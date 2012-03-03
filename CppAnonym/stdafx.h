@@ -20,8 +20,6 @@
 #include <atlcom.h>
 #include <atlctl.h>
 
-using namespace ATL;
-
 #ifndef URASANDESU_CPPANONYM_H
 #include <Urasandesu/CppAnonym.h>
 #endif

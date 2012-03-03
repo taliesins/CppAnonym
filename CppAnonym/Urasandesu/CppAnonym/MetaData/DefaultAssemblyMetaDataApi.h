@@ -8,10 +8,10 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
     {        
         typedef IMetaDataImport2 IImport;
         static IID const IID_IImport;
-        CComPtr<IImport> Import;
+        ATL::CComPtr<IImport> Import;
         typedef IMetaDataAssemblyImport IAssemblyImport;
         static IID const IID_IAssemblyImport;
-        CComPtr<IAssemblyImport> AssemblyImport;
+        ATL::CComPtr<IAssemblyImport> AssemblyImport;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {

@@ -10,7 +10,7 @@ namespace Urasandesu { namespace CppAnonym {
         SystemError() : boost::system::error_code() { }
         SystemError(int val, const boost::system::error_category& cat)
             : boost::system::error_code(val, cat), 
-              m_message(CComBSTR(category().message(value()).data()))
+              m_message(ATL::CComBSTR(category().message(value()).data()))
         { 
         }
 
@@ -22,10 +22,10 @@ namespace Urasandesu { namespace CppAnonym {
             *this = boost::system::errcmake_error_code(e);
         }
         
-        CComBSTR GetBSTRMessage() const { return m_message; }
+        ATL::CComBSTR GetBSTRMessage() const { return m_message; }
 
     private:
-        CComBSTR m_message;
+        ATL::CComBSTR m_message;
     };
     
 }}  // namespace Urasandesu { namespace CppAnonym {

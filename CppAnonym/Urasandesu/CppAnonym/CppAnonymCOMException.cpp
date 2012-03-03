@@ -14,7 +14,7 @@ namespace Urasandesu { namespace CppAnonym {
     CppAnonymCOMException::CppAnonymCOMException(HRESULT hr)
     {
         _com_error ce(hr);    
-        m_what = std::string(CW2A(ce.ErrorMessage()));
+        m_what = std::string(ATL::CW2A(ce.ErrorMessage()));
         *this << ThrowHResult(boost::str(boost::format("0x%|1$08X|") % hr));
         *this << ThrowCOMError(ce);
     }

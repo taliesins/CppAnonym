@@ -2,14 +2,18 @@
 #ifndef URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 #define URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 
+#include <boost/call_traits.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/exception/errinfo_nested_exception.hpp>
 #include <boost/exception_ptr.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/mpl/assert.hpp>
-#include <boost/mpl/or.hpp>
+#include <boost/mpl/advance.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/find.hpp>
 #include <boost/mpl/logical.hpp>
+#include <boost/mpl/or.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
 #include <boost/preprocessor/seq/seq.hpp>

@@ -9,7 +9,7 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         typedef IMetaDataDispenserEx IDispenser;
         static IID const CLSID_Dispenser;
         static IID const IID_IDispenser;
-        CComPtr<IDispenser> Dispenser;
+        ATL::CComPtr<IDispenser> Dispenser;
         
         static HRESULT CoCreateInstance(REFCLSID rclsid, 
                                              LPUNKNOWN pUnkOuter,

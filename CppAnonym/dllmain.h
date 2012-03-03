@@ -1,6 +1,6 @@
 ﻿// dllmain.h : モジュール クラスの宣言
 
-class CCppAnonymModule : public CAtlDllModuleT< CCppAnonymModule >
+class CCppAnonymModule : public ATL::CAtlDllModuleT< CCppAnonymModule >
 {
 public :
 	DECLARE_LIBID(LIBID_CppAnonymLib)

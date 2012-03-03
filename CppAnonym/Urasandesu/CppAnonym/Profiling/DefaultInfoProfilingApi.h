@@ -8,7 +8,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Profiling {
     {
         typedef ICorProfilerInfo2 IProfilerInfo;
         static IID const IID_IProfilerInfo;
-        CComPtr<IProfilerInfo> ProfilerInfo;
+        ATL::CComPtr<IProfilerInfo> ProfilerInfo;
     };
         
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Profiling {

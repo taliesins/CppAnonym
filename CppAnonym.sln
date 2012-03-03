@@ -1,14 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonym", "CppAnonym\CppAnonym.vcproj", "{2B027484-C74E-45B9-A972-609CCC0C67DE}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonym", "CppAnonym\CppAnonym.vcxproj", "{2B027484-C74E-45B9-A972-609CCC0C67DE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymPS", "CppAnonym\CppAnonymPS.vcproj", "{8ED27138-E18C-4AE9-977F-649589C2BD87}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2B027484-C74E-45B9-A972-609CCC0C67DE} = {2B027484-C74E-45B9-A972-609CCC0C67DE}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymPS", "CppAnonym\CppAnonymPS.vcxproj", "{8ED27138-E18C-4AE9-977F-649589C2BD87}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymTest", "CppAnonymTest\CppAnonymTest.vcproj", "{D07E6929-A4F7-4311-8771-16A2A93C2E27}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymTest", "CppAnonymTest\CppAnonymTest.vcxproj", "{D07E6929-A4F7-4311-8771-16A2A93C2E27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
