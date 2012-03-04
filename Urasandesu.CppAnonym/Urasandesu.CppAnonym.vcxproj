@@ -159,6 +159,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymSystemException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\GlobalSafeDictionary.h" />
     <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\IApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />

@@ -30,6 +30,10 @@
 #include <Urasandesu/CppAnonym/Environment.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_GLOBALSAFEDICTIONARY_H
+#include <Urasandesu/CppAnonym/GlobalSafeDictionary.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif

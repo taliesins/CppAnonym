@@ -252,6 +252,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ValueConverter.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\GlobalSafeDictionary.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

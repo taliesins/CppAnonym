@@ -71,5 +71,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

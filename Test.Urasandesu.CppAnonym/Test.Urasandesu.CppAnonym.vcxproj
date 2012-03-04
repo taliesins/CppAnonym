@@ -100,6 +100,7 @@
     </ClCompile>
     <ClCompile Include="Test.Urasandesu.CppAnonym.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
