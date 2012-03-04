@@ -40,3 +40,7 @@
 *.log
 *.patch
 *.tlog
+*.lastbuildstate
+*_manifest.rc
+*.ipch
+*.sdf
