@@ -1,0 +1,18 @@
+// UrasandesuCppAnonym.idl : Urasandesu.CppAnonym の IDL ソース
+//
+
+// このファイルは、タイプ ライブラリ (UrasandesuCppAnonym.tlb) およびマーシャリング コードを
+// 作成するために MIDL ツールによって処理されます。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(E97F150F-ABB3-4CFE-83DF-A263EC8491F3),
+	version(1.0),
+]
+library UrasandesuCppAnonymLib
+{
+	importlib("stdole2.tlb");
+};
+

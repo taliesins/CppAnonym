@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{dbb48b91-5388-44f1-a2a6-85e66d9ddfc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="生成されたファイル">
+      <UniqueIdentifier>{5bd27c9a-e46b-493f-bea8-d00813ac87ac}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Urasandesu.CppAnonymps.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UrasandesuCppAnonym_i.c">
+      <Filter>生成されたファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UrasandesuCppAnonym_p.c">
+      <Filter>生成されたファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="dlldata.c">
+      <Filter>生成されたファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

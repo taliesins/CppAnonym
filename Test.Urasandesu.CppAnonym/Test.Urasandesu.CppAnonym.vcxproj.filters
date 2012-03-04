@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Test">
+      <UniqueIdentifier>{df08e2da-a3bb-4ff3-907b-2fa140ccd0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu">
+      <UniqueIdentifier>{1d5c661b-a45b-4390-a89b-47a5b8e8ce50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym">
+      <UniqueIdentifier>{5e9d6544-78a5-44e5-add1-91d0b8434af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Urasandesu">
+      <UniqueIdentifier>{9b900142-af38-4eca-b71f-4341c710c299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym">
+      <UniqueIdentifier>{d4e9692f-424e-40af-940a-6693a5f4bf30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.Urasandesu.CppAnonym.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymCOMException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymSystemException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

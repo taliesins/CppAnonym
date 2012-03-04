@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonym", "CppAnonym\CppAnonym.vcxproj", "{2B027484-C74E-45B9-A972-609CCC0C67DE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Urasandesu.CppAnonym", "Urasandesu.CppAnonym\Urasandesu.CppAnonym.vcxproj", "{BBDC5180-4804-48B6-839B-201AF9579491}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymPS", "CppAnonym\CppAnonymPS.vcxproj", "{8ED27138-E18C-4AE9-977F-649589C2BD87}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Urasandesu.CppAnonymPS", "Urasandesu.CppAnonym\Urasandesu.CppAnonymPS.vcxproj", "{26880DE0-37AA-4DE0-89E2-B0102AA89BF7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBDC5180-4804-48B6-839B-201AF9579491} = {BBDC5180-4804-48B6-839B-201AF9579491}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppAnonymTest", "CppAnonymTest\CppAnonymTest.vcxproj", "{D07E6929-A4F7-4311-8771-16A2A93C2E27}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test.Urasandesu.CppAnonym", "Test.Urasandesu.CppAnonym\Test.Urasandesu.CppAnonym.vcxproj", "{5025A4C4-FBA5-4527-8A81-068B26C9AA56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +16,16 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B027484-C74E-45B9-A972-609CCC0C67DE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2B027484-C74E-45B9-A972-609CCC0C67DE}.Debug|Win32.Build.0 = Debug|Win32
-		{2B027484-C74E-45B9-A972-609CCC0C67DE}.Release|Win32.ActiveCfg = Release|Win32
-		{2B027484-C74E-45B9-A972-609CCC0C67DE}.Release|Win32.Build.0 = Release|Win32
-		{8ED27138-E18C-4AE9-977F-649589C2BD87}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8ED27138-E18C-4AE9-977F-649589C2BD87}.Release|Win32.ActiveCfg = Release|Win32
-		{D07E6929-A4F7-4311-8771-16A2A93C2E27}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D07E6929-A4F7-4311-8771-16A2A93C2E27}.Debug|Win32.Build.0 = Debug|Win32
-		{D07E6929-A4F7-4311-8771-16A2A93C2E27}.Release|Win32.ActiveCfg = Release|Win32
-		{D07E6929-A4F7-4311-8771-16A2A93C2E27}.Release|Win32.Build.0 = Release|Win32
+		{BBDC5180-4804-48B6-839B-201AF9579491}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BBDC5180-4804-48B6-839B-201AF9579491}.Debug|Win32.Build.0 = Debug|Win32
+		{BBDC5180-4804-48B6-839B-201AF9579491}.Release|Win32.ActiveCfg = Release|Win32
+		{BBDC5180-4804-48B6-839B-201AF9579491}.Release|Win32.Build.0 = Release|Win32
+		{26880DE0-37AA-4DE0-89E2-B0102AA89BF7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{26880DE0-37AA-4DE0-89E2-B0102AA89BF7}.Release|Win32.ActiveCfg = Release|Win32
+		{5025A4C4-FBA5-4527-8A81-068B26C9AA56}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5025A4C4-FBA5-4527-8A81-068B26C9AA56}.Debug|Win32.Build.0 = Debug|Win32
+		{5025A4C4-FBA5-4527-8A81-068B26C9AA56}.Release|Win32.ActiveCfg = Release|Win32
+		{5025A4C4-FBA5-4527-8A81-068B26C9AA56}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
