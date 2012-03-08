@@ -12,10 +12,10 @@
 #include "Urasandesu/CppAnonym/StackTrace.h"
 #endif
 
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_CppAnonymExceptionTest.*
 namespace {
 
-    // CppAnonymTest.exe --gtest_filter=CppAnonymTestSuite.CppAnonymExceptionTest
-    TEST(CppAnonymTestSuite, CppAnonymExceptionTest)
+    TEST(Urasandesu_CppAnonym_CppAnonymExceptionTest, Test_01)
     {
         using namespace std;
         using namespace boost;

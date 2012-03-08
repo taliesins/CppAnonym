@@ -22,4 +22,5 @@
 #endif
 
 #include <boost/mpl/vector.hpp>
+#include <boost/timer.hpp>
 #include <gtest/gtest.h>

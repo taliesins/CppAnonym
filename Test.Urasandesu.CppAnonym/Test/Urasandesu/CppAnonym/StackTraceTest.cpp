@@ -8,10 +8,10 @@
 #include "Urasandesu/CppAnonym/StackTrace.h"
 #endif
 
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_StackTraceTest.*
 namespace {
 
-    // CppAnonymTest.exe --gtest_filter=CppAnonymTestSuite.DefaultStackTraceCapturingTest
-    TEST(CppAnonymTestSuite, DefaultStackTraceCapturingTest)
+    TEST(Urasandesu_CppAnonym_StackTraceTest, CaptureTest_Default_01)
     {
         using namespace std;
         using namespace boost;
@@ -35,8 +35,7 @@ namespace {
         }
     }
 
-    // CppAnonymTest.exe --gtest_filter=CppAnonymTestSuite.ExplicitStackTraceCapturingTest
-    TEST(CppAnonymTestSuite, ExplicitStackTraceCapturingTest)
+    TEST(Urasandesu_CppAnonym_StackTraceTest, CaptureTest_Explicit_01)
     {
         using namespace std;
         using namespace boost;

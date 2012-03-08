@@ -8,6 +8,7 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_HeapProviderTest.*
 namespace {
 
     struct A : 
@@ -22,8 +23,7 @@ namespace {
         ULONG m_value;
     };
 
-    // ProfilingApiSample04Test.exe --gtest_filter=HeapProviderTestSuite.*
-    TEST(HeapProviderTestSuite, HeapProviderTestDefaultPath01)
+    TEST(Urasandesu_CppAnonym_HeapProviderTest, DefaultPathTest_01)
     {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
@@ -60,7 +60,7 @@ namespace {
     }
 
 
-    TEST(HeapProviderTestSuite, HeapProviderTestTypeConcept01)
+    TEST(Urasandesu_CppAnonym_HeapProviderTest, TypeConceptTest_01)
     {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
