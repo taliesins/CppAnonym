@@ -28,7 +28,7 @@ namespace {
         catch (CppAnonymException &e)
         {
             string msg = diagnostic_information(e);
-            cout << msg << endl;
+            //cout << msg << endl;
             string expectContaining = "testing";
             ASSERT_TRUE(msg.find(expectContaining) != string::npos);
         }

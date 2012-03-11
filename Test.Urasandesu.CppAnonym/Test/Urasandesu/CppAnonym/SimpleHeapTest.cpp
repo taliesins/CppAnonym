@@ -96,4 +96,34 @@ namespace {
         cout << "A Lot Of Allocation And Free Heap: " << alotOfAllocElapsed << endl;
         ASSERT_LT(alotOfAllocElapsed, defaultElapsed);
     }
+
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapDeleteLastTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.DeleteLast();
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, ALotOfAllocAndFreeHeapDeleteLastTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, ALotOfAllocAndFreeHeap> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.DeleteLast();
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
 }

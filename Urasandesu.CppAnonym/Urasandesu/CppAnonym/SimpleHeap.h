@@ -40,6 +40,15 @@ namespace Urasandesu { namespace CppAnonym {
                 return pObj;
             }
 
+            inline void DeleteLast()
+            {
+                if (m_array.empty())
+                    return;
+                T *pObj = (*this)[Size() - 1];
+                m_array.pop_back();
+                pObj->~T();
+            }
+
             inline SIZE_T Size()
             {
                 return m_array.size();
@@ -72,6 +81,13 @@ namespace Urasandesu { namespace CppAnonym {
                 m_array.push_back(pObj);
                 return pObj;
             }
+
+            inline void DeleteLast()
+            {
+                if (m_array.empty())
+                    return;
+                m_array.pop_back();
+            }
             
             inline SIZE_T Size()
             {
@@ -100,6 +116,11 @@ namespace Urasandesu { namespace CppAnonym {
         inline T *New()
         {
             return m_impl.New();
+        }
+
+        inline void DeleteLast()
+        {
+            m_impl.DeleteLast();
         }
         
         inline SIZE_T Size()

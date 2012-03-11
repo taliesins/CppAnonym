@@ -44,3 +44,4 @@
 *_manifest.rc
 *.ipch
 *.sdf
+*.unsuccessfulbuild

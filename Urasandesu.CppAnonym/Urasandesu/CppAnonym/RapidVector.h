@@ -88,7 +88,7 @@ namespace Urasandesu { namespace CppAnonym {
 
             Value &dereference() const 
             { 
-                return m_pThis->m_size <= RAPID_SIZE ? *m_pBuf : *m_i; 
+                return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
             }
 
             RapidVector<T, Alloc, RAPID_SIZE> *m_pThis;
@@ -117,7 +117,7 @@ namespace Urasandesu { namespace CppAnonym {
 	    typedef typename std::vector<T, Alloc>::value_type value_type;
 
         RapidVector() : m_size(0), m_maxSize(RAPID_SIZE), m_pVec(NULL) { }
-        ~RapidVector() { if (m_pVec == NULL) delete m_pVec; }
+        ~RapidVector() { DestroyVec(); }
         
         void push_back(typename boost::call_traits<T>::param_type val)
         {
@@ -135,6 +135,24 @@ namespace Urasandesu { namespace CppAnonym {
             }
             m_pVec->push_back(val);
             m_maxSize = m_pVec->max_size();
+        }
+
+        void pop_back()
+        {
+            _ASSERTE(!empty());
+
+            if (RunAsRapid())
+            {
+                --m_size;
+                return;
+            }
+
+            m_pVec->pop_back();
+            // NOTE: std::vector::max_size has no effect by calling the pop_back method.
+            if (--m_size == RAPID_SIZE)
+            {
+                DestroyVec();
+            }
         }
 
         inline const_reference operator[](size_type pos) const
@@ -177,6 +195,11 @@ namespace Urasandesu { namespace CppAnonym {
             return RunAsRapid() ? RAPID_SIZE : m_pVec->max_size();
         }
 
+        inline bool empty() const
+        {
+            return m_size == 0;
+        }
+
         void resize(size_type newSize)
         {
             if (newSize <= RAPID_SIZE)
@@ -185,7 +208,7 @@ namespace Urasandesu { namespace CppAnonym {
                 return;
             }
             
-            if (m_size <= RAPID_SIZE && RAPID_SIZE < newSize)
+            if (RunAsRapid() && RAPID_SIZE < newSize)
             {
                 m_pVec = new std::vector<T, Alloc>(newSize);
                 m_pVec->assign(reinterpret_cast<T *>(m_pRapidBuf), reinterpret_cast<T *>(m_pRapidBuf) + RAPID_SIZE);
@@ -208,6 +231,15 @@ namespace Urasandesu { namespace CppAnonym {
         SIZE_T m_size;
         SIZE_T m_maxSize;
         UINT64 m_pRapidBuf[(RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64)];
+
+        void DestroyVec()
+        {
+            if (m_pVec != NULL)
+            {
+                delete m_pVec;
+                m_pVec = NULL;
+            }
+        }
     };
 
 }}  // namespace Urasandesu { namespace CppAnonym {

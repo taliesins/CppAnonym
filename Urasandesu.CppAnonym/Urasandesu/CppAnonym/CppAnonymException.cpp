@@ -28,8 +28,23 @@ namespace Urasandesu { namespace CppAnonym {
         CaptureStackTrace(this);
     }
     
+    CppAnonymException::CppAnonymException(std::wstring const &what) : 
+        m_what(ATL::CW2A(what.c_str())),
+        m_pStackTrace(boost::make_shared<StackTrace>())
+    { 
+        CaptureStackTrace(this);
+    }
+    
     CppAnonymException::CppAnonymException(std::string const &what, CppAnonymException &innerException) : 
         m_what(what),
+        m_pStackTrace(boost::make_shared<StackTrace>())
+    {
+        CaptureStackTrace(this);
+        *this << boost::errinfo_nested_exception(boost::copy_exception(innerException));
+    }
+    
+    CppAnonymException::CppAnonymException(std::wstring const &what, CppAnonymException &innerException) : 
+        m_what(ATL::CW2A(what.c_str())),
         m_pStackTrace(boost::make_shared<StackTrace>())
     {
         CaptureStackTrace(this);

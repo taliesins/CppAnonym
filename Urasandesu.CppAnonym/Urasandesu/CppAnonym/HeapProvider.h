@@ -19,6 +19,7 @@ namespace Urasandesu { namespace CppAnonym {
             public HeapProviderImpl<Key, Sequence, typename boost::mpl::next<I>::type, IEnd>
         {
         private:
+            typedef HeapProviderImpl<Key, Sequence, I, IEnd> this_type;
             typedef typename boost::mpl::deref<I>::type obj_type;
             BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
             typedef typename boost::call_traits<Key>::param_type key_param_type;
@@ -54,6 +55,16 @@ namespace Urasandesu { namespace CppAnonym {
                 return (*GetHeap())[m_objIndexes[key]];
             }
             
+            inline obj_type *GetOrNew(key_param_type key)
+            {
+                return Exists(key) ? Get(key) : New(key);
+            }
+            
+            inline obj_type const *GetOrNew(key_param_type key) const
+            {
+                return Exists(key) ? Get(key) : const_cast<this_type *>(this)->New(key);
+            }
+            
             inline void Set(key_param_type key, SIZE_T index)
             {
                 m_objIndexes[key] = index;
@@ -83,6 +94,16 @@ namespace Urasandesu { namespace CppAnonym {
             inline obj_type *Peek() const
             {
                 return GetHeap()->Size() == 0 ? NULL : (*GetHeap())[GetHeap()->Size() - 1];
+            }
+
+            inline void DeleteLast()
+            {
+                obj_type *pObj = Peek();
+                if (pObj != NULL)
+                {
+                    m_objIndexes.erase(pObj->GetKey());
+                    GetHeap()->DeleteLast();
+                }
             }
         };
 

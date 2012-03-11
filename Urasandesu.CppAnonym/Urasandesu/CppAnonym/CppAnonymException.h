@@ -15,7 +15,9 @@ namespace Urasandesu { namespace CppAnonym {
     public:
         CppAnonymException();
         CppAnonymException(std::string const &what);
+        CppAnonymException(std::wstring const &what);
         CppAnonymException(std::string const &what, CppAnonymException &innerException);
+        CppAnonymException(std::wstring const &what, CppAnonymException &innerException);
         virtual const char *__CLR_OR_THIS_CALL what() const;
         
     protected:
