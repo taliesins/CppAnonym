@@ -24,3 +24,7 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/timer.hpp>
 #include <gtest/gtest.h>
+
+#include <mscoree.h>
+#include <boost/mpl/for_each.hpp>
+#include <fusion.h>

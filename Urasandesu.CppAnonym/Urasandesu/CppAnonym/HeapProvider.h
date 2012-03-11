@@ -60,11 +60,6 @@ namespace Urasandesu { namespace CppAnonym {
                 return Exists(key) ? Get(key) : New(key);
             }
             
-            inline obj_type const *GetOrNew(key_param_type key) const
-            {
-                return Exists(key) ? Get(key) : const_cast<this_type *>(this)->New(key);
-            }
-            
             inline void Set(key_param_type key, SIZE_T index)
             {
                 m_objIndexes[key] = index;
@@ -127,6 +122,9 @@ namespace Urasandesu { namespace CppAnonym {
                                  typename Traits::DistinctEnd<Sequence>::type>
     {
     public:
+        typedef Key key_type;
+        typedef Sequence sequence_type;
+
         template<class T>
         struct type_decided_by
         {
