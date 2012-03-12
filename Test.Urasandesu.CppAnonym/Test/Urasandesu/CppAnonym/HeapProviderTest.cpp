@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
 #include <Urasandesu/CppAnonym/HeapProvider.h>
@@ -26,7 +26,7 @@
 
 namespace Urasandesu { namespace CppAnonym { 
 
-    // TODO: .h ‚Æ .cpp ‚É•ª—£
+    // TODO: .h ã¨ .cpp ã«åˆ†é›¢
     class CppAnonymArgumentException : 
         public CppAnonymException
     {
@@ -95,7 +95,7 @@ namespace Urasandesu { namespace CppAnonym {
     };
 
 
-    // TODO: .h ‚Æ .cpp ‚É•ª—£
+    // TODO: .h ã¨ .cpp ã«åˆ†é›¢
     struct CppAnonymNotSupportedException : CppAnonymException
     {
         CppAnonymNotSupportedException() : 
