@@ -16,18 +16,18 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}  // namespace Urasandesu { namespace CppAnonym {
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
         class HeapManagerType,
         class ApiType
     >        
-    class ATL_NO_VTABLE IMetaDataApiOperable : 
+    class ATL_NO_VTABLE IMetadataApiOperable : 
         public IApiOperable<HeapManagerType, ApiType>, 
         public IHeapContent<mdToken>
     {
     public:
-        IMetaDataApiOperable() { }
+        IMetadataApiOperable() { }
 
         template<class T>
         T *CreateIfNecessary(mdToken token)
@@ -55,6 +55,6 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         }
     };
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_IMETADATAAPIOPERABLE_H

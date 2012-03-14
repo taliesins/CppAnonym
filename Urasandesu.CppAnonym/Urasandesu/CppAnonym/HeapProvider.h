@@ -21,7 +21,6 @@ namespace Urasandesu { namespace CppAnonym {
         private:
             typedef HeapProviderImpl<Key, Sequence, I, IEnd> this_type;
             typedef typename boost::mpl::deref<I>::type obj_type;
-            BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
             typedef typename boost::call_traits<Key>::param_type key_param_type;
 
             boost::shared_ptr<SimpleHeap<obj_type>> mutable m_objFactory;
@@ -29,6 +28,8 @@ namespace Urasandesu { namespace CppAnonym {
             
             inline SimpleHeap<obj_type> *GetHeap() const
             {
+                BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
+                
                 if (!m_objFactory.get())
                     m_objFactory = boost::make_shared<SimpleHeap<obj_type>>();
                 return m_objFactory.get();

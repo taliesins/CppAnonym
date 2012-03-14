@@ -2,12 +2,12 @@
 #include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPI_H
-#include <Urasandesu/CppAnonym/MetaData/DefaultAssemblyMetaDataApi.h>
+#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApi.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    IID const DefaultAssemblyMetaDataApi::IID_IImport = IID_IMetaDataImport2;
-    IID const DefaultAssemblyMetaDataApi::IID_IAssemblyImport = IID_IMetaDataAssemblyImport;
+    IID const DefaultAssemblyMetadataApi::IID_IImport = IID_IMetadataImport2;
+    IID const DefaultAssemblyMetadataApi::IID_IAssemblyImport = IID_IMetadataAssemblyImport;
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

@@ -1,0 +1,13 @@
+﻿#pragma once
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_H
+#define URASANDESU_CPPANONYM_STRONGNAMING_H
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMINGDEPENDSON_H
+#include <Urasandesu/CppAnonym/StrongNaming/StrongNamingDependsOn.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
+#endif
+
+#endif  // #ifndef URASANDESU_CPPANONYM_STRONGNAMING_H

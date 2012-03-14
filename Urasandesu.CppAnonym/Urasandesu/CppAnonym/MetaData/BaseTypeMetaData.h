@@ -6,7 +6,7 @@
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #ifdef UNT
 #error This .h reserves the word "UNT" that means "Urasandesu::CppAnonym::Traits".
@@ -17,40 +17,40 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         class HeapManagerType,
         class ApiType
     >        
-    class ATL_NO_VTABLE IMetaDataApiOperable;
+    class ATL_NO_VTABLE IMetadataApiOperable;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData;
+    class BaseAssemblyMetadata;
 
-    struct DefaultAssemblyMetaDataApi;
-
-    template<
-        class AssemblyMetaDataApiType
-    >
-    class BaseModuleMetaData;
+    struct DefaultAssemblyMetadataApi;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseMethodMetaData;
+    class BaseModuleMetadata;
 
     template<
-        class AssemblyMetaDataApiType = boost::use_default
+        class AssemblyMetadataApiType
     >
-    class BaseTypeMetaData : 
-        public IMetaDataApiOperable<
-            BaseAssemblyMetaData<AssemblyMetaDataApiType>, 
-            typename UNT::Replace<AssemblyMetaDataApiType, boost::use_default, DefaultAssemblyMetaDataApi>::type
+    class BaseMethodMetadata;
+
+    template<
+        class AssemblyMetadataApiType = boost::use_default
+    >
+    class BaseTypeMetadata : 
+        public IMetadataApiOperable<
+            BaseAssemblyMetadata<AssemblyMetadataApiType>, 
+            typename UNT::Replace<AssemblyMetadataApiType, boost::use_default, DefaultAssemblyMetadataApi>::type
         >
     {
     public:
-        BaseTypeMetaData() : 
+        BaseTypeMetadata() : 
             m_pModMeta(NULL)
         { }
         
-        BaseModuleMetaData<AssemblyMetaDataApiType> *GetModule()
+        BaseModuleMetadata<AssemblyMetadataApiType> *GetModule()
         {
             HRESULT hr = E_FAIL;
             
@@ -61,12 +61,12 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
                 if (FAILED(hr))
                     BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
                 
-                m_pModMeta = CreateIfNecessary<BaseModuleMetaData<AssemblyMetaDataApiType>>(mdm);
+                m_pModMeta = CreateIfNecessary<BaseModuleMetadata<AssemblyMetadataApiType>>(mdm);
             }
             return m_pModMeta;
         }
 
-        BaseMethodMetaData<AssemblyMetaDataApiType> *GetMethod(mdMethodDef mdmd)
+        BaseMethodMetadata<AssemblyMetadataApiType> *GetMethod(mdMethodDef mdmd)
         {
             HRESULT hr = E_FAIL;
             
@@ -86,17 +86,17 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
             if (FAILED(hr))
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
             
-            return CreateIfNecessary<BaseMethodMetaData<AssemblyMetaDataApiType>>(mdmd);
+            return CreateIfNecessary<BaseMethodMetadata<AssemblyMetadataApiType>>(mdmd);
         }
         
     private:
-        BaseModuleMetaData<AssemblyMetaDataApiType> *m_pModMeta;
+        BaseModuleMetadata<AssemblyMetadataApiType> *m_pModMeta;
     };
 
-    typedef BaseTypeMetaData<boost::use_default> TypeMetaData;
+    typedef BaseTypeMetadata<boost::use_default> TypeMetadata;
 
 #undef UNT
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATA_H

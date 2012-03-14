@@ -2,11 +2,11 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTINFOMETADATAAPI_H
 #define URASANDESU_CPPANONYM_METADATA_DEFAULTINFOMETADATAAPI_H
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    struct DefaultInfoMetaDataApi
+    struct DefaultInfoMetadataApi
     {
-        typedef IMetaDataDispenserEx IDispenser;
+        typedef IMetadataDispenserEx IDispenser;
         static IID const CLSID_Dispenser;
         static IID const IID_IDispenser;
         ATL::CComPtr<IDispenser> Dispenser;
@@ -18,6 +18,6 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
                                              LPVOID FAR* ppv);
     };
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTINFOMETADATAAPI_H

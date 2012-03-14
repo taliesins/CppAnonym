@@ -10,7 +10,7 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #ifdef UNT
 #error This .h reserves the word "UNT" that means "Urasandesu::CppAnonym::Traits".
@@ -21,50 +21,50 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         class HeapManagerType,
         class ApiType
     >        
-    class ATL_NO_VTABLE IMetaDataApiOperable;
+    class ATL_NO_VTABLE IMetadataApiOperable;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData;
+    class BaseAssemblyMetadata;
 
-    struct DefaultAssemblyMetaDataApi;
-
-    template<
-        class AssemblyMetaDataApiType
-    >
-    class BaseModuleMetaData;
+    struct DefaultAssemblyMetadataApi;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseTypeMetaData;
+    class BaseModuleMetadata;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseMethodMetaData;
+    class BaseTypeMetadata;
 
     template<
-        class AssemblyMetaDataApiType = boost::use_default
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData : 
-        public IMetaDataApiOperable<
-            BaseAssemblyMetaData<AssemblyMetaDataApiType>, 
-            typename UNT::Replace<AssemblyMetaDataApiType, boost::use_default, DefaultAssemblyMetaDataApi>::type
+    class BaseMethodMetadata;
+
+    template<
+        class AssemblyMetadataApiType = boost::use_default
+    >
+    class BaseAssemblyMetadata : 
+        public IMetadataApiOperable<
+            BaseAssemblyMetadata<AssemblyMetadataApiType>, 
+            typename UNT::Replace<AssemblyMetadataApiType, boost::use_default, DefaultAssemblyMetadataApi>::type
         >
     {
         CPPANONYM_BEGIN_HEAP_PROVIDER_DECLARATION()
-            CPPANONYM_HEAP_PROVIDER(BaseModuleMetaData<AssemblyMetaDataApiType>, mdToken, m_pModMetaFactory);
-            CPPANONYM_HEAP_PROVIDER(BaseTypeMetaData<AssemblyMetaDataApiType>, mdToken, m_pTypeMetaFactory);
-            CPPANONYM_HEAP_PROVIDER(BaseMethodMetaData<AssemblyMetaDataApiType>, mdToken, m_pMethodMetaFactory);
+            CPPANONYM_HEAP_PROVIDER(BaseModuleMetadata<AssemblyMetadataApiType>, mdToken, m_pModMetaFactory);
+            CPPANONYM_HEAP_PROVIDER(BaseTypeMetadata<AssemblyMetadataApiType>, mdToken, m_pTypeMetaFactory);
+            CPPANONYM_HEAP_PROVIDER(BaseMethodMetadata<AssemblyMetadataApiType>, mdToken, m_pMethodMetaFactory);
         CPPANONYM_END_HEAP_PROVIDER_DECLARATION()
     };
 
-    typedef BaseAssemblyMetaData<boost::use_default> AssemblyMetaData;
+    typedef BaseAssemblyMetadata<boost::use_default> AssemblyMetadata;
 
 #undef UNT
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_H

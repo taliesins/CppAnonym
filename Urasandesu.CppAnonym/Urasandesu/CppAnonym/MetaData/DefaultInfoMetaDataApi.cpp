@@ -2,12 +2,12 @@
 #include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTINFOMETADATAAPI_H
-#include <Urasandesu/CppAnonym/MetaData/DefaultInfoMetaDataApi.h>
+#include <Urasandesu/CppAnonym/Metadata/DefaultInfoMetadataApi.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    HRESULT DefaultInfoMetaDataApi::CoCreateInstance(REFCLSID rclsid, 
+    HRESULT DefaultInfoMetadataApi::CoCreateInstance(REFCLSID rclsid, 
                                          LPUNKNOWN pUnkOuter,
                                          DWORD dwClsContext, 
                                          REFIID riid, 
@@ -16,7 +16,7 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         return ::CoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv);
     }
 
-    IID const DefaultInfoMetaDataApi::CLSID_Dispenser = CLSID_CorMetaDataDispenser;
-    IID const DefaultInfoMetaDataApi::IID_IDispenser = IID_IMetaDataDispenserEx;
+    IID const DefaultInfoMetadataApi::CLSID_Dispenser = CLSID_CorMetadataDispenser;
+    IID const DefaultInfoMetadataApi::IID_IDispenser = IID_IMetadataDispenserEx;
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

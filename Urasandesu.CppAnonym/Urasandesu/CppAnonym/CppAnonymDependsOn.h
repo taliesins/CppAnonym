@@ -34,7 +34,7 @@ namespace Urasandesu { namespace CppAnonym {
 }}   // namespace Urasandesu { namespace CppAnonym {
 
 #ifndef URASANDESU_CPPANONYM_METADATA_METADATADEPENDSON_H
-#include <Urasandesu/CppAnonym/MetaData/MetaDataDependsOn.h>
+#include <Urasandesu/CppAnonym/Metadata/MetadataDependsOn.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PROFILING_PROFILINGDEPENDSON_H

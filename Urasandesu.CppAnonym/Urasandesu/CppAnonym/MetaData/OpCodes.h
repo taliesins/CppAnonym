@@ -2,7 +2,7 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
 #define URASANDESU_CPPANONYM_METADATA_OPCODES_H
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace OpCodes {
 
@@ -33,6 +33,6 @@ namespace OpCodes {
 
 }   // namespace OpCodes
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H

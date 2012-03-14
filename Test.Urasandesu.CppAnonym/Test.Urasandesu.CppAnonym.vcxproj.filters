@@ -28,6 +28,12 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym">
       <UniqueIdentifier>{d4e9692f-424e-40af-940a-6693a5f4bf30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Fusion">
+      <UniqueIdentifier>{7c6bfdef-abcc-43c1-a6c2-f7e3e13c3f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Hosting">
+      <UniqueIdentifier>{9a161422-f848-4421-a221-95ef438d0e3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -82,6 +88,21 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymArgumentException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\AssemblyInfo.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiProto3CBCB74B.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Hosting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

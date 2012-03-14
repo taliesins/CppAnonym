@@ -10,7 +10,7 @@
 #include <boost/range/any_range.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     inline ULONG CorSigUncompressSerString( // return number of bytes of that compressed string occupied in pData 
         PCCOR_SIGNATURE pData,              // [IN] compressed data 
@@ -34,6 +34,6 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         }
     }
 
-}}} // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}} // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_METADATADEPENDSON_H

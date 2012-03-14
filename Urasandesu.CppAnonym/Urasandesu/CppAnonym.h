@@ -6,8 +6,12 @@
 #include <Urasandesu/CppAnonym/CppAnonymDependsOn.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_FUSION_H
+#include <Urasandesu/CppAnonym/Fusion.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_H
-#include <Urasandesu/CppAnonym/MetaData.h>
+#include <Urasandesu/CppAnonym/Metadata.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PROFILING_H
@@ -80,6 +84,14 @@
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H

@@ -10,7 +10,7 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #ifdef UNT
 #error This .h reserves the word "UNT" that means "Urasandesu::CppAnonym::Traits".
@@ -21,35 +21,35 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         class HeapManagerType,
         class ApiType
     >        
-    class ATL_NO_VTABLE IMetaDataApiOperable;
+    class ATL_NO_VTABLE IMetadataApiOperable;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData;
+    class BaseAssemblyMetadata;
 
-    struct DefaultInfoMetaDataApi;
-    struct DefaultAssemblyMetaDataApi;
+    struct DefaultInfoMetadataApi;
+    struct DefaultAssemblyMetadataApi;
 
     template<
-        class InfoMetaDataApiType = boost::use_default,
-        class AssemblyMetaDataApiType = boost::use_default
+        class InfoMetadataApiType = boost::use_default,
+        class AssemblyMetadataApiType = boost::use_default
     >    
-    class BaseMetaDataInfo
+    class BaseMetadataInfo
     {
     public:
-        typedef typename UNT::Replace<InfoMetaDataApiType, boost::use_default, DefaultInfoMetaDataApi>::type info_meta_data_api_type;
-        typedef typename UNT::Replace<AssemblyMetaDataApiType, boost::use_default, DefaultAssemblyMetaDataApi>::type assembly_meta_data_api_type;
+        typedef typename UNT::Replace<InfoMetadataApiType, boost::use_default, DefaultInfoMetadataApi>::type info_meta_data_api_type;
+        typedef typename UNT::Replace<AssemblyMetadataApiType, boost::use_default, DefaultAssemblyMetadataApi>::type assembly_meta_data_api_type;
     
     private:
         CPPANONYM_BEGIN_HEAP_PROVIDER_DECLARATION()
             CPPANONYM_HEAP_PROVIDER(info_meta_data_api_type, mdToken, m_pInfoMetaApiFactory);
             CPPANONYM_HEAP_PROVIDER(assembly_meta_data_api_type, mdToken, m_pAsmMetaApiFactory);
-            CPPANONYM_HEAP_PROVIDER(BaseAssemblyMetaData<AssemblyMetaDataApiType>, mdToken, m_pAsmMetaFactory);
+            CPPANONYM_HEAP_PROVIDER(BaseAssemblyMetadata<AssemblyMetadataApiType>, mdToken, m_pAsmMetaFactory);
         CPPANONYM_END_HEAP_PROVIDER_DECLARATION()
 
     public:
-        BaseMetaDataInfo() : 
+        BaseMetadataInfo() : 
             m_pInfoMetaApi(NULL)
         { }
 
@@ -70,10 +70,10 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         info_meta_data_api_type *m_pInfoMetaApi;
     };
 
-    typedef BaseMetaDataInfo<boost::use_default, boost::use_default> MetaDataInfo;
+    typedef BaseMetadataInfo<boost::use_default, boost::use_default> MetadataInfo;
 
 #undef UNT
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_H

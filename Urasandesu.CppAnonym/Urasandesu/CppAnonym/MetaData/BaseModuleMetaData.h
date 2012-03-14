@@ -6,7 +6,7 @@
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #ifdef UNT
 #error This .h reserves the word "UNT" that means "Urasandesu::CppAnonym::Traits".
@@ -17,35 +17,35 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         class HeapManagerType,
         class ApiType
     >        
-    class ATL_NO_VTABLE IMetaDataApiOperable;
+    class ATL_NO_VTABLE IMetadataApiOperable;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData;
+    class BaseAssemblyMetadata;
 
-    struct DefaultAssemblyMetaDataApi;
-
-    template<
-        class AssemblyMetaDataApiType
-    >
-    class BaseTypeMetaData;
+    struct DefaultAssemblyMetadataApi;
 
     template<
-        class AssemblyMetaDataApiType = boost::use_default
+        class AssemblyMetadataApiType
     >
-    class BaseModuleMetaData : 
-        public IMetaDataApiOperable<
-            BaseAssemblyMetaData<AssemblyMetaDataApiType>, 
-            typename UNT::Replace<AssemblyMetaDataApiType, boost::use_default, DefaultAssemblyMetaDataApi>::type
+    class BaseTypeMetadata;
+
+    template<
+        class AssemblyMetadataApiType = boost::use_default
+    >
+    class BaseModuleMetadata : 
+        public IMetadataApiOperable<
+            BaseAssemblyMetadata<AssemblyMetadataApiType>, 
+            typename UNT::Replace<AssemblyMetadataApiType, boost::use_default, DefaultAssemblyMetadataApi>::type
         >
     {
     public:
-        BaseAssemblyMetaData<AssemblyMetaDataApiType> *GetAssembly()
+        BaseAssemblyMetadata<AssemblyMetadataApiType> *GetAssembly()
         {
             HRESULT hr = E_FAIL;
             
-            BaseAssemblyMetaData<AssemblyMetaDataApiType> *pAsmMeta = NULL;
+            BaseAssemblyMetadata<AssemblyMetadataApiType> *pAsmMeta = NULL;
             pAsmMeta = GetHeapManager();
             if (pAsmMeta->GetToken() == -1)
             {
@@ -67,10 +67,10 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
             return pAsmMeta;
         }
         
-        BaseTypeMetaData<AssemblyMetaDataApiType> *GetType(mdTypeDef mdtd)
+        BaseTypeMetadata<AssemblyMetadataApiType> *GetType(mdTypeDef mdtd)
         {
-            BaseTypeMetaData<AssemblyMetaDataApiType> *pTypeMeta = NULL;
-            pTypeMeta = CreateIfNecessary<BaseTypeMetaData<AssemblyMetaDataApiType>>(mdtd);
+            BaseTypeMetadata<AssemblyMetadataApiType> *pTypeMeta = NULL;
+            pTypeMeta = CreateIfNecessary<BaseTypeMetadata<AssemblyMetadataApiType>>(mdtd);
             return pTypeMeta;
         }
         
@@ -78,10 +78,10 @@ namespace Urasandesu { namespace CppAnonym { namespace MetaData {
         boost::unordered_map<mdToken, SIZE_T> m_typeIndexes;
     };
 
-    typedef BaseModuleMetaData<boost::use_default> ModuleMetaData;
+    typedef BaseModuleMetadata<boost::use_default> ModuleMetadata;
 
 #undef UNT
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATA_H

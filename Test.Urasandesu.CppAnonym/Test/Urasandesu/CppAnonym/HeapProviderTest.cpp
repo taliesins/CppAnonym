@@ -24,496 +24,68 @@
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIPROTO3CBCB74B_H
+#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiProto3CBCB74B.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOPROTO3CBCB74B_H
+#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoProto3CBCB74B.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTHOSTINFOAPIPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/DefaultHostInfoApiProto07F03042.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEHOSTINFOPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/BaseHostInfoProto07F03042.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostProto07F03042.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { 
-
-    // TODO: .h と .cpp に分離
-    class CppAnonymArgumentException : 
-        public CppAnonymException
-    {
-    public:
-        CppAnonymArgumentException() : 
-            CppAnonymException()
-        {
-        }
-
-        CppAnonymArgumentException(std::string const &what) : 
-            CppAnonymException(what)
-        {
-        }
-
-        CppAnonymArgumentException(std::wstring const &what) : 
-            CppAnonymException(what)
-        {
-        }
-
-        CppAnonymArgumentException(std::string const &what, std::string const &paramName) : 
-            CppAnonymException(what)
-        {
-            AppendMessage(m_what, paramName);
-        }
-
-        CppAnonymArgumentException(std::wstring const &what, std::wstring const &paramName) : 
-            CppAnonymException(what)
-        {
-            AppendMessage(m_what, paramName);
-        }
-
-        CppAnonymArgumentException(std::string const &what, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        {
-        }
-
-        CppAnonymArgumentException(std::wstring const &what, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        {
-        }
-
-        CppAnonymArgumentException(std::string const &what, std::string const &paramName, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        {
-            AppendMessage(m_what, paramName);
-        }
-
-        CppAnonymArgumentException(std::wstring const &what, std::wstring const &paramName, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        {
-            AppendMessage(m_what, paramName);
-        }
-
-    private:
-        static void AppendMessage(std::string &what, std::wstring const &paramName)
-        {
-            AppendMessage(what, std::string(ATL::CW2A(paramName.c_str())));
-        }
-
-        static void AppendMessage(std::string &what, std::string const &paramName)
-        {
-            what += "\r\n";
-            what += "Parameter Name: ";
-            what += paramName;
-        }
-    };
-
-
-    // TODO: .h と .cpp に分離
-    struct CppAnonymNotSupportedException : CppAnonymException
-    {
-        CppAnonymNotSupportedException() : 
-            CppAnonymException()
-        { }
-
-        CppAnonymNotSupportedException(std::string const &what) : 
-            CppAnonymException(what)
-        { }
-
-        CppAnonymNotSupportedException(std::wstring const &what) : 
-            CppAnonymException(what)
-        { }
-
-        CppAnonymNotSupportedException(std::string const &what, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        { }
-
-        CppAnonymNotSupportedException(std::wstring const &what, CppAnonymException &innerException) : 
-            CppAnonymException(what, innerException)
-        { }
-    };
 
 }}   // namespace Urasandesu { namespace CppAnonym { 
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    template<
-        class InfoHostingApiType
-    >
-    class BaseRuntimeHostProto07F03042;
-
-    struct DefaultInfoHostingApi;
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-namespace Urasandesu { namespace CppAnonym { namespace Fusion {
-
-    struct DefaultInfoFusionApi
-    {
-        typedef Hosting::DefaultInfoHostingApi info_hosting_api_type;
-    };
-
-    namespace Detail {
-
-        template<
-            class InfoFusionApiType = boost::use_default
-        >    
-        struct InfoFusionApiTraitProto3CBCB74B
-        {
-            typedef typename Traits::Replace<InfoFusionApiType, boost::use_default, 
-                                 DefaultInfoFusionApi>::type info_fusion_api_type;
-            typedef typename boost::mpl::eval_if<
-                                boost::is_same<InfoFusionApiType, boost::use_default>, 
-                                boost::mpl::identity<boost::use_default>, 
-                                boost::mpl::identity<typename info_fusion_api_type::info_hosting_api_type> >::type info_hosting_api_type;
-        };
-
-    }   // namespace Detail
-
-    class AssemblyInfo
-    {
-    //ULONG cbAssemblyInfo;
-    //DWORD dwAssemblyFlags;
-    //ULARGE_INTEGER uliAssemblySizeInKB;
-    //LPWSTR pszCurrentAssemblyPathBuf;
-    //ULONG cchBuf;
-    public:
-        AssemblyInfo(ULONGLONG assemblySizeInKB, boost::filesystem::path const &assemblyPath) :
-            m_assemblySizeInKB(assemblySizeInKB), 
-            m_assemblyPath(assemblyPath)
-        { }
-
-        inline ULONGLONG GetAssemblySizeInKB() const { return m_assemblySizeInKB; }
-        inline boost::filesystem::path const &GetAssemblyPath() const { return m_assemblyPath; }
-
-    private:
-        ULONGLONG m_assemblySizeInKB;
-        boost::filesystem::path m_assemblyPath;
-    };
-
-    namespace AssemblyQueryTypes {
-
-        enum Types
-        {
-            Default = 0,
-            Validate = QUERYASMINFO_FLAG_VALIDATE, 
-            GetSize = QUERYASMINFO_FLAG_GETSIZE
-        };
-
-    } // QueryAssemblyTypes
-
-
-
-    template<
-        class InfoFusionApiType = boost::use_default
-    >    
-    class BaseFusionInfoProto3CBCB74B : 
-        public IHeapContent<std::wstring>
-    {
-    public:
-        typedef Detail::InfoFusionApiTraitProto3CBCB74B<InfoFusionApiType> trait_type;
-        typedef Hosting::BaseRuntimeHostProto07F03042<typename trait_type::info_hosting_api_type> runtime_host_type;
-
-        BaseFusionInfoProto3CBCB74B() : 
-            m_pRuntimeHost(NULL)
-        { }
-
-        void Init(runtime_host_type const &runtimeHost)
-        {
-            using namespace boost::filesystem;
-            _ASSERTE(m_pRuntimeHost == NULL);
-            
-            m_pRuntimeHost = &runtimeHost;
-            path const &corSystemDirectoryPath = m_pRuntimeHost->GetCORSystemDirectoryPath();
-            path fusionPath = corSystemDirectoryPath;
-            fusionPath /= L"fusion.dll";
-
-            HMODULE hmodCorEE = ::LoadLibraryW(fusionPath.c_str());
-            if (hmodCorEE == NULL)
-                BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
-            BOOST_SCOPE_EXIT((hmodCorEE))
-            {
-                ::FreeLibrary(hmodCorEE);
-            }
-            BOOST_SCOPE_EXIT_END
-
-            typedef HRESULT (__stdcall *CreateAsmCachePtr)(IAssemblyCache **ppAsmCache, DWORD dwReserved);
-
-            CreateAsmCachePtr pfnCreateAsmCache = NULL;
-            pfnCreateAsmCache = reinterpret_cast<CreateAsmCachePtr>(
-                                            ::GetProcAddress(hmodCorEE, "CreateAssemblyCache"));
-            if (!pfnCreateAsmCache)
-                BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
-        
-            HRESULT hr = pfnCreateAsmCache(&m_pAsmCache, 0);
-            if (FAILED(hr)) 
-                BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-        }
-
-        AssemblyInfo QueryAssemblyInfo(AssemblyQueryTypes::Types type, std::wstring const &assemblyName) const
-        {
-            using namespace boost::filesystem;
-
-            WCHAR buffer[MAX_PATH] = { 0 };
-            ASSEMBLY_INFO asmInfo;
-            ::ZeroMemory(&asmInfo, sizeof(ASSEMBLY_INFO));
-            asmInfo.cbAssemblyInfo = sizeof(ASSEMBLY_INFO);
-            asmInfo.pszCurrentAssemblyPathBuf = buffer;
-            asmInfo.cchBuf = MAX_PATH;
-            HRESULT hr = m_pAsmCache->QueryAssemblyInfo(type, assemblyName.c_str(), &asmInfo);
-            if (FAILED(hr)) 
-                BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-            ULONGLONG assemblySizeInKB = 0;
-            ::memcpy_s(&assemblySizeInKB, sizeof(ULONGLONG), &asmInfo.uliAssemblySizeInKB, sizeof(ULARGE_INTEGER));
-
-            return AssemblyInfo(assemblySizeInKB, asmInfo.pszCurrentAssemblyPathBuf);
-        }
-
-    private:
-        runtime_host_type const *m_pRuntimeHost;
-        ATL::CComPtr<IAssemblyCache> m_pAsmCache;
-    };
-
-    typedef BaseFusionInfoProto3CBCB74B<> FusionInfoProto3CBCB74B;
-    
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
-
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-    template<
-        class InfoMetadataApiType = boost::use_default
-    >    
-    class BaseMetadataInfoProtoB8DF5A21 :
-        public IHeapContent<std::wstring>
-    {
-    };
-
-    typedef BaseMetadataInfoProtoB8DF5A21<> MetadataInfoProtoB8DF5A21;
-
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
-    template<
-        class InfoStrongNamingApiType = boost::use_default
-    >    
-    class BaseStrongNameInfoProto4236D495 : 
-        public IHeapContent<std::wstring>
-    {
-    };
-
-    typedef BaseStrongNameInfoProto4236D495<> StrongNameInfoProto4236D495;
-    
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    struct DefaultInfoHostingApi
-    {
-        typedef INT info_strong_naming_api_type;
-        typedef INT info_metadata_api_type;
-        typedef Fusion::DefaultInfoFusionApi info_fusion_api_type;
-    };
-
-    namespace Detail {
-
-        template<
-            class InfoHostingApiType = boost::use_default
-        >    
-        struct InfoHostingApiTraitProto07F03042
-        {
-            typedef typename Traits::Replace<InfoHostingApiType, boost::use_default, 
-                                 DefaultInfoHostingApi>::type info_hosting_api_type_type;
-            typedef typename info_hosting_api_type_type::info_strong_naming_api_type info_strong_naming_api_type;
-            typedef typename info_hosting_api_type_type::info_metadata_api_type info_metadata_api_type;
-            typedef typename boost::mpl::eval_if<
-                                boost::is_same<InfoHostingApiType, boost::use_default>, 
-                                boost::mpl::identity<boost::use_default>, 
-                                boost::mpl::identity<typename info_hosting_api_type_type::info_fusion_api_type> >::type info_fusion_api_type;
-        };
-
-    }   // namespace Detail
-
-    template<
-        class InfoHostingApiType
-    >    
-    class BaseHostInfoProto07F03042;
-
-
-
-    template<
-        class InfoHostingApiType = boost::use_default
-    >
-    class BaseRuntimeHostProto07F03042 : 
-        public IHeapContent<std::wstring>, 
-        public HeapProvider<
-            std::wstring, 
-            boost::mpl::vector<
-                StrongNaming::BaseStrongNameInfoProto4236D495<typename Detail::InfoHostingApiTraitProto07F03042<InfoHostingApiType>::info_strong_naming_api_type>, 
-                Metadata::BaseMetadataInfoProtoB8DF5A21<typename Detail::InfoHostingApiTraitProto07F03042<InfoHostingApiType>::info_metadata_api_type>, 
-                Fusion::BaseFusionInfoProto3CBCB74B<typename Detail::InfoHostingApiTraitProto07F03042<InfoHostingApiType>::info_fusion_api_type>
-            >
-        >
-    {
-    public:
-        typedef BaseRuntimeHostProto07F03042<InfoHostingApiType> this_type;
-        typedef Detail::InfoHostingApiTraitProto07F03042<InfoHostingApiType> trait_type;
-        typedef StrongNaming::BaseStrongNameInfoProto4236D495<typename trait_type::info_strong_naming_api_type> strong_name_info_type;
-        typedef typename type_decided_by<strong_name_info_type>::type strong_name_info_heap_type;
-        typedef Fusion::BaseFusionInfoProto3CBCB74B<typename trait_type::info_fusion_api_type> fusion_info_type;
-        typedef typename type_decided_by<fusion_info_type>::type fusion_info_heap_type;
-
-        BaseRuntimeHostProto07F03042() : 
-            m_corVersionInitialized(false), 
-            m_corSystemDirectoryPathInitialized(false)
-        {
-            namespace mpl = boost::mpl;
-            mpl::for_each<sequence_type>(m_infosInitializer(m_infos));
-        }
-
-        template<class InfoType>
-        InfoType const *GetInfo() const
-        {
-            namespace mpl = boost::mpl;
-            using namespace boost;
-            
-            typedef mpl::find<sequence_type, InfoType>::type i;
-            typedef mpl::end<sequence_type>::type i_end;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<i, i_end> >));
-
-            typedef typename type_decided_by<InfoType>::type info_heap_type;
-            LPCSTR infoTypeName = typeid(InfoType).name();
-            InfoType *pInfo = static_cast<InfoType *>(m_infos[infoTypeName]);
-            if (pInfo == NULL)
-            {
-                info_heap_type &infoHeap = const_cast<this_type *>(this)->Of<InfoType>();
-                pInfo = infoHeap.New(GetCORVersion());
-                pInfo->Init(*this);
-                m_infos[infoTypeName] = pInfo;
-            }
-
-            return pInfo;
-        }
-        
-        std::wstring const &GetCORVersion() const
-        {
-            if (!m_corVersionInitialized)
-            {
-                WCHAR buffer[MAX_PATH] = { 0 };
-                DWORD bufferSize = MAX_PATH - 1;
-                DWORD length = 0;
-
-#pragma warning(push)
-#pragma warning(disable: 4996)
-                HRESULT hr = ::GetCORVersion(buffer, bufferSize, &length);
-#pragma warning(pop)
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-                
-                m_corVersion = buffer;
-
-                m_corVersionInitialized = true;
-            }
-            return m_corVersion;
-        }
-
-        boost::filesystem::path const &GetCORSystemDirectoryPath() const
-        {
-            using namespace boost::filesystem;
-
-            if (!m_corSystemDirectoryPathInitialized)
-            {
-                WCHAR buffer[MAX_PATH] = { 0 };
-                DWORD bufferSize = MAX_PATH - 1;
-                DWORD length = 0;
-
-#pragma warning(push)
-#pragma warning(disable: 4996)
-                HRESULT hr = ::GetCORSystemDirectory(buffer, bufferSize, &length);
-#pragma warning(pop)
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-                m_corSystemDirectoryPath = buffer;
-                
-                m_corSystemDirectoryPathInitialized = true;
-            }
-            return m_corSystemDirectoryPath;
-        }
-    
-    private:
-        mutable boost::unordered_map<std::string, void *> m_infos;
-        
-        class m_infosInitializer
-        {
-        public:
-            m_infosInitializer(boost::unordered_map<std::string, void *> &infos) : 
-                m_pInfos(&infos)
-            { }
-
-            template<typename T> 
-            void operator()(T _)
-            {
-                (*m_pInfos)[typeid(T).name()] = NULL;
-            }
-
-        private:
-            boost::unordered_map<std::string, void *> *m_pInfos;
-        };
-
-        mutable bool m_corVersionInitialized;
-        mutable std::wstring m_corVersion;
-        mutable bool m_corSystemDirectoryPathInitialized;
-        mutable boost::filesystem::path m_corSystemDirectoryPath;
-    };
-
-    typedef BaseRuntimeHostProto07F03042<> RuntimeHostProto07F03042;
-
-    template<
-        class InfoHostingApiType = boost::use_default
-    >    
-    class BaseHostInfoProto07F03042 : 
-        public HeapProvider<
-            std::wstring, 
-            boost::mpl::vector<
-                BaseRuntimeHostProto07F03042<InfoHostingApiType> 
-            > 
-        >
-    {
-    public:
-        typedef BaseHostInfoProto07F03042<InfoHostingApiType> this_type;
-        typedef BaseRuntimeHostProto07F03042<InfoHostingApiType> runtime_host_type;
-        typedef typename type_decided_by<runtime_host_type>::type runtime_host_heap_type;
-
-        runtime_host_type const *GetRuntime(std::wstring const &version) const
-        {
-            if (version.empty())
-                BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
-
-            runtime_host_heap_type const &heap = Of<runtime_host_type>();
-            if (heap.Exists(version))
-            {
-                return heap.Get(version);
-            }
-            else
-            {
-                runtime_host_heap_type *pHeap = const_cast<runtime_host_heap_type *>(&heap);
-                runtime_host_type const *pRuntimeHost = pHeap->NewPseudo();
-
-                std::wstring const &corVersion = pRuntimeHost->GetCORVersion();
-                if (corVersion != version)
-                {
-                    BOOST_SCOPE_EXIT((pHeap))
-                    {
-                        pHeap->DeleteLast();
-                    }
-                    BOOST_SCOPE_EXIT_END
-
-                    std::wstring what;
-                    what += L"The version '";
-                    what += version;
-                    what += L"' is not supported. For your information, this process runs at version '";
-                    what += corVersion;
-                    what += L"'.";
-                    BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
-                }
-
-                pHeap->SetToLast(version);
-                return pRuntimeHost;
-            }
-        }
-    };
-
-    typedef BaseHostInfoProto07F03042<> HostInfoProto07F03042;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

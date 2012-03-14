@@ -6,28 +6,28 @@
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseAssemblyMetaData;
+    class BaseAssemblyMetadata;
 
-    typedef BaseAssemblyMetaData<boost::use_default> AssemblyMetaData;
+    typedef BaseAssemblyMetadata<boost::use_default> AssemblyMetadata;
 
-    struct DefaultAssemblyMetaDataApi;
+    struct DefaultAssemblyMetadataApi;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseMethodMetaData;
+    class BaseMethodMetadata;
 
     template<
-        class AssemblyMetaDataApiType
+        class AssemblyMetadataApiType
     >
-    class BaseTypeMetaData;
+    class BaseTypeMetadata;
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace MetaData {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Profiling {
 
@@ -65,9 +65,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 #define UNP Urasandesu::CppAnonym::Profiling
 
 #ifdef UNM
-#error This .h reserves the word "UNM" that means "Urasandesu::CppAnonym::MetaData".
+#error This .h reserves the word "UNM" that means "Urasandesu::CppAnonym::Metadata".
 #endif
-#define UNM Urasandesu::CppAnonym::MetaData
+#define UNM Urasandesu::CppAnonym::Metadata
 
 #ifdef UNT
 #error This .h reserves the word "UNT" that means "Urasandesu::CppAnonym::Traits".
@@ -79,16 +79,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 
     template<
-        class AssemblyMetaDataApiType,
+        class AssemblyMetadataApiType,
         class InfoProfilingApiType
     >
     class ValueConverter<
-        UNM::BaseAssemblyMetaData<AssemblyMetaDataApiType> *, 
+        UNM::BaseAssemblyMetadata<AssemblyMetadataApiType> *, 
         UNP::BaseProcessProfile<InfoProfilingApiType> *
     >
     {
     public:
-        typedef typename UNT::Replace<AssemblyMetaDataApiType, boost::use_default, UNM::DefaultAssemblyMetaDataApi>::type assembly_meta_data_api_type;
+        typedef typename UNT::Replace<AssemblyMetadataApiType, boost::use_default, UNM::DefaultAssemblyMetadataApi>::type assembly_meta_data_api_type;
         typedef typename UNT::Replace<InfoProfilingApiType, boost::use_default, UNP::DefaultInfoProfilingApi>::type info_profiling_api_type;
 
         ValueConverter() : 
@@ -98,14 +98,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         }
         
-        void Initialize(UNM::BaseAssemblyMetaData<AssemblyMetaDataApiType> *pAsmMeta, 
+        void Initialize(UNM::BaseAssemblyMetadata<AssemblyMetadataApiType> *pAsmMeta, 
                         UNP::BaseProcessProfile<InfoProfilingApiType> *pProcProf, 
                         UNP::BaseModuleProfile<InfoProfilingApiType> *pModProf)
         {
             
             HRESULT hr = E_FAIL;
             
-            hr = pProcProf->GetApi()->ProfilerInfo->GetModuleMetaData(
+            hr = pProcProf->GetApi()->ProfilerInfo->GetModuleMetadata(
                                                 pModProf->GetID(), ofRead, 
                                                 assembly_meta_data_api_type::IID_IImport, 
                                                 reinterpret_cast<IUnknown **>(&pAsmMeta->GetApi()->Import));
@@ -122,25 +122,25 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             return m_pAsmMeta != NULL && m_pProcProf != NULL && m_pModProf != NULL;
         }
 
-        UNM::BaseMethodMetaData<AssemblyMetaDataApiType> *Convert(UNP::BaseMethodProfile<InfoProfilingApiType> *from)
+        UNM::BaseMethodMetadata<AssemblyMetadataApiType> *Convert(UNP::BaseMethodProfile<InfoProfilingApiType> *from)
         {
-            using namespace Urasandesu::CppAnonym::MetaData;
+            using namespace Urasandesu::CppAnonym::Metadata;
             HRESULT hr = E_FAIL;
             
             CComPtr<assembly_meta_data_api_type::IImport> pImport;
             mdToken mdt = mdTokenNil;
-            hr = m_pProcProf->GetApi()->ProfilerInfo->GetTokenAndMetaDataFromFunction(from->GetID(), 
+            hr = m_pProcProf->GetApi()->ProfilerInfo->GetTokenAndMetadataFromFunction(from->GetID(), 
                                                 assembly_meta_data_api_type::IID_IImport, 
                                                 reinterpret_cast<IUnknown **>(&pImport), &mdt);
             if (FAILED(hr))
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
             
-            BaseMethodMetaData<AssemblyMetaDataApiType> *pMethodMeta = NULL;
-            pMethodMeta = m_pAsmMeta->CreateIfNecessary<BaseMethodMetaData<AssemblyMetaDataApiType>>(mdt);
+            BaseMethodMetadata<AssemblyMetadataApiType> *pMethodMeta = NULL;
+            pMethodMeta = m_pAsmMeta->CreateIfNecessary<BaseMethodMetadata<AssemblyMetadataApiType>>(mdt);
             return pMethodMeta;
         }
 
-        UNP::BaseTypeProfile<InfoProfilingApiType> *ConvertBack(UNM::BaseTypeMetaData<AssemblyMetaDataApiType> *to)
+        UNP::BaseTypeProfile<InfoProfilingApiType> *ConvertBack(UNM::BaseTypeMetadata<AssemblyMetadataApiType> *to)
         {
             using namespace Urasandesu::CppAnonym::Profiling;
             HRESULT hr = E_FAIL;
@@ -155,7 +155,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             return pTypeProf;
         }
         
-        UNP::BaseMethodProfile<InfoProfilingApiType> *ConvertBack(UNM::BaseMethodMetaData<AssemblyMetaDataApiType> *to)
+        UNP::BaseMethodProfile<InfoProfilingApiType> *ConvertBack(UNM::BaseMethodMetadata<AssemblyMetadataApiType> *to)
         {
             using namespace Urasandesu::CppAnonym::Profiling;
             HRESULT hr = E_FAIL;
@@ -171,7 +171,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
     private:
-        UNM::BaseAssemblyMetaData<AssemblyMetaDataApiType> *m_pAsmMeta;
+        UNM::BaseAssemblyMetadata<AssemblyMetadataApiType> *m_pAsmMeta;
         UNP::BaseProcessProfile<InfoProfilingApiType> *m_pProcProf;
         UNP::BaseModuleProfile<InfoProfilingApiType> *m_pModProf;
     };
