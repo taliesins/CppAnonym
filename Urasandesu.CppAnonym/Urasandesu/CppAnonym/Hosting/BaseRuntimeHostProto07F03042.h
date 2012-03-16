@@ -2,6 +2,17 @@
 #ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
 #define URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
 
+#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
+#include <Urasandesu/CppAnonym/IHeapContent.h>
+#endif
+
+namespace Urasandesu { namespace CppAnonym {
+
+    template<class Key, class Sequence>
+    class ATL_NO_VTABLE HeapProvider;
+
+}}   // namespace Urasandesu { namespace CppAnonym {
+
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
     template<
@@ -31,6 +42,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
+    struct DefaultRuntimeHostApiProto07F03042;
+
     template<
         class RuntimeHostApiType = DefaultRuntimeHostApiProto07F03042
     >
@@ -39,21 +52,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::info_strong_naming_api_type>, 
-                Metadata::BaseMetadataInfoProtoB8DF5A21<typename RuntimeHostApiType::info_metadata_api_type>, 
-                Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::info_fusion_api_type>
+                StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::strong_naming_info_api_type>, 
+                Metadata::BaseMetadataInfoProtoB8DF5A21<typename RuntimeHostApiType::metadata_info_api_type>, 
+                Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::fusion_info_api_type>
             >
         >
     {
     public:
         typedef BaseRuntimeHostProto07F03042<RuntimeHostApiType> this_type;
-        typedef StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::info_strong_naming_api_type> strong_name_info_type;
-        typedef typename type_decided_by<strong_name_info_type>::type strong_name_info_heap_type;
-        typedef Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::info_fusion_api_type> fusion_info_type;
-        typedef typename type_decided_by<fusion_info_type>::type fusion_info_heap_type;
+        typedef StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::strong_naming_info_api_type> strong_name_info_type;
+        typedef Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::fusion_info_api_type> fusion_info_type;
 
         BaseRuntimeHostProto07F03042() : 
-            m_infosInitialized(false),
             m_corVersionInitialized(false), 
             m_corSystemDirectoryPathInitialized(false)
         { }
@@ -68,17 +78,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             typedef mpl::end<sequence_type>::type i_end;
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<i, i_end> >));
 
-            if (!m_infosInitialized)
+            LPCSTR infoTypeName = typeid(InfoType).name();
+            if (m_infos.find(infoTypeName) == m_infos.end())
             {
-                mpl::for_each<sequence_type>(m_infosInitializer(m_infos));
-                m_infosInitialized = true;
+                m_infos[infoTypeName] = NULL;
             }
 
-            typedef typename type_decided_by<InfoType>::type info_heap_type;
-            LPCSTR infoTypeName = typeid(InfoType).name();
             InfoType *pInfo = static_cast<InfoType *>(m_infos[infoTypeName]);
             if (pInfo == NULL)
             {
+                typedef typename type_decided_by<InfoType>::type info_heap_type;
                 info_heap_type &infoHeap = const_cast<this_type *>(this)->Of<InfoType>();
                 pInfo = infoHeap.New(GetCORVersion());
                 pInfo->Init(*this);
@@ -135,26 +144,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
     
     private:
-        mutable bool m_infosInitialized;
         mutable boost::unordered_map<std::string, void *> m_infos;
-        
-        class m_infosInitializer
-        {
-        public:
-            m_infosInitializer(boost::unordered_map<std::string, void *> &infos) : 
-                m_pInfos(&infos)
-            { }
-
-            template<typename T> 
-            void operator()(T _)
-            {
-                (*m_pInfos)[typeid(T).name()] = NULL;
-            }
-
-        private:
-            boost::unordered_map<std::string, void *> *m_pInfos;
-        };
-
         mutable bool m_corVersionInitialized;
         mutable std::wstring m_corVersion;
         mutable bool m_corSystemDirectoryPathInitialized;

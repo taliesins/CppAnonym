@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Hosting">
       <UniqueIdentifier>{9a161422-f848-4421-a221-95ef438d0e3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Fusion">
+      <UniqueIdentifier>{524b781c-8852-46f1-8b14-5bb95d76e323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -103,6 +106,15 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042Test.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostProto07F03042Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74BTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Fusion</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

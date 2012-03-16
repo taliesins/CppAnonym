@@ -103,9 +103,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.Urasandesu.CppAnonym.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74BTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042Test.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostProto07F03042Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\RapidVectorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
