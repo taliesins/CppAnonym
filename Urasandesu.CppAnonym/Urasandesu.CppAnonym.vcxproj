@@ -183,6 +183,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseAssemblyMetadata.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataProtoB8DF5A21.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseMetadataInfo.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseMethodBodyMetadata.h" />
@@ -190,7 +192,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseModuleMetadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseTypeMetadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\DefaultAssemblyMetadataApi.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultAssemblyMetadataApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\DefaultInfoMetadataApi.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultMetadataDispenserApiProtoB8DF5A21.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultMetadataInfoApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\IMetadataApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\MetadataDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\OpCodes.h" />

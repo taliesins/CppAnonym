@@ -42,11 +42,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             m_pRuntimeHost(NULL)
         { }
 
-        void Init(runtime_host_type const &runtimeHost)
+        void Init(runtime_host_type &runtimeHost) const
         {
             using namespace boost::filesystem;
             _ASSERTE(m_pRuntimeHost == NULL);
-            
+
             m_pRuntimeHost = &runtimeHost;
             path const &corSystemDirectoryPath = m_pRuntimeHost->GetCORSystemDirectoryPath();
             path fusionPath = corSystemDirectoryPath;
@@ -69,7 +69,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             if (!pfnCreateAsmCache)
                 BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
         
-            HRESULT hr = pfnCreateAsmCache(&m_pAsmCache, 0);
+            HRESULT hr = pfnCreateAsmCache(&m_pAsmCacheApi, 0);
             if (FAILED(hr)) 
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
         }
@@ -85,7 +85,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             asmInfo.cbAssemblyInfo = sizeof(ASSEMBLY_INFO);
             asmInfo.pszCurrentAssemblyPathBuf = buffer;
             asmInfo.cchBuf = MAX_PATH;
-            HRESULT hr = m_pAsmCache->QueryAssemblyInfo(type, assemblyName.c_str(), &asmInfo);
+            HRESULT hr = m_pAsmCacheApi->QueryAssemblyInfo(type, assemblyName.c_str(), &asmInfo);
             if (FAILED(hr)) 
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
@@ -98,8 +98,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         }
 
     private:
-        runtime_host_type const *m_pRuntimeHost;
-        ATL::CComPtr<IAssemblyCache> m_pAsmCache;
+        mutable runtime_host_type *m_pRuntimeHost;
+        mutable ATL::CComPtr<IAssemblyCache> m_pAsmCacheApi;
     };
 
     typedef BaseFusionInfoProto3CBCB74B<> FusionInfoProto3CBCB74B;

@@ -4,22 +4,10 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
-//#include <Urasandesu/CppAnonym/IHeapContent.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTHOSTINFOAPIPROTO07F03042_H
-//#include <Urasandesu/CppAnonym/Hosting/DefaultHostInfoApiProto07F03042.h>
-//#endif
-
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
 #include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
 #endif
-//
-//#ifndef URASANDESU_CPPANONYM_FUSION_BASEHOSTINFOPROTO07F03042_H
-//#include <Urasandesu/CppAnonym/Hosting/BaseHostInfoProto07F03042.h>
-//#endif
-//
+
 #ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostProto07F03042.h>
 #endif
@@ -28,21 +16,9 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
-//#endif
-
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIPROTO3CBCB74B_H
 #include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiProto3CBCB74B.h>
 #endif
-
-//#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
-//#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
-//#endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOPROTO3CBCB74B_H
 #include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoProto3CBCB74B.h>
@@ -50,6 +26,14 @@
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test.*
@@ -71,7 +55,7 @@ namespace {
             << "Expected: " << expected.c_str() << ", Actual: " << corSystemDirectoryPath.c_str();
     }
 
-    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test, Test_02)
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test, GetInfoTest_FusionInfo_01)
     {
         namespace fs = boost::filesystem;
         
@@ -84,5 +68,20 @@ namespace {
 
         FusionInfo const *pFuInfo2 = runtimeHost.GetInfo<FusionInfo>();
         ASSERT_EQ(pFuInfo, pFuInfo2);
+    }
+
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test, GetInfoTest_MetadataInfo_01)
+    {
+        namespace fs = boost::filesystem;
+        
+        typedef Urasandesu::CppAnonym::Hosting::RuntimeHostProto07F03042 RuntimeHost;
+        
+        RuntimeHost runtimeHost;
+        typedef RuntimeHost::metadata_info_type MetaInfo;
+        MetaInfo const *pMetaInfo = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_FALSE(pMetaInfo == NULL);
+
+        MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_EQ(pMetaInfo, pMetaInfo2);
     }
 }

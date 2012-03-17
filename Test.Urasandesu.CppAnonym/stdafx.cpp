@@ -6,3 +6,9 @@
 
 // TODO: このファイルではなく、STDAFX.H で必要な
 // 追加ヘッダーを参照してください。
+
+struct OleCom 
+{
+    OleCom() { ::CoInitialize(NULL); }
+    ~OleCom() { ::CoUninitialize(); }
+} olecom;

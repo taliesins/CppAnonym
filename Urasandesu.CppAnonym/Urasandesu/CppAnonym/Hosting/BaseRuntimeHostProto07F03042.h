@@ -61,6 +61,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     public:
         typedef BaseRuntimeHostProto07F03042<RuntimeHostApiType> this_type;
         typedef StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::strong_naming_info_api_type> strong_name_info_type;
+        typedef Metadata::BaseMetadataInfoProtoB8DF5A21<typename RuntimeHostApiType::metadata_info_api_type> metadata_info_type;
         typedef Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::fusion_info_api_type> fusion_info_type;
 
         BaseRuntimeHostProto07F03042() : 
@@ -84,13 +85,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 m_infos[infoTypeName] = NULL;
             }
 
-            InfoType *pInfo = static_cast<InfoType *>(m_infos[infoTypeName]);
+            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[infoTypeName]);
             if (pInfo == NULL)
             {
+                this_type *mutableThis = const_cast<this_type *>(this);
                 typedef typename type_decided_by<InfoType>::type info_heap_type;
-                info_heap_type &infoHeap = const_cast<this_type *>(this)->Of<InfoType>();
+                info_heap_type &infoHeap = mutableThis->Of<InfoType>();
                 pInfo = infoHeap.New(GetCORVersion());
-                pInfo->Init(*this);
+                pInfo->Init(*mutableThis);
                 m_infos[infoTypeName] = pInfo;
             }
 
@@ -144,7 +146,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
     
     private:
-        mutable boost::unordered_map<std::string, void *> m_infos;
+        mutable boost::unordered_map<std::string, void const *> m_infos;
         mutable bool m_corVersionInitialized;
         mutable std::wstring m_corVersion;
         mutable bool m_corSystemDirectoryPathInitialized;

@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Fusion">
       <UniqueIdentifier>{524b781c-8852-46f1-8b14-5bb95d76e323}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Metadata">
+      <UniqueIdentifier>{c5bc9a57-d840-4f4d-8d05-123f529063b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -115,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
