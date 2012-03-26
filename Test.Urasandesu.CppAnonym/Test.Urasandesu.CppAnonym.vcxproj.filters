@@ -122,5 +122,14 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21Test.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserProtoB8DF5A21Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataProtoB8DF5A21Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

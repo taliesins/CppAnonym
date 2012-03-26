@@ -6,9 +6,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     struct DefaultRuntimeHostApiProto07F03042;
 
-    struct DefaultHostInfoApiProto07F03042
+    struct IHostInfoApi { };
+
+    struct DefaultHostInfoApiProto07F03042 : 
+        Traits::ChildApiOperable, 
+        IHostInfoApi
     {
-        typedef DefaultRuntimeHostApiProto07F03042 runtime_host_api_type;
+        typedef boost::mpl::vector<DefaultRuntimeHostApiProto07F03042> child_api_types;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {

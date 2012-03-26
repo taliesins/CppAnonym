@@ -23,16 +23,16 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename boost::mpl::deref<I>::type obj_type;
             typedef typename boost::call_traits<Key>::param_type key_param_type;
 
-            boost::shared_ptr<SimpleHeap<obj_type>> mutable m_objFactory;
+            boost::shared_ptr<SimpleHeap<obj_type>> mutable m_pObjFactory;
             boost::unordered_map<Key, SIZE_T> mutable m_objIndexes;
             
             inline SimpleHeap<obj_type> *GetHeap() const
             {
                 BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
                 
-                if (!m_objFactory.get())
-                    m_objFactory = boost::make_shared<SimpleHeap<obj_type>>();
-                return m_objFactory.get();
+                if (!m_pObjFactory.get())
+                    m_pObjFactory = boost::make_shared<SimpleHeap<obj_type>>();
+                return m_pObjFactory.get();
             }
 
         public:

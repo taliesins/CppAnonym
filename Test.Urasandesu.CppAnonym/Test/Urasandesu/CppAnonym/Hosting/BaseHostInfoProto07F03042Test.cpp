@@ -8,6 +8,14 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
+#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
+#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTHOSTINFOAPIPROTO07F03042_H
 #include <Urasandesu/CppAnonym/Hosting/DefaultHostInfoApiProto07F03042.h>
 #endif
@@ -22,6 +30,14 @@
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostProto07F03042.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIPROTO3CBCB74B_H
+#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiProto3CBCB74B.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H

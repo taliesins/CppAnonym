@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     >
     class BaseRuntimeHostProto07F03042;
 
+    struct IRuntimeHostApi;
+
     struct DefaultRuntimeHostApiProto07F03042;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
@@ -26,6 +28,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct DefaultMetadataInfoApiProtoB8DF5A21;
 
+    struct IMetadataDispenserApi;
+
 
     template<
         class MetadataInfoApiType = DefaultMetadataInfoApiProtoB8DF5A21
@@ -35,10 +39,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseMetadataInfoProtoB8DF5A21<MetadataInfoApiType> this_type;
-        typedef Hosting::BaseRuntimeHostProto07F03042<
-                    typename MetadataInfoApiType::runtime_host_api_type> runtime_host_type;
-        typedef BaseMetadataDispenserProtoB8DF5A21<
-                    typename MetadataInfoApiType::metadata_dispenser_api_type> metadata_dispenser_type;
+        typedef typename Traits::ParentApiOrDefault<MetadataInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
+        typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
+        typedef typename Traits::ChildApiOrDefault<MetadataInfoApiType, IMetadataDispenserApi>::type metadata_dispenser_api_type;
+        typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
         
         BaseMetadataInfoProtoB8DF5A21() : 
             m_pRuntimeHost(NULL)

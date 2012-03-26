@@ -54,6 +54,10 @@
 #include <Urasandesu/CppAnonym/RapidVector.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#include <Urasandesu/CppAnonym/SafeEnum.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
 #include <Urasandesu/CppAnonym/SimpleBlob.h>
 #endif

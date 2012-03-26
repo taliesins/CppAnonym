@@ -4,17 +4,6 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-    namespace AssemblyQueryTypes {
-
-        enum Types
-        {
-            Default = 0,
-            Validate = QUERYASMINFO_FLAG_VALIDATE, 
-            GetSize = QUERYASMINFO_FLAG_GETSIZE
-        };
-
-    } // QueryAssemblyTypes
-
     class AssemblyInfo
     {
     public:

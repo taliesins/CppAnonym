@@ -6,7 +6,13 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#include <Urasandesu/CppAnonym/SafeEnum.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
+    struct IRuntimeHostApi;
 
     template<
         class HostInfoApiType
@@ -15,13 +21,31 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
+namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
+    template<class ApiType, class IApiType>
+    struct ParentApiOrDefault;
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-    namespace AssemblyQueryTypes {
+    namespace Detail {
 
-        enum Types;
+        struct AssemblyQueryTypesDef
+        {
+            enum type
+            {
+                AQT_DEFAULT = 0,
+                AQT_VALIDATE = QUERYASMINFO_FLAG_VALIDATE, 
+                AQT_GET_SIZE = QUERYASMINFO_FLAG_GETSIZE,
+                AQT_UNREACHED
+            };
+        };
 
-    } // QueryAssemblyTypes
+    }   // Detail
+
+    typedef SafeEnum<Detail::AssemblyQueryTypesDef> AssemblyQueryTypes;
 
     class AssemblyInfo;
 
@@ -35,8 +59,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         public IHeapContent<std::wstring>
     {
     public:
-        typedef Hosting::BaseRuntimeHostProto07F03042<
-                    typename FusionInfoApiType::runtime_host_api_type> runtime_host_type;
+        typedef typename Traits::ParentApiOrDefault<FusionInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
+        typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
 
         BaseFusionInfoProto3CBCB74B() : 
             m_pRuntimeHost(NULL)
@@ -75,7 +99,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         }
 
         boost::shared_ptr<AssemblyInfo> QueryAssemblyInfo(
-                  AssemblyQueryTypes::Types type, std::wstring const &assemblyName) const
+                  AssemblyQueryTypes const &type, std::wstring const &assemblyName) const
         {
             using namespace boost::filesystem;
 
@@ -85,7 +109,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             asmInfo.cbAssemblyInfo = sizeof(ASSEMBLY_INFO);
             asmInfo.pszCurrentAssemblyPathBuf = buffer;
             asmInfo.cchBuf = MAX_PATH;
-            HRESULT hr = m_pAsmCacheApi->QueryAssemblyInfo(type, assemblyName.c_str(), &asmInfo);
+            HRESULT hr = m_pAsmCacheApi->QueryAssemblyInfo(type.Value(), assemblyName.c_str(), &asmInfo);
             if (FAILED(hr)) 
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 

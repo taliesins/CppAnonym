@@ -57,6 +57,8 @@ namespace {
         ASSERT_EQ(1, caHeap.Size());
         ASSERT_TRUE(caHeap.Exists(0)); 
         ASSERT_FALSE(caHeap.Exists(1)); 
+
+        std::cout << "Size Of MyHeapProvider: " << sizeof(MyHeapProvider) << std::endl;
     }
 
 

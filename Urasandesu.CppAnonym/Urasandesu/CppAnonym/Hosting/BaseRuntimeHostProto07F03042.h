@@ -15,6 +15,8 @@ namespace Urasandesu { namespace CppAnonym {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
+    struct IStrongNameInfoApi;
+
     template<
         class StrongNameInfoApiType
     >    
@@ -24,6 +26,8 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    struct IMetadataInfoApi;
+
     template<
         class MetadataInfoApiType
     >    
@@ -32,6 +36,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
+
+    struct IFusionInfoApi;
 
     template<
         class FusionInfoApiType
@@ -44,6 +50,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     struct DefaultRuntimeHostApiProto07F03042;
 
+    
     template<
         class RuntimeHostApiType = DefaultRuntimeHostApiProto07F03042
     >
@@ -52,17 +59,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::strong_naming_info_api_type>, 
-                Metadata::BaseMetadataInfoProtoB8DF5A21<typename RuntimeHostApiType::metadata_info_api_type>, 
-                Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::fusion_info_api_type>
+                StrongNaming::BaseStrongNameInfoProto4236D495<typename Traits::ChildApiOrDefault<RuntimeHostApiType, StrongNaming::IStrongNameInfoApi>::type>, 
+                Metadata::BaseMetadataInfoProtoB8DF5A21<typename Traits::ChildApiOrDefault<RuntimeHostApiType, Metadata::IMetadataInfoApi>::type>, 
+                Fusion::BaseFusionInfoProto3CBCB74B<typename Traits::ChildApiOrDefault<RuntimeHostApiType, Fusion::IFusionInfoApi>::type>
             >
         >
     {
     public:
         typedef BaseRuntimeHostProto07F03042<RuntimeHostApiType> this_type;
-        typedef StrongNaming::BaseStrongNameInfoProto4236D495<typename RuntimeHostApiType::strong_naming_info_api_type> strong_name_info_type;
-        typedef Metadata::BaseMetadataInfoProtoB8DF5A21<typename RuntimeHostApiType::metadata_info_api_type> metadata_info_type;
-        typedef Fusion::BaseFusionInfoProto3CBCB74B<typename RuntimeHostApiType::fusion_info_api_type> fusion_info_type;
+        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, StrongNaming::IStrongNameInfoApi>::type strong_naming_info_api_type;
+        typedef StrongNaming::BaseStrongNameInfoProto4236D495<strong_naming_info_api_type> strong_name_info_type;
+        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, Metadata::IMetadataInfoApi>::type metadata_info_api_type;
+        typedef Metadata::BaseMetadataInfoProtoB8DF5A21<metadata_info_api_type> metadata_info_type;
+        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, Fusion::IFusionInfoApi>::type fusion_info_api_type;
+        typedef Fusion::BaseFusionInfoProto3CBCB74B<fusion_info_api_type> fusion_info_type;
 
         BaseRuntimeHostProto07F03042() : 
             m_corVersionInitialized(false), 

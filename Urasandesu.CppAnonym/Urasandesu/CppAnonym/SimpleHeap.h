@@ -36,7 +36,10 @@ namespace Urasandesu { namespace CppAnonym {
                 }
                 pObj = m_pCurrent;
                 ++m_pCurrent;
+#pragma warning(push)
+#pragma warning(disable: 4345)
                 new(pObj)T();
+#pragma warning(pop)
                 return pObj;
             }
 

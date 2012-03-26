@@ -16,6 +16,10 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
+#include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     template<
@@ -59,7 +63,7 @@ namespace {
         fuInfo.Init(runtimeHost);
 
         std::wstring assemblyName(L"System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL");
-        boost::shared_ptr<AssemblyInfo> pAsmInfo = fuInfo.QueryAssemblyInfo(AssemblyQueryTypes::GetSize, assemblyName);
+        boost::shared_ptr<AssemblyInfo> pAsmInfo = fuInfo.QueryAssemblyInfo(AssemblyQueryTypes::AQT_GET_SIZE, assemblyName);
 
 
         // Assert        

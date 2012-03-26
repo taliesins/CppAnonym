@@ -116,7 +116,7 @@ namespace Urasandesu { namespace CppAnonym {
 	    typedef typename std::vector<T, Alloc>::size_type size_type;
 	    typedef typename std::vector<T, Alloc>::value_type value_type;
 
-        RapidVector() : m_size(0), m_maxSize(RAPID_SIZE), m_pVec(NULL) { }
+        RapidVector() : m_size(0), m_pVec(NULL) { }
         ~RapidVector() { DestroyVec(); }
         
         void push_back(typename boost::call_traits<T>::param_type val)
@@ -134,7 +134,6 @@ namespace Urasandesu { namespace CppAnonym {
                 ++m_size;
             }
             m_pVec->push_back(val);
-            m_maxSize = m_pVec->max_size();
         }
 
         void pop_back()
@@ -215,7 +214,6 @@ namespace Urasandesu { namespace CppAnonym {
                 m_size = newSize;
             }
             m_pVec->resize(newSize);
-            m_maxSize = m_pVec->max_size();
         }
 
         inline bool RunAsRapid() const
@@ -229,7 +227,6 @@ namespace Urasandesu { namespace CppAnonym {
 	    
         std::vector<T, Alloc> *m_pVec;
         SIZE_T m_size;
-        SIZE_T m_maxSize;
         UINT64 m_pRapidBuf[(RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64)];
 
         void DestroyVec()

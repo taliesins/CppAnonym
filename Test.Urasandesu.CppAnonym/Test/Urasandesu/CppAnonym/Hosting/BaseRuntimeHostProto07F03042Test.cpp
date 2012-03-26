@@ -4,6 +4,14 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
+#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
+#include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
 #include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
 #endif
@@ -36,6 +44,10 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
+#endif
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test.*
 namespace {
 
@@ -63,6 +75,7 @@ namespace {
         
         RuntimeHost runtimeHost;
         typedef RuntimeHost::fusion_info_type FusionInfo;
+
         FusionInfo const *pFuInfo = runtimeHost.GetInfo<FusionInfo>();
         ASSERT_FALSE(pFuInfo == NULL);
 
