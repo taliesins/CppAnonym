@@ -12,17 +12,17 @@
 #include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataProtoB8DF5A21.h>
@@ -43,6 +43,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
+    struct IAssemblyMetadataApi { };
+    struct IMetadataDispenserApi { };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseMetadataDispenserProtoB8DF5A21Test.*
 namespace {
 
@@ -56,8 +63,8 @@ namespace {
         struct TestMetadataDispenserApi;
 
         struct TestAssemblyMetadataApi : 
-            Traits::ParentApiOperable,
-            Traits::ChildApiOperable, 
+            //Traits::ParentApiOperable,
+            //Traits::ChildApiOperable, 
             IAssemblyMetadataApi
         {
             typedef TestMetadataDispenserApi parent_api_type;
@@ -67,7 +74,7 @@ namespace {
         };
 
         struct TestMetadataDispenserApi : 
-            Traits::ChildApiOperable, 
+            //Traits::ChildApiOperable, 
             IMetadataDispenserApi
         {
             //typedef TestAssemblyMetadataApi assembly_metadata_api_type;

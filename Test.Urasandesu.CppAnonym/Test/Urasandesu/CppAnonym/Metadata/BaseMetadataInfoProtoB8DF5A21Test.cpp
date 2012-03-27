@@ -12,17 +12,17 @@
 #include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
@@ -32,13 +32,13 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+//#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
+//#endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
+//#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
@@ -51,6 +51,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
+    struct IMetadataDispenserApi { };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseMetadataInfoProtoB8DF5A21Test.*
 namespace {
 
@@ -60,7 +66,11 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
 
         // Arrange
-        typedef MetadataInfoProtoB8DF5A21 MetadataInfo;
+        struct TestMetadataInfoApi
+        {
+        };
+
+        typedef BaseMetadataInfoProtoB8DF5A21<TestMetadataInfoApi> MetadataInfo;
         typedef MetadataInfo::runtime_host_type RuntimeHost;
 
         RuntimeHost runtimeHost;

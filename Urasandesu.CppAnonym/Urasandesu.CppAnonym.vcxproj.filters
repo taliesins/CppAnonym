@@ -360,12 +360,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ParentApiOrDefault.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ChildApiOperable.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ParentApiOperable.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultTypeMetadataApiProtoB8DF5A21.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>

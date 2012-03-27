@@ -97,4 +97,23 @@ namespace {
         MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
         ASSERT_EQ(pMetaInfo, pMetaInfo2);
     }
+
+
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test, Test_02)
+    {
+        namespace fs = boost::filesystem;
+
+        struct TestRuntimeHostApi
+        {
+        };
+        
+        typedef Urasandesu::CppAnonym::Hosting::BaseRuntimeHostProto07F03042<TestRuntimeHostApi> RuntimeHost;
+        RuntimeHost runtimeHost;
+        typedef RuntimeHost::metadata_info_type MetaInfo;
+        MetaInfo const *pMetaInfo = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_FALSE(pMetaInfo == NULL);
+
+        MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_EQ(pMetaInfo, pMetaInfo2);
+    }
 }

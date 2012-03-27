@@ -8,17 +8,17 @@
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Traits/ParentApiOperable.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIOPERABLE_H
+//#include <Urasandesu/CppAnonym/Traits/ParentApiOperable.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
 #include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
+//#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
 #include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
@@ -103,8 +103,8 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
 
         // Arrange
-        struct TestTypeMetadataApi : 
-            Traits::ChildApiOperable 
+        struct TestTypeMetadataApi  
+            //Traits::ChildApiOperable 
         {
             typedef INT assembly_metadata_api_type;
             //typedef IMetaDataImport2 metadata_import_api_type;
@@ -141,8 +141,8 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
 
         // Arrange
-        struct TestTypeMetadataApi : 
-            Traits::ChildApiOperable 
+        struct TestTypeMetadataApi  
+            //Traits::ChildApiOperable 
         {
             typedef INT assembly_metadata_api_type;
             //typedef IMetaDataImport2 metadata_import_api_type;
@@ -242,7 +242,7 @@ namespace {
 
     struct IHogedataDispenserApi { };
     struct DefaultHogedataDispenserApi : 
-        Urasandesu::CppAnonym::Traits::ParentApiOperable, 
+        //Urasandesu::CppAnonym::Traits::ParentApiOperable, 
         IHogedataDispenserApi
     {
         typedef DefaultHogedataInfoApi parent_api_type;
@@ -268,7 +268,7 @@ namespace {
 
     struct IHogedataInfoApi { };
     struct DefaultHogedataInfoApi : 
-        Urasandesu::CppAnonym::Traits::ChildApiOperable, 
+        //Urasandesu::CppAnonym::Traits::ChildApiOperable, 
         IHogedataInfoApi
     {
         typedef boost::mpl::void_ parent_api_type;
@@ -292,6 +292,9 @@ namespace {
 
     TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_04)
     {
+        namespace mpl = boost::mpl;
+        namespace UCT = Urasandesu::CppAnonym::Traits;
+
         typedef BaseHogedataInfo<> HogedataInfo;
         HogedataInfo hogeInfo;
 
@@ -300,7 +303,7 @@ namespace {
 
         typedef BaseHogedataInfo<INT> HogedataInfo2;
         HogedataInfo2 hogeInfo2;
-        BOOST_MPL_ASSERT((boost::is_same<HogedataInfo2::hogedata_dispenser_api_type, boost::use_default>));
+        BOOST_MPL_ASSERT((boost::is_same<HogedataInfo2::hogedata_dispenser_api_type, UCT::DefaultChildApi<INT, IHogedataDispenserApi>>));
 
         
         typedef BaseHogedataDispenser<> HogedataDispenser;
@@ -311,6 +314,6 @@ namespace {
 
         typedef BaseHogedataDispenser<INT> HogedataDispenser2;
         HogedataDispenser2 hogeDisp2;
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser2::hogedata_info_api_type, boost::use_default>));
+        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser2::hogedata_info_api_type, UCT::DefaultParentApi<INT, IHogedataInfoApi>>));
     }
 }

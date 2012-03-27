@@ -2,9 +2,9 @@
 #ifndef URASANDESU_CPPANONYM_TRAITS_H
 #define URASANDESU_CPPANONYM_TRAITS_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
+//#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
 #include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
@@ -14,9 +14,9 @@
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Traits/ParentApiOperable.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIOPERABLE_H
+//#include <Urasandesu/CppAnonym/Traits/ParentApiOperable.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
 #include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>

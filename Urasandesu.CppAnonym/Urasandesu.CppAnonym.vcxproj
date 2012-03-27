@@ -225,11 +225,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\StrongNamingDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SystemError.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ChildApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ChildApiOrDefault.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Distinct.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ParentApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ParentApiOrDefault.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />

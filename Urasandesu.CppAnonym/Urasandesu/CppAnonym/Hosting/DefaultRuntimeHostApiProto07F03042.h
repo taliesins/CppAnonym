@@ -2,9 +2,9 @@
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
 #define URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
+//#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
+//#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -23,7 +23,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     struct IRuntimeHostApi { };
 
     struct DefaultRuntimeHostApiProto07F03042 : 
-        Traits::ChildApiOperable, 
+        //Traits::ChildApiOperable, 
         IRuntimeHostApi
     {
         //typedef INT strong_naming_info_api_type;
