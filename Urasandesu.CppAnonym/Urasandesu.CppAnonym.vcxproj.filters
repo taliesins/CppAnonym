@@ -357,12 +357,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ChildApiOrDefault.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\ParentApiOrDefault.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultTypeMetadataApiProtoB8DF5A21.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
@@ -392,6 +386,9 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\ExternalApiStrategies.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

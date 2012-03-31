@@ -104,7 +104,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             std::vector<this_type const *> m_paramTypes;
         };
 
-        method_metadata_type const *GetMethod(std::wstring const &name, CallingConventions const &callConvention, this_type const *pRetType, std::vector<this_type const *> const &paramTypes) const
+        method_metadata_type const *GetMethod(std::wstring const &name, 
+                                              CallingConventions const &callConvention, 
+                                              this_type const *pRetType, 
+                                              std::vector<this_type const *> const &paramTypes) const
         {
             MethodKey key;
             key.m_name = name;

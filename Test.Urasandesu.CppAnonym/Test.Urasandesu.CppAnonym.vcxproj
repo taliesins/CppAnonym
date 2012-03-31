@@ -118,6 +118,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ExternalApiStrategiesTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultEqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultHashTest.cpp" />
   </ItemGroup>

@@ -4,25 +4,13 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
+#include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
 #endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
-#endif
-
-//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
-//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
-//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
 #endif
-
-//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
-//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
-//#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
@@ -31,14 +19,6 @@
 #ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
-
-//#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-//#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
-//#endif
-
-//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
-//#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
-//#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

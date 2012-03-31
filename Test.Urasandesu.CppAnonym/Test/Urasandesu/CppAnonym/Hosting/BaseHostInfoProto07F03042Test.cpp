@@ -8,12 +8,8 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIOPERABLE_H
-//#include <Urasandesu/CppAnonym/Traits/ChildApiOperable.h>
-//#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
+#include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTHOSTINFOAPIPROTO07F03042_H

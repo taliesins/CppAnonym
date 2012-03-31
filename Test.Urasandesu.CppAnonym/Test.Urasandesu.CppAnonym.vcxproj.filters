@@ -43,6 +43,9 @@
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{84c2002a-7124-4e90-bc10-13cf55fea226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Traits">
+      <UniqueIdentifier>{376f8f01-e942-4521-b9c6-a6a6f709457a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ExternalApiStrategiesTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

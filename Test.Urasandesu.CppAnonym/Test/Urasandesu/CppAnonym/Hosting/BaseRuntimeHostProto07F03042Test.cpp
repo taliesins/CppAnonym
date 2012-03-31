@@ -4,12 +4,8 @@
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
+#include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H

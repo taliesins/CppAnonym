@@ -1,11 +1,17 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
-#define URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
+#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
+#define URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
+    template<class ApiType, class IChildApiType>
+    struct DefaultChildApi;
+
     template<class ApiType, class IParentApiType>
-    struct DefaultParentApi;
+    struct DefaultParentApi : IParentApiType
+    {
+        typedef boost::mpl::vector<ApiType> child_api_types;
+    };
 
     template<class ApiType, class IChildApiType>
     struct DefaultChildApi : IChildApiType
@@ -17,6 +23,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
         namespace mpl = boost::mpl;
         using namespace mpl::placeholders;
+
+        template<class ApiType, class Tag = mpl::void_>
+        struct HasParentApi
+        {
+            typedef mpl::false_ type;
+            static const bool value = false;
+        };
+
+        template<class ApiType>
+        struct HasParentApi<ApiType, typename mpl::apply<mpl::always<mpl::void_>, typename ApiType::parent_api_type>::type>
+        {
+            typedef mpl::true_ type;
+            static const bool value = true;
+        };
 
         template<class ApiType, class Tag = mpl::void_>
         struct HasChildApi
@@ -33,9 +53,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         };
 
         template<class ApiType>
+        struct GetParentApi
+        {
+            typedef typename ApiType::parent_api_type type;
+        };
+
+        template<class ApiType>
         struct GetChildApi
         {
             typedef typename ApiType::child_api_types type;
+        };
+
+        template<class ApiType, class IParentApiType>
+        struct CreateDefaultParentApi
+        {
+            typedef DefaultParentApi<ApiType, IParentApiType> type; 
+        };
+
+        template<class SourceApiType, class IChildApiType, class IParentApiType>
+        struct CreateDefaultParentApi<DefaultChildApi<SourceApiType, IChildApiType>, IParentApiType>
+        {
+            typedef SourceApiType type; 
         };
 
         template<class ApiType, class IChildApiType>
@@ -48,6 +86,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         struct CreateDefaultChildApi<DefaultParentApi<SourceApiType, IParentApiType>, IChildApiType>
         {
             typedef SourceApiType type; 
+        };
+
+        template<class ApiType, class IParentApiType>
+        class ParentApiOrDefaultImpl
+        {
+            typedef typename mpl::eval_if<
+                                HasParentApi<ApiType>,
+                                GetParentApi<ApiType>, 
+                                mpl::identity<mpl::void_>>::type parent_api_type;
+        public:
+            typedef typename mpl::eval_if<
+                                boost::is_base_of<IParentApiType, parent_api_type>, 
+                                mpl::identity<parent_api_type>, 
+                                CreateDefaultParentApi<ApiType, IParentApiType>>::type type;
         };
         
         template<class ApiType, class IChildApiType>
@@ -67,6 +119,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         };
 
     }   // Detail
+
+    template<class ApiType, class IParentApiType>
+    struct ParentApiOrDefault
+    {
+        typedef typename Detail::ParentApiOrDefaultImpl<ApiType, IParentApiType>::type type;
+    };
         
     template<class ApiType, class IChildApiType>
     struct ChildApiOrDefault
@@ -76,4 +134,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H

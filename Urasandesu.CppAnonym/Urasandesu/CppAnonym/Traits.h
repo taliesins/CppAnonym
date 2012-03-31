@@ -2,16 +2,12 @@
 #ifndef URASANDESU_CPPANONYM_TRAITS_H
 #define URASANDESU_CPPANONYM_TRAITS_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CHILDAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ChildApiOrDefault.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
+#include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_PARENTAPIORDEFAULT_H
-#include <Urasandesu/CppAnonym/Traits/ParentApiOrDefault.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REPLACE_H
