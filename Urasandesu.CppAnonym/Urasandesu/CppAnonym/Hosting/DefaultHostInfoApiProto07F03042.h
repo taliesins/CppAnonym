@@ -9,7 +9,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     struct IHostInfoApi { };
 
     struct DefaultHostInfoApiProto07F03042 : 
-        //Traits::ChildApiOperable, 
         IHostInfoApi
     {
         typedef boost::mpl::vector<DefaultRuntimeHostApiProto07F03042> child_api_types;

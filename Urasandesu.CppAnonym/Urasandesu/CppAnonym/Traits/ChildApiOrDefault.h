@@ -4,8 +4,6 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    //struct ChildApiOperable;
-
     template<class ApiType, class IParentApiType>
     struct DefaultParentApi;
 
@@ -57,23 +55,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         {
             typedef typename mpl::eval_if<
                                 HasChildApi<ApiType>,
-                                //boost::mpl::or_<
-                                //    boost::is_same<ChildApiOperable, ApiType>,
-                                //    boost::is_base_of<ChildApiOperable, ApiType> 
-                                //>, 
                                 GetChildApi<ApiType>, 
                                 mpl::identity<mpl::vector<>>>::type child_api_types;
-            //typedef typename mpl::eval_if<
-            //                    boost::is_same<ApiType, mpl::void_>,
-            //                    mpl::identity<mpl::void_>, 
-            //                    child_api_types_>::type child_api_types;
             typedef typename mpl::find_if<child_api_types, boost::is_base_of<IChildApiType, _1>>::type i;
             typedef typename mpl::end<child_api_types>::type i_end; 
         public:
             typedef typename mpl::eval_if<
                                 boost::is_same<i, i_end>, 
                                 CreateDefaultChildApi<ApiType, IChildApiType>,
-                                //mpl::identity<mpl::void_>, 
                                 mpl::deref<i>>::type type;
         };
 

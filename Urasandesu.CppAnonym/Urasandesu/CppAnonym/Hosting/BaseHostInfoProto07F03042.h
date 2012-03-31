@@ -42,15 +42,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             if (version.empty())
                 BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
 
-            typedef typename type_decided_by<runtime_host_type>::type runtime_host_heap_type;
-            runtime_host_heap_type const &heap = Of<runtime_host_type>();
+            typedef typename type_decided_by<runtime_host_type>::type RuntimeHostHeap;
+            RuntimeHostHeap const &heap = Of<runtime_host_type>();
             if (heap.Exists(version))
             {
                 return heap.Get(version);
             }
             else
             {
-                runtime_host_heap_type *pHeap = const_cast<runtime_host_heap_type *>(&heap);
+                RuntimeHostHeap *pHeap = const_cast<RuntimeHostHeap *>(&heap);
                 runtime_host_type const *pRuntimeHost = pHeap->NewPseudo();
 
                 std::wstring const &corVersion = pRuntimeHost->GetCORVersion();

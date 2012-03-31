@@ -40,6 +40,9 @@
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Metadata">
       <UniqueIdentifier>{c5bc9a57-d840-4f4d-8d05-123f529063b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Utilities">
+      <UniqueIdentifier>{84c2002a-7124-4e90-bc10-13cf55fea226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -130,6 +133,15 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21Test.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultHashTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultEqualToTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

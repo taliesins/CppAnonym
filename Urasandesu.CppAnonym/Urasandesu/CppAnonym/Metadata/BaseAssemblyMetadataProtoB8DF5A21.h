@@ -102,9 +102,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
                 this_type *mutableThis = const_cast<this_type *>(this);
-                typedef typename type_decided_by<type_metadata_type>::type type_metadata_heap_type;
-                type_metadata_heap_type &typeHeap = mutableThis->Of<type_metadata_type>();
-                type_metadata_type *pTypeMeta = typeHeap.New(mdtd);
+                typedef typename type_decided_by<type_metadata_type>::type TypeMetadataHeap;
+                TypeMetadataHeap &heap = mutableThis->Of<type_metadata_type>();
+                type_metadata_type *pTypeMeta = heap.New(mdtd);
                 pTypeMeta->Init(*mutableThis, m_pMetaImpApi);
 
                 m_typeMetas[name] = mdtd;
@@ -120,9 +120,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     private:
         type_metadata_type const *GetTypeFromTokenCore(mdToken mdt) const
         {
-            typedef typename type_decided_by<type_metadata_type>::type type_metadata_heap_type;
-            type_metadata_heap_type const &typeHeap = Of<type_metadata_type>();
-            return typeHeap.Get(mdt);
+            typedef typename type_decided_by<type_metadata_type>::type TypeMetadataHeap;
+            TypeMetadataHeap const &heap = Of<type_metadata_type>();
+            return heap.Get(mdt);
         }
 
         mutable metadata_dispenser_type *m_pMetaDisp;

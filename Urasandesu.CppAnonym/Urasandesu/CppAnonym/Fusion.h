@@ -14,6 +14,10 @@
 #include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOPROTO3CBCB74B_H
 #include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoProto3CBCB74B.h>
 #endif

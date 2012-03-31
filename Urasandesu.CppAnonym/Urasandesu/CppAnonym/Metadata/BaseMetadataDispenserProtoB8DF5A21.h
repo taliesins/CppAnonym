@@ -2,6 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
 #define URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTHASH_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTEQUALTO_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultEqualTo.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
     template<class Key, class Sequence>
@@ -77,15 +85,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
                 this_type *mutableThis = const_cast<this_type *>(this);
-                typedef typename type_decided_by<assembly_metadata_type>::type assembly_metadata_heap_type;
-                assembly_metadata_heap_type &asmHeap = mutableThis->Of<assembly_metadata_type>();
-                assembly_metadata_type *pAsmMeta = asmHeap.NewPseudo();
+                typedef typename type_decided_by<assembly_metadata_type>::type AssemblyMetadataHeap;
+                AssemblyMetadataHeap &heap = mutableThis->Of<assembly_metadata_type>();
+                assembly_metadata_type *pAsmMeta = heap.NewPseudo();
                 pAsmMeta->Init(*mutableThis, pMetaImpApi);
 
                 mda = pAsmMeta->GetToken();
                 m_assemblyMetas[asmPath] = mda;
 
-                asmHeap.SetToLast(mda);
+                heap.SetToLast(mda);
                 return pAsmMeta;
             }
             else
@@ -94,47 +102,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         }
 
-        //assembly_metadata_type const *LoadAssemblyFromToken(mdAssembly mda) const
-        //{
-        //    return NULL;
-        //}
-
     private:
         assembly_metadata_type const *LoadAssemblyFromTokenCore(mdAssembly mda) const
         {
-            typedef typename type_decided_by<assembly_metadata_type>::type assembly_metadata_heap_type;
-            assembly_metadata_heap_type const &asmHeap = Of<assembly_metadata_type>();
-            return asmHeap.Get(mda);
+            typedef typename type_decided_by<assembly_metadata_type>::type AssemblyMetadataHeap;
+            AssemblyMetadataHeap const &heap = Of<assembly_metadata_type>();
+            return heap.Get(mda);
         }
 
-        struct IgnoreCaseHash
-            : std::unary_function<boost::filesystem::path, std::size_t>
-        {
-            std::size_t operator()(boost::filesystem::path const &x) const
-            {
-                typedef boost::filesystem::path::string_type string_type;
-                std::size_t seed = 0;
-
-                string_type const &native = x.native();
-                for (string_type::const_iterator i = native.begin(), i_end = native.end(); i != i_end; ++i)
-                {
-                    boost::hash_combine(seed, std::toupper(*i, std::locale()));
-                }
-
-                return seed;
-            }
-        };
-
-        struct IgnoreCaseEqualTo
-            : std::binary_function<boost::filesystem::path, boost::filesystem::path, bool>
-        {
-            bool operator()(boost::filesystem::path const &x, boost::filesystem::path const &y) const
-            {
-                return boost::algorithm::iequals(x.native(), y.native());
-            }
-        };
-
-        mutable boost::unordered_map<boost::filesystem::path, mdAssembly, IgnoreCaseHash, IgnoreCaseEqualTo> m_assemblyMetas;
+        typedef boost::filesystem::path path;
+        mutable boost::unordered_map<path, mdAssembly, Utilities::DefaultHash<path>, Utilities::DefaultEqualTo<path, path>> m_assemblyMetas;
         mutable CComPtr<IMetaDataDispenserEx> m_pMetaDispApi;
     };
 

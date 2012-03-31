@@ -70,9 +70,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         
         typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, StrongNaming::IStrongNameInfoApi>::type strong_naming_info_api_type;
         typedef StrongNaming::BaseStrongNameInfoProto4236D495<strong_naming_info_api_type> strong_name_info_type;
-        
-        // ChildApiOrDefault の場合、ParentApi は自明なのだから、戻り値としてそれをラップしたデフォルト値を取得するようにしたほうが良いのかも？？
-        // ・・・ん？Parent のほうも同様？
+
         typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, Metadata::IMetadataInfoApi>::type metadata_info_api_type;
         typedef Metadata::BaseMetadataInfoProtoB8DF5A21<metadata_info_api_type> metadata_info_type;
         
@@ -90,9 +88,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             namespace mpl = boost::mpl;
             using namespace boost;
             
-            typedef mpl::find<sequence_type, InfoType>::type i;
-            typedef mpl::end<sequence_type>::type i_end;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<i, i_end> >));
+            typedef mpl::find<sequence_type, InfoType>::type I;
+            typedef mpl::end<sequence_type>::type IEnd;
+            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
             LPCSTR infoTypeName = typeid(InfoType).name();
             if (m_infos.find(infoTypeName) == m_infos.end())
@@ -104,9 +102,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             if (pInfo == NULL)
             {
                 this_type *mutableThis = const_cast<this_type *>(this);
-                typedef typename type_decided_by<InfoType>::type info_heap_type;
-                info_heap_type &infoHeap = mutableThis->Of<InfoType>();
-                pInfo = infoHeap.New(GetCORVersion());
+                typedef typename type_decided_by<InfoType>::type InfoHeap;
+                InfoHeap &heap = mutableThis->Of<InfoType>();
+                pInfo = heap.New(GetCORVersion());
                 pInfo->Init(*mutableThis);
                 m_infos[infoTypeName] = pInfo;
             }

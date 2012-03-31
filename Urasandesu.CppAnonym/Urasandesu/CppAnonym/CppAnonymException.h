@@ -28,7 +28,7 @@ namespace Urasandesu { namespace CppAnonym {
         void CaptureStackTrace(CppAnonymException *this_);
 
     };
-        
+
 }}  // namespace Urasandesu { namespace CppAnonym {
 
 #endif  // URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H

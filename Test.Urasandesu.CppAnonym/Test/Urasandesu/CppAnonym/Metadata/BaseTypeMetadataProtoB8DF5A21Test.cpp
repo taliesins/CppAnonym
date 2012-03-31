@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 
-//#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
-//#include <Urasandesu/CppAnonym/HeapProvider.h>
-//#endif
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
+#include <Urasandesu/CppAnonym/HeapProvider.h>
+#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REPLACE_H
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
@@ -28,6 +28,22 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataProtoB8DF5A21.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadataProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODMETADATAAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMethodMetadataApiProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
+#include <Urasandesu/CppAnonym/SimpleBlob.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymException.h>
+#endif
+
 //#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
 //#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
 //#endif
@@ -48,9 +64,13 @@
 //#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataProtoB8DF5A21.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
-//#endif
+#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -67,6 +87,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class BaseMetadataDispenserProtoB8DF5A21
     {
     };
+
+    struct ITypeMetadataApi { };
+
+    //struct IMethodMetadataApi { };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -141,13 +165,22 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
 
         // Arrange
-        struct TestTypeMetadataApi  
-            //Traits::ChildApiOperable 
+        struct TestTypeMetadataApi;
+
+        struct TestMethodMetadataApi : 
+            IMethodMetadataApi
+        {
+            typedef TestTypeMetadataApi parent_api_type;
+            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+        };
+
+        struct TestTypeMetadataApi : 
+            ITypeMetadataApi  
         {
             typedef INT assembly_metadata_api_type;
             //typedef IMetaDataImport2 metadata_import_api_type;
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> child_api_types;
         };
 
         typedef BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi> TypeMetadata;
@@ -164,25 +197,31 @@ namespace {
         AssemblyMetadata asmMeta;
         TypeMetadata typeMeta;
         typeMeta.Init(asmMeta, pMetaImpApi);
+        typeMeta.SetKey(0x02000058);
 
+        
         std::wstring name(L".ctor");
+        
         CallingConventions callConvention = CallingConventions::CC_HAS_THIS;
+        
         TypeMetadata retType;
         retType.SetKind(TypeKinds::TK_VOID);
+        
         std::vector<TypeMetadata const *> paramTypes;
-        TypeMetadata paramType0;
-        paramType0.SetKind(TypeKinds::TK_OBJECT);
+        TypeMetadata paramType0(TypeKinds::TK_OBJECT);
         paramTypes.push_back(&paramType0);
-        TypeMetadata paramType1;
-        paramType1.SetKind(TypeKinds::TK_I);
+        TypeMetadata paramType1(TypeKinds::TK_I);
         paramTypes.push_back(&paramType1);
+        
         MethodMetadata const *pMethodMeta = typeMeta.GetMethod(name, callConvention, &retType, paramTypes);
-        //typeMeta.SetKey(mdtd);
-        //mdToken mdt = typeMeta.GetToken();
+        ASSERT_FALSE(pMethodMeta == NULL);
+        mdToken mdt = pMethodMeta->GetToken();
 
+        MethodMetadata const *pMethodMeta2 = typeMeta.GetMethod(name, callConvention, &retType, paramTypes);
 
-        //// Assert
-        //ASSERT_EQ(0x02000058, mdt);
+        // Assert
+        ASSERT_EQ(0x06000232, mdt);
+        ASSERT_EQ(pMethodMeta, pMethodMeta2);
     }
 
     struct TypeKindsDef

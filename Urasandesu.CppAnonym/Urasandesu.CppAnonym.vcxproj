@@ -139,6 +139,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymException.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Environment.cpp" />
@@ -162,12 +163,14 @@
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymException.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymSystemException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyInfo.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyQueryTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\FusionDependsOn.h" />
@@ -189,10 +192,13 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseMethodBodyMetadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseMethodMetadata.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodMetadataProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseModuleMetadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\BaseTypeMetadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\CallingConventions.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\DefaultAssemblyMetadataApi.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultMethodMetadataApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultTypeMetadataApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\DefaultInfoMetadataApi.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultMetadataDispenserApiProtoB8DF5A21.h" />
@@ -201,6 +207,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\IMetadataApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\MetadataDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\OpCodes.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeKinds.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAppDomainProfile.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAssemblyProfile.h" />
@@ -232,6 +239,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultEqualTo.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultHash.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ValueConverter.h" />
   </ItemGroup>

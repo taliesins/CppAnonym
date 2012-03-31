@@ -10,6 +10,10 @@ namespace Urasandesu { namespace CppAnonym {
     public:
         typedef SafeEnum<EnumDef, EnumType> this_type;
 
+        SafeEnum() : 
+            m_value(EnumType())
+        { }
+
         SafeEnum(EnumType value) : 
             m_value(value)
         { }

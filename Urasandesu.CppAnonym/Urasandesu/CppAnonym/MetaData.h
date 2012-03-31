@@ -78,4 +78,20 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataProtoB8DF5A21.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODMETADATAAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMethodMetadataApiProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadataProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
+#include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CALLINGCONVENTIONS_H
+#include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_H

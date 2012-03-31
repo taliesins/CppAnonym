@@ -86,6 +86,10 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
 #endif

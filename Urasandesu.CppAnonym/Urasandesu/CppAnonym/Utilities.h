@@ -6,6 +6,14 @@
 #include <Urasandesu/CppAnonym/Utilities/UtilitiesDependsOn.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTEQUALTO_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultEqualTo.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTHASH_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_VALUECONVERTER_H
 #include <Urasandesu/CppAnonym/Utilities/ValueConverter.h>
 #endif
