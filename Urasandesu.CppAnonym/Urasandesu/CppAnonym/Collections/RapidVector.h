@@ -1,12 +1,12 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_RAPIDVECTOR_H
-#define URASANDESU_CPPANONYM_RAPIDVECTOR_H
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym {
+namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     template<class T, class Alloc, DWORD RAPID_SIZE>
     class RapidVector;
@@ -239,6 +239,6 @@ namespace Urasandesu { namespace CppAnonym {
         }
     };
 
-}}  // namespace Urasandesu { namespace CppAnonym {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-#endif  // URASANDESU_CPPANONYM_RAPIDVECTOR_H
+#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR

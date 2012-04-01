@@ -34,10 +34,6 @@
 #include <Urasandesu/CppAnonym/Environment.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_GLOBALSAFEDICTIONARY_H
-#include <Urasandesu/CppAnonym/GlobalSafeDictionary.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
 #include <Urasandesu/CppAnonym/HeapProvider.h>
 #endif
@@ -48,10 +44,6 @@
 
 #ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
 #include <Urasandesu/CppAnonym/IHeapContent.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/RapidVector.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_H

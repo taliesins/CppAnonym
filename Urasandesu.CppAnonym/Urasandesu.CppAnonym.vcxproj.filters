@@ -62,6 +62,9 @@
     <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming">
       <UniqueIdentifier>{ac1553e6-71e0-453f-be85-9414915dc007}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\Collections">
+      <UniqueIdentifier>{2ca6d9fd-46fd-4b4f-a785-4359c7bd2523}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -171,9 +174,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Profiling.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\RapidVector.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -251,9 +251,6 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ValueConverter.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\GlobalSafeDictionary.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
@@ -389,6 +386,18 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ExternalApiStrategies.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

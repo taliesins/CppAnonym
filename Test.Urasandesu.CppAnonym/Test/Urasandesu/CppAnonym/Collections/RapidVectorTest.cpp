@@ -1,10 +1,10 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/RapidVector.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
-// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_RapidVectorTest.*
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Collections_RapidVectorTest.*
 namespace {
 
     struct MyPOD1
@@ -30,10 +30,10 @@ namespace {
     };
 
     
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, IterationTest_LessThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_LessThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i < 512; ++i)
@@ -50,10 +50,10 @@ namespace {
     }
 
 
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, IterationTest_EqualsOrGreaterThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i <= 512; ++i)
@@ -78,10 +78,10 @@ namespace {
     }
 
 
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, RandomAccessOperatorTest_LessThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_LessThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i < 512; ++i)
@@ -95,10 +95,10 @@ namespace {
     }
 
 
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, RandomAccessOperatorTest_EqualsOrGreaterThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i <= 512; ++i)
@@ -113,10 +113,10 @@ namespace {
     }
 
 
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, RemoveTest_LessThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_LessThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i < 512; ++i)
@@ -134,10 +134,10 @@ namespace {
     }
 
 
-    TEST(Urasandesu_CppAnonym_RapidVectorTest, RemoveTest_EqualsOrGreaterThan512_01)
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
-        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
         for (INT i = 0; i <= 512; ++i)

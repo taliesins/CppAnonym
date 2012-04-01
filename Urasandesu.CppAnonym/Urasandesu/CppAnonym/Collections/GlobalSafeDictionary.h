@@ -1,8 +1,8 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_GLOBALSAFEDICTIONARY_H
-#define URASANDESU_CPPANONYM_GLOBALSAFEDICTIONARY_H
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_GLOBALSAFEDICTIONARY_H
+#define URASANDESU_CPPANONYM_COLLECTIONS_GLOBALSAFEDICTIONARY_H
 
-namespace Urasandesu { namespace CppAnonym {
+namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     template<
         typename Key, 
@@ -107,6 +107,6 @@ namespace Urasandesu { namespace CppAnonym {
         boost::unordered_map<Key, Value, Hash, Pred, Alloc> m_map;
     };
 
-}}  // namespace Urasandesu { namespace CppAnonym {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_GLOBALSAFEDICTIONARY_H
+#endif  // #ifndef URASANDESU_CPPANONYM_COLLECTIONS_GLOBALSAFEDICTIONARY_H

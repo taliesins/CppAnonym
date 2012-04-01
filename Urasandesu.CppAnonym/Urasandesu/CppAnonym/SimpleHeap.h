@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #define URASANDESU_CPPANONYM_SIMPLEHEAP_H
 
-#ifndef URASANDESU_CPPANONYM_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/RapidVector.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
@@ -21,7 +21,7 @@ namespace Urasandesu { namespace CppAnonym {
         class SimpleHeapImpl<T, ALotOfAllocAndFreeHeap>
         {
         public:
-            typedef RapidVector<T> TArray;
+            typedef Collections::RapidVector<T> TArray;
             
             SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastMaxSize(m_array.max_size()) { }
 

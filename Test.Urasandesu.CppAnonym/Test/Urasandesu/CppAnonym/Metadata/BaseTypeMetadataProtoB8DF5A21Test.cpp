@@ -194,4 +194,70 @@ namespace {
         ASSERT_EQ(0x06000232, mdt);
         ASSERT_EQ(pMethodMeta, pMethodMeta2);
     }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_03)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        // Arrange
+        struct TestTypeMetadataApi;
+
+        struct TestMethodMetadataApi : 
+            IMethodMetadataApi
+        {
+            typedef TestTypeMetadataApi parent_api_type;
+            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+        };
+
+        struct TestTypeMetadataApi : 
+            ITypeMetadataApi  
+        {
+            typedef INT assembly_metadata_api_type;
+            typedef INT method_metadata_api_type;
+            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> child_api_types;
+        };
+
+        typedef BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi> TypeMetadata;
+        typedef TypeMetadata::assembly_metadata_type AssemblyMetadata;
+        typedef TypeMetadata::method_metadata_type MethodMetadata;
+
+        fs::path asmPath(L"C:\\windows\\assembly\\GAC_32\\mscorlib\\2.0.0.0__b77a5c561934e089\\mscorlib.dll");
+        std::wstring typeName(L"System.DateTime");
+        ATL::CComPtr<IMetaDataDispenserEx> pMetaDispApi;
+        ATL::CComPtr<IMetaDataImport2> pMetaImpApi;
+        mdTypeDef mdtd = mdTypeDefNil;
+        SetupApis(asmPath, typeName, &pMetaDispApi, &pMetaImpApi, mdtd);
+
+
+        // Act
+        AssemblyMetadata asmMeta;
+        TypeMetadata typeMeta;
+        typeMeta.Init(asmMeta, pMetaImpApi);
+        typeMeta.SetKey(mdtd);
+
+        
+        std::wstring name(L"get_Now");
+        
+        CallingConventions callConvention = CallingConventions::CC_STANDARD;
+        
+        TypeMetadata retType;
+        retType.SetKind(TypeKinds::TK_VALUETYPE);
+        retType.SetKey(mdtd);
+        
+        std::vector<TypeMetadata const *> paramTypes;
+
+        MethodMetadata const *pMethodMeta = typeMeta.GetMethod(name, callConvention, &retType, paramTypes);
+        ASSERT_FALSE(pMethodMeta == NULL);
+        mdToken mdt = pMethodMeta->GetToken();
+
+        MethodMetadata const *pMethodMeta2 = typeMeta.GetMethod(name, callConvention, &retType, paramTypes);
+
+
+        // Assert
+        ASSERT_EQ(0x060002D2, mdt);
+        ASSERT_EQ(pMethodMeta, pMethodMeta2);
+    }
 }

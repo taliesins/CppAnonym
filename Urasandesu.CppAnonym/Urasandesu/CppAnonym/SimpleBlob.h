@@ -2,15 +2,15 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
 #define URASANDESU_CPPANONYM_SIMPLEBLOB_H
 
-#ifndef URASANDESU_CPPANONYM_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/RapidVector.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
     
     class SimpleBlob
     {
-        typedef RapidVector<BYTE> ByteVector;        
+        typedef Collections::RapidVector<BYTE> ByteVector;        
         ByteVector m_buffer;
 
     public:

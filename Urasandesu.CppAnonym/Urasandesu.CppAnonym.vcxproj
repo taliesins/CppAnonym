@@ -159,6 +159,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UrasandesuCppAnonym_i.h" />
     <ClInclude Include="Urasandesu\CppAnonym.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
@@ -174,7 +178,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\FusionDependsOn.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\GlobalSafeDictionary.h" />
     <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042.h" />
@@ -221,7 +224,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\ICorProfilerCallback2Impl.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\IProfilingApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\ProfilingDependsOn.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\RapidVector.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h" />
