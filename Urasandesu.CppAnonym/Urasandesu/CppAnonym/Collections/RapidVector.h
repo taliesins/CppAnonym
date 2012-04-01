@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
-#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
+#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
@@ -241,4 +241,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H

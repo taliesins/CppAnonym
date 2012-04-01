@@ -399,6 +399,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

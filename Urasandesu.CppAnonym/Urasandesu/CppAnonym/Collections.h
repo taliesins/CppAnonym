@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Collections/GlobalSafeDictionary.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
+#include <Urasandesu/CppAnonym/Collections/Iterable.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
 #include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif

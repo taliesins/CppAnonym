@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
 #include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 

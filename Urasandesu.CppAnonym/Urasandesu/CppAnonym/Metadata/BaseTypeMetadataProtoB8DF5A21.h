@@ -40,102 +40,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    // TODO: SequenceEqual、SequenceHashValue は、新しく Iterators ってフィルタ切ろう。
-    // TODO: RapidVector や GlobalSafeDictionary も分けなきゃだった。新しく Containers ってフィルタ切ります。
-    // TODO: HashValue や、CreateHash は DefaultHash と同梱でいいや。
-    template<class InputIterator1, class InputIterator2>
-    bool SequenceEqual(InputIterator1 i1, InputIterator1 i_end1,
-                       InputIterator2 i2, InputIterator2 i_end2)
-    {
-        while ((i1 != i_end1) && (i2 != i_end2))
-        {
-            if (!(*i1 == *i2))
-                return false;
-            ++i1; ++i2;
-        }
-        return (i1 == i_end1) && (i2 == i_end2);
-    } 
-
-    
-    template<class InputIterator, class Hash>
-    std::size_t SequenceHashValue(InputIterator i, InputIterator i_end, Hash hash)
-    {
-        std::size_t seed = 0;
-        for ( ; i != i_end; ++i)
-            boost::hash_combine(seed, hash(*i));
-        return seed;
-    } 
-
     template<class X, class Y>
     struct DefaultEqualTo;
 
-    template<class T>
-    struct DefaultHash;
-
-    template<class T>
-    std::size_t HashValue(T v)
-    {
-        return DefaultHash<T>()(v);
-    }
-
-    namespace Detail {
-
-        namespace mpl = boost::mpl;
-
-        template<class T, class Tag = mpl::void_>
-        struct CreateHashImpl
-        {
-            typedef DefaultHash<T> hash_type;
-        };
-
-        template<class T>
-        struct CreateHashImpl<T, typename mpl::apply<mpl::always<mpl::void_>, typename T::value_type>::type>
-        {
-            typedef DefaultHash<typename T::value_type> hash_type;
-        };
-    
-    }   // namespace Detail
-
-    template<class T>
-    typename Detail::CreateHashImpl<T>::hash_type CreateHash(T)
-    {
-        return typename Detail::CreateHashImpl<T>::hash_type();
-    }
-
-
-    
-    
-    template<class TypeMetadataApiType>
-    struct DefaultEqualTo<
-                    Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *, 
-                    Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *> : 
-        std::binary_function<
-                    Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *, 
-                    Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *, 
-                    bool>
-    {
-        typedef Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> type_metadata_type;
-        
-        bool operator()(type_metadata_type const *x, type_metadata_type const *y) const
-        {
-            return x == y;
-        }
-    };
-
-    template<class TypeMetadataApiType>
-    struct DefaultHash<Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *> : 
-        std::unary_function<Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> const *, std::size_t>
-    {
-        typedef Metadata::BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> type_metadata_type;
-        
-        std::size_t operator()(type_metadata_type const *x) const
-        {
-            return reinterpret_cast<std::size_t>(x);
-        }
-    };
-
-    
-    
     template<class TypeMetadataApiType>
     struct DefaultEqualTo<
                     Metadata::Detail::MethodKey<TypeMetadataApiType>, 
@@ -149,6 +56,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         
         bool operator()(method_key_type const &x, method_key_type const &y) const
         {
+            using namespace Urasandesu::CppAnonym::Collections;
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             return x.m_name == y.m_name &&
                    x.m_callConvention == y.m_callConvention &&
                    x.m_pRetType == y.m_pRetType &&
@@ -157,6 +67,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
     };
 
+    
+
+    template<class T>
+    struct DefaultHash;
+    
     template<class TypeMetadataApiType>
     struct DefaultHash<Metadata::Detail::MethodKey<TypeMetadataApiType>> : 
         std::unary_function<Metadata::Detail::MethodKey<TypeMetadataApiType>, std::size_t>
@@ -165,12 +80,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         
         std::size_t operator()(method_key_type const &x) const
         {
+            using namespace Urasandesu::CppAnonym::Collections;
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             std::size_t seed = 0;
             boost::hash_combine(seed, boost::hash_value(x.m_name));
             boost::hash_combine(seed, x.m_callConvention.Value());
             boost::hash_combine(seed, HashValue(x.m_pRetType));
-            boost::hash_combine(seed, SequenceHashValue(x.m_paramTypes.begin(), 
-                                x.m_paramTypes.end(), CreateHash(x.m_paramTypes.begin())));
+            boost::hash_combine(seed, SequenceHashValue(x.m_paramTypes.begin(), x.m_paramTypes.end()));
             return seed;
         }
     };

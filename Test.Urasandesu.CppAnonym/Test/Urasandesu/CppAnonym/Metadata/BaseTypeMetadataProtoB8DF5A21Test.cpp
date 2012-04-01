@@ -40,6 +40,14 @@
 #include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
+#include <Urasandesu/CppAnonym/Collections/Iterable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTHASH_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<

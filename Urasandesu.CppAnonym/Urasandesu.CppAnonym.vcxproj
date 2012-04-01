@@ -162,6 +162,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />

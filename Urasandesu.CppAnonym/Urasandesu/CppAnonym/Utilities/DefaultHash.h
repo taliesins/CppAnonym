@@ -25,6 +25,49 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             return seed;
         }
     };
+    
+    template<class T>
+    struct DefaultHash<T const *> : 
+        std::unary_function<T const *, std::size_t>
+    {
+        inline std::size_t operator()(T const *x) const
+        {
+            return reinterpret_cast<std::size_t>(x);
+        }
+    };
+
+
+    template<class T>
+    inline std::size_t HashValue(T v)
+    {
+        return DefaultHash<T>()(v);
+    }
+
+
+    namespace Detail {
+
+        namespace mpl = boost::mpl;
+
+        template<class T, class Tag = mpl::void_>
+        struct CreateHashImpl
+        {
+            typedef DefaultHash<T> hash_type;
+        };
+
+        // Template specialization for an iterator.
+        template<class T>
+        struct CreateHashImpl<T, typename mpl::apply<mpl::always<mpl::void_>, typename T::value_type>::type>
+        {
+            typedef DefaultHash<typename T::value_type> hash_type;
+        };
+    
+    }   // namespace Detail
+
+    template<class T>
+    inline typename Detail::CreateHashImpl<T>::hash_type CreateHash(T)
+    {
+        return typename Detail::CreateHashImpl<T>::hash_type();
+    }
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
