@@ -45,6 +45,10 @@ namespace Urasandesu { namespace CppAnonym {
 #include <Urasandesu/CppAnonym/Profiling/ProfilingDependsOn.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMINGDEPENDSON_H
+#include <Urasandesu/CppAnonym/StrongNaming/StrongNamingDependsOn.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_TRAITSDEPENDSON_H
 #include <Urasandesu/CppAnonym/Traits/TraitsDependsOn.h>
 #endif

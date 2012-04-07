@@ -49,6 +49,9 @@
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Collections">
       <UniqueIdentifier>{58e658ec-5729-40d9-b781-8368496aeec1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming">
+      <UniqueIdentifier>{09cf71cf-4a49-4ec3-8d4c-12cf8c45dfd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

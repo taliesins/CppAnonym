@@ -36,57 +36,41 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 m_pBuf(NULL)
             {
                 if (m_pThis->RunAsRapid())
-                {
                     m_pBuf = !isEnd ? 
                                 reinterpret_cast<T *>(m_pThis->m_pRapidBuf) : 
                                 reinterpret_cast<T *>(m_pThis->m_pRapidBuf) + m_pThis->m_size;
-                }
                 else
-                {
                     m_i = !isEnd ? m_pThis->m_pVec->begin() : m_pThis->m_pVec->end();
-                }
             }
         
         private:
             friend class boost::iterator_core_access;
 
-            void increment() 
+            inline void increment() 
             { 
                 if (m_pThis->RunAsRapid())
-                {
                     ++m_pBuf;
-                }
                 else
-                {
                     ++m_i;
-                }
             }
 
-            void advance(difference_type n) 
+            inline void advance(difference_type n) 
             { 
                 if (m_pThis->RunAsRapid())
-                {
                     m_pBuf += n;
-                }
                 else
-                {
                     m_i += n;
-                }
             }
 
-            bool equal(RapidVectorIterator<Value, T, Alloc, RAPID_SIZE> const& other) const
+            inline bool equal(RapidVectorIterator<Value, T, Alloc, RAPID_SIZE> const& other) const
             {
                 if (m_pThis->RunAsRapid())
-                {
                     return m_pBuf == other.m_pBuf;
-                }
                 else
-                {
                     return m_i == other.m_i;
-                }
             }
 
-            Value &dereference() const 
+            inline Value &dereference() const 
             { 
                 return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
             }
