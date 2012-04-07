@@ -39,8 +39,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseMetadataInfoProtoB8DF5A21<MetadataInfoApiType> this_type;
+
         typedef typename Traits::ParentApiOrDefault<MetadataInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
         typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
+        
         typedef typename Traits::ChildApiOrDefault<MetadataInfoApiType, IMetadataDispenserApi>::type metadata_dispenser_api_type;
         typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
         
@@ -54,6 +56,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 
             m_pRuntimeHost = &runtimeHost;
         }
+
+        template<class T>
+        T const *FindType() const { return static_cast<runtime_host_type const *>(m_pRuntimeHost)->FindType<T>(); }
+
+        template<class T>
+        T *FindType() { return m_pRuntimeHost->FindType<T>(); }
+      
+        template<>
+        this_type const *FindType<this_type>() const { return this; }
+      
+        template<>
+        this_type *FindType<this_type>() { return this; }
 
         boost::shared_ptr<metadata_dispenser_type const> CreateDispenser() const
         {

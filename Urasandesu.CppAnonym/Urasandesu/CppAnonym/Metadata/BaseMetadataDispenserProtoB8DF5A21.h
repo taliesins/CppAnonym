@@ -49,14 +49,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseMetadataDispenserProtoB8DF5A21<MetadataDispenserApiType> this_type;
+
         typedef typename Traits::ParentApiOrDefault<MetadataDispenserApiType, IMetadataInfoApi>::type metadata_info_api_type;
         typedef BaseMetadataInfoProtoB8DF5A21<metadata_info_api_type> metadata_info_type;
+        
         typedef typename Traits::ChildApiOrDefault<MetadataDispenserApiType, IAssemblyMetadataApi>::type assembly_metadata_api_type;
         typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
 
+        BaseMetadataDispenserProtoB8DF5A21() : 
+            m_pMetaInfo(NULL)
+        { }
+
         void Init(metadata_info_type &metaInfo) const
         {
+            _ASSERTE(m_pMetaInfo == NULL);
             _ASSERTE(m_pMetaDispApi.p == NULL);
+
+            m_pMetaInfo = &metaInfo;
 
             HRESULT hr = ::CoCreateInstance(CLSID_CorMetaDataDispenser, NULL, CLSCTX_INPROC_SERVER, 
                                             IID_IMetaDataDispenserEx, 
@@ -64,6 +73,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             if (FAILED(hr))
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
         }
+
+        template<class T>
+        T const *FindType() const { return static_cast<metadata_info_type const *>(m_pMetaInfo)->FindType<T>(); }
+
+        template<class T>
+        T *FindType() { return m_pMetaInfo->FindType<T>(); }
+      
+        template<>
+        this_type const *FindType<this_type>() const { return this; }
+      
+        template<>
+        this_type *FindType<this_type>() { return this; }
 
         assembly_metadata_type const *LoadAssemblyFromFile(boost::filesystem::path const &asmPath) const
         {
@@ -88,7 +109,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 typedef typename type_decided_by<assembly_metadata_type>::type AssemblyMetadataHeap;
                 AssemblyMetadataHeap &heap = mutableThis->Of<assembly_metadata_type>();
                 assembly_metadata_type *pAsmMeta = heap.NewPseudo();
-                pAsmMeta->Init(*mutableThis, pMetaImpApi);
+                pAsmMeta->Init(*mutableThis, *pMetaImpApi);
 
                 mda = pAsmMeta->GetToken();
                 m_assemblyMetas[asmPath] = mda;
@@ -110,6 +131,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return heap.Get(mda);
         }
 
+        mutable metadata_info_type *m_pMetaInfo;
         typedef boost::filesystem::path path;
         typedef Utilities::DefaultHash<path> path_hash;
         typedef Utilities::DefaultEqualTo<path, path> path_equal_to;

@@ -36,7 +36,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
         typedef typename Traits::ChildApiOrDefault<MethodMetadataApiType, IMetaDataImport2>::type metadata_import_api_type;
         
-        void Init(type_metadata_type &typeMeta, metadata_import_api_type *metaImpApi) const
+        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
         {
         }
 

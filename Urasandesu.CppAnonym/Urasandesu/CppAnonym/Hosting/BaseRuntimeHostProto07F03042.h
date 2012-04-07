@@ -82,6 +82,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             m_corSystemDirectoryPathInitialized(false)
         { }
 
+        template<class T>
+        T const *FindType() const { return GetInfo<T>(); }
+
+        template<class T>
+        T *FindType() { return GetInfo<T>(); }
+      
+        template<>
+        this_type const *FindType<this_type>() const { return this; }
+      
+        template<>
+        this_type *FindType<this_type>() { return this; }
+
         template<class InfoType>
         InfoType const *GetInfo() const
         {

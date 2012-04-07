@@ -8,13 +8,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     struct DefaultChildApi;
 
     template<class ApiType, class IParentApiType>
-    struct DefaultParentApi : IParentApiType
+    struct DefaultParentApi
     {
         typedef boost::mpl::vector<ApiType> child_api_types;
     };
 
     template<class ApiType, class IChildApiType>
-    struct DefaultChildApi : IChildApiType
+    struct DefaultChildApi
     {
         typedef ApiType parent_api_type;
     };

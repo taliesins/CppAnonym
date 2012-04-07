@@ -16,6 +16,21 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
+namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
+    template<
+        class HostInfoApiType
+    >
+    class BaseRuntimeHostProto07F03042
+    {
+    };
+
+    struct IRuntimeHostApi { };
+
+    struct DefaultRuntimeHostApiProto07F03042 : IRuntimeHostApi { };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseStrongNameInfoProto4236D495Test.*
 namespace {
 

@@ -125,7 +125,7 @@ namespace {
         // Act
         AssemblyMetadata asmMeta;
         TypeMetadata typeMeta;
-        typeMeta.Init(asmMeta, pMetaImpApi);
+        typeMeta.Init(asmMeta, *pMetaImpApi);
         typeMeta.SetKey(mdtd);
         mdToken mdt = typeMeta.GetToken();
 
@@ -174,7 +174,7 @@ namespace {
         // Act
         AssemblyMetadata asmMeta;
         TypeMetadata typeMeta;
-        typeMeta.Init(asmMeta, pMetaImpApi);
+        typeMeta.Init(asmMeta, *pMetaImpApi);
         typeMeta.SetKey(mdtd);
 
         
@@ -243,7 +243,7 @@ namespace {
         // Act
         AssemblyMetadata asmMeta;
         TypeMetadata typeMeta;
-        typeMeta.Init(asmMeta, pMetaImpApi);
+        typeMeta.Init(asmMeta, *pMetaImpApi);
         typeMeta.SetKey(mdtd);
 
         

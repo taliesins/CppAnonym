@@ -150,10 +150,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> this_type;
+        
         typedef Detail::MethodKey<TypeMetadataApiType> method_key_type;
+        
         typedef typename Traits::ParentApiOrDefault<TypeMetadataApiType, IAssemblyMetadataApi>::type assembly_metadata_api_type;
         typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
+        
         typedef typename Traits::ChildApiOrDefault<TypeMetadataApiType, IMetaDataImport2>::type metadata_import_api_type;
+        
         typedef typename Traits::ChildApiOrDefault<TypeMetadataApiType, IMethodMetadataApi>::type method_metadata_api_type;
         typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
 
@@ -169,14 +173,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_kind(kind)
         { }
 
-        void Init(assembly_metadata_type &asmMeta, metadata_import_api_type *metaImpApi) const
+        void Init(assembly_metadata_type &asmMeta, metadata_import_api_type &metaImpApi) const
         {
             _ASSERTE(m_pAsmMeta == NULL);
             _ASSERTE(m_pMetaImpApi.p == NULL);
-            _ASSERTE(metaImpApi != NULL);
             
             m_pAsmMeta = &asmMeta;
-            m_pMetaImpApi = metaImpApi;
+            m_pMetaImpApi = &metaImpApi;
         }
 
         inline TypeKinds const &GetKind() const
@@ -274,7 +277,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 typedef typename type_decided_by<method_metadata_type>::type MethodMetadataHeap;
                 MethodMetadataHeap &heap = mutableThis->Of<method_metadata_type>();
                 method_metadata_type *pMethodMeta = heap.New(mdmd);
-                pMethodMeta->Init(*mutableThis, m_pMetaImpApi);
+                pMethodMeta->Init(*mutableThis, *m_pMetaImpApi);
 
                 m_methodMetas[methodKey] = mdmd;
 

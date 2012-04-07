@@ -18,6 +18,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
+    struct DefaultStrongNameInfoApiProto4236D495;
+
+    struct IStrongNameKeyApi { };
+    struct DefaultStrongNameKeyApiProto4236D495 : 
+        IStrongNameKeyApi 
+    { 
+        typedef DefaultStrongNameInfoApiProto4236D495 parent_api_type;
+    };
+
+
     struct IStrongNameInfoApi;
 
     template<
@@ -25,9 +35,6 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     >    
     class BaseStrongNameInfoProto4236D495;
 
-
-    struct IStrongNameKeyApi { };
-    struct DefaultStrongNameKeyApiProto4236D495 : IStrongNameKeyApi { };
 
     template<
         class StrongNameKeyApiType = DefaultStrongNameKeyApiProto4236D495

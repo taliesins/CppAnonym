@@ -6,6 +6,19 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
+    template<
+        class HostInfoApiType
+    >
+    class BaseRuntimeHostProto07F03042;
+
+    struct IRuntimeHostApi;
+
+    struct DefaultRuntimeHostApiProto07F03042;
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     template<class ApiType, class IParentApiType>
@@ -18,6 +31,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
+    struct DefaultStrongNameKeyApiProto4236D495;
+
+    struct IStrongNameInfoApi { };
+    struct DefaultStrongNameInfoApiProto4236D495 : 
+        IStrongNameInfoApi 
+    { 
+        typedef Hosting::DefaultRuntimeHostApiProto07F03042 parent_api_type;
+        typedef boost::mpl::vector<DefaultStrongNameKeyApiProto4236D495> child_api_types;
+    };
+
+    
     struct IStrongNameKeyApi;
 
     template<
@@ -25,10 +49,7 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     >    
     class BaseStrongNameKeyProto4236D495;
 
-
-    struct IStrongNameInfoApi { };
-    struct DefaultStrongNameInfoApiProto4236D495 : IStrongNameInfoApi { };
-
+    
     template<
         class StrongNameInfoApiType = DefaultStrongNameInfoApiProto4236D495
     >    
@@ -37,8 +58,23 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     {
     public:
         typedef BaseStrongNameInfoProto4236D495<StrongNameInfoApiType> this_type;
+
+        typedef typename Traits::ParentApiOrDefault<StrongNameInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
+        typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
+
         typedef typename Traits::ChildApiOrDefault<StrongNameInfoApiType, IStrongNameKeyApi>::type strong_name_key_api_type;
         typedef BaseStrongNameKeyProto4236D495<strong_name_key_api_type> strong_name_key_type;
+
+        BaseStrongNameInfoProto4236D495() : 
+            m_pRuntimeHost(NULL)
+        { }
+
+        void Init(runtime_host_type &runtimeHost) const
+        {
+            _ASSERTE(m_pRuntimeHost == NULL);
+                
+            m_pRuntimeHost = &runtimeHost;
+        }
 
         boost::shared_ptr<strong_name_key_type const> CreateKey(PublicKeyBlob const *pPubKeyBlob, DWORD pubKeyBlobSize) const
         {
@@ -48,6 +84,9 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
             pSnKey->Init(*mutableThis, pPubKeyBlob, pubKeyBlobSize);
             return pSnKey; 
         }
+    
+    private:
+        mutable runtime_host_type *m_pRuntimeHost;
     };
 
     typedef BaseStrongNameInfoProto4236D495<> StrongNameInfoProto4236D495;

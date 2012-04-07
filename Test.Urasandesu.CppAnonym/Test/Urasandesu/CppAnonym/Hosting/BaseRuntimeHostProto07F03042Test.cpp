@@ -44,6 +44,10 @@
 #include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
+#endif
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseRuntimeHostProto07F03042Test.*
 namespace {
 
