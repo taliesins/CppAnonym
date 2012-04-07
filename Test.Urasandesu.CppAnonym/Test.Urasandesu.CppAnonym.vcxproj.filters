@@ -155,5 +155,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495Test.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495Test.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

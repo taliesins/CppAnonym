@@ -402,6 +402,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

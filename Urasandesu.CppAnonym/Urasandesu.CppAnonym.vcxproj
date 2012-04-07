@@ -232,6 +232,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\StrongNamingDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SystemError.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits.h" />

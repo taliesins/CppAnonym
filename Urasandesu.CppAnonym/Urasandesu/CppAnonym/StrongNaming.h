@@ -10,4 +10,8 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyProto4236D495.h>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_STRONGNAMING_H
