@@ -27,3 +27,4 @@
 
 #include <mscoree.h>
 #include <fusion.h>
+#include <boost/any.hpp>

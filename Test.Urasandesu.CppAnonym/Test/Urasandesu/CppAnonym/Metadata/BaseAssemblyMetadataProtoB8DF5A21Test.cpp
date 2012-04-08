@@ -36,49 +36,180 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyProto4236D495.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
+//#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+//#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
+//#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostProto07F03042.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIPROTO3CBCB74B_H
+//#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiProto3CBCB74B.h>
+//#endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
-#endif
+namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
-#endif
+    template<class T>
+    struct RemoveConst 
+    { 
+        typedef T type;
+    };
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
-#endif
+    template<class T>
+    struct RemoveConst<const T *>
+    {
+        typedef T * type;
+    };
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
-#endif
+    template<class T>
+    struct RemoveConst<T * const>
+    {
+        typedef T * type;
+    };
 
-#ifndef URASANDESU_CPPANONYM_FUSION_BASERUNTIMEHOSTPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostProto07F03042.h>
-#endif
+    template<class T>
+    struct RemoveConst<const T &>
+    {
+        typedef T & type;
+    };
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIPROTO3CBCB74B_H
-#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiProto3CBCB74B.h>
-#endif
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
+namespace Urasandesu { namespace CppAnonym { namespace Utilities {
+
+    // NOTE: I made this class by reference to Boost.Any. 
+    //       Boost.Any is permitted free of changes under Boost Software License, Version 1.0.
+    //       The copyright statement is as below: 
+    // 
+    // Copyright Kevlin Henney, 2000, 2001, 2002. All rights reserved.
+    //
+    // Distributed under the Boost Software License, Version 1.0. (See
+    // accompanying file LICENSE_1_0.txt or copy at
+    // http://www.boost.org/LICENSE_1_0.txt)
+    class AnyPointer
+    {
+    public:
+        AnyPointer() : 
+            m_pHolder(NULL)
+        { }
+
+        template<class PointerType>
+        AnyPointer(PointerType p) : 
+            m_pHolder(new PointerHolder<PointerType>(p))
+        { }
+
+        AnyPointer(AnyPointer const &other) : 
+            m_pHolder(other.IsEmpty() ? NULL : other.m_pHolder->Clone())
+        { }
+
+        ~AnyPointer() 
+        { 
+            if (m_pHolder != NULL)
+                delete m_pHolder;
+        }
+
+        inline bool IsEmpty() const { return m_pHolder == NULL; }
+
+        template<class PointerType>
+        inline bool Is() const 
+        {
+            return !IsEmpty() && 
+                   typeid(typename PointerHolder<PointerType>::pointer_type) == m_pHolder->GetType();
+        }
+        
+        inline AnyPointer &Swap(AnyPointer &other) 
+        { 
+            std::swap(m_pHolder, other.m_pHolder); 
+            return *this; 
+        }
+
+        inline AnyPointer &operator =(AnyPointer &other)
+        {
+            other.Swap(*this);
+            return *this;
+        }
+
+        template<class PointerType>
+        inline AnyPointer &operator =(PointerType p)
+        {
+            AnyPointer(p).Swap(*this);
+            return *this;
+        }
+
+        template<class PointerType>
+        inline operator PointerType()
+        {
+            typedef typename PointerHolder<PointerType>::type HolderType;
+            return Is<PointerType>() ? static_cast<HolderType *>(m_pHolder)->m_p : NULL;
+        }
+
+    private:
+        struct Holder
+        {
+            virtual ~Holder() { }
+            virtual std::type_info const &GetType() const = 0;
+            virtual Holder *Clone() const = 0;
+        };
+
+        template<class PointerType>
+        struct PointerHolder : Holder
+        {
+            BOOST_MPL_ASSERT((boost::is_pointer<PointerType>));
+            typedef typename Traits::RemoveConst<PointerType>::type pointer_type;
+            typedef PointerHolder<pointer_type> type;
+            PointerHolder(pointer_type p) : m_p(p) { }
+            virtual ~PointerHolder() { delete m_p; }
+            virtual std::type_info const &GetType() const { return typeid(pointer_type); }            
+            virtual Holder *Clone() const { return new PointerHolder(m_p); }            
+            pointer_type m_p;
+        };
+
+        Holder *m_pHolder;
+    };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    //struct IMetadataDispenserApi { };
+    struct IMetadataDispenserApi { };
+    struct DefaultMetadataDispenserApiProtoB8DF5A21 : IMetadataDispenserApi { };
 
-    //struct DefaultMetadataDispenserApiProtoB8DF5A21 : 
-    //    IMetadataDispenserApi
-    //{
-    //};
+    template<
+        class MetadataDispenserApiType
+    >    
+    class BaseMetadataDispenserProtoB8DF5A21
+    {
+    public:
+        template<class T>
+        T const *FindType() const 
+        {
+            if (m_pType.IsEmpty())
+            {
+                m_pType = new T();
+            } 
+            return m_pType;
+        }
 
-    //template<
-    //    class MetadataDispenserApiType
-    //>    
-    //class BaseMetadataDispenserProtoB8DF5A21
-    //{
-    //};
+    private:
+        mutable Utilities::AnyPointer m_pType;
+    };
 
     //struct ITypeMetadataApi { };
     //struct IAssemblyMetadataApi { };
@@ -333,21 +464,36 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
 
         // Arrange
-        typedef AssemblyMetadataProtoB8DF5A21 AssemblyMetadata;
+        struct TestAssemblyMetadataApi;
+
+        struct TestAssemblyNameMetadataApi : 
+            IAssemblyNameMetadataApi
+        {
+            typedef TestAssemblyMetadataApi parent_api_type;
+            typedef boost::mpl::vector<IMetaDataAssemblyImport> child_api_types;
+        };
+
+        struct TestAssemblyMetadataApi : 
+            IAssemblyMetadataApi
+        {
+            typedef boost::mpl::vector<TestAssemblyNameMetadataApi, IMetaDataImport2> child_api_types;
+        };
+
+        typedef BaseAssemblyMetadataProtoB8DF5A21<TestAssemblyMetadataApi> AssemblyMetadata;
         typedef AssemblyMetadata::metadata_dispenser_type MetadataDispenser;
-        typedef MetadataDispenser::metadata_info_type MetadataInfo;
-        typedef MetadataInfo::runtime_host_type RuntimeHost;
+        //typedef MetadataDispenser::metadata_info_type MetadataInfo;
+        //typedef MetadataInfo::runtime_host_type RuntimeHost;
 
         fs::path asmPath(L"C:\\Windows\\assembly\\GAC_MSIL\\System.Core\\3.5.0.0__b77a5c561934e089\\System.Core.dll");
         ATL::CComPtr<IMetaDataDispenserEx> pMetaDispApi;
         ATL::CComPtr<IMetaDataImport2> pMetaImpApi;
         SetupApis(asmPath, &pMetaDispApi, &pMetaImpApi);
 
-        RuntimeHost runtimeHost;
-        MetadataInfo metaInfo;
-        metaInfo.Init(runtimeHost);
+        //RuntimeHost runtimeHost;
+        //MetadataInfo metaInfo;
+        //metaInfo.Init(runtimeHost);
         MetadataDispenser metaDisp;
-        metaDisp.Init(metaInfo);
+        //metaDisp.Init(metaInfo);
 
         
         // Act
@@ -365,6 +511,7 @@ namespace {
         // Assert
         ASSERT_STREQ(L"System.Core", name.c_str());
         ASSERT_TRUE(pSnKey != NULL);
+
         //ASSERT_TRUE(pAsmNameMeta != NULL);
         //AssemblyNameMetadata const *pAsmNameMeta2 = asmMeta.GetName();
         //ASSERT_EQ(pAsmNameMeta, pAsmNameMeta2);
