@@ -239,9 +239,11 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ExternalApiStrategies.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Distinct.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPointer.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultEqualTo.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultHash.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />

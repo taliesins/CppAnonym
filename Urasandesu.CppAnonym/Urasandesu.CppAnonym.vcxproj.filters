@@ -405,6 +405,12 @@
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPointer.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

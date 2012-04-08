@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
+#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_REPLACE_H
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
