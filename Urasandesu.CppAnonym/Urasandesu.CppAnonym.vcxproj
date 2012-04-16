@@ -256,6 +256,7 @@
     <None Include="ReadMe.txt" />
     <None Include="Urasandesu.CppAnonym.def" />
     <None Include="Urasandesu.CppAnonym.rgs" />
+    <None Include="Urasandesu\CppAnonym\Metadata\OpCodeEx.def" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="UrasandesuCppAnonym.idl" />

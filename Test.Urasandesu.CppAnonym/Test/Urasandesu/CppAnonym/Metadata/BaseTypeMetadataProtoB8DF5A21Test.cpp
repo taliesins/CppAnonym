@@ -268,4 +268,15 @@ namespace {
         ASSERT_EQ(0x060002D2, mdt);
         ASSERT_EQ(pMethodMeta, pMethodMeta2);
     }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_04)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        typedef OpCodesProtoB8DF5A21 OpCodes;
+        ASSERT_STREQ(L"CEE_NOP,nop,Pop0,Push0,InlineNone,IPrimitive,1,0xFF,0x00,NEXT", OpCodes::Nop.CStr());
+    }
 }

@@ -425,6 +425,9 @@
     <None Include="Urasandesu.CppAnonym.def">
       <Filter>ソース ファイル</Filter>
     </None>
+    <None Include="Urasandesu\CppAnonym\Metadata\OpCodeEx.def">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="UrasandesuCppAnonym.idl">

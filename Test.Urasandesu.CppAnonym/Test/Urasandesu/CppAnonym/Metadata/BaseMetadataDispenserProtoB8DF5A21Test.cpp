@@ -51,27 +51,19 @@ namespace {
         struct TestMetadataDispenserApi;
 
         struct TestAssemblyMetadataApi : 
-            //Traits::ParentApiOperable,
-            //Traits::ChildApiOperable, 
             IAssemblyMetadataApi
         {
             typedef TestMetadataDispenserApi parent_api_type;
-            //typedef IMetaDataImport2 metadata_import_api_type;
-            //typedef INT type_metadata_api_type;
             typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
         };
 
         struct TestMetadataDispenserApi : 
-            //Traits::ChildApiOperable, 
             IMetadataDispenserApi
         {
-            //typedef TestAssemblyMetadataApi assembly_metadata_api_type;
-            //typedef INT metadata_info_api_type;
             typedef boost::mpl::vector<TestAssemblyMetadataApi> child_api_types;
         };
         typedef BaseMetadataDispenserProtoB8DF5A21<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;
-        //BOOST_MPL_ASSERT((boost::is_same<MetadataDispenser::metadata_info_type, boost::use_default>));
 
         MetadataInfo metaInfo;
         
@@ -81,7 +73,6 @@ namespace {
         metaDisp.Init(metaInfo);
 
         typedef MetadataDispenser::assembly_metadata_type AssemblyMetadata;
-        //BOOST_MPL_ASSERT((boost::is_same<AssemblyMetadata::metadata_import_api_type, INT>));
         fs::path asmPath(L"C:\\Windows\\assembly\\GAC_MSIL\\System.Core\\3.5.0.0__b77a5c561934e089\\System.Core.dll");
         AssemblyMetadata const *pAsmMeta = metaDisp.LoadAssemblyFromFile(asmPath);
 
@@ -90,5 +81,26 @@ namespace {
         ASSERT_FALSE(pAsmMeta == NULL);
         AssemblyMetadata const *pAsmMeta2 = metaDisp.LoadAssemblyFromFile(asmPath);
         ASSERT_EQ(pAsmMeta, pAsmMeta2);
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseMetadataDispenserProtoB8DF5A21Test, Test_02)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        
+        typedef MetadataDispenserProtoB8DF5A21 MetadataDispenser;
+        typedef MetadataDispenser::metadata_info_type MetadataInfo;
+        typedef MetadataDispenser::assembly_metadata_type AssemblyMetadata;
+
+        MetadataInfo metaInfo;
+
+
+        MetadataDispenser metaDisp;
+        metaDisp.Init(metaInfo);
+
+        
     }
 }

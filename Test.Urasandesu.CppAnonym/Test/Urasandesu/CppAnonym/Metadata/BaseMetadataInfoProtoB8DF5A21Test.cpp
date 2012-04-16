@@ -66,4 +66,32 @@ namespace {
         boost::shared_ptr<MetadataDispenser const> pMetaDisp = metaInfo.CreateDispenser();
         ASSERT_FALSE(pMetaDisp.get() == NULL);
     }
+
+
+    //TEST(Urasandesu_CppAnonym_Hosting_BaseMetadataInfoProtoB8DF5A21Test, Test_02)
+    //{
+    //    namespace fs = boost::filesystem;
+    //    using namespace Urasandesu::CppAnonym::Metadata;
+
+    //    // Arrange
+    //    struct TestMetadataInfoApi
+    //    {
+    //    };
+
+    //    typedef BaseMetadataInfoProtoB8DF5A21<TestMetadataInfoApi> MetadataInfo;
+    //    typedef MetadataInfo::runtime_host_type RuntimeHost;
+
+    //    RuntimeHost runtimeHost;
+
+    //    // Act
+    //    MetadataInfo metaInfo;
+    //    metaInfo.Init(runtimeHost);
+
+    //    // Assert
+    //    typedef MetadataInfo::metadata_dispenser_type MetadataDispenser;
+    //    //BOOST_MPL_ASSERT((boost::is_same<MetadataInfo::this_type, boost::use_default>));
+    //    //BOOST_MPL_ASSERT((boost::is_same<MetadataInfo::metadata_dispenser_api_type, boost::use_default>));
+    //    boost::shared_ptr<MetadataDispenser const> pMetaDisp = metaInfo.CreateDispenser();
+    //    ASSERT_FALSE(pMetaDisp.get() == NULL);
+    //}
 }
