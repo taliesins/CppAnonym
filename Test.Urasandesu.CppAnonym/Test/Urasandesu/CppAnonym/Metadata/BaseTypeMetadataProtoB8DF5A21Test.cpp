@@ -275,8 +275,18 @@ namespace {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
-
+     
         typedef OpCodesProtoB8DF5A21 OpCodes;
         ASSERT_STREQ(L"CEE_NOP,nop,Pop0,Push0,InlineNone,IPrimitive,1,0xFF,0x00,NEXT", OpCodes::Nop.CStr());
+        ASSERT_EQ(OpCodeTypes::CEE_NOP, OpCodes::Nop.GetType().Value());
+        ASSERT_STREQ(L"nop", OpCodes::Nop.GetName().c_str());
+        ASSERT_EQ(StackBehaviourTypes::SBT_POP0, OpCodes::Nop.GetBehaviour0().GetType().Value());
+        ASSERT_EQ(StackBehaviourTypes::SBT_PUSH0, OpCodes::Nop.GetBehaviour1().GetType().Value());
+        ASSERT_EQ(OperandParamTypes::OPT_INLINE_NONE, OpCodes::Nop.GetOperandParam().GetType().Value());
+        ASSERT_EQ(OpcodeKindTypes::OKT_I_PRIMITIVE, OpCodes::Nop.GetOpcodeKind().GetType().Value());
+        ASSERT_EQ(1, OpCodes::Nop.GetLength());
+        ASSERT_EQ(0xFF, OpCodes::Nop.GetByte1());
+        ASSERT_EQ(0x00, OpCodes::Nop.GetByte2());
+        ASSERT_EQ(ControlFlowTypes::CFT_NEXT, OpCodes::Nop.GetControlFlow().GetType().Value());
     }
 }

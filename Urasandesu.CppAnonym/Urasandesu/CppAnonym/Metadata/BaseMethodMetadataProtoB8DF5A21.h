@@ -119,15 +119,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     typedef SafeEnum<Detail::OpcodeKindTypesDef> OpcodeKindTypes;
     typedef SafeEnum<Detail::ControlFlowTypesDef> ControlFlowTypes;
 
-    struct StackBehaviour
+    class StackBehaviour
     {
-        StackBehaviour(StackBehaviourTypes const &type)
+    public:
+        StackBehaviour(StackBehaviourTypes const &type) : 
+            m_type(type)
         { }
 
         StackBehaviour operator +(StackBehaviour const &other) const
         {
             return StackBehaviour(StackBehaviourTypes::SBT_POP0);
         }
+
+        inline StackBehaviourTypes const &GetType() const { return m_type; }
+
+    private:
+        StackBehaviourTypes m_type;
     };
 
     struct StackBehaviours
@@ -167,10 +174,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     const StackBehaviour StackBehaviours::VarPop = StackBehaviour(StackBehaviourTypes::SBT_VAR_POP);
     const StackBehaviour StackBehaviours::VarPush = StackBehaviour(StackBehaviourTypes::SBT_VAR_PUSH);
 
-    struct OperandParam
+    class OperandParam
     {
-        OperandParam(OperandParamTypes const &type)
+    public:
+        OperandParam(OperandParamTypes const &type) : 
+            m_type(type)
         { }
+
+        inline OperandParamTypes const &GetType() const { return m_type; }
+
+    private:
+        OperandParamTypes m_type;
     };
 
     struct OperandParams
@@ -212,10 +226,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     const OperandParam OperandParams::ShortInlineR = OperandParam(OperandParamTypes::OPT_SHORT_INLINE_R);
     const OperandParam OperandParams::ShortInlineVar = OperandParam(OperandParamTypes::OPT_SHORT_INLINE_VAR);
 
-    struct OpcodeKind
+    class OpcodeKind
     {
-        OpcodeKind(OpcodeKindTypes const &type)
+    public:
+        OpcodeKind(OpcodeKindTypes const &type) : 
+            m_type(type)
         { }
+
+        inline OpcodeKindTypes const &GetType() const { return m_type; }
+
+    private:
+        OpcodeKindTypes m_type;
     };
 
     struct OpcodeKinds
@@ -233,10 +254,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     const OpcodeKind OpcodeKinds::IPrefix = OpcodeKind(OpcodeKindTypes::OKT_I_PREFIX);
     const OpcodeKind OpcodeKinds::IPrimitive = OpcodeKind(OpcodeKindTypes::OKT_I_PRIMITIVE);
 
-    struct ControlFlow
+    class ControlFlow
     {
-        ControlFlow(ControlFlowTypes const &type)
+    public:
+        ControlFlow(ControlFlowTypes const &type) : 
+            m_type(type)
         { }
+
+        inline ControlFlowTypes const &GetType() const { return m_type; }
+
+    private:
+        ControlFlowTypes m_type;
     };
 
     struct ControlFlows
@@ -264,6 +292,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         boost::noncopyable
     {
     public:
+        inline OpCodeTypes const &GetType() const { return m_type; }
+        inline std::wstring const &GetName() const  { return m_name; }
+        inline StackBehaviour const &GetBehaviour0() const { return m_behaviour0; }
+        inline StackBehaviour const &GetBehaviour1() const { return m_behaviour1; }
+        inline OperandParam const &GetOperandParam() const { return m_operandParam; }
+        inline OpcodeKind const &GetOpcodeKind() const { return m_opcodeKind; }
+        inline BYTE GetLength() const { return m_length; }
+        inline BYTE GetByte1() const { return m_byte1; }
+        inline BYTE GetByte2() const { return m_byte2; }
+        inline ControlFlow const &GetControlFlow() const { return m_controlFlow; }
+        inline LPCWSTR CStr() const { return m_cstr.c_str(); }
+
+    protected:
         OpCodeProtoB8DF5A21(OpCodeTypes const &type, 
                             std::wstring const &name, 
                             StackBehaviour const &behaviour0, 
@@ -273,15 +314,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                             BYTE length, 
                             BYTE byte1,
                             BYTE byte2, 
-                            ControlFlow const &controlFlow)
+                            ControlFlow const &controlFlow, 
+                            std::wstring const &cstr) : 
+            m_type(type),
+            m_name(name),
+            m_behaviour0(behaviour0),
+            m_behaviour1(behaviour1),
+            m_operandParam(operandParam),
+            m_opcodeKind(opcodeKind),
+            m_length(length),
+            m_byte1(byte1),
+            m_byte2(byte2),
+            m_controlFlow(controlFlow), 
+            m_cstr(cstr)
         { }
 
-        wchar_t const *CStr() const
-        {
-            return m_cstr.c_str();
-        }
-
     private:
+        OpCodeTypes m_type;
+        std::wstring m_name; 
+        StackBehaviour m_behaviour0;
+        StackBehaviour m_behaviour1;
+        OperandParam m_operandParam;
+        OpcodeKind m_opcodeKind;
+        BYTE m_length;
+        BYTE m_byte1;
+        BYTE m_byte2;
+        ControlFlow m_controlFlow;
         std::wstring m_cstr;
     };
 
@@ -342,7 +400,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         OpCode_ProtoB8DF5A21() : \
             OpCodeProtoB8DF5A21(OpCodeTypes::canonicalName, L"" L##stringName L"", \
                                 stackBehaviour0, stackBehaviour1, \
-                                operandParam, opcodeKind, length, byte1, byte2, controlFlow) \
+                                operandParam, opcodeKind, \
+                                length, byte1, byte2, controlFlow, \
+                                L"" L#canonicalName L"," L##stringName L"," \
+                                L#stackBehaviour0 L"," L#stackBehaviour1 L"," \
+                                L#operandParam L"," L#opcodeKind L"," \
+                                L#length L"," L#byte1 L"," L#byte2 L"," L#controlFlow L"") \
         { } \
     };
 #include "opcode.def"
