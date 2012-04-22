@@ -136,10 +136,10 @@
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OperandParams.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp">
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.cpp">
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKinds.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
@@ -447,7 +447,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamTypes.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKindTypes.h">
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKindTypes.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowTypes.h">
@@ -465,10 +465,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParams.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.h">
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.h">
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKinds.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlow.h">
