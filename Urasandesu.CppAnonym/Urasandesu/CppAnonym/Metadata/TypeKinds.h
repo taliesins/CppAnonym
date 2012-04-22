@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
 #define URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
-#include <Urasandesu/CppAnonym/SafeEnum.h>
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {

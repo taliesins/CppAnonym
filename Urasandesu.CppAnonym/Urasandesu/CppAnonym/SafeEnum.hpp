@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
-#define URASANDESU_CPPANONYM_SAFEENUM_H
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#define URASANDESU_CPPANONYM_SAFEENUM_HPP
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -36,4 +36,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#endif  // #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP

@@ -46,8 +46,8 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
-#include <Urasandesu/CppAnonym/SafeEnum.h>
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
