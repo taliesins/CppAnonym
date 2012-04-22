@@ -3,23 +3,23 @@
 #define URASANDESU_CPPANONYM_METADATA_OPCODEPROTOB8DF5A21_H
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodeTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpCodeTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OperandParamTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OperandParamTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
@@ -56,6 +56,10 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
 #include <Urasandesu/CppAnonym/Metadata/ControlFlows.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEFWDPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodeFwdProtoB8DF5A21.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {

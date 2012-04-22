@@ -2,9 +2,11 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_H
 #define URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_H
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H
+#include <Urasandesu/CppAnonym/Metadata/OperandParam.h>
+#endif
 
-    class OperandParam;
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct OperandParams
     {

@@ -2,9 +2,11 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
 #define URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
 
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H
+#include <Urasandesu/CppAnonym/Metadata/ControlFlow.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-    
-    class ControlFlow;
 
     struct ControlFlows
     {

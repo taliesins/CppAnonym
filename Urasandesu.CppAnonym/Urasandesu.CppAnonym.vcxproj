@@ -150,8 +150,8 @@
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlows.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\MetaData\DefaultAssemblyMetadataApi.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\MetaData\DefaultInfoMetadataApi.cpp" />
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp" />
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKinds.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
@@ -212,6 +212,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\CallingConventions.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlow.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlows.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\DefaultAssemblyMetadataApi.h" />
@@ -223,10 +224,12 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultAssemblyMetadataApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\IMetadataApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\MetadataDependsOn.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKindTypes.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKindFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKinds.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKindTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoFwdB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\OpCodes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeTypes.h" />

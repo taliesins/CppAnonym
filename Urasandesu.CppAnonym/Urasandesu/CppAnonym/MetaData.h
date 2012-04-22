@@ -66,20 +66,12 @@
 #include <Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURFWD_H
-#include <Urasandesu/CppAnonym/Metadata/StackBehaviourFwd.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
 #include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 #include <Urasandesu/CppAnonym/Metadata/StackBehaviours.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMFWD_H
-#include <Urasandesu/CppAnonym/Metadata/OperandParamFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H

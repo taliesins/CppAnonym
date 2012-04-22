@@ -2,9 +2,11 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
 #define URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKind.h>
+#endif
 
-    class OpCodeKind;
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct OpCodeKinds
     {

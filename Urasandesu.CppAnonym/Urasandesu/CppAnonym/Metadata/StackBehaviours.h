@@ -2,13 +2,11 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 #define URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 
-#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURFWD_H
-#include <Urasandesu/CppAnonym/Metadata/StackBehaviourFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-    //class StackBehaviour;
 
     class StackBehaviours
     {

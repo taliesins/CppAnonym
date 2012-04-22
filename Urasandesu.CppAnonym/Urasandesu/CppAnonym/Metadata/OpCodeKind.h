@@ -3,7 +3,15 @@
 #define URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDFWD_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKindFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {

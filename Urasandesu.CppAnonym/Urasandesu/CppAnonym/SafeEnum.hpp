@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #define URASANDESU_CPPANONYM_SAFEENUM_HPP
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#include <Urasandesu/CppAnonym/SafeEnumFwd.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
     template<class EnumDef, class EnumType>

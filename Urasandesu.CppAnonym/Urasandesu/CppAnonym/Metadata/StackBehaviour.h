@@ -14,6 +14,10 @@
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURFWD_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourFwd.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     class StackBehaviour

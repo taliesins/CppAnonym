@@ -495,6 +495,15 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKindFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoFwdB8DF5A21.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">
