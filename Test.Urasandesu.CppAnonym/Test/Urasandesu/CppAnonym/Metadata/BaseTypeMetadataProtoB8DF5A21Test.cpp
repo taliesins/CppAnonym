@@ -289,4 +289,34 @@ namespace {
         ASSERT_EQ(0x00, OpCodes::Nop.GetByte2());
         ASSERT_EQ(ControlFlowTypes::CFT_NEXT, OpCodes::Nop.GetControlFlow().GetType().Value());
     }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_05)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        StackBehaviour expected = StackBehaviours::PopRef;
+        expected += StackBehaviours::PopI;
+        expected += StackBehaviours::PopRef;
+     
+        typedef OpCodesProtoB8DF5A21 OpCodes;
+        ASSERT_STREQ(L"CEE_STELEM_REF,stelem.ref,PopRef+PopI+PopRef,Push0,InlineNone,IObjModel,1,0xFF,0xA2,NEXT", OpCodes::Stelem_Ref.CStr());
+        ASSERT_TRUE(expected == OpCodes::Stelem_Ref.GetBehaviour0());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_06)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        StackBehaviour expected = StackBehaviours::PopRef;
+        expected += StackBehaviours::PopI;
+     
+        typedef OpCodesProtoB8DF5A21 OpCodes;
+        ASSERT_TRUE(expected != OpCodes::Stfld.GetBehaviour0());
+    }
 }

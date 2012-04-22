@@ -7,7 +7,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
     class AssemblyInfo
     {
     public:
-        AssemblyInfo(ULONGLONG assemblySizeInKB, boost::filesystem::path const &assemblyPath);
+        inline AssemblyInfo(ULONGLONG assemblySizeInKB, boost::filesystem::path const &assemblyPath) :
+            m_assemblySizeInKB(assemblySizeInKB), 
+            m_assemblyPath(assemblyPath)
+        { }
         inline ULONGLONG GetAssemblySizeInKB() const { return m_assemblySizeInKB; }
         inline boost::filesystem::path const &GetAssemblyPath() const { return m_assemblyPath; }
 

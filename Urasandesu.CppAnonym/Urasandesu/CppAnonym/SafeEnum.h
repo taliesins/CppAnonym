@@ -4,7 +4,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    template<class EnumDef, class EnumType = EnumDef::type>
+    template<class EnumDef, class EnumType>
     class SafeEnum : public EnumDef
     {
     public:

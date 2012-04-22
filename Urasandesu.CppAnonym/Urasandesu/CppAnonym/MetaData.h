@@ -46,6 +46,66 @@
 #include "Urasandesu/CppAnonym/Metadata/OpCodes.h"
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
+#include "Urasandesu/CppAnonym/Metadata/OpCodeTypes.h"
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
+#include "Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h"
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMTYPES_H
+#include "Urasandesu/CppAnonym/Metadata/OperandParamTypes.h"
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
+#include "Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h"
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWTYPES_H
+#include "Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h"
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviours.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H
+#include <Urasandesu/CppAnonym/Metadata/OperandParam.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_H
+#include <Urasandesu/CppAnonym/Metadata/OperandParams.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
+#include <Urasandesu/CppAnonym/Metadata/OpcodeKind.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
+#include <Urasandesu/CppAnonym/Metadata/OpcodeKinds.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H
+#include <Urasandesu/CppAnonym/Metadata/ControlFlow.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
+#include <Urasandesu/CppAnonym/Metadata/ControlFlows.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodeProtoB8DF5A21.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODESPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodesProtoB8DF5A21.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
 #endif

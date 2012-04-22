@@ -124,6 +124,36 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\StackBehaviours.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OperandParam.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OperandParams.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlows.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -410,6 +440,51 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPointer.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeTypes.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourTypes.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamTypes.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKindTypes.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowTypes.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviour.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviours.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParam.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParams.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKind.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpcodeKinds.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlow.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlows.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
