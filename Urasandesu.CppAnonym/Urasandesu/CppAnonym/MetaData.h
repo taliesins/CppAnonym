@@ -59,7 +59,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include <Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h>
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWTYPES_H
@@ -91,11 +91,11 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
-#include <Urasandesu/CppAnonym/Metadata/OpcodeKind.h>
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKind.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
-#include <Urasandesu/CppAnonym/Metadata/OpcodeKinds.h>
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H

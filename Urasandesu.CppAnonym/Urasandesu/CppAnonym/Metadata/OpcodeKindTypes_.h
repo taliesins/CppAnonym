@@ -10,7 +10,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     namespace Detail {
 
-        struct OpcodeKindTypesDef
+        struct OpCodeKindTypesDef
         {
             enum type
             {
@@ -25,7 +25,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     }   // Detail
 
-    typedef SafeEnum<Detail::OpcodeKindTypesDef> OpcodeKindTypes;
+    typedef SafeEnum<Detail::OpCodeKindTypesDef> OpCodeKindTypes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

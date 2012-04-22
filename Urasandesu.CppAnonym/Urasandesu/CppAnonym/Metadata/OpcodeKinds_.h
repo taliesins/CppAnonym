@@ -4,15 +4,15 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    class OpcodeKind;
+    class OpCodeKind;
 
-    struct OpcodeKinds
+    struct OpCodeKinds
     {
-        static const OpcodeKind IInternal;
-        static const OpcodeKind IMacro;
-        static const OpcodeKind IObjModel;
-        static const OpcodeKind IPrefix;
-        static const OpcodeKind IPrimitive;
+        static const OpCodeKind IInternal;
+        static const OpCodeKind IMacro;
+        static const OpCodeKind IObjModel;
+        static const OpCodeKind IPrefix;
+        static const OpCodeKind IPrimitive;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

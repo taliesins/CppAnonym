@@ -15,7 +15,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h"
+#include "Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h"
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWTYPES_H
@@ -43,11 +43,11 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
-#include <Urasandesu/CppAnonym/Metadata/OpcodeKind.h>
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKind.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
-#include <Urasandesu/CppAnonym/Metadata/OpcodeKinds.h>
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H
@@ -69,7 +69,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         inline StackBehaviour const &GetBehaviour0() const { return m_behaviour0; }
         inline StackBehaviour const &GetBehaviour1() const { return m_behaviour1; }
         inline OperandParam const &GetOperandParam() const { return m_operandParam; }
-        inline OpcodeKind const &GetOpcodeKind() const { return m_opcodeKind; }
+        inline OpCodeKind const &GetOpCodeKind() const { return m_opcodeKind; }
         inline BYTE GetLength() const { return m_length; }
         inline BYTE GetByte1() const { return m_byte1; }
         inline BYTE GetByte2() const { return m_byte2; }
@@ -82,7 +82,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                             StackBehaviour const &behaviour0, 
                             StackBehaviour const &behaviour1, 
                             OperandParam const &operandParam, 
-                            OpcodeKind const &opcodeKind, 
+                            OpCodeKind const &opcodeKind, 
                             BYTE length, 
                             BYTE byte1,
                             BYTE byte2, 
@@ -107,7 +107,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         StackBehaviour m_behaviour0;
         StackBehaviour m_behaviour1;
         OperandParam m_operandParam;
-        OpcodeKind m_opcodeKind;
+        OpCodeKind m_opcodeKind;
         BYTE m_length;
         BYTE m_byte1;
         BYTE m_byte2;
@@ -152,11 +152,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 #define ShortInlineI OperandParams::ShortInlineI
 #define ShortInlineR OperandParams::ShortInlineR
 #define ShortInlineVar OperandParams::ShortInlineVar
-#define IInternal OpcodeKinds::IInternal
-#define IMacro OpcodeKinds::IMacro
-#define IObjModel OpcodeKinds::IObjModel
-#define IPrefix OpcodeKinds::IPrefix
-#define IPrimitive OpcodeKinds::IPrimitive
+#define IInternal OpCodeKinds::IInternal
+#define IMacro OpCodeKinds::IMacro
+#define IObjModel OpCodeKinds::IObjModel
+#define IPrefix OpCodeKinds::IPrefix
+#define IPrimitive OpCodeKinds::IPrimitive
 #define BRANCH ControlFlows::Branch
 #define BREAK ControlFlows::Break
 #define CALL ControlFlows::Call

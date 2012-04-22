@@ -3,22 +3,22 @@
 #define URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h"
+#include "Urasandesu/CppAnonym/Metadata/OpCodeKindTypes.h"
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    class OpcodeKind
+    class OpCodeKind
     {
     public:
-        inline OpcodeKind(OpcodeKindTypes const &type) : 
+        inline OpCodeKind(OpCodeKindTypes const &type) : 
             m_type(type)
         { }
 
-        inline OpcodeKindTypes const &GetType() const { return m_type; }
+        inline OpCodeKindTypes const &GetType() const { return m_type; }
 
     private:
-        OpcodeKindTypes m_type;
+        OpCodeKindTypes m_type;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

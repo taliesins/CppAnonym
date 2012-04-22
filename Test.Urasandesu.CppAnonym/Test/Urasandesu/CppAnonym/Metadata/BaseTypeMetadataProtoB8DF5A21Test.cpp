@@ -283,7 +283,7 @@ namespace {
         ASSERT_EQ(StackBehaviourTypes::SBT_POP0, OpCodes::Nop.GetBehaviour0().GetType().Value());
         ASSERT_EQ(StackBehaviourTypes::SBT_PUSH0, OpCodes::Nop.GetBehaviour1().GetType().Value());
         ASSERT_EQ(OperandParamTypes::OPT_INLINE_NONE, OpCodes::Nop.GetOperandParam().GetType().Value());
-        ASSERT_EQ(OpcodeKindTypes::OKT_I_PRIMITIVE, OpCodes::Nop.GetOpcodeKind().GetType().Value());
+        ASSERT_EQ(OpCodeKindTypes::OKT_I_PRIMITIVE, OpCodes::Nop.GetOpCodeKind().GetType().Value());
         ASSERT_EQ(1, OpCodes::Nop.GetLength());
         ASSERT_EQ(0xFF, OpCodes::Nop.GetByte1());
         ASSERT_EQ(0x00, OpCodes::Nop.GetByte2());
