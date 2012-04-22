@@ -231,9 +231,11 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParam.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParams.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviour.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviours.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeKinds.h" />
@@ -251,6 +253,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\IProfilingApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\ProfilingDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h" />

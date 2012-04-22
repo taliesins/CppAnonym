@@ -2,12 +2,17 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 #define URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURFWD_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourFwd.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    class StackBehaviour;
+    //class StackBehaviour;
 
-    struct StackBehaviours
+    class StackBehaviours
     {
+    public:
         static const StackBehaviour Pop0;
         static const StackBehaviour Pop1;
         static const StackBehaviour PopI;
@@ -24,6 +29,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         static const StackBehaviour PushRef;
         static const StackBehaviour VarPop;
         static const StackBehaviour VarPush;
+    private:
+        StackBehaviours() { }
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

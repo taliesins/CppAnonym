@@ -3,11 +3,15 @@
 #define URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
 #include <Urasandesu/CppAnonym/Collections/Iterable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {

@@ -2,13 +2,14 @@
 //
 
 #include "stdafx.h"
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodeTypes.h"
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
+#include <Urasandesu/CppAnonym/Metadata/OpcodeKind.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-#include <Urasandesu/CppAnonym/SafeEnum.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
+//#include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
+//#endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test.*
 namespace {
@@ -16,7 +17,7 @@ namespace {
     TEST(Urasandesu_CppAnonym_Test, Test_01)
     {
         using namespace Urasandesu::CppAnonym::Metadata;
-        OpCodeTypes types;
+        OperandParam const &param = OperandParams::InlineBrTarget;
         //SUCCEED();
     }
 }

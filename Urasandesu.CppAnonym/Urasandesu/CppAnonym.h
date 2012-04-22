@@ -46,6 +46,10 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#include <Urasandesu/CppAnonym/SafeEnumFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif

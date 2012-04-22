@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
 #define URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#include <Urasandesu/CppAnonym/SafeEnumFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {

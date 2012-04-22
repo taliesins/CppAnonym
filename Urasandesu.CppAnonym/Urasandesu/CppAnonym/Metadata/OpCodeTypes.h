@@ -2,16 +2,9 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
 #define URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
 
-//#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-//#include <Urasandesu/CppAnonym/SafeEnum.hpp>
-//#endif
-
-namespace Urasandesu { namespace CppAnonym {
-
-    template<class EnumDef, class EnumType = EnumDef::type>
-    class SafeEnum;
-
-}}   // namespace Urasandesu { namespace CppAnonym {
+#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#include <Urasandesu/CppAnonym/SafeEnumFwd.hpp>
+#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

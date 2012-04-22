@@ -6,6 +6,10 @@
 #include "Urasandesu/CppAnonym/Metadata/OperandParamTypes.h"
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     class OperandParam

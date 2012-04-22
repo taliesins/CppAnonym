@@ -115,18 +115,10 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParams.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviours.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParams.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviours.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp" />
     <ClCompile Include="stdafx.cpp">

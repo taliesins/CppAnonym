@@ -43,27 +43,31 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpCodes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpCodeTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpCodeTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OperandParamTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OperandParamTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/OpcodeKindTypes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWTYPES_H
-#include "Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h"
+#include <Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURFWD_H
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviourFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOUR_H
@@ -72,6 +76,10 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
 #include <Urasandesu/CppAnonym/Metadata/StackBehaviours.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMFWD_H
+#include <Urasandesu/CppAnonym/Metadata/OperandParamFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H
