@@ -70,32 +70,32 @@
 #include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
-#include <Urasandesu/CppAnonym/Metadata/StackBehaviours.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_HPP
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviours.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H
 #include <Urasandesu/CppAnonym/Metadata/OperandParam.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_H
-#include <Urasandesu/CppAnonym/Metadata/OperandParams.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_HPP
+#include <Urasandesu/CppAnonym/Metadata/OperandParams.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
 #include <Urasandesu/CppAnonym/Metadata/OpCodeKind.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
-#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_HPP
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H
 #include <Urasandesu/CppAnonym/Metadata/ControlFlow.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
-#include <Urasandesu/CppAnonym/Metadata/ControlFlows.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_HPP
+#include <Urasandesu/CppAnonym/Metadata/ControlFlows.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEPROTOB8DF5A21_H

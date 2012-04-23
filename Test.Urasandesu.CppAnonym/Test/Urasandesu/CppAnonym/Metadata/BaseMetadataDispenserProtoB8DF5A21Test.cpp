@@ -38,10 +38,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseMetadataDispenserProtoB8DF5A21Test.*
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_BaseMetadataDispenserProtoB8DF5A21Test.*
 namespace {
 
-    TEST(Urasandesu_CppAnonym_Hosting_BaseMetadataDispenserProtoB8DF5A21Test, Test_01)
+    TEST(Urasandesu_CppAnonym_Metadata_BaseMetadataDispenserProtoB8DF5A21Test, Test_01)
     {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
@@ -84,20 +84,34 @@ namespace {
     }
 
     
-    TEST(Urasandesu_CppAnonym_Hosting_BaseMetadataDispenserProtoB8DF5A21Test, Test_02)
+    TEST(Urasandesu_CppAnonym_Metadata_BaseMetadataDispenserProtoB8DF5A21Test, Test_02)
     {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-        
-        typedef MetadataDispenserProtoB8DF5A21 MetadataDispenser;
+        // Arrange
+        struct TestMetadataDispenserApi;
+
+        struct TestAssemblyMetadataApi : 
+            IAssemblyMetadataApi
+        {
+            typedef TestMetadataDispenserApi parent_api_type;
+            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+        };
+
+        struct TestMetadataDispenserApi : 
+            IMetadataDispenserApi
+        {
+            typedef boost::mpl::vector<TestAssemblyMetadataApi> child_api_types;
+        };
+        typedef BaseMetadataDispenserProtoB8DF5A21<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;
-        typedef MetadataDispenser::assembly_metadata_type AssemblyMetadata;
 
         MetadataInfo metaInfo;
-
-
+        
+        
+        // Act
         MetadataDispenser metaDisp;
         metaDisp.Init(metaInfo);
 

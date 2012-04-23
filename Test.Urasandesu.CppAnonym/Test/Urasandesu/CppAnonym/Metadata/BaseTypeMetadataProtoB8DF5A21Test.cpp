@@ -297,9 +297,9 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-        StackBehaviour expected = StackBehaviours::PopRef;
-        expected += StackBehaviours::PopI;
-        expected += StackBehaviours::PopRef;
+        StackBehaviour expected = StackBehaviours::PopRef();
+        expected += StackBehaviours::PopI();
+        expected += StackBehaviours::PopRef();
      
         typedef OpCodesProtoB8DF5A21 OpCodes;
         ASSERT_STREQ(L"CEE_STELEM_REF,stelem.ref,PopRef+PopI+PopRef,Push0,InlineNone,IObjModel,1,0xFF,0xA2,NEXT", OpCodes::Stelem_Ref.CStr());
@@ -313,10 +313,54 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-        StackBehaviour expected = StackBehaviours::PopRef;
-        expected += StackBehaviours::PopI;
+        StackBehaviour expected = StackBehaviours::PopRef();
+        expected += StackBehaviours::PopI();
      
         typedef OpCodesProtoB8DF5A21 OpCodes;
         ASSERT_TRUE(expected != OpCodes::Stfld.GetBehaviour0());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_07)
+    {
+        namespace fs = boost::filesystem;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Metadata;
+
+        typedef OpCodesProtoB8DF5A21 OpCodes;
+        typedef OpCodeProtoB8DF5A21 OpCode;
+#if 0
+        typedef ILGeneratorProtoB8DF5A21 ILGenerator;
+        typedef InstructionProtoB8DF5A21 Instruction;
+        ILGenerator gen;
+        gen.EmitWriteLine(L"Hello, world!!");
+        gen.Emit(OpCodes::Ret);
+
+        std::vector<boost::shared_ptr<Instruction const> > const &insts = gen.GetInstructions();
+#endif
+        // Instruction は ILGenerator が管理する？
+        // →いや、そうすると、「この命令いらない」が簡単にできなくなるのか。
+        // 
+        // コピーで引き回す。
+        // →いや、そうすると、「この命令とこの命令の間に挿入」とか「この命令をこっちの命令に置き換え」みたいなことができないか。
+        //   →全くできないってことはないけど、Instruction ID みたいな Primary Key 作って管理する必要がある。
+        // 
+        // Instruction の構造を考えてみる。
+        struct Instruction
+        {
+            OpCode *opcode;
+            boost::any operand;
+            Instruction *prev;
+            Instruction *next;
+        };
+
+        std::cout << "Size of: " << sizeof(Instruction) << std::endl;
+        
+
+        //StackBehaviour expected = StackBehaviours::PopRef;
+        //expected += StackBehaviours::PopI;
+     
+        //typedef OpCodesProtoB8DF5A21 OpCodes;
+        //ASSERT_TRUE(expected != OpCodes::Stfld.GetBehaviour0());
     }
 }

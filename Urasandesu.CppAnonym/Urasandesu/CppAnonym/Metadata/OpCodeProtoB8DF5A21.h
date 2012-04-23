@@ -30,32 +30,32 @@
 #include <Urasandesu/CppAnonym/Metadata/StackBehaviour.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_H
-#include <Urasandesu/CppAnonym/Metadata/StackBehaviours.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURS_HPP
+#include <Urasandesu/CppAnonym/Metadata/StackBehaviours.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAM_H
 #include <Urasandesu/CppAnonym/Metadata/OperandParam.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_H
-#include <Urasandesu/CppAnonym/Metadata/OperandParams.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPERANDPARAMS_HPP
+#include <Urasandesu/CppAnonym/Metadata/OperandParams.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKIND_H
 #include <Urasandesu/CppAnonym/Metadata/OpCodeKind.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_H
-#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEKINDS_HPP
+#include <Urasandesu/CppAnonym/Metadata/OpCodeKinds.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOW_H
 #include <Urasandesu/CppAnonym/Metadata/ControlFlow.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_H
-#include <Urasandesu/CppAnonym/Metadata/ControlFlows.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWS_HPP
+#include <Urasandesu/CppAnonym/Metadata/ControlFlows.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODEFWDPROTOB8DF5A21_H
@@ -123,52 +123,52 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         template<int type>
         class OpCode_;
-#define Pop0 StackBehaviours::Pop0
-#define Pop1 StackBehaviours::Pop1
-#define PopI StackBehaviours::PopI
-#define PopI8 StackBehaviours::PopI8
-#define PopR4 StackBehaviours::PopR4
-#define PopR8 StackBehaviours::PopR8
-#define PopRef StackBehaviours::PopRef
-#define Push0 StackBehaviours::Push0
-#define Push1 StackBehaviours::Push1
-#define PushI StackBehaviours::PushI
-#define PushI8 StackBehaviours::PushI8
-#define PushR4 StackBehaviours::PushR4
-#define PushR8 StackBehaviours::PushR8
-#define PushRef StackBehaviours::PushRef
-#define VarPop StackBehaviours::VarPop
-#define VarPush StackBehaviours::VarPush
-#define InlineBrTarget OperandParams::InlineBrTarget
-#define InlineField OperandParams::InlineField
-#define InlineI OperandParams::InlineI
-#define InlineI8 OperandParams::InlineI8
-#define InlineMethod OperandParams::InlineMethod
-#define InlineNone OperandParams::InlineNone
-#define InlineR OperandParams::InlineR
-#define InlineSig OperandParams::InlineSig
-#define InlineString OperandParams::InlineString
-#define InlineSwitch OperandParams::InlineSwitch
-#define InlineTok OperandParams::InlineTok
-#define InlineType OperandParams::InlineType
-#define InlineVar OperandParams::InlineVar
-#define ShortInlineBrTarget OperandParams::ShortInlineBrTarget
-#define ShortInlineI OperandParams::ShortInlineI
-#define ShortInlineR OperandParams::ShortInlineR
-#define ShortInlineVar OperandParams::ShortInlineVar
-#define IInternal OpCodeKinds::IInternal
-#define IMacro OpCodeKinds::IMacro
-#define IObjModel OpCodeKinds::IObjModel
-#define IPrefix OpCodeKinds::IPrefix
-#define IPrimitive OpCodeKinds::IPrimitive
-#define BRANCH ControlFlows::Branch
-#define BREAK ControlFlows::Break
-#define CALL ControlFlows::Call
-#define COND_BRANCH ControlFlows::CondBranch
-#define META ControlFlows::Meta
-#define NEXT ControlFlows::Next
-#define RETURN ControlFlows::Return
-#define THROW ControlFlows::Throw
+#define Pop0 StackBehaviours::Pop0()
+#define Pop1 StackBehaviours::Pop1()
+#define PopI StackBehaviours::PopI()
+#define PopI8 StackBehaviours::PopI8()
+#define PopR4 StackBehaviours::PopR4()
+#define PopR8 StackBehaviours::PopR8()
+#define PopRef StackBehaviours::PopRef()
+#define Push0 StackBehaviours::Push0()
+#define Push1 StackBehaviours::Push1()
+#define PushI StackBehaviours::PushI()
+#define PushI8 StackBehaviours::PushI8()
+#define PushR4 StackBehaviours::PushR4()
+#define PushR8 StackBehaviours::PushR8()
+#define PushRef StackBehaviours::PushRef()
+#define VarPop StackBehaviours::VarPop()
+#define VarPush StackBehaviours::VarPush()
+#define InlineBrTarget OperandParams::InlineBrTarget()
+#define InlineField OperandParams::InlineField()
+#define InlineI OperandParams::InlineI()
+#define InlineI8 OperandParams::InlineI8()
+#define InlineMethod OperandParams::InlineMethod()
+#define InlineNone OperandParams::InlineNone()
+#define InlineR OperandParams::InlineR()
+#define InlineSig OperandParams::InlineSig()
+#define InlineString OperandParams::InlineString()
+#define InlineSwitch OperandParams::InlineSwitch()
+#define InlineTok OperandParams::InlineTok()
+#define InlineType OperandParams::InlineType()
+#define InlineVar OperandParams::InlineVar()
+#define ShortInlineBrTarget OperandParams::ShortInlineBrTarget()
+#define ShortInlineI OperandParams::ShortInlineI()
+#define ShortInlineR OperandParams::ShortInlineR()
+#define ShortInlineVar OperandParams::ShortInlineVar()
+#define IInternal OpCodeKinds::IInternal()
+#define IMacro OpCodeKinds::IMacro()
+#define IObjModel OpCodeKinds::IObjModel()
+#define IPrefix OpCodeKinds::IPrefix()
+#define IPrimitive OpCodeKinds::IPrimitive()
+#define BRANCH ControlFlows::Branch()
+#define BREAK ControlFlows::Break()
+#define CALL ControlFlows::Call()
+#define COND_BRANCH ControlFlows::CondBranch()
+#define META ControlFlows::Meta()
+#define NEXT ControlFlows::Next()
+#define RETURN ControlFlows::Return()
+#define THROW ControlFlows::Throw()
 #define OPDEF(canonicalName, stringName, stackBehaviour0, stackBehaviour1, \
                 operandParam, opcodeKind, length, byte1, byte2, controlFlow) \
         template<> \
