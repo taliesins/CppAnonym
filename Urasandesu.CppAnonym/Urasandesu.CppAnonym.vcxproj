@@ -185,7 +185,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiProto3CBCB74B.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\FusionDependsOn.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\HeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\BaseRuntimeHostProto07F03042.h" />

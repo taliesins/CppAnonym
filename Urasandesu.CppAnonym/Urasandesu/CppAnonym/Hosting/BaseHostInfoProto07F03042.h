@@ -2,12 +2,9 @@
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEHOSTINFOPROTO07F03042_H
 #define URASANDESU_CPPANONYM_FUSION_BASEHOSTINFOPROTO07F03042_H
 
-namespace Urasandesu { namespace CppAnonym {
-
-    template<class Key, class Sequence>
-    class ATL_NO_VTABLE HeapProvider;
-
-}}   // namespace Urasandesu { namespace CppAnonym {
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
+#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

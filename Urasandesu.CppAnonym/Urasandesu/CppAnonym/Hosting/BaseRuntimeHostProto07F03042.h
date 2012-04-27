@@ -6,12 +6,9 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym {
-
-    template<class Key, class Sequence>
-    class ATL_NO_VTABLE HeapProvider;
-
-}}   // namespace Urasandesu { namespace CppAnonym {
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
+#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 

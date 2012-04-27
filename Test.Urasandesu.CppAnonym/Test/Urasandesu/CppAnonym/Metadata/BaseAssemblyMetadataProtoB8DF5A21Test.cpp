@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
-#include <Urasandesu/CppAnonym/HeapProvider.h>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H

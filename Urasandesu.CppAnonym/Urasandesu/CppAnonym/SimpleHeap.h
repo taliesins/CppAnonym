@@ -9,8 +9,11 @@
 namespace Urasandesu { namespace CppAnonym {
     
     struct DefaultHeap;
-    struct ALotOfAllocAndFreeHeap;  // The type size is less than 32 - 40 and 
-                                    // they are a lot of allocated and freed.
+    struct QuickHeap;
+    struct VeryQuickHeapButMustUseSubscriptOperator;    // Very quick version for small objects allocation.
+                                                        // In particular, the size is less than between 32 to 40, and when they are performed a lot of allocation and free.
+                                                        // Although must use the subscript operator [] if access the allocated object after a while, 
+                                                        // because the allocated objects are moved when the heap is over a threshold size.
     
     namespace Detail {
     
@@ -18,7 +21,7 @@ namespace Urasandesu { namespace CppAnonym {
         struct SimpleHeapImpl;
         
         template<class T>
-        class SimpleHeapImpl<T, ALotOfAllocAndFreeHeap>
+        class SimpleHeapImpl<T, VeryQuickHeapButMustUseSubscriptOperator>
         {
         public:
             typedef Collections::RapidVector<T> TArray;
@@ -72,6 +75,41 @@ namespace Urasandesu { namespace CppAnonym {
             TArray m_array;
             T *m_pCurrent;
             SIZE_T m_lastMaxSize;
+        };
+
+        template<class T>
+        class SimpleHeapImpl<T, QuickHeap>
+        {
+        public:
+            inline T *New()
+            {
+                T *pObj = m_pool.malloc();
+                m_array.push_back(pObj);
+                return pObj;
+            }
+
+            inline void DeleteLast()
+            {
+                if (m_array.empty())
+                    return;
+                T *pObj = (*this)[Size() - 1];
+                m_array.pop_back();
+                m_pool.free(pObj);
+            }
+            
+            inline SIZE_T Size()
+            {
+                return m_array.size();
+            }
+            
+            inline T *operator[] (SIZE_T ix)
+            {
+                return m_array[ix];
+            }
+        
+        private:    
+            boost::object_pool<T> m_pool;
+            std::vector<T *> m_array;
         };
     
         template<class T>

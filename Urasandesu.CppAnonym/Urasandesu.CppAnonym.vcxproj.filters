@@ -180,9 +180,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\IApiOperable.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -491,6 +488,12 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviours.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\HeapProviderFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

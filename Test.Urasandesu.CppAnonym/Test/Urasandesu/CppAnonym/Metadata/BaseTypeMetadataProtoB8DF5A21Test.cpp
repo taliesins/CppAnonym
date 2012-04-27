@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
-#include <Urasandesu/CppAnonym/HeapProvider.h>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REPLACE_H
@@ -340,10 +340,12 @@ namespace {
 #endif
         // Instruction は ILGenerator が管理する？
         // →いや、そうすると、「この命令いらない」が簡単にできなくなるのか。
-        // 
+        //   →DeleteLast の Random Access 版を作るのはそこまで難しいことではない。
+        //
         // コピーで引き回す。
         // →いや、そうすると、「この命令とこの命令の間に挿入」とか「この命令をこっちの命令に置き換え」みたいなことができないか。
         //   →全くできないってことはないけど、Instruction ID みたいな Primary Key 作って管理する必要がある。
+        //     →それはめんどう・・・。
         // 
         // Instruction の構造を考えてみる。
         struct Instruction
@@ -355,7 +357,60 @@ namespace {
         };
 
         std::cout << "Size of: " << sizeof(Instruction) << std::endl;
-        
+        // 12 バイト
+        // →微妙・・・。Boost.Pool 使ってみよう。
+        //   →あかん、shared_ptr と一緒に使うには、pool_allocator 使わなきゃだけど、
+        //     中で Singleton_pool 使ってる。これだと、確保→消去する Memory の単位は
+        //     「Tag 単位」「型単位」しかない・・・。
+        //     このインスタンスが消えたら、保持していた Memory 一緒に消すっていうのが無い・・・。
+
+        // カスタムアロケータ作るしかなさそう・・・。
+        // →アロケータは状態を持ってはいけないことになってる。ほげぇ・・・。
+
+        // Boost.Pool 版はやっぱりそんなに早くない。
+        // →でも RapidVector 利用版は、ある閾値越えると、昔作った要素保持してても無効になっちゃう件。
+        //   →まあ、昔作った要素触る時は、必ず operator [] 経由で見ればいいだけなので、気にしなくていいっちゃいい。
+        //     →やっぱり RapidVector 利用版そのまま使うほうが良さそう。ポインタの引き回しだけしないようにしたい。
+        //       →そうなると、Instruction *prev とかはだめ。もう一度 Instrcution の構造考えてみるか・・・。
+
+#if 0
+        std::vector<Instruction const *> const &insts = gen.GetInstructions();
+        // この中で遅延初期化するのがいいのか・・・？
+
+        template<
+            class ILGeneratorApiType = DefaultILGeneratorApiProtoB8DF5A21
+        >
+        class ILGenerator :
+            public HeapProvider<
+                size_t, 
+                boost::mpl::vector<
+                    Instruction 
+                >,
+                VeryQuickHeapButMustUseSubscriptOperator
+            >
+        {
+        public:
+            typedef ILGenerator<ILGeneratorApiType> this_type;
+
+            ILGenerator() : 
+                m_instructionsInitialized(false)
+            { }
+
+            std::vector<Instruction const *> const &GetInstructions() const
+            {
+                if (!m_instructionsInitialized)
+                {
+                    typedef typename type_decided_by<Instruction>::type InstructionHeap;
+                    InstructionHeap &heap = Of<Instruction>();
+                }
+                return m_instructions;
+            }
+
+        private:
+            mutable bool m_instructionsInitialized;
+            std::vector<Instruction const *> m_instructions;
+        };
+#endif   
 
         //StackBehaviour expected = StackBehaviours::PopRef;
         //expected += StackBehaviours::PopI;

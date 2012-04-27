@@ -113,8 +113,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             
             if (m_size == RAPID_SIZE)
             {
-                m_pVec = new std::vector<T, Alloc>(RAPID_SIZE);
-                m_pVec->assign(reinterpret_cast<T *>(m_pRapidBuf), reinterpret_cast<T *>(m_pRapidBuf) + RAPID_SIZE);
+                AssignVec(m_pVec, m_size, reinterpret_cast<T *>(m_pRapidBuf));
                 ++m_size;
             }
             m_pVec->push_back(val);
@@ -193,8 +192,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             
             if (RunAsRapid() && RAPID_SIZE < newSize)
             {
-                m_pVec = new std::vector<T, Alloc>(newSize);
-                m_pVec->assign(reinterpret_cast<T *>(m_pRapidBuf), reinterpret_cast<T *>(m_pRapidBuf) + RAPID_SIZE);
+                AssignVec(m_pVec, newSize, reinterpret_cast<T *>(m_pRapidBuf));
                 m_size = newSize;
             }
             m_pVec->resize(newSize);
@@ -212,6 +210,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         std::vector<T, Alloc> *m_pVec;
         SIZE_T m_size;
         UINT64 m_pRapidBuf[(RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64)];
+
+        static void AssignVec(std::vector<T, Alloc> *&pVec, size_type newSize, T *pRapidBuf)
+        {
+            pVec = new std::vector<T, Alloc>(newSize);
+            pVec->assign(pRapidBuf, pRapidBuf + RAPID_SIZE);
+        }
 
         void DestroyVec()
         {

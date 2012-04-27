@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
-#define URASANDESU_CPPANONYM_HEAPPROVIDER_H
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#define URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #include <Urasandesu/CppAnonym/SimpleHeap.h>
@@ -10,28 +10,34 @@
 #include <Urasandesu/CppAnonym/Traits/Distinct.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
+#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
     
     namespace Detail {
+        
+        namespace mpl = boost::mpl;
 
-        template<class Key, class Sequence, class I, class IEnd>
+        template<class Key, class Sequence, class I, class IEnd, class Tag>
         class ATL_NO_VTABLE HeapProviderImpl : 
-            public HeapProviderImpl<Key, Sequence, typename boost::mpl::next<I>::type, IEnd>
+            public HeapProviderImpl<Key, Sequence, typename mpl::next<I>::type, IEnd, Tag>
         {
         private:
-            typedef HeapProviderImpl<Key, Sequence, I, IEnd> this_type;
-            typedef typename boost::mpl::deref<I>::type obj_type;
+            typedef HeapProviderImpl<Key, Sequence, I, IEnd, Tag> this_type;
+            typedef typename mpl::deref<I>::type obj_type;
             typedef typename boost::call_traits<Key>::param_type key_param_type;
 
-            boost::shared_ptr<SimpleHeap<obj_type>> mutable m_pObjFactory;
+            boost::shared_ptr<SimpleHeap<obj_type, Tag>> mutable m_pObjFactory;
             boost::unordered_map<Key, SIZE_T> mutable m_objIndexes;
             
-            inline SimpleHeap<obj_type> *GetHeap() const
+            inline SimpleHeap<obj_type, Tag> *GetHeap() const
             {
                 BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
                 
                 if (!m_pObjFactory.get())
-                    m_pObjFactory = boost::make_shared<SimpleHeap<obj_type>>();
+                    m_pObjFactory = boost::make_shared<SimpleHeap<obj_type, Tag>>();
                 return m_pObjFactory.get();
             }
 
@@ -80,10 +86,10 @@ namespace Urasandesu { namespace CppAnonym {
 
             inline obj_type *New(key_param_type key)
             {
-                if (Exists(key))
+                if (Exists(key))    // VeryQuickHeap のアドバンテージの内、5 割持ってく・・・ふええ
                     Get(key)->SetKey(Key());
                 obj_type *pObj = GetHeap()->New();
-                SetToLast(key);
+                SetToLast(key);     // VeryQuickHeap のアドバンテージの内、9 割持ってく・・・ふええ
                 return pObj;
             }
             
@@ -103,11 +109,12 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
-        template<class Key, class Sequence>
+        template<class Key, class Sequence, class Tag>
         class ATL_NO_VTABLE HeapProviderImpl<Key, 
                                              Sequence, 
                                              typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type> : 
+                                             typename Traits::DistinctEnd<Sequence>::type, 
+                                             Tag> : 
             boost::noncopyable
         {
         };
@@ -115,12 +122,13 @@ namespace Urasandesu { namespace CppAnonym {
     }   // namespace Detail
 
 
-    template<class Key, class Sequence>
+    template<class Key, class Sequence, class Tag>
     class ATL_NO_VTABLE HeapProvider : 
         Detail::HeapProviderImpl<Key, 
                                  Sequence, 
                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                 typename Traits::DistinctEnd<Sequence>::type>
+                                 typename Traits::DistinctEnd<Sequence>::type, 
+                                 Tag>
     {
     public:
         typedef Key key_type;
@@ -136,7 +144,8 @@ namespace Urasandesu { namespace CppAnonym {
                     typename Traits::Distinct<Sequence>::type,
                     T
                 >::type,
-                typename Traits::DistinctEnd<Sequence>::type
+                typename Traits::DistinctEnd<Sequence>::type, 
+                Tag
             > type;
         };
 
@@ -268,4 +277,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
+#endif  // #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP

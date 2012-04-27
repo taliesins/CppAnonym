@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Traits/Replace.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_H
-#include <Urasandesu/CppAnonym/HeapProvider.h>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Profiling {
