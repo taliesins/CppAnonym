@@ -518,4 +518,152 @@ namespace {
         pod2Heap.DeleteLast();
         ASSERT_EQ(0, pod2Heap.Size());
     }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapDeleteTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapDeleteTest_02)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2> pod2Heap;
+        
+        MyPOD2 *pPod2 = NULL;
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(1, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[0]);
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(2, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[1]);
+            pPod2 = pPod2_;
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(3, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[2]);
+        }
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(2, pod2Heap.Size());
+        ASSERT_NE(pPod2, pod2Heap[1]);
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapDeleteTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, QuickHeap> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapDeleteTest_02)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, QuickHeap> pod2Heap;
+        
+        MyPOD2 *pPod2 = NULL;
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(1, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[0]);
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(2, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[1]);
+            pPod2 = pPod2_;
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            ASSERT_EQ(3, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[2]);
+        }
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(2, pod2Heap.Size());
+        ASSERT_NE(pPod2, pod2Heap[1]);
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorDeleteTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, VeryQuickHeapButMustUseSubscriptOperator> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorDeleteTest_02)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, VeryQuickHeapButMustUseSubscriptOperator> pod2Heap;
+        
+        MyPOD2 *pPod2 = NULL;
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            pPod2_->int1 = 1;
+            ASSERT_EQ(1, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[0]);
+            ASSERT_EQ(1, pod2Heap[0]->int1);
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            pPod2_->int1 = 2;
+            ASSERT_EQ(2, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[1]);
+            ASSERT_EQ(2, pod2Heap[1]->int1);
+            pPod2 = pPod2_;
+        }
+        
+        {
+            MyPOD2 *pPod2_ = pod2Heap.New();
+            pPod2_->int1 = 3;
+            ASSERT_EQ(3, pod2Heap.Size());
+            ASSERT_EQ(pPod2_, pod2Heap[2]);
+            ASSERT_EQ(3, pod2Heap[2]->int1);
+        }
+
+        pod2Heap.Delete(pPod2);
+        ASSERT_EQ(2, pod2Heap.Size());
+        ASSERT_EQ(pPod2, pod2Heap[1]);  // This assertion is really TRUE!!, but its content has been changed.
+        ASSERT_EQ(3, pod2Heap[1]->int1);
+    }
 }

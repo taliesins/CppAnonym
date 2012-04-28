@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     namespace Detail {
 
+        namespace mpl = boost::mpl;
+
         template<
             class Value, 
             class T, 
@@ -26,25 +28,65 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 boost::random_access_traversal_tag>
         {
         private:
-            typedef typename boost::mpl::eval_if<
-                Urasandesu::CppAnonym::Traits::HasConst<Value>, 
-                boost::mpl::identity<typename std::vector<T, Alloc>::const_iterator>, 
-                boost::mpl::identity<typename std::vector<T, Alloc>::iterator> >::type iterator_;
+            typedef typename mpl::eval_if<
+                Traits::HasConst<Value>, 
+                mpl::identity<typename std::vector<T, Alloc>::const_iterator>, 
+                mpl::identity<typename std::vector<T, Alloc>::iterator> >::type iterator_;
+
+            typedef typename mpl::eval_if<
+                Traits::HasConst<Value>,
+                mpl::identity<RapidVectorIterator<Value, T, Alloc, RAPID_SIZE> >,
+                mpl::identity<RapidVectorIterator<Value const, T, Alloc, RAPID_SIZE> > >::type const_iterator_;
         public:
-            RapidVectorIterator(RapidVector<T, Alloc, RAPID_SIZE> *pThis, bool isEnd = false) : 
+            RapidVectorIterator() : 
+                m_pThis(NULL), 
+                m_isEnd(false),
+                m_pBuf(NULL)
+            { }
+
+            explicit RapidVectorIterator(RapidVector<T, Alloc, RAPID_SIZE> *pThis, bool isEnd = false) : 
                 m_pThis(pThis), 
+                m_isEnd(isEnd),
                 m_pBuf(NULL)
             {
                 if (m_pThis->RunAsRapid())
-                    m_pBuf = !isEnd ? 
-                                reinterpret_cast<T *>(m_pThis->m_pRapidBuf) : 
-                                reinterpret_cast<T *>(m_pThis->m_pRapidBuf) + m_pThis->m_size;
+                    m_pBuf = !isEnd ? m_pThis->RapidBuf() : m_pThis->RapidBuf() + m_pThis->m_size;
                 else
                     m_i = !isEnd ? m_pThis->m_pVec->begin() : m_pThis->m_pVec->end();
+            }
+
+            template<
+                class OtherValue, 
+                class OtherT, 
+                class OtherAlloc, 
+                DWORD OTHER_RAPID_SIZE
+            >
+            RapidVectorIterator(RapidVectorIterator<OtherValue, OtherT, OtherAlloc, OTHER_RAPID_SIZE> const &other)
+            {
+                m_pThis = other.m_pThis;
+                m_isEnd = other.m_isEnd;
+                m_pBuf = other.m_pBuf;
+                m_i = other.m_i;
+            } 
+
+            operator const_iterator_() const
+            {
+                return const_iterator_(*this);
             }
         
         private:
             friend class boost::iterator_core_access;
+            
+            template<class T, class Alloc, DWORD RAPID_SIZE>
+            friend class RapidVector;
+
+            template<
+                class Value, 
+                class T, 
+                class Alloc, 
+                DWORD RAPID_SIZE
+            >
+            friend class RapidVectorIterator;
 
             inline void increment() 
             { 
@@ -70,12 +112,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                     return m_i == other.m_i;
             }
 
-            inline Value &dereference() const 
+            inline reference dereference() const 
             { 
                 return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
             }
 
+            difference_type distance_to(RapidVectorIterator<Value, T, Alloc, RAPID_SIZE> const& other) const
+            {
+                if (m_pThis->RunAsRapid())
+                    return static_cast<difference_type>(other.m_pBuf - m_pBuf);
+                else
+                    return other.m_i - m_i;
+            }
+
             RapidVector<T, Alloc, RAPID_SIZE> *m_pThis;
+            bool m_isEnd;
             T *m_pBuf;
             iterator_ m_i;
         };
@@ -107,13 +158,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         {
             if (m_size < RAPID_SIZE)
             {
-                reinterpret_cast<T *>(m_pRapidBuf)[m_size++] = val;
+                RapidBuf()[m_size++] = val;
                 return;
             }
             
             if (m_size == RAPID_SIZE)
             {
-                AssignVec(m_pVec, m_size, reinterpret_cast<T *>(m_pRapidBuf));
+                AssignVec(m_pVec, m_size, RapidBuf());
                 ++m_size;
             }
             m_pVec->push_back(val);
@@ -137,14 +188,49 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
         }
 
+        iterator erase(const_iterator first, const_iterator last)
+        {
+            _ASSERTE(!empty());
+
+            if (this != first.m_pThis || this != last.m_pThis)
+                return end();
+
+            if (RunAsRapid())
+            {
+                if (last.m_pBuf == RapidBuf() + m_size)
+                {
+                    m_size -= static_cast<difference_type>(last.m_pBuf - first.m_pBuf);
+                    return begin();
+                }
+                else
+                {
+                    difference_type diff = static_cast<difference_type>(first.m_pBuf - RapidBuf());
+                    size_type size = static_cast<size_type>(RapidBuf() + m_size - last.m_pBuf) * sizeof(T);
+                    ::memcpy_s(RapidBuf() + diff, size, last.m_pBuf, size);
+                    m_size -= m_size - diff - size;
+                    return begin();
+                }
+            }
+
+            m_pVec->erase(first.m_i, last.m_i);
+            m_size = m_pVec->size();
+            if (m_size < RAPID_SIZE)
+            {
+                ::memcpy_s(RapidBuf(), m_size, &(*m_pVec)[0], m_size);
+                DestroyVec();
+            }
+
+            return begin();
+        }
+
         inline const_reference operator[](size_type pos) const
         {
-            return RunAsRapid() ? reinterpret_cast<T *>(const_cast<PUINT64>(m_pRapidBuf))[pos] : (*m_pVec)[pos];
+            return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
         }
 
         inline reference operator[](size_type pos)
         {
-            return RunAsRapid() ? reinterpret_cast<T *>(m_pRapidBuf)[pos] : (*m_pVec)[pos];
+            return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
         }
 
 	    inline iterator begin()
@@ -154,7 +240,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         inline const_iterator begin() const
         {
-            return const_iterator(this);
+            return const_iterator(const_cast<type *>(this));
         }
 
         inline iterator end()
@@ -164,7 +250,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         inline const_iterator end() const
         {
-            return const_iterator(this, true);
+            return const_iterator(const_cast<type *>(this), true);
         }
 
         inline size_type size() const
@@ -192,7 +278,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             
             if (RunAsRapid() && RAPID_SIZE < newSize)
             {
-                AssignVec(m_pVec, newSize, reinterpret_cast<T *>(m_pRapidBuf));
+                AssignVec(m_pVec, newSize, RapidBuf());
                 m_size = newSize;
             }
             m_pVec->resize(newSize);
@@ -210,6 +296,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         std::vector<T, Alloc> *m_pVec;
         SIZE_T m_size;
         UINT64 m_pRapidBuf[(RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64)];
+
+        inline T *RapidBuf()
+        {
+            return reinterpret_cast<T *>(m_pRapidBuf);
+        }
+
+        inline T const *RapidBuf() const
+        {
+            return reinterpret_cast<T *>(const_cast<PUINT64>(m_pRapidBuf));
+        }
 
         static void AssignVec(std::vector<T, Alloc> *&pVec, size_type newSize, T *pRapidBuf)
         {

@@ -50,9 +50,43 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 if (m_array.empty())
                     return;
-                T *pObj = (*this)[Size() - 1];
-                m_array.pop_back();
-                pObj->~T();
+                
+                DeleteLastCore();
+            }
+
+            void Delete(T *pObj)
+            {
+                if (m_array.empty())
+                    return;
+
+                if ((*this)[Size() - 1] == pObj)
+                {
+                    DeleteLastCore();
+                    return;
+                }
+
+                class EqualTo : 
+                    std::unary_function<T, bool>
+                {
+                public:
+                    EqualTo(T *pObj_) : 
+                        m_pObj_(pObj_)
+                    { }
+
+                    bool operator()(T const &x) const
+                    {
+                        return m_pObj_ == &x;
+                    }
+                private:
+                    T *m_pObj_;
+                };
+                typedef TArray::iterator Iterator;
+                Iterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+                if (obj != m_array.end())
+                {
+                    (*obj).~T();
+                    m_array.erase(obj, m_array.end());
+                }
             }
 
             inline SIZE_T Size()
@@ -72,6 +106,13 @@ namespace Urasandesu { namespace CppAnonym {
             }
         
         private:    
+            void DeleteLastCore()
+            {
+                T *pObj = (*this)[Size() - 1];
+                m_array.pop_back();
+                pObj->~T();
+            }
+
             TArray m_array;
             T *m_pCurrent;
             SIZE_T m_lastMaxSize;
@@ -81,20 +122,63 @@ namespace Urasandesu { namespace CppAnonym {
         class SimpleHeapImpl<T, QuickHeap>
         {
         public:
+            SimpleHeapImpl() : 
+                m_pool(sizeof(T))
+            { }
+
             inline T *New()
             {
-                T *pObj = m_pool.malloc();
+                T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+#pragma warning(push)
+#pragma warning(disable: 4345)
+                new(pObj)T();
+#pragma warning(pop)
                 m_array.push_back(pObj);
                 return pObj;
             }
 
-            inline void DeleteLast()
+            void DeleteLast()
             {
                 if (m_array.empty())
                     return;
-                T *pObj = (*this)[Size() - 1];
-                m_array.pop_back();
-                m_pool.free(pObj);
+                
+                DeleteLastCore();
+            }
+
+            void Delete(T *pObj)
+            {
+                if (m_array.empty())
+                    return;
+
+                if ((*this)[Size() - 1] == pObj)
+                {
+                    DeleteLastCore();
+                    return;
+                }
+
+                class EqualTo : 
+                    std::unary_function<T *, bool>
+                {
+                public:
+                    EqualTo(T *pObj_) : 
+                        m_pObj_(pObj_)
+                    { }
+
+                    bool operator()(T const *x) const
+                    {
+                        return m_pObj_ == x;
+                    }
+                private:
+                    T *m_pObj_;
+                };
+                typedef std::vector<T *>::iterator Iterator;
+                Iterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+                if (obj != m_array.end())
+                {
+                    T *pObj_ = *obj;
+                    m_array.erase(obj, m_array.end());
+                    m_pool.free(pObj_);
+                }
             }
             
             inline SIZE_T Size()
@@ -108,7 +192,15 @@ namespace Urasandesu { namespace CppAnonym {
             }
         
         private:    
-            boost::object_pool<T> m_pool;
+            void DeleteLastCore()
+            {
+                T *pObj = (*this)[Size() - 1];
+                m_array.pop_back();
+                pObj->~T();
+                m_pool.free(pObj);
+            }
+
+            boost::pool<> m_pool;
             std::vector<T *> m_array;
         };
     
@@ -128,6 +220,35 @@ namespace Urasandesu { namespace CppAnonym {
                 if (m_array.empty())
                     return;
                 m_array.pop_back();
+            }
+
+            void Delete(T *pObj)
+            {
+                if (m_array.empty())
+                    return;
+                
+                if ((*this)[Size() - 1] == pObj)
+                {
+                    m_array.pop_back();
+                    return;
+                }
+
+                class EqualTo : 
+                    std::unary_function<T, bool>
+                {
+                public:
+                    EqualTo(T *pObj_) : 
+                        m_pObj_(pObj_)
+                    { }
+
+                    bool operator()(T const &x) const
+                    {
+                        return m_pObj_ == &x;
+                    }
+                private:
+                    T *m_pObj_;
+                };
+                m_array.erase_if(m_array.begin(), m_array.end(), EqualTo(pObj));
             }
             
             inline SIZE_T Size()
@@ -162,6 +283,11 @@ namespace Urasandesu { namespace CppAnonym {
         inline void DeleteLast()
         {
             m_impl.DeleteLast();
+        }
+
+        inline void Delete(T *pObj)
+        {
+            m_impl.Delete(pObj);
         }
         
         inline SIZE_T Size()

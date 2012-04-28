@@ -28,3 +28,6 @@
 #include <mscoree.h>
 #include <fusion.h>
 #include <boost/any.hpp>
+
+#include <boost/lambda/lambda.hpp>
+#include <boost/range/algorithm_ext.hpp>
