@@ -264,6 +264,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\StrongNamingDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SystemError.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\AddImplicitConversion.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ExternalApiStrategies.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Distinct.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />

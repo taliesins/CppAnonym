@@ -19,6 +19,7 @@
 #include <boost/preprocessor/seq/seq.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/pool/object_pool.hpp>
+#include <boost/pool/pool_alloc.hpp>
 #include <boost/scope_exit.hpp>
 #include <boost/system/windows_error.hpp>
 #include <boost/type_traits.hpp>

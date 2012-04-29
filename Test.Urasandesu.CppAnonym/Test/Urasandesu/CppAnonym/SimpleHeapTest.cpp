@@ -12,63 +12,57 @@
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Traits {
+#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
+#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
+#endif
+
+namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     template<class T>
-    struct AddImplicitConversion
+    struct SmartDestructor
     {
-        AddImplicitConversion(T& other) { }
-        AddImplicitConversion& operator=(T& other) { return *this; }
+        typedef typename boost::call_traits<T>::param_type param_type;
+        typedef typename boost::remove_pointer<typename Traits::RemoveConst<T>::type>::type raw_type;
+
+        static void Destruct(param_type obj)
+        {
+            typedef typename boost::is_pointer<T>::type is_pointer;
+            typedef typename boost::has_trivial_destructor<raw_type>::type has_trivial_destructor;
+            
+            DestructImpl<is_pointer, has_trivial_destructor>::Destruct(obj);
+        }
+
+        template<class IsPointer, class HasTrivialDestructor>
+        struct DestructImpl
+        {
+            static void Destruct(param_type obj)
+            {
+                // Do nothing. Because T has trivial destructor in this case.
+            }
+        };
+
+        template<>
+        struct DestructImpl<boost::integral_constant<bool, false>, boost::integral_constant<bool, false>> 
+        { 
+            static void Destruct(param_type obj)
+            {
+                obj.~raw_type();
+            }
+        };
+
+        template<>
+        struct DestructImpl<boost::integral_constant<bool, true>, boost::integral_constant<bool, false>> 
+        { 
+            static void Destruct(param_type obj)
+            {
+                obj->~raw_type();
+            }
+        };
     };
 
-#ifdef CPPANONYM_ADDIMPLICITCONVERSION_SIZE
-#error This .h reserves the word "CPPANONYM_ADDIMPLICITCONVERSION_SIZE".
-#endif
-#define CPPANONYM_ADDIMPLICITCONVERSION_SIZE 11
-
-#ifdef CPPANONYM_IGNORE_PARAM
-#error This .h reserves the word "CPPANONYM_IGNORE_PARAM".
-#endif
-#define CPPANONYM_IGNORE_PARAM(z, n, _) \
-        template<template<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), class T)> class Container> \
-        struct IgnoreParam ## n \
-        { \
-        };
-
-    BOOST_PP_REPEAT_FROM_TO(1, CPPANONYM_ADDIMPLICITCONVERSION_SIZE, CPPANONYM_IGNORE_PARAM, nil)
-
-#undef CPPANONYM_IGNORE_PARAM
-
-#ifdef CPPANONYM_ADDIMPLICITCONVERSION
-#error This .h reserves the word "CPPANONYM_ADDIMPLICITCONVERSION".
-#endif
-#define CPPANONYM_ADDIMPLICITCONVERSION(z, n, _) \
-        template<template<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), class T)> class Container> \
-        struct AddImplicitConversion<IgnoreParam ## n<Container>> \
-        { \
-            template<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), class T)> \
-            AddImplicitConversion(Container<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), T)>& other) { } \
-            template<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), class T)> \
-            AddImplicitConversion& operator=(Container<BOOST_PP_ENUM_SHIFTED_PARAMS_Z(z, BOOST_PP_INC(n), T)>& other) { return *this; } \
-        };
-
-    BOOST_PP_REPEAT_FROM_TO(1, CPPANONYM_ADDIMPLICITCONVERSION_SIZE, CPPANONYM_ADDIMPLICITCONVERSION, nil)
-
-#undef CPPANONYM_ADDIMPLICITCONVERSION
-    
-#undef CPPANONYM_ADDIMPLICITCONVERSION_SIZE
-
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym {
-
-    template<class Key, class Object, class Tag = DefaultHeap>
-    struct KeyObjectTag
-    {
-        typedef Key key_type;
-        typedef Object object_type;
-        typedef Tag tag_type;
-    };
 
     template<class Object, class Tag = DefaultHeap>
     struct ObjectTag
@@ -212,50 +206,50 @@ namespace {
         MyPOD3 *next;
     };
 
-    struct MyPOD3GeneratorDefault : 
+    struct MyPOD2GeneratorDefault : 
         Urasandesu::CppAnonym::SimpleHeapProvider<
             boost::mpl::vector<
                 Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::DefaultHeap
                 >                 
             >
         >
     {
         typedef Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::DefaultHeap
                 > object_tag_type;                 
     };
 
-    struct MyPOD3GeneratorQuick : 
+    struct MyPOD2GeneratorQuick : 
         Urasandesu::CppAnonym::SimpleHeapProvider<
             boost::mpl::vector<
                 Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::QuickHeap
                 >                 
             >
         >
     {
         typedef Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::QuickHeap
                 > object_tag_type;                 
     };
 
-    struct MyPOD3GeneratorVeryQuick : 
+    struct MyPOD2GeneratorVeryQuick : 
         Urasandesu::CppAnonym::SimpleHeapProvider<
             boost::mpl::vector<
                 Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::VeryQuickHeapButMustUseSubscriptOperator
                 >                 
             >
         >
     {
         typedef Urasandesu::CppAnonym::ObjectTag<
-                    MyPOD3, 
+                    MyPOD2, 
                     Urasandesu::CppAnonym::VeryQuickHeapButMustUseSubscriptOperator
                 > object_tag_type;                 
     };
@@ -362,9 +356,9 @@ namespace {
         using namespace std;
         using namespace Urasandesu::CppAnonym;
 
-        INT const ASSIGN_COUNT = 21;
+        INT const ASSIGN_COUNT = 512;
 #ifdef _DEBUG
-        INT const RETRY_COUNT = 1000;
+        INT const RETRY_COUNT = 100;
 #else
         INT const RETRY_COUNT = 100000;
 #endif
@@ -412,9 +406,9 @@ namespace {
         cout << "Quick Heap: " << quickElapsed << " (x " << defaultElapsed / quickElapsed << ")" << endl;
         cout << "Very Quick Heap: " << veryQuickElapsed << " (x " << defaultElapsed / veryQuickElapsed << ")" << endl;
         // Sample results is as follows: 
-        //   Default Heap: 0.16
-        //   Quick Heap: 0.053 (x 3.01887)
-        //   Very Quick Heap: 0.008 (x 20)
+        //   Default Heap: 0.811
+        //   Quick Heap: 0.113 (x 7.17699)
+        //   Very Quick Heap: 0.046 (x 17.6304)
         ASSERT_LT(veryQuickElapsed, defaultElapsed);
     }
 
@@ -435,13 +429,13 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD3GeneratorDefault gen;
-            typedef MyPOD3GeneratorDefault::object_tag_type KeyObjectTag;
-            typedef MyPOD3GeneratorDefault::type_decided_by<KeyObjectTag>::type MyPOD3Heap;
-            MyPOD3Heap &heap = gen.Of<KeyObjectTag>();
+            MyPOD2GeneratorDefault gen;
+            typedef MyPOD2GeneratorDefault::object_tag_type KeyObjectTag;
+            typedef MyPOD2GeneratorDefault::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
+            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD3 *pPod3 = heap.New();
+                MyPOD2 *pPod2 = heap.New();
             }
         }
         
@@ -451,13 +445,13 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD3GeneratorQuick gen;
-            typedef MyPOD3GeneratorQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD3GeneratorQuick::type_decided_by<KeyObjectTag>::type MyPOD3Heap;
-            MyPOD3Heap &heap = gen.Of<KeyObjectTag>();
+            MyPOD2GeneratorQuick gen;
+            typedef MyPOD2GeneratorQuick::object_tag_type KeyObjectTag;
+            typedef MyPOD2GeneratorQuick::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
+            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD3 *pPod3 = heap.New();
+                MyPOD2 *pPod2 = heap.New();
             }
         }
         
@@ -467,13 +461,13 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD3GeneratorVeryQuick gen;
-            typedef MyPOD3GeneratorVeryQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD3GeneratorVeryQuick::type_decided_by<KeyObjectTag>::type MyPOD3Heap;
-            MyPOD3Heap &heap = gen.Of<KeyObjectTag>();
+            MyPOD2GeneratorVeryQuick gen;
+            typedef MyPOD2GeneratorVeryQuick::object_tag_type KeyObjectTag;
+            typedef MyPOD2GeneratorVeryQuick::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
+            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD3 *pPod3 = heap.New();
+                MyPOD2 *pPod2 = heap.New();
             }
         }
         
@@ -483,9 +477,9 @@ namespace {
         cout << "Quick Heap: " << quickElapsed << " (x " << defaultElapsed / quickElapsed << ")" << endl;
         cout << "Very Quick Heap: " << veryQuickElapsed << " (x " << defaultElapsed / veryQuickElapsed << ")" << endl;
         // Sample results is as follows: 
-        //   Default Heap: 0.16
-        //   Quick Heap: 0.053 (x 3.01887)
-        //   Very Quick Heap: 0.008 (x 20)
+        //   Default Heap: 0.639
+        //   Quick Heap: 0.148 (x 4.31757)
+        //   Very Quick Heap: 0.08 (x 7.9875)
         ASSERT_LT(veryQuickElapsed, defaultElapsed);
     }
 
@@ -665,5 +659,66 @@ namespace {
         ASSERT_EQ(2, pod2Heap.Size());
         ASSERT_EQ(pPod2, pod2Heap[1]);  // This assertion is really TRUE!!, but its content has been changed.
         ASSERT_EQ(3, pod2Heap[1]->int1);
+    }
+
+
+    TEST(Urasandesu_CppAnonym_Utilities_SmartDestructorTest, Test_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+
+        typedef Utilities::SmartDestructor<int> IntDestructor;
+        int i = 10;
+        IntDestructor::Destruct(i);
+
+        
+        struct POD
+        {
+            int i;
+        };
+        typedef Utilities::SmartDestructor<POD> PODDestructor;
+        POD pod;
+        pod.i = 20;
+        PODDestructor::Destruct(pod);
+
+        typedef Utilities::SmartDestructor<POD *> PODPointerDestructor;
+        {
+            BYTE b[sizeof(POD)];
+            POD *pPod = reinterpret_cast<POD *>(b);
+            new(pPod)POD();
+            PODPointerDestructor::Destruct(pPod);
+        }
+
+
+        struct DestructionChecker
+        {
+            DestructionChecker() : Destructed(false) { }
+            static DestructionChecker &Instance() { static DestructionChecker c; return c; }
+            bool Destructed;
+        };
+        struct NotPOD
+        {
+            NotPOD() { DestructionChecker::Instance().Destructed = false; }
+            ~NotPOD() { DestructionChecker::Instance().Destructed = true; }
+            int i;
+        };
+        typedef Utilities::SmartDestructor<NotPOD> NotPODDestructor;
+        {
+            BYTE b[sizeof(NotPOD)];
+            NotPOD *pNotPod = reinterpret_cast<NotPOD *>(b);
+            new(pNotPod)NotPOD();
+            ASSERT_FALSE(DestructionChecker::Instance().Destructed);
+            NotPODDestructor::Destruct(*pNotPod);
+            ASSERT_TRUE(DestructionChecker::Instance().Destructed);
+        }
+
+        typedef Utilities::SmartDestructor<NotPOD *> NotPODPointerDestructor;
+        {
+            BYTE b[sizeof(NotPOD)];
+            NotPOD *pNotPod = reinterpret_cast<NotPOD *>(b);
+            new(pNotPod)NotPOD();
+            ASSERT_FALSE(DestructionChecker::Instance().Destructed);
+            NotPODPointerDestructor::Destruct(pNotPod);
+            ASSERT_TRUE(DestructionChecker::Instance().Destructed);
+        }
     }
 }

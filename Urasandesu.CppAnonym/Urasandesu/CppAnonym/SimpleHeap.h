@@ -27,6 +27,15 @@ namespace Urasandesu { namespace CppAnonym {
             typedef Collections::RapidVector<T> TArray;
             
             SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastMaxSize(m_array.max_size()) { }
+            
+            ~SimpleHeapImpl()
+            {
+                if (m_array.empty())
+                    return;
+
+                for (T *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
+                    Utilities::SmartDestructor<T>::Destruct(*i_end);
+            }
 
             T *New()
             {
@@ -80,11 +89,12 @@ namespace Urasandesu { namespace CppAnonym {
                 private:
                     T *m_pObj_;
                 };
-                typedef TArray::iterator Iterator;
-                Iterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+                typedef TArray::iterator TIterator;
+                TIterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
                 if (obj != m_array.end())
                 {
-                    (*obj).~T();
+                    for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
+                        Utilities::SmartDestructor<T>::Destruct(*i);
                     m_array.erase(obj, m_array.end());
                 }
             }
@@ -98,19 +108,13 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 return &m_array[ix];
             }
-            
-            ~SimpleHeapImpl()
-            {
-                for (T const *i = &m_array[0], *i_end = i + m_array.size(); i != i_end; ++i)
-                    (*i).~T();
-            }
         
         private:    
             void DeleteLastCore()
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                pObj->~T();
+                Utilities::SmartDestructor<T *>::Destruct(pObj);
             }
 
             TArray m_array;
@@ -122,9 +126,23 @@ namespace Urasandesu { namespace CppAnonym {
         class SimpleHeapImpl<T, QuickHeap>
         {
         public:
+            typedef std::vector<T *> TArray;
+
             SimpleHeapImpl() : 
                 m_pool(sizeof(T))
             { }
+            
+            ~SimpleHeapImpl()
+            {
+                if (m_array.empty())
+                    return;
+
+                for (T **i = &m_array[0] - 1, **i_end = i + m_array.size(); i != i_end; --i_end)
+                {
+                    Utilities::SmartDestructor<T *>::Destruct(*i_end);
+                    m_pool.free(*i_end);
+                }
+            }
 
             inline T *New()
             {
@@ -171,13 +189,16 @@ namespace Urasandesu { namespace CppAnonym {
                 private:
                     T *m_pObj_;
                 };
-                typedef std::vector<T *>::iterator Iterator;
-                Iterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+                typedef TArray::iterator TIterator;
+                TIterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
                 if (obj != m_array.end())
                 {
-                    T *pObj_ = *obj;
+                    for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
+                    {
+                        Utilities::SmartDestructor<T *>::Destruct(*i);
+                        m_pool.free(*i);
+                    }
                     m_array.erase(obj, m_array.end());
-                    m_pool.free(pObj_);
                 }
             }
             
@@ -196,12 +217,12 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                pObj->~T();
+                Utilities::SmartDestructor<T *>::Destruct(pObj);
                 m_pool.free(pObj);
             }
 
             boost::pool<> m_pool;
-            std::vector<T *> m_array;
+            TArray m_array;
         };
     
         template<class T>

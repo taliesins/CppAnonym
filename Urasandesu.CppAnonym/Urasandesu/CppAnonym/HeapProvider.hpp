@@ -20,46 +20,61 @@ namespace Urasandesu { namespace CppAnonym {
         
         namespace mpl = boost::mpl;
 
-        template<class Key, class Sequence, class I, class IEnd, class Tag>
+        template<class Key, class Sequence, class I, class IEnd>
         class ATL_NO_VTABLE HeapProviderImpl : 
-            public HeapProviderImpl<Key, Sequence, typename mpl::next<I>::type, IEnd, Tag>
+            public HeapProviderImpl<Key, Sequence, typename mpl::next<I>::type, IEnd>
         {
         private:
-            typedef HeapProviderImpl<Key, Sequence, I, IEnd, Tag> this_type;
+            typedef HeapProviderImpl<Key, Sequence, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type obj_type;
+            
+            typedef SimpleHeap<obj_type> factory_type;
+
+            typedef boost::hash<Key> hash_type;
+            typedef std::equal_to<Key> equal_to_type;
+            typedef std::allocator<std::pair<const Key, SIZE_T>> allocator_type;
+            typedef boost::unordered_map<Key, SIZE_T, hash_type, equal_to_type, allocator_type> indexes_type;
+            
             typedef typename boost::call_traits<Key>::param_type key_param_type;
 
-            boost::shared_ptr<SimpleHeap<obj_type, Tag>> mutable m_pObjFactory;
-            boost::unordered_map<Key, SIZE_T> mutable m_objIndexes;
+            boost::shared_ptr<factory_type> mutable m_pFactory;
+            boost::shared_ptr<indexes_type> mutable m_pIndexes;
             
-            inline SimpleHeap<obj_type, Tag> *GetHeap() const
+            inline factory_type &Factory() const
             {
                 BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
                 
-                if (!m_pObjFactory.get())
-                    m_pObjFactory = boost::make_shared<SimpleHeap<obj_type, Tag>>();
-                return m_pObjFactory.get();
+                if (!m_pFactory.get())
+                    m_pFactory = boost::make_shared<factory_type>();
+                return *m_pFactory.get();
+            }
+            
+            inline indexes_type &Indexes() const
+            {
+                if (!m_pIndexes.get())
+                    m_pIndexes = boost::make_shared<indexes_type>();
+                return *m_pIndexes.get();
             }
 
         public:
             inline SIZE_T Size() const
             {
-                return GetHeap()->Size();
+                return Factory().Size();
             }
             
             inline bool Exists(key_param_type key) const
             {
-                return m_objIndexes.find(key) != m_objIndexes.end();
+                return Indexes().find(key) != Indexes().end();
             }
             
             inline obj_type *Get(key_param_type key)
             {
-                return (*GetHeap())[m_objIndexes[key]];
+                return Factory()[Indexes()[key]];
             }
             
             inline obj_type const *Get(key_param_type key) const
             {
-                return (*GetHeap())[m_objIndexes[key]];
+                return Factory()[Indexes()[key]];
             }
             
             inline obj_type *GetOrNew(key_param_type key)
@@ -69,7 +84,7 @@ namespace Urasandesu { namespace CppAnonym {
             
             inline void Set(key_param_type key, SIZE_T index)
             {
-                m_objIndexes[key] = index;
+                Indexes()[key] = index;
                 Get(key)->SetKey(key);
             }
             
@@ -80,22 +95,22 @@ namespace Urasandesu { namespace CppAnonym {
             
             inline obj_type *NewPseudo()
             {
-                obj_type *pObj = GetHeap()->New();
+                obj_type *pObj = Factory().New();
                 return pObj;
             }
 
             inline obj_type *New(key_param_type key)
             {
-                if (Exists(key))    // VeryQuickHeap のアドバンテージの内、5 割持ってく・・・ふええ
+                if (Exists(key))
                     Get(key)->SetKey(Key());
-                obj_type *pObj = GetHeap()->New();
-                SetToLast(key);     // VeryQuickHeap のアドバンテージの内、9 割持ってく・・・ふええ
+                obj_type *pObj = Factory().New();
+                SetToLast(key);
                 return pObj;
             }
             
             inline obj_type *Peek() const
             {
-                return GetHeap()->Size() == 0 ? NULL : (*GetHeap())[GetHeap()->Size() - 1];
+                return Factory().Size() == 0 ? NULL : Factory()[Factory().Size() - 1];
             }
 
             inline void DeleteLast()
@@ -103,18 +118,17 @@ namespace Urasandesu { namespace CppAnonym {
                 obj_type *pObj = Peek();
                 if (pObj != NULL)
                 {
-                    m_objIndexes.erase(pObj->GetKey());
-                    GetHeap()->DeleteLast();
+                    Indexes().erase(pObj->GetKey());
+                    Factory().DeleteLast();
                 }
             }
         };
 
-        template<class Key, class Sequence, class Tag>
+        template<class Key, class Sequence>
         class ATL_NO_VTABLE HeapProviderImpl<Key, 
                                              Sequence, 
                                              typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type, 
-                                             Tag> : 
+                                             typename Traits::DistinctEnd<Sequence>::type> : 
             boost::noncopyable
         {
         };
@@ -122,13 +136,12 @@ namespace Urasandesu { namespace CppAnonym {
     }   // namespace Detail
 
 
-    template<class Key, class Sequence, class Tag>
+    template<class Key, class Sequence>
     class ATL_NO_VTABLE HeapProvider : 
         Detail::HeapProviderImpl<Key, 
                                  Sequence, 
                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                 typename Traits::DistinctEnd<Sequence>::type, 
-                                 Tag>
+                                 typename Traits::DistinctEnd<Sequence>::type>
     {
     public:
         typedef Key key_type;
@@ -144,8 +157,7 @@ namespace Urasandesu { namespace CppAnonym {
                     typename Traits::Distinct<Sequence>::type,
                     T
                 >::type,
-                typename Traits::DistinctEnd<Sequence>::type, 
-                Tag
+                typename Traits::DistinctEnd<Sequence>::type
             > type;
         };
 
@@ -168,7 +180,7 @@ namespace Urasandesu { namespace CppAnonym {
 #define CPPANONYM_BEGIN_HEAP_PROVIDER_DECLARATION() \
     private: \
         template<class T> \
-        Urasandesu::CppAnonym::SimpleHeap<T> *GetHeap(); \
+        Urasandesu::CppAnonym::SimpleHeap<T> *Factory(); \
     public: \
         template<class T> \
         SIZE_T Size(); \
@@ -201,7 +213,7 @@ namespace Urasandesu { namespace CppAnonym {
         boost::unordered_map<key_, SIZE_T> name##Indexes; \
          \
         template<> \
-        Urasandesu::CppAnonym::SimpleHeap<t> *GetHeap() \
+        Urasandesu::CppAnonym::SimpleHeap<t> *Factory() \
         { \
             if (!name.get()) \
             { \
@@ -213,7 +225,7 @@ namespace Urasandesu { namespace CppAnonym {
         template<> \
         SIZE_T Size<t>() \
         { \
-            return GetHeap<t>()->Size(); \
+            return Factory<t>()->Size(); \
         } \
          \
         template<> \
@@ -225,7 +237,7 @@ namespace Urasandesu { namespace CppAnonym {
         template<> \
         t *Get(key_ key) \
         { \
-            return (*GetHeap<t>())[name##Indexes[key]]; \
+            return (*Factory<t>())[name##Indexes[key]]; \
         } \
          \
         template<> \
@@ -244,7 +256,7 @@ namespace Urasandesu { namespace CppAnonym {
         template<> \
         t *NewPseudo() \
         { \
-            t *pObj = GetHeap<t>()->New(); \
+            t *pObj = Factory<t>()->New(); \
             return pObj; \
         } \
          \
@@ -255,7 +267,7 @@ namespace Urasandesu { namespace CppAnonym {
             { \
                 Get<t>(key)->SetKey(key_()); \
             } \
-            t *pObj = GetHeap<t>()->New(); \
+            t *pObj = Factory<t>()->New(); \
             SetToLast<t>(key); \
             return pObj; \
         } \
@@ -263,13 +275,13 @@ namespace Urasandesu { namespace CppAnonym {
         template<> \
         t *Peek() \
         { \
-            if (GetHeap<t>()->Size() == 0) \
+            if (Factory<t>()->Size() == 0) \
             { \
                 return NULL; \
             } \
             else \
             { \
-                return (*GetHeap<t>())[GetHeap<t>()->Size() - 1]; \
+                return (*Factory<t>())[Factory<t>()->Size() - 1]; \
             } \
         }
 

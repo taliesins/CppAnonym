@@ -6,13 +6,13 @@ namespace Urasandesu { namespace CppAnonym {
     
     namespace Detail {
         
-        template<class Key, class Sequence, class I, class IEnd, class Tag>
+        template<class Key, class Sequence, class I, class IEnd>
         class ATL_NO_VTABLE HeapProviderImpl;
 
     }   // namespace Detail
 
 
-    template<class Key, class Sequence, class Tag = DefaultHeap>
+    template<class Key, class Sequence>
     class ATL_NO_VTABLE HeapProvider;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
