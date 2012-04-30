@@ -170,6 +170,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
@@ -239,6 +240,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviours.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeKinds.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\ObjectTag.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\ObjectTagFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAppDomainProfile.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAssemblyProfile.h" />
@@ -256,6 +259,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProvider.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />
@@ -275,6 +281,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPointer.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultEqualTo.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultHash.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ValueConverter.h" />
   </ItemGroup>

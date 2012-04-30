@@ -46,6 +46,10 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
@@ -56,6 +60,10 @@
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #include <Urasandesu/CppAnonym/SimpleHeap.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STACKFRAME_H

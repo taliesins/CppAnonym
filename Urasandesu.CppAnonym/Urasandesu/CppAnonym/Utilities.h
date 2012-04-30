@@ -18,6 +18,10 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_VALUECONVERTER_H
 #include <Urasandesu/CppAnonym/Utilities/ValueConverter.h>
 #endif

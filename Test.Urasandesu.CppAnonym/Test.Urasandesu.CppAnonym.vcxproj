@@ -114,6 +114,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74BTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostProto07F03042Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataProtoB8DF5A21Test.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495Test.cpp" />
@@ -128,6 +130,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ExternalApiStrategiesTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultEqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultHashTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

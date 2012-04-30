@@ -6,10 +6,11 @@
 #include <Urasandesu/CppAnonym/Traits/HasConst.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Collections {
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
+#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.h>
+#endif
 
-    template<class T, class Alloc, DWORD RAPID_SIZE>
-    class RapidVector;
+namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     namespace Detail {
 
@@ -18,8 +19,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         template<
             class Value, 
             class T, 
-            class Alloc = std::allocator<T>, 
-            DWORD RAPID_SIZE = 512
+            class Alloc, 
+            DWORD RAPID_SIZE
         >
         class RapidVectorIterator : 
             public boost::iterator_facade<
@@ -133,7 +134,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         
     }   // namespace Detail
 
-    template<class T, class Alloc = std::allocator<T>, DWORD RAPID_SIZE = 512>
+    template<class T, class Alloc, DWORD RAPID_SIZE>
     class RapidVector
     {
     public:

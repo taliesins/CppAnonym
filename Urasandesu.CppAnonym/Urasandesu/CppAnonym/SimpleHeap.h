@@ -2,8 +2,12 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #define URASANDESU_CPPANONYM_SIMPLEHEAP_H
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
+#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
+#include <Urasandesu/CppAnonym/SimpleHeapFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
@@ -34,7 +38,7 @@ namespace Urasandesu { namespace CppAnonym {
                     return;
 
                 for (T *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
-                    Utilities::SmartDestructor<T>::Destruct(*i_end);
+                    Utilities::DestructionDistributor<T>::Destruct(*i_end);
             }
 
             T *New()
@@ -94,7 +98,7 @@ namespace Urasandesu { namespace CppAnonym {
                 if (obj != m_array.end())
                 {
                     for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
-                        Utilities::SmartDestructor<T>::Destruct(*i);
+                        Utilities::DestructionDistributor<T>::Destruct(*i);
                     m_array.erase(obj, m_array.end());
                 }
             }
@@ -114,7 +118,7 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                Utilities::SmartDestructor<T *>::Destruct(pObj);
+                Utilities::DestructionDistributor<T *>::Destruct(pObj);
             }
 
             TArray m_array;
@@ -139,7 +143,7 @@ namespace Urasandesu { namespace CppAnonym {
 
                 for (T **i = &m_array[0] - 1, **i_end = i + m_array.size(); i != i_end; --i_end)
                 {
-                    Utilities::SmartDestructor<T *>::Destruct(*i_end);
+                    Utilities::DestructionDistributor<T *>::Destruct(*i_end);
                     m_pool.free(*i_end);
                 }
             }
@@ -195,7 +199,7 @@ namespace Urasandesu { namespace CppAnonym {
                 {
                     for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
                     {
-                        Utilities::SmartDestructor<T *>::Destruct(*i);
+                        Utilities::DestructionDistributor<T *>::Destruct(*i);
                         m_pool.free(*i);
                     }
                     m_array.erase(obj, m_array.end());
@@ -217,7 +221,7 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                Utilities::SmartDestructor<T *>::Destruct(pObj);
+                Utilities::DestructionDistributor<T *>::Destruct(pObj);
                 m_pool.free(pObj);
             }
 
@@ -289,7 +293,7 @@ namespace Urasandesu { namespace CppAnonym {
     
     template<
         class T, 
-        class Tag = DefaultHeap
+        class Tag
     >
     class SimpleHeap
     {
