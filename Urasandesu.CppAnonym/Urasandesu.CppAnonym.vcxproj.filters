@@ -192,9 +192,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -405,9 +402,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -513,10 +507,16 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.h">
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.h">
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
     </ClInclude>
   </ItemGroup>

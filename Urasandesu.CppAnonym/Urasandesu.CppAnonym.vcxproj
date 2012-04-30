@@ -169,8 +169,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
@@ -258,8 +258,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h" />

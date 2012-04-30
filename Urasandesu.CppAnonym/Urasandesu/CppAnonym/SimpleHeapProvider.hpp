@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Traits/Distinct.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
-#include <Urasandesu/CppAnonym/SimpleHeapFwd.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP

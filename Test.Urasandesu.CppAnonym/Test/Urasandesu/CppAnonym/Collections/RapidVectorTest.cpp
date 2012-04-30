@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
-#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
+#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Collections_RapidVectorTest.*

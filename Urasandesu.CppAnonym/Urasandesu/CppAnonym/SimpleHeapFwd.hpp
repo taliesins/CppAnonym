@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
-#define URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
+#define URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
 
 namespace Urasandesu { namespace CppAnonym {
     
@@ -26,4 +26,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}  // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
+#endif  // URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP

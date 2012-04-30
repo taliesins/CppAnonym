@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
-#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
+#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
 
 namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
@@ -21,4 +21,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
+#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP

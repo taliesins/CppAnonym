@@ -58,8 +58,8 @@
 #include <Urasandesu/CppAnonym/SimpleBlob.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
-#include <Urasandesu/CppAnonym/SimpleHeap.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP

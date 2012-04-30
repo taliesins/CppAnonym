@@ -1,13 +1,13 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
-#define URASANDESU_CPPANONYM_SIMPLEHEAP_H
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#define URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
-#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.h>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
+#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
-#include <Urasandesu/CppAnonym/SimpleHeapFwd.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
@@ -328,4 +328,4 @@ namespace Urasandesu { namespace CppAnonym {
     
 }}  // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // URASANDESU_CPPANONYM_SIMPLEHEAP_H
+#endif  // URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
