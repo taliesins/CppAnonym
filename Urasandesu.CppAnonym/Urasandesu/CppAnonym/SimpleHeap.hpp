@@ -103,12 +103,17 @@ namespace Urasandesu { namespace CppAnonym {
                 }
             }
 
-            inline SIZE_T Size()
+            inline SIZE_T Size() const
             {
                 return m_array.size();
             }
             
             inline T *operator[] (SIZE_T ix)
+            {
+                return &m_array[ix];
+            }
+            
+            inline T const *operator[] (SIZE_T ix) const
             {
                 return &m_array[ix];
             }
@@ -206,12 +211,17 @@ namespace Urasandesu { namespace CppAnonym {
                 }
             }
             
-            inline SIZE_T Size()
+            inline SIZE_T Size() const
             {
                 return m_array.size();
             }
             
             inline T *operator[] (SIZE_T ix)
+            {
+                return m_array[ix];
+            }
+            
+            inline T const *operator[] (SIZE_T ix) const
             {
                 return m_array[ix];
             }
@@ -276,12 +286,17 @@ namespace Urasandesu { namespace CppAnonym {
                 m_array.erase_if(m_array.begin(), m_array.end(), EqualTo(pObj));
             }
             
-            inline SIZE_T Size()
+            inline SIZE_T Size() const
             {
                 return m_array.size();
             }
             
             inline T *operator[] (SIZE_T ix)
+            {
+                return &m_array[ix];
+            }
+            
+            inline T const *operator[] (SIZE_T ix) const
             {
                 return &m_array[ix];
             }
@@ -315,12 +330,17 @@ namespace Urasandesu { namespace CppAnonym {
             m_impl.Delete(pObj);
         }
         
-        inline SIZE_T Size()
+        inline SIZE_T Size() const
         {
             return m_impl.Size();
         }
 
         inline T *operator[] (SIZE_T ix)
+        {
+            return m_impl[ix];
+        }
+
+        inline T const *operator[] (SIZE_T ix) const
         {
             return m_impl[ix];
         }

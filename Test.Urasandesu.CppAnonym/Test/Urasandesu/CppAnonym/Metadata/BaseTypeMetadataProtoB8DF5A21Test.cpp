@@ -48,6 +48,18 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
@@ -65,6 +77,144 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     };
 
     struct ITypeMetadataApi { };
+
+
+    class Instruction
+    {
+    public:
+        Instruction() : 
+            m_pOpCode(NULL)
+        { }
+    
+        OpCodeProtoB8DF5A21 const &GetOpCode() const
+        {
+            return *m_pOpCode;
+        }
+        
+        void SetOpCode(OpCodeProtoB8DF5A21 const &opCode)
+        {
+            m_pOpCode = &opCode;
+        }
+
+        boost::any const &GetOprand() const
+        {
+            return m_oprand;
+        }
+
+        void SetOprand(boost::any const &oprand)
+        {
+            m_oprand = oprand;
+        }
+
+    private:
+        OpCodeProtoB8DF5A21 const *m_pOpCode;
+        boost::any m_oprand;
+    };
+    
+    struct DefaultILGeneratorApiProtoB8DF5A21 { };
+
+    template<
+        class ILGeneratorApiType = DefaultILGeneratorApiProtoB8DF5A21
+    >
+    class BaseILGeneratorProtoB8DF5A21 :
+        public SimpleHeapProvider<
+            boost::mpl::vector<
+                ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator>
+            >
+        >
+    {
+    public:
+        typedef BaseILGeneratorProtoB8DF5A21<ILGeneratorApiType> this_type;
+
+        typedef typename Traits::ParentApiOrDefault<ILGeneratorApiType, IMethodMetadataApi>::type method_metadata_api_type;
+        typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
+
+        //typedef typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, IMetadataDispenserApi>::type metadata_dispenser_api_type;
+        //typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
+        // Parent ～とか Child ～とか区別するのがあほらしくなってきた・・・orz
+
+        typedef ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator> instruction_obj_tag_type;
+        typedef typename type_decided_by<instruction_obj_tag_type>::type instruction_heap_type;
+
+        BaseILGeneratorProtoB8DF5A21() : 
+            m_instructionsInitialized(false)
+        { }
+        
+        void Init(method_metadata_type &methodMeta) const
+        {
+            _ASSERTE(m_pMethodMeta == NULL);
+            
+            m_pMethodMeta = &methodMeta;
+        }
+
+        template<class T>
+        T const *FindType() const { return static_cast<method_metadata_type const *>(m_pMethodMeta)->FindType<T>(); }
+
+        template<class T>
+        T *FindType() { return m_pMethodMeta->FindType<T>(); }
+      
+        template<>
+        this_type const *FindType<this_type>() const { return this; }
+      
+        template<>
+        this_type *FindType<this_type>() { return this; }
+
+        void EmitWriteLine(LPCWSTR s)
+        {
+            typedef OpCodesProtoB8DF5A21 OpCodes;
+            {
+                Instruction *pInst = InstructionHeap().New();
+                pInst->SetOpCode(OpCodes::Ldstr);
+                pInst->SetOprand(std::wstring(s));
+            }
+            {
+                Instruction *pInst = InstructionHeap().New();
+                pInst->SetOpCode(OpCodes::Call);
+
+
+                //pInst->SetOprand(std::wstring(s));
+            }
+            m_instructionsInitialized = false;
+        }
+
+        void Emit(OpCodeProtoB8DF5A21 const &op)
+        {
+            Instruction *pInst = InstructionHeap().New();
+            pInst->SetOpCode(op);
+            m_instructionsInitialized = false;
+        }
+
+        std::vector<Instruction const *> const &GetInstructions() const
+        {
+            if (!m_instructionsInitialized)
+            {
+                SIZE_T size = InstructionHeap().Size();
+                std::vector<Instruction const *> instructions(size);
+                for (SIZE_T i = 0; i < size; ++i)
+                    instructions[i] = InstructionHeap()[i];
+                instructions.swap(m_instructions);
+                m_instructionsInitialized = true;
+            }
+            return m_instructions;
+        }
+
+    private:
+        instruction_heap_type &InstructionHeap()
+        {
+            return Of<instruction_obj_tag_type>();
+        }
+        
+        instruction_heap_type const &InstructionHeap() const
+        {
+            return Of<instruction_obj_tag_type>();
+        }
+
+        mutable method_metadata_type *m_pMethodMeta;
+        mutable bool m_instructionsInitialized;
+        mutable std::vector<Instruction const *> m_instructions;
+    };
+
+    typedef BaseILGeneratorProtoB8DF5A21<> ILGeneratorProtoB8DF5A21;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -321,101 +471,40 @@ namespace {
     }
 
     
+
+    
     TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_07)
     {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
+        using boost::any_cast;
 
+        typedef MethodMetadataProtoB8DF5A21 MethodMetadata;
         typedef OpCodesProtoB8DF5A21 OpCodes;
         typedef OpCodeProtoB8DF5A21 OpCode;
-#if 0
         typedef ILGeneratorProtoB8DF5A21 ILGenerator;
-        typedef InstructionProtoB8DF5A21 Instruction;
         ILGenerator gen;
         gen.EmitWriteLine(L"Hello, world!!");
         gen.Emit(OpCodes::Ret);
 
-        std::vector<boost::shared_ptr<Instruction const> > const &insts = gen.GetInstructions();
-#endif
-        // Instruction は ILGenerator が管理する？
-        // →いや、そうすると、「この命令いらない」が簡単にできなくなるのか。
-        //   →DeleteLast の Random Access 版を作るのはそこまで難しいことではない。
-        //
-        // コピーで引き回す。
-        // →いや、そうすると、「この命令とこの命令の間に挿入」とか「この命令をこっちの命令に置き換え」みたいなことができないか。
-        //   →全くできないってことはないけど、Instruction ID みたいな Primary Key 作って管理する必要がある。
-        //     →それはめんどう・・・。
-        // 
-        // Instruction の構造を考えてみる。
-        struct Instruction
-        {
-            OpCode *opcode;
-            boost::any operand;
-            Instruction *prev;
-            Instruction *next;
-        };
-
-        std::cout << "Size of: " << sizeof(Instruction) << std::endl;
-        // 12 バイト
-        // →微妙・・・。Boost.Pool 使ってみよう。
-        //   →あかん、shared_ptr と一緒に使うには、pool_allocator 使わなきゃだけど、
-        //     中で Singleton_pool 使ってる。これだと、確保→消去する Memory の単位は
-        //     「Tag 単位」「型単位」しかない・・・。
-        //     このインスタンスが消えたら、保持していた Memory 一緒に消すっていうのが無い・・・。
-
-        // カスタムアロケータ作るしかなさそう・・・。
-        // →アロケータは状態を持ってはいけないことになってる。ほげぇ・・・。
-
-        // Boost.Pool 版はやっぱりそんなに早くない。
-        // →でも RapidVector 利用版は、ある閾値越えると、昔作った要素保持してても無効になっちゃう件。
-        //   →まあ、昔作った要素触る時は、必ず operator [] 経由で見ればいいだけなので、気にしなくていいっちゃいい。
-        //     →やっぱり RapidVector 利用版そのまま使うほうが良さそう。ポインタの引き回しだけしないようにしたい。
-        //       →そうなると、Instruction *prev とかはだめ。もう一度 Instrcution の構造考えてみるか・・・。
-
-#if 0
         std::vector<Instruction const *> const &insts = gen.GetInstructions();
-        // この中で遅延初期化するのがいいのか・・・？
-
-        template<
-            class ILGeneratorApiType = DefaultILGeneratorApiProtoB8DF5A21
-        >
-        class ILGenerator :
-            public HeapProvider<
-                size_t, 
-                boost::mpl::vector<
-                    Instruction 
-                >,
-                VeryQuickHeapButMustUseSubscriptOperator
-            >
+        ASSERT_EQ(3, insts.size());
         {
-        public:
-            typedef ILGenerator<ILGeneratorApiType> this_type;
-
-            ILGenerator() : 
-                m_instructionsInitialized(false)
-            { }
-
-            std::vector<Instruction const *> const &GetInstructions() const
-            {
-                if (!m_instructionsInitialized)
-                {
-                    typedef typename type_decided_by<Instruction>::type InstructionHeap;
-                    InstructionHeap &heap = Of<Instruction>();
-                }
-                return m_instructions;
-            }
-
-        private:
-            mutable bool m_instructionsInitialized;
-            std::vector<Instruction const *> m_instructions;
-        };
-#endif   
-
-        //StackBehaviour expected = StackBehaviours::PopRef;
-        //expected += StackBehaviours::PopI;
-     
-        //typedef OpCodesProtoB8DF5A21 OpCodes;
-        //ASSERT_TRUE(expected != OpCodes::Stfld.GetBehaviour0());
+            OpCode const &op = insts[0]->GetOpCode();
+            std::wstring const &s = any_cast<std::wstring const &>(insts[0]->GetOprand());
+            ASSERT_EQ(&OpCodes::Ldstr, &op);
+            ASSERT_STREQ(L"Hello, world!!", s.c_str());
+        }
+        {
+            OpCode const &op = insts[1]->GetOpCode();
+            MethodMetadata const *pMethodMeta = any_cast<MethodMetadata const *>(insts[1]->GetOprand());
+            ASSERT_EQ(&OpCodes::Call, &op);
+            ASSERT_EQ(0x060007C9, pMethodMeta->GetToken());
+        }
+        {
+            OpCode const &op = insts[2]->GetOpCode();
+            ASSERT_EQ(&OpCodes::Ret, &op);
+        }
     }
 }

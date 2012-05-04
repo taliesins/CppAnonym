@@ -50,6 +50,11 @@ namespace Urasandesu { namespace CppAnonym {
                 return Factory()[ix];
             }
 
+            inline object_type const *operator[] (SIZE_T ix) const
+            {
+                return Factory()[ix];
+            }
+
             inline object_type *New()
             {
                 return Factory().New();
