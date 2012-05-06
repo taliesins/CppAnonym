@@ -13,10 +13,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct DefaultAssemblyMetadataApiProtoB8DF5A21 : 
         IAssemblyMetadataApi
     {
-        typedef DefaultMetadataDispenserApiProtoB8DF5A21 parent_api_type;
-        typedef boost::mpl::vector<DefaultAssemblyNameMetadataApiProtoB8DF5A21, 
+        //typedef DefaultMetadataDispenserApiProtoB8DF5A21 parent_api_type;
+        typedef boost::mpl::vector<DefaultMetadataDispenserApiProtoB8DF5A21, 
+                                   DefaultAssemblyNameMetadataApiProtoB8DF5A21, 
                                    DefaultTypeMetadataApiProtoB8DF5A21, 
-                                   IMetaDataImport2> child_api_types;
+                                   IMetaDataImport2> external_api_types;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

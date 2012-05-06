@@ -11,7 +11,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct DefaultTypeMetadataApiProtoB8DF5A21 : 
         ITypeMetadataApi
     {
-        typedef DefaultAssemblyMetadataApiProtoB8DF5A21 parent_api_type;
+        //typedef DefaultAssemblyMetadataApiProtoB8DF5A21 parent_api_type;
+        typedef boost::mpl::vector<DefaultAssemblyMetadataApiProtoB8DF5A21> external_api_types;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

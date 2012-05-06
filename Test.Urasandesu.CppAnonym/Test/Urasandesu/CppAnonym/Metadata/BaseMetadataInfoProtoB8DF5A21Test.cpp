@@ -20,6 +20,10 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     template<

@@ -56,22 +56,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                StrongNaming::BaseStrongNameInfoProto4236D495<typename Traits::ChildApiOrDefault<RuntimeHostApiType, StrongNaming::IStrongNameInfoApi>::type>, 
-                Metadata::BaseMetadataInfoProtoB8DF5A21<typename Traits::ChildApiOrDefault<RuntimeHostApiType, Metadata::IMetadataInfoApi>::type>, 
-                Fusion::BaseFusionInfoProto3CBCB74B<typename Traits::ChildApiOrDefault<RuntimeHostApiType, Fusion::IFusionInfoApi>::type>
+                StrongNaming::BaseStrongNameInfoProto4236D495<typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, StrongNaming::IStrongNameInfoApi>::type>, 
+                Metadata::BaseMetadataInfoProtoB8DF5A21<typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, Metadata::IMetadataInfoApi>::type>, 
+                Fusion::BaseFusionInfoProto3CBCB74B<typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, Fusion::IFusionInfoApi>::type>
             >
         >
     {
     public:
         typedef BaseRuntimeHostProto07F03042<RuntimeHostApiType> this_type;
         
-        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, StrongNaming::IStrongNameInfoApi>::type strong_naming_info_api_type;
+        typedef typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, StrongNaming::IStrongNameInfoApi>::type strong_naming_info_api_type;
         typedef StrongNaming::BaseStrongNameInfoProto4236D495<strong_naming_info_api_type> strong_name_info_type;
 
-        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, Metadata::IMetadataInfoApi>::type metadata_info_api_type;
+        typedef typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, Metadata::IMetadataInfoApi>::type metadata_info_api_type;
         typedef Metadata::BaseMetadataInfoProtoB8DF5A21<metadata_info_api_type> metadata_info_type;
         
-        typedef typename Traits::ChildApiOrDefault<RuntimeHostApiType, Fusion::IFusionInfoApi>::type fusion_info_api_type;
+        typedef typename Traits::ExternalApiOrDefault<RuntimeHostApiType, IRuntimeHostApi, Fusion::IFusionInfoApi>::type fusion_info_api_type;
         typedef Fusion::BaseFusionInfoProto3CBCB74B<fusion_info_api_type> fusion_info_type;
 
         BaseRuntimeHostProto07F03042() : 

@@ -29,7 +29,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     {
         typedef boost::mpl::vector<StrongNaming::DefaultStrongNameInfoApiProto4236D495, 
                                    Metadata::DefaultMetadataInfoApiProtoB8DF5A21, 
-                                   Fusion::DefaultFusionInfoApiProto3CBCB74B> child_api_types;
+                                   Fusion::DefaultFusionInfoApiProto3CBCB74B> external_api_types;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {

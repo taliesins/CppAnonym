@@ -53,14 +53,14 @@ namespace {
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
-            typedef TestMetadataDispenserApi parent_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            //typedef TestMetadataDispenserApi parent_api_type;
+            typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
         };
 
         struct TestMetadataDispenserApi : 
             IMetadataDispenserApi
         {
-            typedef boost::mpl::vector<TestAssemblyMetadataApi> child_api_types;
+            typedef boost::mpl::vector<TestAssemblyMetadataApi> external_api_types;
         };
         typedef BaseMetadataDispenserProtoB8DF5A21<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;
@@ -96,14 +96,14 @@ namespace {
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
-            typedef TestMetadataDispenserApi parent_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            //typedef TestMetadataDispenserApi parent_api_type;
+            typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
         };
 
         struct TestMetadataDispenserApi : 
             IMetadataDispenserApi
         {
-            typedef boost::mpl::vector<TestAssemblyMetadataApi> child_api_types;
+            typedef boost::mpl::vector<TestAssemblyMetadataApi> external_api_types;
         };
         typedef BaseMetadataDispenserProtoB8DF5A21<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;

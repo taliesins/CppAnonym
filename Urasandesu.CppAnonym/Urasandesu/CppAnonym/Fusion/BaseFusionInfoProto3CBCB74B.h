@@ -26,6 +26,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     template<class ApiType, class IApiType>
     struct ParentApiOrDefault;
 
+    template<class ApiType, class ApiTypeInterface, class IExternalApiType>
+    struct ExternalApiOrDefault;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
@@ -34,6 +37,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
     struct DefaultFusionInfoApiProto3CBCB74B;
 
+    struct IFusionInfoApi;
 
     template<
         class FusionInfoApiType = DefaultFusionInfoApiProto3CBCB74B
@@ -42,7 +46,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         public IHeapContent<std::wstring>
     {
     public:
-        typedef typename Traits::ParentApiOrDefault<FusionInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
+        typedef typename Traits::ExternalApiOrDefault<FusionInfoApiType, IFusionInfoApi, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
         typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
 
         BaseFusionInfoProto3CBCB74B() : 

@@ -35,9 +35,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct DefaultAssemblyNameMetadataApiProtoB8DF5A21 : 
         IAssemblyNameMetadataApi 
     { 
-        typedef DefaultAssemblyMetadataApiProtoB8DF5A21 parent_api_type;
-        typedef boost::mpl::vector<IMetaDataAssemblyImport, 
-                                   StrongNaming::DefaultStrongNameInfoApiProto4236D495> child_api_types;
+        //typedef DefaultAssemblyMetadataApiProtoB8DF5A21 parent_api_type;
+        typedef boost::mpl::vector<DefaultAssemblyMetadataApiProtoB8DF5A21, 
+                                   IMetaDataAssemblyImport, 
+                                   StrongNaming::DefaultStrongNameInfoApiProto4236D495> external_api_types;
     };
 
 
@@ -58,15 +59,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseAssemblyNameMetadataProtoB8DF5A21<AssemblyNameMetadataApiType> this_type;
 
-        typedef typename Traits::ParentApiOrDefault<AssemblyNameMetadataApiType, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyNameMetadataApiType, IAssemblyNameMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
         typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
 
-        typedef typename Traits::ChildApiOrDefault<AssemblyNameMetadataApiType, IMetaDataAssemblyImport>::type metadata_assembly_import_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyNameMetadataApiType, IAssemblyNameMetadataApi, IMetaDataAssemblyImport>::type metadata_assembly_import_api_type;
 
-        typedef typename Traits::ChildApiOrDefault<AssemblyNameMetadataApiType, StrongNaming::IStrongNameInfoApi>::type strong_name_info_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyNameMetadataApiType, IAssemblyNameMetadataApi, StrongNaming::IStrongNameInfoApi>::type strong_name_info_api_type;
         typedef StrongNaming::BaseStrongNameInfoProto4236D495<strong_name_info_api_type> strong_name_info_type;
 
-        typedef typename Traits::ChildApiOrDefault<strong_name_info_api_type, StrongNaming::IStrongNameKeyApi>::type strong_name_key_api_type;
+        typedef typename Traits::ExternalApiOrDefault<strong_name_info_api_type, StrongNaming::IStrongNameInfoApi, StrongNaming::IStrongNameKeyApi>::type strong_name_key_api_type;
         typedef StrongNaming::BaseStrongNameKeyProto4236D495<strong_name_key_api_type> strong_name_key_type;
 
         BaseAssemblyNameMetadataProtoB8DF5A21() : 
@@ -180,23 +181,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public HeapProvider<
             mdToken, 
             boost::mpl::vector<
-                BaseTypeMetadataProtoB8DF5A21<typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, ITypeMetadataApi>::type>, 
-                BaseAssemblyNameMetadataProtoB8DF5A21<typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, IAssemblyNameMetadataApi>::type> 
+                BaseTypeMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, ITypeMetadataApi>::type>, 
+                BaseAssemblyNameMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IAssemblyNameMetadataApi>::type> 
             >
         >
     {
     public:
         typedef BaseAssemblyMetadataProtoB8DF5A21<AssemblyMetadataApiType> this_type;
         
-        typedef typename Traits::ParentApiOrDefault<AssemblyMetadataApiType, IMetadataDispenserApi>::type metadata_dispenser_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IMetadataDispenserApi>::type metadata_dispenser_api_type;
         typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
         
-        typedef typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
-        typedef typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, ITypeMetadataApi>::type type_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
         typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
         
-        typedef typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, IAssemblyNameMetadataApi>::type assembly_name_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IAssemblyNameMetadataApi>::type assembly_name_metadata_api_type;
         typedef BaseAssemblyNameMetadataProtoB8DF5A21<assembly_name_metadata_api_type> assembly_name_metadata_type;
 
         BaseAssemblyMetadataProtoB8DF5A21() : 

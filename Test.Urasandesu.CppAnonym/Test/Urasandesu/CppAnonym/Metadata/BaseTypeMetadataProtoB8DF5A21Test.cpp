@@ -111,7 +111,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         boost::any m_oprand;
     };
     
-    struct DefaultILGeneratorApiProtoB8DF5A21 { };
+    struct IILGeneratorApi { };
+
+    struct DefaultILGeneratorApiProtoB8DF5A21 : 
+        IILGeneratorApi
+    { 
+    };
 
     template<
         class ILGeneratorApiType = DefaultILGeneratorApiProtoB8DF5A21
@@ -126,7 +131,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseILGeneratorProtoB8DF5A21<ILGeneratorApiType> this_type;
 
-        typedef typename Traits::ParentApiOrDefault<ILGeneratorApiType, IMethodMetadataApi>::type method_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IMethodMetadataApi>::type method_metadata_api_type;
         typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
 
         //typedef typename Traits::ChildApiOrDefault<AssemblyMetadataApiType, IMetadataDispenserApi>::type metadata_dispenser_api_type;
@@ -258,7 +263,7 @@ namespace {
         {
             typedef INT assembly_metadata_api_type;
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<IMetaDataImport2> external_api_types;
         };
 
         typedef BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi> TypeMetadata;
@@ -297,8 +302,8 @@ namespace {
         struct TestMethodMetadataApi : 
             IMethodMetadataApi
         {
-            typedef TestTypeMetadataApi parent_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            //typedef TestTypeMetadataApi parent_api_type;
+            typedef boost::mpl::vector<TestTypeMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         struct TestTypeMetadataApi : 
@@ -306,7 +311,7 @@ namespace {
         {
             typedef INT assembly_metadata_api_type;
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         typedef BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi> TypeMetadata;
@@ -366,8 +371,8 @@ namespace {
         struct TestMethodMetadataApi : 
             IMethodMetadataApi
         {
-            typedef TestTypeMetadataApi parent_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            //typedef TestTypeMetadataApi parent_api_type;
+            typedef boost::mpl::vector<TestTypeMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         struct TestTypeMetadataApi : 
@@ -375,7 +380,7 @@ namespace {
         {
             typedef INT assembly_metadata_api_type;
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<TestMethodMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         typedef BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi> TypeMetadata;

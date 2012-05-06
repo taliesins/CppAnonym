@@ -8,11 +8,14 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    template<class ApiType, class IParentApiType>
-    struct ParentApiOrDefault;
+    //template<class ApiType, class IParentApiType>
+    //struct ParentApiOrDefault;
 
-    template<class ApiType, class IChildApiType>
-    struct ChildApiOrDefault;
+    //template<class ApiType, class IChildApiType>
+    //struct ChildApiOrDefault;
+
+    template<class ApiType, class ApiTypeInterface, class IExternalApiType>
+    struct ExternalApiOrDefault;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -24,7 +27,8 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     struct DefaultStrongNameKeyApiProto4236D495 : 
         IStrongNameKeyApi 
     { 
-        typedef DefaultStrongNameInfoApiProto4236D495 parent_api_type;
+        //typedef DefaultStrongNameInfoApiProto4236D495 parent_api_type;
+        typedef boost::mpl::vector<DefaultStrongNameInfoApiProto4236D495> external_api_types;
     };
 
 
@@ -43,7 +47,8 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     {
     public:
         typedef BaseStrongNameKeyProto4236D495<StrongNameKeyApiType> this_type;
-        typedef typename Traits::ParentApiOrDefault<StrongNameKeyApiType, IStrongNameInfoApi>::type strong_name_info_api_type;
+        
+        typedef typename Traits::ExternalApiOrDefault<StrongNameKeyApiType, IStrongNameKeyApi, IStrongNameInfoApi>::type strong_name_info_api_type;
         typedef BaseStrongNameInfoProto4236D495<strong_name_info_api_type> strong_name_info_type;
         
         BaseStrongNameKeyProto4236D495() : 

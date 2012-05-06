@@ -8,6 +8,18 @@
 #include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYPROTO4236D495_H
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyProto4236D495.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiProto07F03042.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAPROTOB8DF5A21_H
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataProtoB8DF5A21.h>
 #endif
@@ -28,13 +40,13 @@
 #include <Urasandesu/CppAnonym/Metadata/DefaultTypeMetadataApiProtoB8DF5A21.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
-#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYPROTO4236D495_H
-#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyProto4236D495.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOPROTO4236D495_H
+//#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoProto4236D495.h>
+//#endif
+//
+//#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYPROTO4236D495_H
+//#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyProto4236D495.h>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
@@ -203,7 +215,7 @@ namespace {
         struct TestAssemblyMetadataApi 
         {
             typedef INT metadata_dispenser_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<IMetaDataImport2> external_api_types;
         };
 
         typedef BaseAssemblyMetadataProtoB8DF5A21<TestAssemblyMetadataApi> AssemblyMetadata;
@@ -240,16 +252,16 @@ namespace {
         struct TestTypeMetadataApi : 
             ITypeMetadataApi
         {
-            typedef TestAssemblyMetadataApi parent_api_type;
+            //typedef TestAssemblyMetadataApi parent_api_type;
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<TestAssemblyMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
             typedef INT metadata_dispenser_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2, TestTypeMetadataApi> child_api_types;
+            typedef boost::mpl::vector<IMetaDataImport2, TestTypeMetadataApi> external_api_types;
         };
 
         typedef BaseAssemblyMetadataProtoB8DF5A21<TestAssemblyMetadataApi> AssemblyMetadata;
@@ -324,14 +336,14 @@ namespace {
         struct TestAssemblyNameMetadataApi : 
             IAssemblyNameMetadataApi
         {
-            typedef TestAssemblyMetadataApi parent_api_type;
-            typedef boost::mpl::vector<IMetaDataAssemblyImport> child_api_types;
+            //typedef TestAssemblyMetadataApi parent_api_type;
+            typedef boost::mpl::vector<TestAssemblyMetadataApi, IMetaDataAssemblyImport> external_api_types;
         };
 
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
-            typedef boost::mpl::vector<TestAssemblyNameMetadataApi, IMetaDataImport2> child_api_types;
+            typedef boost::mpl::vector<TestAssemblyNameMetadataApi, IMetaDataImport2> external_api_types;
         };
 
         typedef BaseAssemblyMetadataProtoB8DF5A21<TestAssemblyMetadataApi> AssemblyMetadata;

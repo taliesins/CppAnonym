@@ -44,9 +44,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseMethodMetadataProtoB8DF5A21<MethodMetadataApiType> this_type;
-        typedef typename Traits::ParentApiOrDefault<MethodMetadataApiType, ITypeMetadataApi>::type type_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
+        
         typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
-        typedef typename Traits::ChildApiOrDefault<MethodMetadataApiType, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
         void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
         {

@@ -11,364 +11,274 @@ namespace {
         using namespace Urasandesu::CppAnonym::Traits;
     }   // namespace UCT
 
-#if 0
-    struct DefaultHogedataInfoApi;
 
-    template<
-        class HogedataInfoApiType
-    >
-    class BaseHogedataInfo;
 
-    struct IHogedataDispenserApi { };
-
-    struct DefaultHogedataDispenserApi : 
-        IHogedataDispenserApi
-    {
-        typedef DefaultHogedataInfoApi parent_api_type;
-        typedef boost::mpl::vector<> child_api_types;
-    };
+    struct IClass1Api;
     
-    struct IHogedataInfoApi;
+    struct DefaultClass1Api;
 
     template<
-        class HogedataDispenserApiType = DefaultHogedataDispenserApi
+        class Class1ApiType
     >
-    class BaseHogedataDispenser
+    class BaseClass1;
+
+    struct IClass2Api;
+
+    struct DefaultClass2Api;
+    
+    template<
+        class Class2ApiType
+    >
+    class BaseClass2;
+
+    struct IClass3Api { };
+
+    struct DefaultClass3Api : 
+        IClass3Api
     {
-    public:
-
-        typedef typename UCT::ParentApiOrDefault<HogedataDispenserApiType, IHogedataInfoApi>::type hogedata_info_api_type;
-
-        BaseHogedataInfo<hogedata_info_api_type> *GetInfo() const
-        {
-            return NULL;
-        }
-    };
-
-
-    struct IHogedataInfoApi { };
-
-    struct DefaultHogedataInfoApi : 
-        IHogedataInfoApi
-    {
-        typedef boost::mpl::void_ parent_api_type;
-        typedef boost::mpl::vector<DefaultHogedataDispenserApi> child_api_types;
+        typedef boost::mpl::vector<DefaultClass1Api, DefaultClass2Api> external_api_types;
     };
 
     template<
-        class HogedataInfoApiType = DefaultHogedataInfoApi
+        class Class3ApiType = DefaultClass3Api
     >
-    class BaseHogedataInfo
+    class BaseClass3
     {
     public:
         
-        typedef typename UCT::ChildApiOrDefault<HogedataInfoApiType, IHogedataDispenserApi>::type hogedata_dispenser_api_type;
+        typedef typename UCT::ExternalApiOrDefault<Class3ApiType, IClass3Api, IClass1Api>::type class1_api_type;
+        typedef BaseClass1<class1_api_type> class1_type;
 
-        BaseHogedataDispenser<hogedata_dispenser_api_type> *GetDispenser() const
+        typedef typename UCT::ExternalApiOrDefault<Class3ApiType, IClass3Api, IClass2Api>::type class2_api_type;
+        typedef BaseClass2<class2_api_type> class2_type;
+
+        class1_type *GetClass1() const
+        {
+            return NULL;
+        }
+
+        class2_type *GetClass2() const
+        {
+            return NULL;
+        }
+    };
+
+    
+    
+    struct IClass2Api { };
+
+    struct DefaultClass2Api : 
+        IClass2Api
+    {
+        typedef boost::mpl::vector<DefaultClass1Api, DefaultClass3Api> external_api_types;
+    };
+    
+    template<
+        class Class2ApiType = DefaultClass2Api
+    >
+    class BaseClass2
+    {
+    public:
+        typedef typename UCT::ExternalApiOrDefault<Class2ApiType, IClass2Api, IClass1Api>::type class1_api_type;
+        typedef BaseClass1<class1_api_type> class1_type;
+
+        typedef typename UCT::ExternalApiOrDefault<Class2ApiType, IClass2Api, IClass3Api>::type class3_api_type;
+        typedef BaseClass3<class3_api_type> class3_type;
+
+        class1_type *GetClass1() const
+        {
+            return NULL;
+        }
+
+        class3_type *GetClass3() const
         {
             return NULL;
         }
     };
 
 
-    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, Test_01)
+
+    struct IClass1Api { };
+
+    struct DefaultClass1Api : 
+        IClass1Api
+    {
+        typedef boost::mpl::vector<DefaultClass2Api, DefaultClass3Api> external_api_types;
+    };
+
+    template<
+        class Class1ApiType = DefaultClass1Api
+    >
+    class BaseClass1
+    {
+    public:
+        
+        typedef typename UCT::ExternalApiOrDefault<Class1ApiType, IClass1Api, IClass2Api>::type class2_api_type;
+        typedef BaseClass2<class2_api_type> class2_type;
+        
+        typedef typename UCT::ExternalApiOrDefault<Class1ApiType, IClass1Api, IClass3Api>::type class3_api_type;
+        typedef BaseClass3<class3_api_type> class3_type;
+
+        class2_type *GetClass2() const
+        {
+            return NULL;
+        }
+
+        class3_type *GetClass3() const
+        {
+            return NULL;
+        }
+    };
+
+    
+
+
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass1_01)
     {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
-        typedef BaseHogedataInfo<> HogedataInfo;
-        HogedataInfo hogeInfo;
+        typedef BaseClass1<> Class1;
+        typedef Class1::class2_type Class2;
+        typedef Class2::class3_type Class3;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
 
-        hogeInfo.GetDispenser();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataInfo::hogedata_dispenser_api_type, DefaultHogedataDispenserApi>));
-
-        typedef BaseHogedataInfo<INT> HogedataInfo2;
-        HogedataInfo2 hogeInfo2;
-
-        hogeInfo2.GetDispenser();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataInfo2::hogedata_dispenser_api_type, DefaultChildApi<INT, IHogedataDispenserApi>>));
-
-        
-        typedef BaseHogedataDispenser<> HogedataDispenser;
-        HogedataDispenser hogeDisp;
-
-        hogeDisp.GetInfo();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_api_type, DefaultHogedataInfoApi>));
-
-        typedef BaseHogedataDispenser<INT> HogedataDispenser2;
-        HogedataDispenser2 hogeDisp2;
-        hogeDisp2.GetInfo();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser2::hogedata_info_api_type, DefaultParentApi<INT, IHogedataInfoApi>>));
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class1_api_type, DefaultClass1Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class1_type, Class1>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class1_api_type, DefaultClass1Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class1_type, Class1>));
     }
-#endif
 
 
-    struct IHogedataInfoApi;
-    
-    struct DefaultHogedataInfoApi;
-
-    template<
-        class HogedataInfoApiType
-    >
-    class BaseHogedataInfo;
-
-    struct IAssemblyHogedataApi { };
-
-    struct DefaultAssemblyHogedataApi : 
-        IAssemblyHogedataApi
-    {
-        typedef boost::mpl::vector<DefaultHogedataInfoApi> external_api_types;
-    };
-
-    template<
-        class AssemblyHogedataApiType = DefaultAssemblyHogedataApi
-    >
-    class BaseAssemblyHogedata
-    {
-    public:
-        
-        typedef typename UCT::ExternalApiOrDefault<AssemblyHogedataApiType, IAssemblyHogedataApi, IHogedataInfoApi>::type hogedata_info_api_type;
-        typedef BaseHogedataInfo<hogedata_info_api_type> hogedata_info_type;
-
-        hogedata_info_type *GetInfo() const
-        {
-            return NULL;
-        }
-    };
-
-    
-    
-    struct IHogedataDispenserApi { };
-
-    struct DefaultHogedataDispenserApi : 
-        IHogedataDispenserApi
-    {
-        typedef boost::mpl::vector<DefaultHogedataInfoApi, DefaultAssemblyHogedataApi> external_api_types;
-    };
-    
-    template<
-        class HogedataDispenserApiType = DefaultHogedataDispenserApi
-    >
-    class BaseHogedataDispenser
-    {
-    public:
-        typedef typename UCT::ExternalApiOrDefault<HogedataDispenserApiType, IHogedataDispenserApi, IHogedataInfoApi>::type hogedata_info_api_type;
-        typedef BaseHogedataInfo<hogedata_info_api_type> hogedata_info_type;
-
-        typedef typename UCT::ExternalApiOrDefault<HogedataDispenserApiType, IHogedataDispenserApi, IAssemblyHogedataApi>::type assembly_hogedata_api_type;
-        typedef BaseAssemblyHogedata<assembly_hogedata_api_type> assembly_hogedata_type;
-
-        hogedata_info_type *GetInfo() const
-        {
-            return NULL;
-        }
-
-        assembly_hogedata_type *GetAssembly() const
-        {
-            return NULL;
-        }
-    };
-
-
-
-    struct IHogedataInfoApi { };
-
-    struct DefaultHogedataInfoApi : 
-        IHogedataInfoApi
-    {
-        typedef boost::mpl::vector<DefaultHogedataDispenserApi> external_api_types;
-    };
-
-    template<
-        class HogedataInfoApiType = DefaultHogedataInfoApi
-    >
-    class BaseHogedataInfo
-    {
-    public:
-        
-        typedef typename UCT::ExternalApiOrDefault<HogedataInfoApiType, IHogedataInfoApi, IHogedataDispenserApi>::type hogedata_dispenser_api_type;
-        typedef BaseHogedataDispenser<hogedata_dispenser_api_type> hogedata_dispenser_type;
-
-        hogedata_dispenser_type *GetDispenser() const
-        {
-            return NULL;
-        }
-    };
-
-    
-
-
-#if 0
-    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, Test_01)
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass1_02)
     {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
-        typedef BaseHogedataInfo<> HogedataInfo;
-        typedef HogedataInfo::hogedata_dispenser_api_type HogedataDispenserApi;
-        typedef HogedataInfo::hogedata_dispenser_type HogedataDispenser;
-        typedef HogedataDispenser::assembly_hogedata_api_type AssemblyHogedataApi;
-        typedef HogedataDispenser::assembly_hogedata_type AssemblyHogedata;
-        HogedataInfo hogeInfo;
-        HogedataDispenser hogeDisp;
-        AssemblyHogedata asmHoge;
+        typedef BaseClass1<INT> Class1;
+        typedef Class1::class2_type Class2;
+        typedef Class2::class3_type Class3;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
 
-        hogeInfo.GetDispenser();
-        hogeDisp.GetInfo();
-        hogeDisp.GetAssembly();
-        asmHoge.GetInfo();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenserApi, DefaultHogedataDispenserApi>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser, BaseHogedataDispenser<>>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_api_type, DefaultHogedataInfoApi>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_type, BaseHogedataInfo<>>));
-        BOOST_MPL_ASSERT((boost::is_same<AssemblyHogedata::hogedata_info_api_type, DefaultHogedataInfoApi>));
-        BOOST_MPL_ASSERT((boost::is_same<AssemblyHogedata::hogedata_info_type, BaseHogedataInfo<>>));
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class1_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class1_type, Class1>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class1_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class1_type, Class1>));
     }
-#endif
 
-    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, Test_02)
+
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass2_01)
     {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
-        
-        BOOST_MPL_ASSERT((boost::is_same<Detail::ExtractDefaultExternalApi<INT, INT>::api_type, INT>));
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                Detail::ExtractDefaultExternalApi<
-                    DefaultExternalApi<
-                        INT, 
-                        IHogedataInfoApi, 
-                        IHogedataDispenserApi
-                    >, 
-                    IHogedataInfoApi
-                >::api_type, INT>));
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                Detail::ExtractDefaultExternalApi<
-                    DefaultExternalApi<
-                        DefaultExternalApi<
-                            DefaultExternalApi<
-                                INT, 
-                                IHogedataInfoApi, 
-                                IHogedataDispenserApi
-                            >, 
-                            IHogedataDispenserApi, 
-                            IAssemblyHogedataApi
-                        >, 
-                        IAssemblyHogedataApi, 
-                        IHogedataInfoApi
-                    >, 
-                    IHogedataInfoApi
-                >::api_type, INT>));
+        typedef BaseClass2<> Class2;
+        typedef Class2::class1_type Class1;
+        typedef Class2::class3_type Class3;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
 
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                ExternalApiOrDefault<
-                    INT, 
-                    IHogedataInfoApi, 
-                    IHogedataDispenserApi>::type, 
-                DefaultExternalApi<
-                    INT, 
-                    IHogedataInfoApi, 
-                    IHogedataDispenserApi>>));        
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                ExternalApiOrDefault<
-                    DefaultExternalApi<
-                        INT, 
-                        IHogedataInfoApi, 
-                        IHogedataDispenserApi
-                    >, 
-                    IHogedataDispenserApi, 
-                    IAssemblyHogedataApi
-                >::type, 
-                DefaultExternalApi<
-                    DefaultExternalApi<
-                        INT,
-                        IHogedataInfoApi,
-                        IHogedataDispenserApi
-                    >,
-                    IHogedataDispenserApi,
-                    IAssemblyHogedataApi
-                >>));        
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                ExternalApiOrDefault<
-                    DefaultExternalApi<
-                        INT, 
-                        IHogedataInfoApi, 
-                        IHogedataDispenserApi
-                    >, 
-                    IHogedataDispenserApi, 
-                    IHogedataInfoApi
-                >::type, INT>));
-        BOOST_MPL_ASSERT((
-            boost::is_same<
-                ExternalApiOrDefault<
-                    DefaultExternalApi<
-                        DefaultExternalApi<
-                            INT,
-                            IHogedataInfoApi,
-                            IHogedataDispenserApi
-                        >,
-                        IHogedataDispenserApi,
-                        IAssemblyHogedataApi
-                    >,
-                    IAssemblyHogedataApi,
-                    IHogedataInfoApi
-                >::type, INT>));
-
-        typedef BaseHogedataInfo<INT> HogedataInfo;
-        typedef HogedataInfo::hogedata_dispenser_api_type HogedataDispenserApi;
-        typedef HogedataInfo::hogedata_dispenser_type HogedataDispenser;
-        typedef HogedataDispenser::assembly_hogedata_api_type AssemblyHogedataApi;
-        typedef HogedataDispenser::assembly_hogedata_type AssemblyHogedata;
-        HogedataInfo hogeInfo;
-        HogedataDispenser hogeDisp;
-        AssemblyHogedata asmHoge;
-
-        hogeInfo.GetDispenser();
-        hogeDisp.GetInfo();
-        hogeDisp.GetAssembly();
-        asmHoge.GetInfo();
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenserApi, DefaultExternalApi<INT, IHogedataInfoApi, IHogedataDispenserApi>>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser, BaseHogedataDispenser<DefaultExternalApi<INT, IHogedataInfoApi, IHogedataDispenserApi>>>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_api_type, INT>));
-        BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_type, BaseHogedataInfo<INT>>));
-        BOOST_MPL_ASSERT((boost::is_same<AssemblyHogedata::hogedata_info_api_type, INT>));
-        BOOST_MPL_ASSERT((boost::is_same<AssemblyHogedata::hogedata_info_type, BaseHogedataInfo<INT>>));
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class2_api_type, DefaultClass2Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class2_type, Class2>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class2_api_type, DefaultClass2Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class2_type, Class2>));
     }
 
 
-    //TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, Test_01)
-    //{
-    //    namespace mpl = boost::mpl;
-    //    using namespace Urasandesu::CppAnonym::Traits;
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass2_02)
+    {
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Traits;
 
-    //    typedef BaseHogedataInfo<> HogedataInfo;
-    //    HogedataInfo hogeInfo;
+        typedef BaseClass2<INT> Class2;
+        typedef Class2::class1_type Class1;
+        typedef Class2::class3_type Class3;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
 
-    //    hogeInfo.GetDispenser();
-    //    BOOST_MPL_ASSERT((boost::is_same<HogedataInfo::hogedata_dispenser_api_type, DefaultHogedataDispenserApi>));
-    //    BOOST_MPL_ASSERT((boost::is_same<HogedataInfo::hogedata_dispenser_type, BaseHogedataDispenser<>>));
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class2_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class2_type, Class2>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class2_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class3::class2_type, Class2>));
+    }
 
-    //    typedef BaseHogedataInfo<INT> HogedataInfo2;
-    //    HogedataInfo2 hogeInfo2;
 
-    //    hogeInfo2.GetDispenser();
-    //    BOOST_MPL_ASSERT((boost::is_same<HogedataInfo2::hogedata_dispenser_api_type, DefaultExternalApi<INT, IHogedataDispenserApi>>));
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass3_01)
+    {
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Traits;
 
-    //    
-    //    typedef BaseHogedataDispenser<> HogedataDispenser;
-    //    HogedataDispenser hogeDisp;
+        typedef BaseClass3<> Class3;
+        typedef Class3::class1_type Class1;
+        typedef Class3::class2_type Class2;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
 
-    //    hogeDisp.GetInfo();
-    //    BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser::hogedata_info_api_type, DefaultHogedataInfoApi>));
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class3_api_type, DefaultClass3Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class3_type, Class3>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class3_api_type, DefaultClass3Api>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class3_type, Class3>));
+    }
 
-    //    typedef BaseHogedataDispenser<INT> HogedataDispenser2;
-    //    HogedataDispenser2 hogeDisp2;
-    //    hogeDisp2.GetInfo();
-    //    BOOST_MPL_ASSERT((boost::is_same<HogedataDispenser2::hogedata_info_api_type, DefaultExternalApi<INT, IHogedataInfoApi>>));
-    //}
+
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass3_02)
+    {
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Traits;
+
+        typedef BaseClass3<INT> Class3;
+        typedef Class3::class1_type Class1;
+        typedef Class3::class2_type Class2;
+        Class1 class1;
+        Class2 class2;
+        Class3 class3;
+
+        class1.GetClass2();
+        class1.GetClass3();
+        class2.GetClass1();
+        class2.GetClass3();
+        class3.GetClass1();
+        class3.GetClass2();
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class3_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class1::class3_type, Class3>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class3_api_type, INT>));
+        BOOST_MPL_ASSERT((boost::is_same<Class2::class3_type, Class3>));
+    }
 }

@@ -32,6 +32,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct IAssemblyMetadataApi;
 
+    struct IMetadataDispenserApi;
 
     template<
         class MetadataDispenserApiType = DefaultMetadataDispenserApiProtoB8DF5A21
@@ -40,17 +41,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public HeapProvider<
             mdAssembly, 
             boost::mpl::vector<
-                BaseAssemblyMetadataProtoB8DF5A21<typename Traits::ChildApiOrDefault<MetadataDispenserApiType, IAssemblyMetadataApi>::type> 
+                BaseAssemblyMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<MetadataDispenserApiType, IMetadataDispenserApi, IAssemblyMetadataApi>::type> 
             >
         >
     {
     public:
         typedef BaseMetadataDispenserProtoB8DF5A21<MetadataDispenserApiType> this_type;
 
-        typedef typename Traits::ParentApiOrDefault<MetadataDispenserApiType, IMetadataInfoApi>::type metadata_info_api_type;
+        typedef typename Traits::ExternalApiOrDefault<MetadataDispenserApiType, IMetadataDispenserApi, IMetadataInfoApi>::type metadata_info_api_type;
         typedef BaseMetadataInfoProtoB8DF5A21<metadata_info_api_type> metadata_info_type;
         
-        typedef typename Traits::ChildApiOrDefault<MetadataDispenserApiType, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<MetadataDispenserApiType, IMetadataDispenserApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
         typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
 
         BaseMetadataDispenserProtoB8DF5A21() : 

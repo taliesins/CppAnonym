@@ -25,13 +25,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                BaseRuntimeHostProto07F03042<typename Traits::ChildApiOrDefault<HostInfoApiType, IRuntimeHostApi>::type> 
+                BaseRuntimeHostProto07F03042<typename Traits::ExternalApiOrDefault<HostInfoApiType, IHostInfoApi, IRuntimeHostApi>::type> 
             > 
         >
     {
     public:
         typedef BaseHostInfoProto07F03042<HostInfoApiType> this_type;
-        typedef typename Traits::ChildApiOrDefault<HostInfoApiType, IRuntimeHostApi>::type runtime_host_api_type;
+
+        typedef typename Traits::ExternalApiOrDefault<HostInfoApiType, IHostInfoApi, IRuntimeHostApi>::type runtime_host_api_type;
         typedef BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
 
         runtime_host_type const *GetRuntime(std::wstring const &version) const

@@ -135,6 +135,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     }   // namespace Detail
 
+    struct ITypeMetadataApi;
     
     template<
         class TypeMetadataApiType = DefaultTypeMetadataApiProtoB8DF5A21
@@ -144,7 +145,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public HeapProvider<
             mdToken, 
             boost::mpl::vector<
-                BaseMethodMetadataProtoB8DF5A21<typename Traits::ChildApiOrDefault<TypeMetadataApiType, IMethodMetadataApi>::type> 
+                BaseMethodMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type> 
             >
         >
     {
@@ -153,12 +154,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         
         typedef Detail::MethodKey<TypeMetadataApiType> method_key_type;
         
-        typedef typename Traits::ParentApiOrDefault<TypeMetadataApiType, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
         typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
         
-        typedef typename Traits::ChildApiOrDefault<TypeMetadataApiType, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
-        typedef typename Traits::ChildApiOrDefault<TypeMetadataApiType, IMethodMetadataApi>::type method_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type method_metadata_api_type;
         typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
 
         BaseTypeMetadataProtoB8DF5A21() : 

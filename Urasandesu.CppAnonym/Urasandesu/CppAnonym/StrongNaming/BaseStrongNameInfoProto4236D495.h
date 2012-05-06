@@ -21,11 +21,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    template<class ApiType, class IParentApiType>
-    struct ParentApiOrDefault;
+    //template<class ApiType, class IParentApiType>
+    //struct ParentApiOrDefault;
 
-    template<class ApiType, class IChildApiType>
-    struct ChildApiOrDefault;
+    //template<class ApiType, class IChildApiType>
+    //struct ChildApiOrDefault;
+
+    template<class ApiType, class ApiTypeInterface, class IExternalApiType>
+    struct ExternalApiOrDefault;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -37,8 +40,9 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     struct DefaultStrongNameInfoApiProto4236D495 : 
         IStrongNameInfoApi 
     { 
-        typedef Hosting::DefaultRuntimeHostApiProto07F03042 parent_api_type;
-        typedef boost::mpl::vector<DefaultStrongNameKeyApiProto4236D495> child_api_types;
+        //typedef Hosting::DefaultRuntimeHostApiProto07F03042 parent_api_type;
+        typedef boost::mpl::vector<Hosting::DefaultRuntimeHostApiProto07F03042, 
+                                   DefaultStrongNameKeyApiProto4236D495> external_api_types;
     };
 
     
@@ -59,10 +63,10 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     public:
         typedef BaseStrongNameInfoProto4236D495<StrongNameInfoApiType> this_type;
 
-        typedef typename Traits::ParentApiOrDefault<StrongNameInfoApiType, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
+        typedef typename Traits::ExternalApiOrDefault<StrongNameInfoApiType, IStrongNameInfoApi, Hosting::IRuntimeHostApi>::type runtime_host_api_type;
         typedef Hosting::BaseRuntimeHostProto07F03042<runtime_host_api_type> runtime_host_type;
 
-        typedef typename Traits::ChildApiOrDefault<StrongNameInfoApiType, IStrongNameKeyApi>::type strong_name_key_api_type;
+        typedef typename Traits::ExternalApiOrDefault<StrongNameInfoApiType, IStrongNameInfoApi, IStrongNameKeyApi>::type strong_name_key_api_type;
         typedef BaseStrongNameKeyProto4236D495<strong_name_key_api_type> strong_name_key_type;
 
         BaseStrongNameInfoProto4236D495() : 
