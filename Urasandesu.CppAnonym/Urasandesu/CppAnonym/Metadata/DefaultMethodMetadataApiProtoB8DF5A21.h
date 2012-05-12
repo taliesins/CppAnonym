@@ -4,11 +4,15 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    struct DefaultTypeMetadataApiProtoB8DF5A21;
+
     struct IMethodMetadataApi { };
 
     struct DefaultMethodMetadataApiProtoB8DF5A21 : 
         IMethodMetadataApi
     {
+        typedef boost::mpl::vector<IMetaDataImport2, 
+                                   DefaultTypeMetadataApiProtoB8DF5A21> external_api_types;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

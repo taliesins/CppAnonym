@@ -8,12 +8,6 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    //template<class ApiType, class IParentApiType>
-    //struct ParentApiOrDefault;
-
-    //template<class ApiType, class IChildApiType>
-    //struct ChildApiOrDefault;
-
     template<class ApiType, class ApiTypeInterface, class IExternalApiType>
     struct ExternalApiOrDefault;
 
@@ -27,7 +21,6 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     struct DefaultStrongNameKeyApiProto4236D495 : 
         IStrongNameKeyApi 
     { 
-        //typedef DefaultStrongNameInfoApiProto4236D495 parent_api_type;
         typedef boost::mpl::vector<DefaultStrongNameInfoApiProto4236D495> external_api_types;
     };
 

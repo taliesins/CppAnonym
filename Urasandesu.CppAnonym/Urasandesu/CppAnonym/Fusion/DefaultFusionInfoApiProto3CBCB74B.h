@@ -15,7 +15,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
     struct DefaultFusionInfoApiProto3CBCB74B : 
         IFusionInfoApi
     {
-        //typedef Hosting::DefaultRuntimeHostApiProto07F03042 parent_api_type;
         typedef boost::mpl::vector<Hosting::DefaultRuntimeHostApiProto07F03042> external_api_types;
     };
         

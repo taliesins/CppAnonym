@@ -20,19 +20,40 @@ namespace Urasandesu { namespace CppAnonym {
         
         namespace mpl = boost::mpl;
 
-        template<class Key, class Sequence, class I, class IEnd>
+        template<
+            class Key, 
+            class Sequence, 
+            class I, 
+            class IEnd,
+            class Hash,
+            class EqualTo,
+            class Allocator
+        >
         class ATL_NO_VTABLE HeapProviderImpl : 
-            public HeapProviderImpl<Key, Sequence, typename mpl::next<I>::type, IEnd>
+            public HeapProviderImpl<Key, 
+                                    Sequence, 
+                                    typename mpl::next<I>::type, 
+                                    IEnd, 
+                                    Hash,
+                                    EqualTo,
+                                    Allocator>
         {
         private:
-            typedef HeapProviderImpl<Key, Sequence, I, IEnd> this_type;
+            typedef HeapProviderImpl<Key, 
+                                     Sequence, 
+                                     I, 
+                                     IEnd,
+                                     Hash,
+                                     EqualTo,
+                                     Allocator> this_type;
+
             typedef typename mpl::deref<I>::type obj_type;
             
             typedef SimpleHeap<obj_type> factory_type;
 
-            typedef boost::hash<Key> hash_type;
-            typedef std::equal_to<Key> equal_to_type;
-            typedef std::allocator<std::pair<const Key, SIZE_T>> allocator_type;
+            typedef Hash hash_type;
+            typedef EqualTo equal_to_type;
+            typedef Allocator allocator_type;
             typedef boost::unordered_map<Key, SIZE_T, hash_type, equal_to_type, allocator_type> indexes_type;
             
             typedef typename boost::call_traits<Key>::param_type key_param_type;
@@ -124,11 +145,20 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
-        template<class Key, class Sequence>
+        template<
+            class Key, 
+            class Sequence, 
+            class Hash,
+            class EqualTo,
+            class Allocator
+        >
         class ATL_NO_VTABLE HeapProviderImpl<Key, 
                                              Sequence, 
                                              typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type> : 
+                                             typename Traits::DistinctEnd<Sequence>::type, 
+                                             Hash,
+                                             EqualTo,
+                                             Allocator> : 
             boost::noncopyable
         {
         };
@@ -136,16 +166,28 @@ namespace Urasandesu { namespace CppAnonym {
     }   // namespace Detail
 
 
-    template<class Key, class Sequence>
+    template<
+        class Key, 
+        class Sequence,
+        class Hash,
+        class EqualTo,
+        class Allocator
+    >
     class ATL_NO_VTABLE HeapProvider : 
         Detail::HeapProviderImpl<Key, 
                                  Sequence, 
                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                 typename Traits::DistinctEnd<Sequence>::type>
+                                 typename Traits::DistinctEnd<Sequence>::type, 
+                                 Hash,
+                                 EqualTo,
+                                 Allocator>
     {
     public:
-        typedef Key key_type;
-        typedef Sequence sequence_type;
+        typedef HeapProvider<Key, 
+                             Sequence,
+                             Hash,
+                             EqualTo,
+                             Allocator> this_type;
 
         template<class T>
         struct type_decided_by
@@ -157,7 +199,10 @@ namespace Urasandesu { namespace CppAnonym {
                     typename Traits::Distinct<Sequence>::type,
                     T
                 >::type,
-                typename Traits::DistinctEnd<Sequence>::type
+                typename Traits::DistinctEnd<Sequence>::type, 
+                Hash,
+                EqualTo,
+                Allocator
             > type;
         };
 
@@ -170,7 +215,7 @@ namespace Urasandesu { namespace CppAnonym {
         template<class T>
         inline typename type_decided_by<T>::type const &Of() const
         {
-            return const_cast<HeapProvider<Key, Sequence> *>(this)->Of<T>();
+            return const_cast<this_type *>(this)->Of<T>();
         }
     };
 

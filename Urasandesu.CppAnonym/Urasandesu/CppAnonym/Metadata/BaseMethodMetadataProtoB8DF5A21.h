@@ -26,6 +26,11 @@ namespace Urasandesu { namespace CppAnonym {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    template<
+        class TypeMetadataApiType
+    >    
+    struct MethodKey;
+
     struct DefaultMethodMetadataApiProtoB8DF5A21;
 
     struct ITypeMetadataApi;
@@ -40,23 +45,65 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class MethodMetadataApiType = DefaultMethodMetadataApiProtoB8DF5A21
     >    
     class BaseMethodMetadataProtoB8DF5A21 : 
-        public IHeapContent<mdToken>
+        public IHeapContent<MethodKey<MethodMetadataApiType>>
     {
     public:
         typedef BaseMethodMetadataProtoB8DF5A21<MethodMetadataApiType> this_type;
+
         typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
-        
         typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
+        
         typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
+        typedef MethodKey<MethodMetadataApiType> method_key_type;
+
+        BaseMethodMetadataProtoB8DF5A21() : 
+            m_pTypeMeta(NULL)
+        { }
+
         void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
         {
+            _ASSERTE(m_pTypeMeta == NULL);
+
+            m_pTypeMeta = &typeMeta;
         }
+
+        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi, method_key_type const &methodKey) const
+        {
+            _ASSERTE(m_pTypeMeta == NULL);
+
+            m_pTypeMeta = &typeMeta;
+            m_pMetaImpApi = &metaImpApi;
+            m_methodKey = methodKey;
+        }
+
+        template<class T>
+        T const *FindType() const { return static_cast<type_metadata_type const *>(m_pTypeMeta)->FindType<T>(); }
+
+        template<class T>
+        T *FindType() { return m_pTypeMeta->FindType<T>(); }
+      
+        template<>
+        this_type const *FindType<this_type>() const { return this; }
+      
+        template<>
+        this_type *FindType<this_type>() { return this; }
 
         mdToken GetToken() const
         {
-            return GetKey();
+            return mdTokenNil;
         }
+
+        std::wstring const &GetName() const
+        {
+            return m_name;
+        }
+
+    private:
+        mutable type_metadata_type *m_pTypeMeta;
+        mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
+        mutable method_key_type m_methodKey;
+        mutable std::wstring m_name;
     };
 
     typedef BaseMethodMetadataProtoB8DF5A21<> MethodMetadataProtoB8DF5A21;

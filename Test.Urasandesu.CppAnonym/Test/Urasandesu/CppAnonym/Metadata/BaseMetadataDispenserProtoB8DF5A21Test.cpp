@@ -53,7 +53,6 @@ namespace {
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
-            //typedef TestMetadataDispenserApi parent_api_type;
             typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
         };
 
@@ -96,7 +95,6 @@ namespace {
         struct TestAssemblyMetadataApi : 
             IAssemblyMetadataApi
         {
-            //typedef TestMetadataDispenserApi parent_api_type;
             typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
         };
 

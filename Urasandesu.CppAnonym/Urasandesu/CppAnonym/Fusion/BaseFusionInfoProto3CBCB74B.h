@@ -23,9 +23,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    template<class ApiType, class IApiType>
-    struct ParentApiOrDefault;
-
     template<class ApiType, class ApiTypeInterface, class IExternalApiType>
     struct ExternalApiOrDefault;
 
