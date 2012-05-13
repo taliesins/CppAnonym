@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
+#include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTEQUALTO_H
 #include <Urasandesu/CppAnonym/Utilities/DefaultEqualTo.h>
 #endif

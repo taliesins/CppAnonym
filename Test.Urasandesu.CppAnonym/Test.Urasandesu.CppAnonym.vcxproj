@@ -123,6 +123,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserProtoB8DF5A21Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21Test.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\IMetaDataImport2ImplTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495Test.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ExternalApiStrategiesTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultEqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultHashTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp" />
