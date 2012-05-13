@@ -189,6 +189,9 @@ namespace Urasandesu { namespace CppAnonym {
                              EqualTo,
                              Allocator> this_type;
 
+        typedef Key key_type;
+        typedef Sequence sequence_type;
+
         template<class T>
         struct type_decided_by
         {
