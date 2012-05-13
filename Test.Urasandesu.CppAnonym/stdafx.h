@@ -11,23 +11,23 @@
 #include <tchar.h>
 
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 一部の CString コンストラクターは明示的です。
-
-#include <atlbase.h>
-#include <atlcom.h>
-#include <atlstr.h>
+//#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 一部の CString コンストラクターは明示的です。
+//
+//#include <atlbase.h>
+//#include <atlcom.h>
+//#include <atlstr.h>
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
 #ifndef URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 #include <Urasandesu/CppAnonym/CppAnonymDependsOn.h>
 #endif
 
-#include <boost/mpl/vector.hpp>
+//#include <boost/mpl/vector.hpp>
 #include <boost/timer.hpp>
 #include <gtest/gtest.h>
 
-#include <mscoree.h>
-#include <fusion.h>
+//#include <mscoree.h>
+//#include <fusion.h>
 #include <boost/any.hpp>
 
 #include <boost/lambda/lambda.hpp>

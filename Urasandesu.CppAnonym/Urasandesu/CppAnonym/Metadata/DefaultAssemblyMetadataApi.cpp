@@ -7,7 +7,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    IID const DefaultAssemblyMetadataApi::IID_IImport = IID_IMetadataImport2;
-    IID const DefaultAssemblyMetadataApi::IID_IAssemblyImport = IID_IMetadataAssemblyImport;
+    IID const DefaultAssemblyMetadataApi::IID_IImport = IID_IMetaDataImport2;
+    IID const DefaultAssemblyMetadataApi::IID_IAssemblyImport = IID_IMetaDataAssemblyImport;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

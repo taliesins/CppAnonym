@@ -96,7 +96,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             mdAssembly mda = m_assemblyMetas[asmPath];
             if (mda == mdAssemblyNil)
             {
-                CComPtr<IMetaDataImport2> pMetaImpApi;
+                ATL::CComPtr<IMetaDataImport2> pMetaImpApi;
                 HRESULT hr = m_pMetaDispApi->OpenScope(asmPath.c_str(), ofRead, 
                                                     IID_IMetaDataImport2, 
                                                     reinterpret_cast<IUnknown **>(&pMetaImpApi));
@@ -134,7 +134,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef Utilities::DefaultHash<path> path_hash;
         typedef Utilities::DefaultEqualTo<path, path> path_equal_to;
         mutable boost::unordered_map<path, mdAssembly, path_hash, path_equal_to> m_assemblyMetas;
-        mutable CComPtr<IMetaDataDispenserEx> m_pMetaDispApi;
+        mutable ATL::CComPtr<IMetaDataDispenserEx> m_pMetaDispApi;
     };
 
     typedef BaseMetadataDispenserProtoB8DF5A21<> MetadataDispenserProtoB8DF5A21;

@@ -6,7 +6,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct DefaultInfoMetadataApi
     {
-        typedef IMetadataDispenserEx IDispenser;
+        typedef IMetaDataDispenserEx IDispenser;
         static IID const CLSID_Dispenser;
         static IID const IID_IDispenser;
         ATL::CComPtr<IDispenser> Dispenser;

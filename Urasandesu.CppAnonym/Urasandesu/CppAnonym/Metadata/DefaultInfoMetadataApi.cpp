@@ -16,7 +16,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         return ::CoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv);
     }
 
-    IID const DefaultInfoMetadataApi::CLSID_Dispenser = CLSID_CorMetadataDispenser;
-    IID const DefaultInfoMetadataApi::IID_IDispenser = IID_IMetadataDispenserEx;
+    IID const DefaultInfoMetadataApi::CLSID_Dispenser = CLSID_CorMetaDataDispenser;
+    IID const DefaultInfoMetadataApi::IID_IDispenser = IID_IMetaDataDispenserEx;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

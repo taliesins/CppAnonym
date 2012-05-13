@@ -254,7 +254,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
                     MyMetaDataImportObject *pMetaImpApi_ = NULL;
                     MyMetaDataImportObject::CreateInstance(&pMetaImpApi_); 
-                    CComPtr<metadata_import_api_type> pMetaImpApi(pMetaImpApi_);
+                    ATL::CComPtr<metadata_import_api_type> pMetaImpApi(pMetaImpApi_);
 
                     m_pConsole = new type_metadata_type();
                     type_metadata_type *pConsole = m_pConsole;
@@ -809,7 +809,7 @@ namespace {
         
         MyMetaDataImportObject *pMetaImpApi_ = NULL;
         ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportObject::CreateInstance(&pMetaImpApi_)); 
-        CComPtr<MetaDataImportApi> pMetaImpApi(pMetaImpApi_);
+        ATL::CComPtr<MetaDataImportApi> pMetaImpApi(pMetaImpApi_);
         //MetaDataImportApi *pMetaImpApi = NULL;
 
         TypeMetadata typeMeta;

@@ -6,10 +6,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct DefaultAssemblyMetadataApi
     {        
-        typedef IMetadataImport2 IImport;
+        typedef IMetaDataImport2 IImport;
         static IID const IID_IImport;
         ATL::CComPtr<IImport> Import;
-        typedef IMetadataAssemblyImport IAssemblyImport;
+        typedef IMetaDataAssemblyImport IAssemblyImport;
         static IID const IID_IAssemblyImport;
         ATL::CComPtr<IAssemblyImport> AssemblyImport;
     };
