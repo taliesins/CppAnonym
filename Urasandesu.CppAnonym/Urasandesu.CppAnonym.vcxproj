@@ -150,6 +150,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\MetaData\DefaultAssemblyMetadataApi.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\MetaData\DefaultInfoMetadataApi.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\Instruction.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\DefaultAssemblyMetadataApiProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\IMetadataApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\IMetaDataImport2Impl.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Instruction.h" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\MetadataDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeFwdProtoB8DF5A21.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.h" />

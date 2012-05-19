@@ -100,6 +100,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    struct IAssemblyMetadata { };
+
+    struct ITypeMetadata { };
+
     template<
         class AssemblyMetadataApiType
     >    
@@ -145,27 +149,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     }   // namespace Detail
 #endif
 
+    //struct IMethodKey { };
+
+    struct IMethodMetadata { };
+
     struct ITypeMetadataApi;
 
     template<
-        class MethodMetadataApiType = DefaultMethodMetadataApiProtoB8DF5A21
+        class TypeMetadataType
     >    
-    struct MethodKey
-    {
-        typedef MethodKey<MethodMetadataApiType> this_type;
-
-        typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
-        typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
-
-        typedef typename std::vector<type_metadata_type const *>::iterator param_types_iterator;
-        typedef typename std::vector<type_metadata_type const *>::const_iterator param_types_const_iterator;
-
-        MethodKey() { }
-        std::wstring m_name;
-        CallingConventions m_callConvention;
-        type_metadata_type const *m_pRetType;
-        std::vector<type_metadata_type const *> m_paramTypes;
-    };
+    struct MethodKey;
     
     template<
         class TypeMetadataApiType = DefaultTypeMetadataApiProtoB8DF5A21
@@ -173,28 +166,34 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class BaseTypeMetadataProtoB8DF5A21 : 
         public IHeapContent<mdToken>, 
         public HeapProvider<
-            MethodKey<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type>, 
+            MethodKey<BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType>>,
             boost::mpl::vector<
-                BaseMethodMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type> 
+                typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadata>::type // ううううううううううううううううううううううううううううううううううううう
+                // 直接見せるのいや・・・。
+                // is_same は incompleted な型でも判定できるみたい。いや・・・でもそれって直接見えるってことですよね・・・？
+                // もっとがっつり仕組み変えること考える？
+                // 利用する型を index や ID で取り出す、とか。
             >,
-            Utilities::DefaultHash<MethodKey<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type>>,
+            Utilities::DefaultHash<MethodKey<BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType>>>,
             Utilities::DefaultEqualTo<
-                MethodKey<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type>, 
-                MethodKey<typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type>>
-        >
+                MethodKey<BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType>>, 
+                MethodKey<BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType>>
+            >
+        >, 
+        public ITypeMetadata
     {
     public:
         typedef BaseTypeMetadataProtoB8DF5A21<TypeMetadataApiType> this_type;
         
-        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
-        typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
-        
+        //typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        //typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IAssemblyMetadata>::type assembly_metadata_type;
+
         typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
-        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadataApi>::type method_metadata_api_type;
-        typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<TypeMetadataApiType, ITypeMetadataApi, IMethodMetadata>::type method_metadata_type;
         
-        typedef MethodKey<method_metadata_api_type> method_key_type;
+        typedef MethodKey<this_type> method_key_type;
 
         BaseTypeMetadataProtoB8DF5A21() : 
             IHeapContent(), 
@@ -421,6 +420,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     };
 
     typedef BaseTypeMetadataProtoB8DF5A21<> TypeMetadataProtoB8DF5A21;
+
+
+    template<
+        class TypeMetadataType
+    >    
+    struct MethodKey
+    {
+        typedef MethodKey<TypeMetadataType> this_type;
+
+        //typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadata>::type type_metadata_type;
+        typedef TypeMetadataType type_metadata_type;
+
+        typedef typename std::vector<type_metadata_type const *>::iterator param_types_iterator;
+        typedef typename std::vector<type_metadata_type const *>::const_iterator param_types_const_iterator;
+
+        MethodKey() { }
+        std::wstring m_name;
+        CallingConventions m_callConvention;
+        type_metadata_type const *m_pRetType;
+        std::vector<type_metadata_type const *> m_paramTypes;
+    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

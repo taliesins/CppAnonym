@@ -253,7 +253,9 @@ namespace {
             ITypeMetadataApi
         {
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<TestAssemblyMetadataApi, IMetaDataImport2> external_api_types;
+            typedef boost::mpl::vector<TestAssemblyMetadataApi, 
+                                       IMetaDataImport2, 
+                                       BaseAssemblyMetadataProtoB8DF5A21<TestAssemblyMetadataApi>> external_api_types;
         };
 
         struct TestAssemblyMetadataApi : 

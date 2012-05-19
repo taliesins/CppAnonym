@@ -46,6 +46,10 @@
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INSTRUCTION_H
+#include <Urasandesu/CppAnonym/Metadata/Instruction.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
 #include <Urasandesu/CppAnonym/Metadata/OpCodes.h>
 #endif

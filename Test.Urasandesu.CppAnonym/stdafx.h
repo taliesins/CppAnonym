@@ -23,6 +23,9 @@
 #endif
 
 //#include <boost/mpl/vector.hpp>
+#include <boost/mpl/map.hpp>
+#include <boost/mpl/size.hpp>
+#include <boost/mpl/at.hpp>
 #include <boost/timer.hpp>
 #include <gtest/gtest.h>
 

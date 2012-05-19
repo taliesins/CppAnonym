@@ -26,6 +26,8 @@ namespace Urasandesu { namespace CppAnonym {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    struct IMethodMetadata;
+
     template<
         class TypeMetadataApiType
     >    
@@ -40,18 +42,33 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseTypeMetadataProtoB8DF5A21;
 
+    namespace Detail {
+
+        template<
+            class MethodMetadataApiType, 
+            class IExternalApiType
+        >
+        struct MethodExternalApi
+        {
+            typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, IExternalApiType>::type type;
+        };
+
+    }   // namespace Detail
 
     template<
         class MethodMetadataApiType = DefaultMethodMetadataApiProtoB8DF5A21
     >    
     class BaseMethodMetadataProtoB8DF5A21 : 
-        public IHeapContent<MethodKey<MethodMetadataApiType>>
+        public IHeapContent<MethodKey<MethodMetadataApiType>>, 
+        public IMethodMetadata
     {
     public:
         typedef BaseMethodMetadataProtoB8DF5A21<MethodMetadataApiType> this_type;
 
-        typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
-        typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
+        //typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, ITypeMetadata>::type type_metadata_type;
+        typedef Detail::MethodExternalApi<MethodMetadataApiType, ITypeMetadata> type_metadata;
         
         typedef typename Traits::ExternalApiOrDefault<MethodMetadataApiType, IMethodMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
         
@@ -61,14 +78,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_pTypeMeta(NULL)
         { }
 
-        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
+        void Init(typename type_metadata::type &typeMeta, metadata_import_api_type &metaImpApi) const
         {
             _ASSERTE(m_pTypeMeta == NULL);
 
             m_pTypeMeta = &typeMeta;
         }
 
-        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi, method_key_type const &methodKey) const
+        void Init(typename type_metadata::type &typeMeta, metadata_import_api_type &metaImpApi, method_key_type const &methodKey) const
         {
             _ASSERTE(m_pTypeMeta == NULL);
 
@@ -100,7 +117,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
     private:
-        mutable type_metadata_type *m_pTypeMeta;
+        mutable typename type_metadata::type *m_pTypeMeta;
         mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
         mutable method_key_type m_methodKey;
         mutable std::wstring m_name;

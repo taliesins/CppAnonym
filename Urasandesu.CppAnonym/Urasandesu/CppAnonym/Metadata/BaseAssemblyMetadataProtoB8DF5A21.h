@@ -183,7 +183,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 BaseTypeMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, ITypeMetadataApi>::type>, 
                 BaseAssemblyNameMetadataProtoB8DF5A21<typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IAssemblyNameMetadataApi>::type> 
             >
-        >
+        >, 
+        public IAssemblyMetadata
     {
     public:
         typedef BaseAssemblyMetadataProtoB8DF5A21<AssemblyMetadataApiType> this_type;

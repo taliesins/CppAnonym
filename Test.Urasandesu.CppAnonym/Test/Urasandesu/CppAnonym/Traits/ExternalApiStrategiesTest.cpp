@@ -130,8 +130,152 @@ namespace {
         }
     };
 
-    
 
+    struct TypeMetadataKey;
+
+    struct DefaultTypeMetadataApi; 
+
+    template<
+        class TypeMetadataApiType = DefaultTypeMetadataApi
+    >
+    struct BaseTypeMetadata;
+
+    struct MethodMetadataKey;
+
+    struct DefaultMethodMetadataApi;
+
+    template<
+        class MethodMetadataApiType = DefaultMethodMetadataApi
+    >
+    struct BaseMethodMetadata;
+
+    struct MethodNameMetadataKey;
+
+    struct DefaultMethodNameMetadataApi;
+
+    template<
+        class MethodNameMetadataApiType = DefaultMethodNameMetadataApi
+    >
+    struct BaseMethodNameMetadata;
+
+    
+    
+    struct MethodMetadataKey { };
+
+    struct DefaultMethodMetadataApi
+    {
+        typedef boost::mpl::map<boost::mpl::pair<TypeMetadataKey, BaseTypeMetadata<>>> api_map;
+    };
+
+    template<
+        class MethodMetadataApiType
+    >
+    struct BaseMethodMetadata
+    {
+        typedef typename UCT::ApiAt<MethodMetadataApiType, MethodMetadataKey, TypeMetadataKey>::type type_metadata_type;
+
+        BaseMethodMetadata() { }
+        type_metadata_type *m_pRetType;
+    };
+
+
+    
+    
+    struct MethodNameMetadataKey { };
+
+    struct DefaultMethodNameMetadataApi
+    {
+        typedef boost::mpl::map<boost::mpl::pair<TypeMetadataKey, BaseTypeMetadata<>>> api_map;
+    };
+
+    template<
+        class MethodNameMetadataApiType
+    >
+    struct BaseMethodNameMetadata
+    {
+        typedef typename UCT::ApiAt<MethodNameMetadataApiType, MethodNameMetadataKey, TypeMetadataKey>::type type_metadata_type;
+
+        BaseMethodNameMetadata() { }
+        type_metadata_type *m_pRetType;
+    };
+
+
+    
+    
+    struct TypeMetadataKey { };
+
+    struct DefaultTypeMetadataApi 
+    { 
+        typedef boost::mpl::map<boost::mpl::pair<MethodMetadataKey, BaseMethodMetadata<>>, 
+                                boost::mpl::pair<MethodNameMetadataKey, BaseMethodNameMetadata<>>> api_map;
+    };
+
+    template<
+        class TypeMetadataApiType
+    >
+    struct BaseTypeMetadata : 
+        public UCT::ApiAt<TypeMetadataApiType, TypeMetadataKey, MethodNameMetadataKey>::type, 
+        public UCT::ApiAt<TypeMetadataApiType, TypeMetadataKey, MethodMetadataKey>::type
+    {
+        BaseTypeMetadata() { }
+    };
+
+    // 名前、どうしようか？
+    // 自由に型の入れ替えができる、ってことまできてるから。
+    // あんまり、External じゃなくなってきてるし・・・。
+    // ApiCartridge とか。いや、凝った名前は付けないのが原則。
+    // もっと退屈でそのまんまな感じのほうが良い。
+    // ApiMap とか。
+    //    typedef typename UCT::ApiMap<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // これだと、Map 型のなにがしに見えるな・・・。
+    // ApiMapAccessor とか。
+    //    typedef typename UCT::ApiMapAccessor<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // Default が出てくるのが？？ってなりそう。
+    // ApiMapAtOrDefault とか。
+    //    typedef typename UCT::ApiMapAtOrDefault<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // Map 要らなくね？
+    // ApiAtOrDefault とか。
+    //    typedef typename UCT::ApiAtOrDefault<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // 英語的におかしいね。API と at 逆か。
+    // AtApiOrDefault とか。
+    //    typedef typename UCT::AtApiOrDefault<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // あ。メタ関数的であれば、Default が出てきても驚くことはなさそう。
+    // ApiAt とか。
+    //    typedef typename UCT::ApiAt<Class1ApiType, Class1ApiKey, Class2ApiKey>::type class2_api_type;    // 英語的におかしいことはなかった。
+    //// そういえば、Class1ApiType に渡される型って、必ず完全な型なんだから、Class1ApiKey はそこから導出できるんじゃね？
+    ////    typedef typename UCT::ApiAt<Class1ApiType, Class2ApiKey>::type class2_api_type;    // int とか入ってくるとだめか。
+
+    // ApiAt<ApiMap, CurrentApiKey, ApiKey> に決めるとすると、他の I/F はこうか。
+    // 
+    //template<class ApiType, class ApiTypeInterface, class IExternalApiType>
+    //struct DefaultExternalApi : 
+    //    ApiTypeInterface
+    //{
+    //    typedef boost::mpl::vector<DefaultExternalApi<ApiType, ApiTypeInterface, IExternalApiType>> external_api_types;
+    //};
+    // 
+
+
+    TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, Hoge)
+    {
+        typedef BaseTypeMetadata<> TypeMetadata;
+        typedef BaseMethodMetadata<> MethodMetadata;
+        typedef BaseMethodNameMetadata<> MethodNameMetadata;
+        TypeMetadata typeMeta;
+        MethodMetadata *pMethodMeta = &typeMeta;            // O.K.
+        MethodNameMetadata *pMethodNameMeta = &typeMeta;    // O.K.
+
+        BOOST_MPL_ASSERT((boost::is_same<BaseMethodNameMetadata<INT>::type_metadata_type, INT >));
+
+        //typedef boost::mpl::map<boost::mpl::pair<MetadataInfoKey, BaseMetadataInfo<>>> external_type_map;
+        //BOOST_MPL_ASSERT_RELATION(boost::mpl::size<external_type_map>::value, ==, 1);
+        //typedef boost::mpl::at<external_type_map, MetadataInfoKey>::type Result;
+        //BOOST_MPL_ASSERT((boost::is_same<Result, BaseMetadataInfo<> >));
+
+//BOOST_MPL_ASSERT_RELATION( size<m>::value, ==, 4 );
+//BOOST_MPL_ASSERT_NOT(( empty<m> ));
+//
+//BOOST_MPL_ASSERT(( is_same< at<m,int>::type, unsigned > ));
+//BOOST_MPL_ASSERT(( is_same< at<m,long_<5> >::type, char[17] > ));
+//BOOST_MPL_ASSERT(( is_same< at<m,int[42]>::type, bool > ));
+//BOOST_MPL_ASSERT(( is_same< at<m,long>::type, void_ > ));
+    }
+        
 
     TEST(Urasandesu_CppAnonym_Hosting_ApiStrategiesTest, ApiOrDefaultTest_StartWithClass1_01)
     {

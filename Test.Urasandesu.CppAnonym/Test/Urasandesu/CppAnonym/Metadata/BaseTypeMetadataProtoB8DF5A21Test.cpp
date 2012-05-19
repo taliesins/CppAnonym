@@ -80,6 +80,10 @@
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INSTRUCTION_H
+#include <Urasandesu/CppAnonym/Metadata/Instruction.h>
+#endif
+
 namespace {
 
     class ATL_NO_VTABLE MyMetaDataImport;
@@ -89,46 +93,40 @@ namespace {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    struct IAssemblyNameMetadataApi { };
+    //struct IAssemblyNameMetadataApi { };
 
-    template<
-        class AssemblyNameMetadataApiType
-    >    
-    class BaseAssemblyNameMetadataProtoB8DF5A21
-    {
-    public:
-        std::wstring const &GetName() const
-        {
-            return m_name;
-        }
+    //template<
+    //    class AssemblyNameMetadataApiType
+    //>    
+    //class BaseAssemblyNameMetadataProtoB8DF5A21
+    //{
+    //public:
+    //    std::wstring const &GetName() const
+    //    {
+    //        return m_name;
+    //    }
 
-    private:
-        mutable std::wstring m_name;
-    };
+    //private:
+    //    mutable std::wstring m_name;
+    //};
 
     struct IAssemblyMetadataApi { };
-    
-    struct DefaultAssemblyMetadataApiProtoB8DF5A21 : 
-        IAssemblyMetadataApi
-    {
-        typedef boost::mpl::vector<DefaultTypeMetadataApiProtoB8DF5A21, 
-                                   IMetaDataImport2> external_api_types;
-    };
 
     template<
-        class AssemblyMetadataApiType
+        class TestAssemblyMetadataApiType
     >    
-    class BaseAssemblyMetadataProtoB8DF5A21
+    class BaseTestAssemblyMetadata : 
+        IAssemblyMetadata
     {
     public:
-        typedef BaseAssemblyMetadataProtoB8DF5A21<AssemblyMetadataApiType> this_type;
+        typedef BaseTestAssemblyMetadata<TestAssemblyMetadataApiType> this_type;
 
-        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename Traits::ExternalApiOrDefault<TestAssemblyMetadataApiType, IAssemblyMetadataApi, IMetaDataImport2>::type metadata_import_api_type;
 
-        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, IAssemblyNameMetadataApi>::type assembly_name_metadata_api_type;
-        typedef BaseAssemblyNameMetadataProtoB8DF5A21<assembly_name_metadata_api_type> assembly_name_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<TestAssemblyMetadataApiType, IAssemblyMetadataApi, IAssemblyNameMetadataApi>::type assembly_name_metadata_api_type;
+        //typedef BaseAssemblyNameMetadata<assembly_name_metadata_api_type> assembly_name_metadata_type;
 
-        typedef typename Traits::ExternalApiOrDefault<AssemblyMetadataApiType, IAssemblyMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
+        typedef typename Traits::ExternalApiOrDefault<TestAssemblyMetadataApiType, IAssemblyMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
         typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
 
         template<class T>
@@ -175,24 +173,25 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     };
     
     template<
-        class AssemblyMetadataApiType
+        class TestAssemblyMetadataApiType
     >    
-    std::wstring const BaseAssemblyMetadataProtoB8DF5A21<AssemblyMetadataApiType>::CONSOLE_NAME = std::wstring(L"System.Console");
+    std::wstring const BaseTestAssemblyMetadata<TestAssemblyMetadataApiType>::CONSOLE_NAME = std::wstring(L"System.Console");
 
-
+    struct IMetadataDispenser { };
 
     struct IMetadataDispenserApi { };
 
     template<
-        class MetadataDispenserApiType
+        class TestMetadataDispenserApiType
     >    
-    class BaseMetadataDispenserProtoB8DF5A21
+    class BaseTestMetadataDispenser : 
+        IMetadataDispenser
     {
     public:
-        typedef BaseMetadataDispenserProtoB8DF5A21<MetadataDispenserApiType> this_type;
+        typedef BaseTestMetadataDispenser<TestMetadataDispenserApiType> this_type;
 
-        typedef typename Traits::ExternalApiOrDefault<MetadataDispenserApiType, IMetadataDispenserApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
-        typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<TestMetadataDispenserApiType, IMetadataDispenserApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        typedef BaseTestAssemblyMetadata<assembly_metadata_api_type> assembly_metadata_type;
         
         assembly_metadata_type const *LoadAssembly(std::wstring const &name) const
         {
@@ -211,37 +210,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     };
 
 
-    class Instruction
-    {
-    public:
-        Instruction() : 
-            m_pOpCode(NULL)
-        { }
-    
-        OpCodeProtoB8DF5A21 const &GetOpCode() const
-        {
-            return *m_pOpCode;
-        }
-        
-        void SetOpCode(OpCodeProtoB8DF5A21 const &opCode)
-        {
-            m_pOpCode = &opCode;
-        }
+    //class Instruction
+    //{
+    //public:
+    //    Instruction() : 
+    //        m_pOpCode(NULL)
+    //    { }
+    //
+    //    OpCodeProtoB8DF5A21 const &GetOpCode() const
+    //    {
+    //        return *m_pOpCode;
+    //    }
+    //    
+    //    void SetOpCode(OpCodeProtoB8DF5A21 const &opCode)
+    //    {
+    //        m_pOpCode = &opCode;
+    //    }
 
-        boost::any const &GetOprand() const
-        {
-            return m_oprand;
-        }
+    //    boost::any const &GetOprand() const
+    //    {
+    //        return m_oprand;
+    //    }
 
-        void SetOprand(boost::any const &oprand)
-        {
-            m_oprand = oprand;
-        }
+    //    void SetOprand(boost::any const &oprand)
+    //    {
+    //        m_oprand = oprand;
+    //    }
 
-    private:
-        OpCodeProtoB8DF5A21 const *m_pOpCode;
-        boost::any m_oprand;
-    };
+    //private:
+    //    OpCodeProtoB8DF5A21 const *m_pOpCode;
+    //    boost::any m_oprand;
+    //};
     
     struct IILGeneratorApi { };
 
@@ -264,17 +263,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseILGeneratorProtoB8DF5A21<ILGeneratorApiType> this_type;
 
-        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IMethodMetadataApi>::type method_metadata_api_type;
-        typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IMethodMetadataApi>::type method_metadata_api_type;
+        //typedef BaseMethodMetadataProtoB8DF5A21<method_metadata_api_type> method_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IMethodMetadata>::type method_metadata_type;
 
-        typedef typename Traits::ExternalApiOrDefault<method_metadata_api_type, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
-        typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<method_metadata_api_type, IMethodMetadataApi, ITypeMetadataApi>::type type_metadata_api_type;
+        //typedef BaseTypeMetadataProtoB8DF5A21<type_metadata_api_type> type_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, ITypeMetadata>::type type_metadata_type;
 
-        typedef typename Traits::ExternalApiOrDefault<type_metadata_api_type, ITypeMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
-        typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<type_metadata_api_type, ITypeMetadataApi, IAssemblyMetadataApi>::type assembly_metadata_api_type;
+        //typedef BaseAssemblyMetadataProtoB8DF5A21<assembly_metadata_api_type> assembly_metadata_type;
+        //typedef typename Traits::ExternalApiOrDefault<type_metadata_api_type, ITypeMetadataApi, IAssemblyMetadata>::type assembly_metadata_type;
+        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IAssemblyMetadata>::type assembly_metadata_type;
 
-        typedef typename Traits::ExternalApiOrDefault<assembly_metadata_api_type, IAssemblyMetadataApi, IMetadataDispenserApi>::type metadata_dispenser_api_type;
-        typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
+        //typedef typename Traits::ExternalApiOrDefault<assembly_metadata_api_type, IAssemblyMetadataApi, IMetadataDispenserApi>::type metadata_dispenser_api_type;
+        //typedef BaseMetadataDispenserProtoB8DF5A21<metadata_dispenser_api_type> metadata_dispenser_type;
+        //typedef typename Traits::ExternalApiOrDefault<assembly_metadata_api_type, IAssemblyMetadataApi, IMetadataDispenser>::type metadata_dispenser_type;
+        typedef typename Traits::ExternalApiOrDefault<ILGeneratorApiType, IILGeneratorApi, IMetadataDispenser>::type metadata_dispenser_type;
 
         typedef ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator> instruction_obj_tag_type;
         typedef typename type_decided_by<instruction_obj_tag_type>::type instruction_heap_type;
@@ -407,6 +412,7 @@ namespace {
         );
     }
 
+#if 0
     TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_01)
     {
         namespace fs = boost::filesystem;
@@ -628,6 +634,7 @@ namespace {
         ASSERT_TRUE(expected != OpCodes::Stfld.GetBehaviour0());
     }
 
+#endif
     
 #define CPPANONYM_TEST(test_case_name, test_name) \
     class GTEST_TEST_CLASS_NAME_(test_case_name, test_name); \
@@ -690,14 +697,66 @@ namespace {
     {
         // TODO: せっかく NotImplementedException スローしてるのに Google Test で丸められちゃう。カスタム class 作ったほうが良さそうね。
         namespace fs = boost::filesystem;
+        namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
         using boost::any_cast;
 
         typedef OpCodesProtoB8DF5A21 OpCodes;
         typedef OpCodeProtoB8DF5A21 OpCode;
-        typedef ILGeneratorProtoB8DF5A21 ILGenerator;
-        typedef ILGeneratorProtoB8DF5A21::method_metadata_type MethodMetadata;
+
+        struct TestAssemblyMetadataApi;
+
+        struct TestMetadataDispenserApi : 
+            IMetadataDispenserApi
+        {
+            typedef mpl::vector<TestAssemblyMetadataApi, 
+                                BaseTestAssemblyMetadata<TestAssemblyMetadataApi>> external_api_types;
+        };
+
+        struct TestTypeMetadataApi;
+    
+        struct TestAssemblyMetadataApi : 
+            IAssemblyMetadataApi
+        {
+            typedef mpl::vector<TestTypeMetadataApi, 
+                                IMetaDataImport2, 
+                                BaseTestMetadataDispenser<TestMetadataDispenserApi>> external_api_types;
+        };
+
+        struct TestMethodMetadataApi;
+        struct TestILGeneratorApi;
+
+        struct TestTypeMetadataApi : 
+            ITypeMetadataApi
+        {
+            typedef mpl::vector<IMetaDataImport2, 
+                                TestAssemblyMetadataApi,
+                                TestMethodMetadataApi, 
+                                TestILGeneratorApi, 
+                                BaseTestAssemblyMetadata<TestAssemblyMetadataApi>, 
+                                MethodKey<TestMethodMetadataApi>, 
+                                BaseMethodMetadataProtoB8DF5A21<TestMethodMetadataApi>> external_api_types;
+        };
+
+        struct TestMethodMetadataApi : 
+            IMethodMetadataApi
+        {
+            typedef mpl::vector<IMetaDataImport2, 
+                                BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi>> external_api_types;
+        };
+
+        struct TestILGeneratorApi : 
+            IILGeneratorApi
+        {
+            typedef mpl::vector<BaseTestMetadataDispenser<TestMetadataDispenserApi>,
+                                BaseTestAssemblyMetadata<TestAssemblyMetadataApi>, 
+                                BaseTypeMetadataProtoB8DF5A21<TestTypeMetadataApi>, 
+                                BaseMethodMetadataProtoB8DF5A21<TestMethodMetadataApi>> external_api_types;
+        };
+
+        typedef BaseILGeneratorProtoB8DF5A21<TestILGeneratorApi> ILGenerator;
+        typedef ILGenerator::method_metadata_type MethodMetadata;
         typedef MethodMetadata::type_metadata_type TypeMetadata;
         typedef MethodMetadata::metadata_import_api_type MetaDataImportApi;
         typedef TypeMetadata::assembly_metadata_type AssemblyMetadata;
