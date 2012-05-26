@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_TRAITS_H
 #define URASANDESU_CPPANONYM_TRAITS_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_EXTERNALAPISTRATEGIES_H
-#include <Urasandesu/CppAnonym/Traits/ExternalApiStrategies.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H

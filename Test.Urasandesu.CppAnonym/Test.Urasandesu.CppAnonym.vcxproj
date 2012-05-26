@@ -98,11 +98,12 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\AssemblyInfo.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiProto3CBCB74B.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiHolder.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\Instruction.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodeProtoB8DF5A21.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodesProtoB8DF5A21.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodes.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
@@ -112,73 +113,29 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.Urasandesu.CppAnonym.cpp" />
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoProto3CBCB74BTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoProto07F03042Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostProto07F03042Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataProtoB8DF5A21Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserProtoB8DF5A21Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoProtoB8DF5A21Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataProtoB8DF5A21Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\IMetaDataImport2ImplTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoProto4236D495Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyProto4236D495Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ExternalApiStrategiesTest.cpp" />
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultEqualToTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DefaultHashTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\IMetaDataImport2ImplTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EqualToTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

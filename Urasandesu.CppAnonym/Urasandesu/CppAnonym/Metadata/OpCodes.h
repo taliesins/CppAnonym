@@ -2,36 +2,22 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
 #define URASANDESU_CPPANONYM_METADATA_OPCODES_H
 
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODE_H
+#include <Urasandesu/CppAnonym/Metadata/OpCode.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-namespace OpCodes {
-
-    enum Types_ {
-        #define OPDEF(canonicalName, stringName, stackBehaviour0, stackBehaviour1, \
-                      operandParams, opcodeKind, length, byte1, byte2, controlFlow) \
-                      canonicalName,
-        #include "opcode.def"
-        #undef  OPDEF
-        CEE_COUNT,
-        CEE_UNREACHED
+    class OpCodes
+    {
+    public:
+#define OPDEF_EX(canonicalName, canonicalNameEx) \
+        static const Detail::OpCode_<OpCodeTypes::canonicalName> canonicalNameEx;
+#include <Urasandesu/CppAnonym/Metadata/OpCodeEx.def>
+#undef OPDEF_EX
+    private:
+        OpCodes() { }
     };
-    
-    struct CEncoding {
-        BYTE byte1;
-        BYTE byte2;
-    };
-
-    CEncoding const Encodings[] = {
-        #define OPDEF(canonicalName, stringName, stackBehaviour0, stackBehaviour1, \
-                      operandParams, opcodeKind, length, byte1, byte2, controlFlow) \
-                      { byte1, byte2 },
-        #include "opcode.def"
-        #undef  OPDEF
-        { 0, 0 },
-        { 0, 0 }
-    };
-
-}   // namespace OpCodes
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

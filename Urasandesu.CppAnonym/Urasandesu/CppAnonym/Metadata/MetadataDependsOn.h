@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <boost/algorithm/string.hpp>
+#include <boost/any.hpp>
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>

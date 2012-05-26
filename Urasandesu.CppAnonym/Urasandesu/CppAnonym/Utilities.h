@@ -14,20 +14,16 @@
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTEQUALTO_H
-#include <Urasandesu/CppAnonym/Utilities/DefaultEqualTo.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
+#include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTHASH_H
-#include <Urasandesu/CppAnonym/Utilities/DefaultHash.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
+#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_VALUECONVERTER_H
-#include <Urasandesu/CppAnonym/Utilities/ValueConverter.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

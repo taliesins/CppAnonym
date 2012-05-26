@@ -6,52 +6,12 @@
 #include <Urasandesu/CppAnonym/Metadata/MetadataDependsOn.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_H
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODBODYMETADATA_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMethodBodyMetadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATA_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATA_H
-#include <Urasandesu/CppAnonym/Metadata/BaseModuleMetadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATA_H
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPI_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApi.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTINFOMETADATAAPI_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultInfoMetadataApi.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_IMETADATAAPIOPERABLE_H
-#include <Urasandesu/CppAnonym/Metadata/IMetadataApiOperable.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_IMETADATAIMPORT2IMPL_HPP
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INSTRUCTION_H
 #include <Urasandesu/CppAnonym/Metadata/Instruction.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
-#include <Urasandesu/CppAnonym/Metadata/OpCodes.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
@@ -106,52 +66,124 @@
 #include <Urasandesu/CppAnonym/Metadata/ControlFlows.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODEPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/OpCodeProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODE_H
+#include <Urasandesu/CppAnonym/Metadata/OpCode.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_OPCODESPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/OpCodesProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_OPCODES_H
+#include <Urasandesu/CppAnonym/Metadata/OpCodes.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MetadataInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MetadataInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTTYPEMETADATAAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultTypeMetadataApiProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATAPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSER_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenser.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODMETADATAAPIPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMethodMetadataApiProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAPROTOB8DF5A21_H
-#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadataProtoB8DF5A21.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYNAMEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/AssemblyNameMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYNAMEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyNameMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYNAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/AssemblyNameMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyNameMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/TypeMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTTYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultTypeMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/TypeMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_METHODNAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MethodNameMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODNAMEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_METHODNAMEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MethodNameMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODNAMEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMethodNameMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_METHODMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MethodMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMethodMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_METHODMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/MethodMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H

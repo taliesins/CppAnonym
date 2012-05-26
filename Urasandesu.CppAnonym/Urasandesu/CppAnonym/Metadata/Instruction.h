@@ -4,18 +4,20 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    class OpCode;
+
     class Instruction
     {
     public:
         inline Instruction() { }
     
-        inline OpCodeProtoB8DF5A21 const &GetOpCode() const
+        inline OpCode const &GetOpCode() const
         {
             //_ASSERTE(reinterpret_cast<size_t>(m_pOpCode) != 0xCCCCCCCC);
             return *m_pOpCode;
         }
         
-        inline void SetOpCode(OpCodeProtoB8DF5A21 const &opCode)
+        inline void SetOpCode(OpCode const &opCode)
         {
             m_pOpCode = &opCode;
         }
@@ -31,7 +33,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
     private:
-        OpCodeProtoB8DF5A21 const *m_pOpCode;
+        OpCode const *m_pOpCode;
         boost::any m_oprand;
     };
 

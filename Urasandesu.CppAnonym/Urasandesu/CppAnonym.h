@@ -54,8 +54,8 @@
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
-#include <Urasandesu/CppAnonym/SimpleBlob.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP

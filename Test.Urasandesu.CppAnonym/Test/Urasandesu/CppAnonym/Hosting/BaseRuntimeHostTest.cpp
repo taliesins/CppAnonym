@@ -1,0 +1,121 @@
+﻿#include "stdafx.h"
+
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOST_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHost.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
+#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFO_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#endif
+
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest.*
+namespace {
+
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest, Test_01)
+    {
+        namespace fs = boost::filesystem;
+        
+        typedef Urasandesu::CppAnonym::Hosting::RuntimeHost RuntimeHost;
+        
+        RuntimeHost runtimeHost;
+        std::wstring const &corVersion = runtimeHost.GetCORVersion();
+        ASSERT_STREQ(L"v2.0.50727", corVersion.c_str());
+
+        fs::path const &corSystemDirectoryPath = runtimeHost.GetCORSystemDirectoryPath();
+        fs::path expected(L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\");
+        ASSERT_TRUE(fs::equivalent(expected, corSystemDirectoryPath)) 
+            << "Expected: " << expected.c_str() << ", Actual: " << corSystemDirectoryPath.c_str();
+    }
+
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest, GetInfoTest_FusionInfo_01)
+    {
+        namespace fs = boost::filesystem;
+        
+        typedef Urasandesu::CppAnonym::Hosting::RuntimeHost RuntimeHost;
+        
+        RuntimeHost runtimeHost;
+        typedef RuntimeHost::fusion_info_type FusionInfo;
+
+        FusionInfo const *pFuInfo = runtimeHost.GetInfo<FusionInfo>();
+        ASSERT_FALSE(pFuInfo == NULL);
+
+        FusionInfo const *pFuInfo2 = runtimeHost.GetInfo<FusionInfo>();
+        ASSERT_EQ(pFuInfo, pFuInfo2);
+    }
+
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest, GetInfoTest_MetadataInfo_01)
+    {
+        namespace fs = boost::filesystem;
+        
+        typedef Urasandesu::CppAnonym::Hosting::RuntimeHost RuntimeHost;
+        
+        RuntimeHost runtimeHost;
+        typedef RuntimeHost::metadata_info_type MetaInfo;
+        MetaInfo const *pMetaInfo = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_FALSE(pMetaInfo == NULL);
+
+        MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_EQ(pMetaInfo, pMetaInfo2);
+    }
+
+
+#if 0
+    TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest, Test_02)
+    {
+        namespace fs = boost::filesystem;
+
+        struct TestRuntimeHostApi
+        {
+        };
+        
+        typedef Urasandesu::CppAnonym::Hosting::BaseRuntimeHost<TestRuntimeHostApi> RuntimeHost;
+        RuntimeHost runtimeHost;
+        typedef RuntimeHost::metadata_info_type MetaInfo;
+        MetaInfo const *pMetaInfo = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_FALSE(pMetaInfo == NULL);
+
+        MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
+        ASSERT_EQ(pMetaInfo, pMetaInfo2);
+    }
+#endif
+}

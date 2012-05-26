@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
-#include <Urasandesu/CppAnonym/SimpleBlob.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_SimpleBlobTest.*
