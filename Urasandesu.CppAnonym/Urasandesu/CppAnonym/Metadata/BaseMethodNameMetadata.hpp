@@ -42,7 +42,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     template<class MethodNameMetadataApiHolder>
     struct EqualTo<
-                    Metadata::BaseMethodNameMetadata<MethodNameMetadataApiHolder>, 
                     Metadata::BaseMethodNameMetadata<MethodNameMetadataApiHolder> > : 
         std::binary_function<
                     Metadata::BaseMethodNameMetadata<MethodNameMetadataApiHolder>, 

@@ -353,7 +353,11 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\CartridgeApiSystem.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\CartridgeApiSystemFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Distinct.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />

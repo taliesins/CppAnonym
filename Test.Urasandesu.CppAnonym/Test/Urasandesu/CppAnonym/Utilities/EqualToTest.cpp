@@ -12,7 +12,7 @@ namespace {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym::Utilities;
         
-        typedef EqualTo<fs::path, fs::path> EqualTo;
+        typedef EqualTo<fs::path> EqualTo;
         EqualTo equalTo;
 
         fs::path path1(L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\");

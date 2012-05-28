@@ -157,7 +157,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         mutable metadata_info_type *m_pMetaInfo;
         typedef boost::filesystem::path path;
         typedef Utilities::Hash<path> path_hash;
-        typedef Utilities::EqualTo<path, path> path_equal_to;
+        typedef Utilities::EqualTo<path> path_equal_to;
         mutable boost::unordered_map<path, mdAssembly, path_hash, path_equal_to> m_assemblyMetas;
         mutable ATL::CComPtr<IMetaDataDispenserEx> m_pMetaDispApi;
     };

@@ -22,4 +22,12 @@
 #include <Urasandesu/CppAnonym/Traits/Distinct.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_EQUALITYCOMPARABLE_HPP
+#include <Urasandesu/CppAnonym/Traits/EqualityComparable.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASHCOMPUTABLE_HPP
+#include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_H

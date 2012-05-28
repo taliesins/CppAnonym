@@ -70,7 +70,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             >,
             Utilities::Hash<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type>,
             Utilities::EqualTo<
-                typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type, 
                 typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type
             >
         >

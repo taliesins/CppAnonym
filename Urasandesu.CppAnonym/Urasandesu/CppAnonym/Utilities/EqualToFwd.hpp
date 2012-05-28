@@ -4,7 +4,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    template<class X, class Y>
+    template<class T>
     struct EqualTo;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {

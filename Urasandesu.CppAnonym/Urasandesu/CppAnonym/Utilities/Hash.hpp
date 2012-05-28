@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASHCOMPUTABLE_HPP
+#include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HASHFWD_HPP
 #include <Urasandesu/CppAnonym/Utilities/HashFwd.hpp>
 #endif
@@ -10,14 +14,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     template<>
     struct Hash<boost::filesystem::path> : 
-        std::unary_function<boost::filesystem::path, std::size_t>
+        Traits::HashComputable<boost::filesystem::path>
     {
-        std::size_t operator()(boost::filesystem::path const &x) const
+        result_type operator()(param_type v) const
         {
             typedef boost::filesystem::path::string_type string_type;
             std::size_t seed = 0;
 
-            string_type const &native = x.native();
+            string_type const &native = v.native();
             for (string_type::const_iterator i = native.begin(), i_end = native.end(); i != i_end; ++i)
             {
                 boost::hash_combine(seed, std::toupper(*i, std::locale()));
@@ -29,11 +33,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     
     template<class T>
     struct Hash<T const *> : 
-        std::unary_function<T const *, std::size_t>
+        Traits::HashComputable<T const *>
     {
-        inline std::size_t operator()(T const *x) const
+        inline result_type operator()(param_type v) const
         {
-            return reinterpret_cast<std::size_t>(x);
+            return reinterpret_cast<std::size_t>(v);
         }
     };
 
