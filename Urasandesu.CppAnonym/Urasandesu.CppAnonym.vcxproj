@@ -217,6 +217,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyMetadataApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyNameMetadataApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyNameMetadataApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolder.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMetadataDispenserApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMetadataDispenserApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMetadataInfoApiHolder.h" />
@@ -233,6 +235,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyNameMetadata.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyNameMetadataFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGenerator.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGeneratorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataDispenser.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataInfo.hpp" />
@@ -258,6 +262,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyNameMetadataApiHolderLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyNameMetadataLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyNameMetadataLabelFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabelFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MetadataDispenserApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MetadataDispenserApiHolderLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MetadataDispenserLabel.hpp" />

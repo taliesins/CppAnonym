@@ -100,6 +100,10 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATOR_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseILGenerator.hpp>
+#endif
+
 namespace {
 
     class ATL_NO_VTABLE MyMetaDataImport;
@@ -108,25 +112,6 @@ namespace {
 }
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-    //struct AssemblyNameMetadataApiHolderLabel { };
-
-    //template<
-    //    class AssemblyNameMetadataApiHolder
-    //>    
-    //class BaseAssemblyNameMetadata
-    //{
-    //public:
-    //    std::wstring const &GetName() const
-    //    {
-    //        return m_name;
-    //    }
-
-    //private:
-    //    mutable std::wstring m_name;
-    //};
-
-    //struct AssemblyMetadataApiHolderLabel { };
 
     template<
         class TestAssemblyMetadataApiType
@@ -137,10 +122,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef BaseTestAssemblyMetadata<TestAssemblyMetadataApiType> this_type;
 
         typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, Interfaces::AssemblyMetadataApiHolderLabel, IMetaDataImport2>::type metadata_import_api_type;
-
-        //typedef typename Traits::ExternalApiOrDefault<TestAssemblyMetadataApiType, AssemblyMetadataApiHolderLabel, AssemblyNameMetadataApiHolderLabel>::type assembly_name_metadata_api_type;
-        //typedef BaseAssemblyNameMetadata<assembly_name_metadata_api_type> assembly_name_metadata_type;
-
         typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, Interfaces::AssemblyMetadataApiHolderLabel, Interfaces::TypeMetadataLabel>::type type_metadata_type;
 
         template<class T>
@@ -191,8 +172,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     std::wstring const BaseTestAssemblyMetadata<TestAssemblyMetadataApiType>::CONSOLE_NAME = std::wstring(L"System.Console");
 
-    //struct MetadataDispenserLabel { };
-
     template<
         class TestMetadataDispenserApiType
     >    
@@ -218,165 +197,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     private:
         mutable Utilities::AnyPointer m_pMSCorLib;
     };
-
-
-    //class Instruction
-    //{
-    //public:
-    //    Instruction() : 
-    //        m_pOpCode(NULL)
-    //    { }
-    //
-    //    OpCode const &GetOpCode() const
-    //    {
-    //        return *m_pOpCode;
-    //    }
-    //    
-    //    void SetOpCode(OpCode const &opCode)
-    //    {
-    //        m_pOpCode = &opCode;
-    //    }
-
-    //    boost::any const &GetOprand() const
-    //    {
-    //        return m_oprand;
-    //    }
-
-    //    void SetOprand(boost::any const &oprand)
-    //    {
-    //        m_oprand = oprand;
-    //    }
-
-    //private:
-    //    OpCode const *m_pOpCode;
-    //    boost::any m_oprand;
-    //};
-    
-    struct IILGeneratorApi { };
-
-    struct DefaultILGeneratorApiProtoB8DF5A21 : 
-        IILGeneratorApi
-    { 
-        typedef boost::mpl::vector<ApiHolders::DefaultMethodMetadataApiHolder> external_api_types;
-    };
-
-    template<
-        class ILGeneratorApiType = DefaultILGeneratorApiProtoB8DF5A21
-    >
-    class BaseILGeneratorProtoB8DF5A21 :
-        public SimpleHeapProvider<
-            boost::mpl::vector<
-                ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator>
-            >
-        >
-    {
-    public:
-        typedef BaseILGeneratorProtoB8DF5A21<ILGeneratorApiType> this_type;
-
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::MethodMetadataLabel>::type method_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-
-        typedef ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator> instruction_obj_tag_type;
-        typedef typename type_decided_by<instruction_obj_tag_type>::type instruction_heap_type;
-
-        BaseILGeneratorProtoB8DF5A21() : 
-            m_pMethodMeta(NULL),
-            m_instructionsInitialized(false)
-        { }
-        
-        void Init(method_metadata_type &methodMeta) const
-        {
-            _ASSERTE(m_pMethodMeta == NULL);
-            
-            m_pMethodMeta = &methodMeta;
-        }
-
-        template<class T>
-        T const *FindType() const { return static_cast<method_metadata_type const *>(m_pMethodMeta)->FindType<T>(); }
-
-        template<class T>
-        T *FindType() { return m_pMethodMeta->FindType<T>(); }
-      
-        template<>
-        this_type const *FindType<this_type>() const { return this; }
-      
-        template<>
-        this_type *FindType<this_type>() { return this; }
-
-        void EmitWriteLine(LPCWSTR s)
-        {
-            typedef OpCodes OpCodes;
-            {
-                Instruction *pInst = InstructionHeap().New();
-                pInst->SetOpCode(OpCodes::Ldstr);
-                pInst->SetOprand(std::wstring(s));
-            }
-            {
-                Instruction *pInst = InstructionHeap().New();
-                pInst->SetOpCode(OpCodes::Call);
-
-                this_type const *immutableThis = this;
-
-                metadata_dispenser_type const *pMetaDisp = immutableThis->FindType<metadata_dispenser_type>();
-                
-                std::wstring const msCorLibName(L"mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
-                assembly_metadata_type const *pMSCorLib = pMetaDisp->LoadAssembly(msCorLibName);
-                
-                std::wstring const consoleName(L"System.Console");
-                type_metadata_type const *pConsole = pMSCorLib->GetType(consoleName, TypeKinds::TK_CLASS);
-                
-                std::wstring const writeLineName(L"WriteLine");
-                CallingConventions cc = CallingConventions::CC_STANDARD;
-                type_metadata_type const *pRetType = pMSCorLib->GetType(L"System.Void", TypeKinds::TK_VOID);
-                std::vector<type_metadata_type const *> paramTypes;
-                paramTypes.push_back(pMSCorLib->GetType(L"System.String", TypeKinds::TK_STRING));
-                method_metadata_type const *pWriteLine = pConsole->GetMethod(writeLineName, cc, pRetType, paramTypes);
-
-                pInst->SetOprand(pWriteLine);
-            }
-            m_instructionsInitialized = false;
-        }
-
-        void Emit(OpCode const &op)
-        {
-            Instruction *pInst = InstructionHeap().New();
-            pInst->SetOpCode(op);
-            m_instructionsInitialized = false;
-        }
-
-        std::vector<Instruction const *> const &GetInstructions() const
-        {
-            if (!m_instructionsInitialized)
-            {
-                SIZE_T size = InstructionHeap().Size();
-                std::vector<Instruction const *> instructions(size);
-                for (SIZE_T i = 0; i < size; ++i)
-                    instructions[i] = InstructionHeap()[i];
-                instructions.swap(m_instructions);
-                m_instructionsInitialized = true;
-            }
-            return m_instructions;
-        }
-
-    private:
-        instruction_heap_type &InstructionHeap()
-        {
-            return Of<instruction_obj_tag_type>();
-        }
-        
-        instruction_heap_type const &InstructionHeap() const
-        {
-            return Of<instruction_obj_tag_type>();
-        }
-
-        mutable method_metadata_type *m_pMethodMeta;
-        mutable bool m_instructionsInitialized;
-        mutable std::vector<Instruction const *> m_instructions;
-    };
-
-    typedef BaseILGeneratorProtoB8DF5A21<> ILGeneratorProtoB8DF5A21;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -669,6 +489,12 @@ namespace {
         BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
     }
 
+    // 
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_09)
+    {
+
+    }
+
 
     //class ATL_NO_VTABLE MyMetaDataImport;
     //typedef Urasandesu::CppAnonym::Utilities::CComObjectSlim<MyMetaDataImport> MyMetaDataImportObject;
@@ -733,7 +559,7 @@ namespace {
             typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
                              mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
                              mpl::pair<Interfaces::MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
-                             mpl::pair<IILGeneratorApi, TestILGeneratorApiHolder>, 
+                             mpl::pair<Interfaces::ILGeneratorApiHolderLabel, TestILGeneratorApiHolder>, 
                              mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
                              mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
                              mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
@@ -756,7 +582,7 @@ namespace {
                              mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
         };
 
-        typedef BaseILGeneratorProtoB8DF5A21<TestILGeneratorApiHolder> ILGenerator;
+        typedef BaseILGenerator<TestILGeneratorApiHolder> ILGenerator;
         typedef ILGenerator::method_metadata_type MethodMetadata;
         typedef MethodMetadata::type_metadata_type TypeMetadata;
         typedef MethodMetadata::metadata_import_api_type MetaDataImportApi;

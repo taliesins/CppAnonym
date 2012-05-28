@@ -24,11 +24,25 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultAssemblyNameMetadataApiHolder
+    namespace Detail {
+        
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+        using namespace Urasandesu::CppAnonym::StrongNaming;
+        using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
+
+        struct DefaultAssemblyNameMetadataApiHolderImpl
+        {
+            typedef map<pair<AssemblyMetadataLabel, BaseAssemblyMetadata<> >, 
+                        pair<StrongNameKeyLabel, BaseStrongNameKey<> >, 
+                        pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport> > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultAssemblyNameMetadataApiHolder : 
+        Detail::DefaultAssemblyNameMetadataApiHolderImpl
     { 
-        typedef boost::mpl::map<boost::mpl::pair<AssemblyMetadataLabel, BaseAssemblyMetadata<> >, 
-                                boost::mpl::pair<StrongNaming::StrongNameKeyLabel, StrongNaming::BaseStrongNameKey<> >, 
-                                boost::mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport> > api_cartridges;
     };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {

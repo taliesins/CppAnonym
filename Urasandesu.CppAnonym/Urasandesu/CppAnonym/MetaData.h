@@ -186,6 +186,22 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ILGENERATORAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ILGeneratorApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTILGENERATORAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultILGeneratorApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ILGENERATORLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ILGeneratorLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATOR_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseILGenerator.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
 #include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
 #endif

@@ -16,9 +16,20 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultMethodNameMetadataApiHolder
+    namespace Detail {
+        
+        using namespace boost::mpl;
+
+        struct DefaultMethodNameMetadataApiHolderImpl
+        {
+            typedef map<pair<TypeMetadataLabel, BaseTypeMetadata<> > > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultMethodNameMetadataApiHolder : 
+        Detail::DefaultMethodNameMetadataApiHolderImpl
     {
-        typedef boost::mpl::map<boost::mpl::pair<TypeMetadataLabel, BaseTypeMetadata<> > > api_cartridges;
     };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {

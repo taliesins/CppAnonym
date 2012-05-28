@@ -768,6 +768,30 @@
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyInfoFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGeneratorFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGenerator.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabelFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabelFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">
