@@ -20,6 +20,10 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/range/algorithm_ext.hpp>
 
+#include <boost/intrusive_ptr.hpp>
+#include <boost/detail/atomic_count.hpp>
+#include <boost/unordered_set.hpp>
+
 #define CPPANONYM_TEST(test_case_name, test_name) \
     class GTEST_TEST_CLASS_NAME_(test_case_name, test_name); \
     void CppAnonymTest(GTEST_TEST_CLASS_NAME_(test_case_name, test_name)); \

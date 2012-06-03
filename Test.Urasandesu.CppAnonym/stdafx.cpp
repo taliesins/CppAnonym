@@ -9,6 +9,12 @@
 
 struct OleCom 
 {
-    OleCom() { ::_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); ::CoInitialize(NULL); }
+    OleCom() 
+    { 
+#ifdef _DEBUG
+        ::_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); 
+#endif
+        ::CoInitialize(NULL); 
+    }
     ~OleCom() { ::CoUninitialize(); }
 } olecom;

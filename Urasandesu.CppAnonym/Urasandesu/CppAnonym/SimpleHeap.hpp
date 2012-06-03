@@ -11,14 +11,7 @@
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
-    
-    struct DefaultHeap;
-    struct QuickHeap;
-    struct VeryQuickHeapButMustUseSubscriptOperator;    // Very quick version for small objects allocation.
-                                                        // In particular, the size is less than between 32 to 40, and when they are performed a lot of allocation and free.
-                                                        // Although must use the subscript operator [] if access the allocated object after a while, 
-                                                        // because the allocated objects are moved when the heap is over a threshold size.
-    
+
     namespace Detail {
     
         template<class T, class Tag>
@@ -191,7 +184,7 @@ namespace Urasandesu { namespace CppAnonym {
                         m_pObj_(pObj_)
                     { }
 
-                    bool operator()(T const *x) const
+                    inline bool operator()(T const *x) const
                     {
                         return m_pObj_ == x;
                     }
@@ -202,6 +195,7 @@ namespace Urasandesu { namespace CppAnonym {
                 TIterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
                 if (obj != m_array.end())
                 {
+                    // This loop is performed only one time.
                     for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
                     {
                         Utilities::DestructionDistributor<T *>::Destruct(*i);

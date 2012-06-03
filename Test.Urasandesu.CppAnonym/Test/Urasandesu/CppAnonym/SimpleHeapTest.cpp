@@ -56,6 +56,29 @@ namespace {
         MyPOD3 *next;
     };
 
+    template<class Tag, INT Index>
+    class AtomicCounter : 
+        boost::noncopyable
+    {
+    public:
+        static AtomicCounter &Instance() { static AtomicCounter obj; return obj; }
+        INT operator++() { return ++m_refCount; }
+        INT operator--() { return --m_refCount; }
+        INT Value() { return m_refCount; }
+    private:
+        AtomicCounter() : m_refCount(0) { }
+        ~AtomicCounter() { }
+        boost::detail::atomic_count m_refCount;
+    };
+
+    template<class Tag, INT Index>
+    struct ConstructionTester
+    {
+        typedef AtomicCounter<Tag, Index> counter;
+        static counter &Counter() { return counter::Instance(); }
+        ConstructionTester() { ++counter::Instance(); }
+        ~ConstructionTester() { --counter::Instance(); }
+    };
 
     
     TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapTest_01)
@@ -63,6 +86,42 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         SimpleHeap<MyPOD2> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        pPod2->int1 = 1;
+        pPod2->pod1.byte1 = 0x02;
+        pPod2->pod1.byte2 = 0x03;
+        pPod2->pod1.byte3 = 0x04;
+        pPod2->pod1.byte4 = 0x05;
+        pPod2->pod1.byte5 = 0x06;
+        pPod2->pod1.byte6 = 0x07;
+        pPod2->pod1.byte7 = 0x08;
+        pPod2->pod1.byte8 = 0x09;
+        pPod2->pv = pPod2;
+        pPod2->prev = pPod2;
+        pPod2->next = pPod2;
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap[0]->int1);
+        ASSERT_EQ(0x02, pod2Heap[0]->pod1.byte1);
+        ASSERT_EQ(0x03, pod2Heap[0]->pod1.byte2);
+        ASSERT_EQ(0x04, pod2Heap[0]->pod1.byte3);
+        ASSERT_EQ(0x05, pod2Heap[0]->pod1.byte4);
+        ASSERT_EQ(0x06, pod2Heap[0]->pod1.byte5);
+        ASSERT_EQ(0x07, pod2Heap[0]->pod1.byte6);
+        ASSERT_EQ(0x08, pod2Heap[0]->pod1.byte7);
+        ASSERT_EQ(0x09, pod2Heap[0]->pod1.byte8);
+        ASSERT_EQ(pPod2, pod2Heap[0]->pv);
+        ASSERT_EQ(pPod2, pod2Heap[0]->prev);
+        ASSERT_EQ(pPod2, pod2Heap[0]->next);
+        ASSERT_EQ(1, pod2Heap.Size());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, QuickHeap> pod2Heap;
         
         MyPOD2 *pPod2 = pod2Heap.New();
         pPod2->int1 = 1;
@@ -153,6 +212,78 @@ namespace {
         ASSERT_EQ(513, pod2Heap.Size());
     }
 
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapTest_Construction_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapTest_Construction_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+
+        ASSERT_EQ(0, Tester::Counter().Value());
+        {
+            SimpleHeap<Tester> testerHeap;
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(1, Tester::Counter().Value());
+            }
+            
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(2, Tester::Counter().Value());
+            }
+        }
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapTest_Construction_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapTest_Construction_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+
+        ASSERT_EQ(0, Tester::Counter().Value());
+        {
+            SimpleHeap<Tester, QuickHeap> testerHeap;
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(1, Tester::Counter().Value());
+            }
+            
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(2, Tester::Counter().Value());
+            }
+        }
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+    
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorTest_Construction_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorTest_Construction_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+
+        ASSERT_EQ(0, Tester::Counter().Value());
+        {
+            SimpleHeap<Tester, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(1, Tester::Counter().Value());
+            }
+            
+            {
+                Tester *pTester = testerHeap.New();
+                ASSERT_EQ(2, Tester::Counter().Value());
+            }
+        }
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
 
     TEST(Urasandesu_CppAnonym_SimpleHeapTest, PerformanceTest_01)
     {
@@ -221,6 +352,21 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         SimpleHeap<MyPOD2> pod2Heap;
+        
+        MyPOD2 *pPod2 = pod2Heap.New();
+        ASSERT_EQ(pPod2, pod2Heap[0]);
+        ASSERT_EQ(1, pod2Heap.Size());
+
+        pod2Heap.DeleteLast();
+        ASSERT_EQ(0, pod2Heap.Size());
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapDeleteLastTest_01)
+    {
+        using namespace Urasandesu::CppAnonym;
+        
+        SimpleHeap<MyPOD2, QuickHeap> pod2Heap;
         
         MyPOD2 *pPod2 = pod2Heap.New();
         ASSERT_EQ(pPod2, pod2Heap[0]);
