@@ -229,8 +229,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodNameMetadataApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeMetadataApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeMetadataApiHolderFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\AssemblyNameMetadataApiHolderLabel.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\AssemblyNameMetadataApiHolderLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadata.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyNameMetadata.hpp" />
