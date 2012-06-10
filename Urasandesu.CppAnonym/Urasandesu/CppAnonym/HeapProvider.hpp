@@ -63,8 +63,6 @@ namespace Urasandesu { namespace CppAnonym {
             
             inline factory_type &Factory() const
             {
-                BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
-                
                 if (!m_pFactory.get())
                     m_pFactory = boost::make_shared<factory_type>();
                 return *m_pFactory.get();
@@ -105,6 +103,8 @@ namespace Urasandesu { namespace CppAnonym {
             
             inline void Set(key_param_type key, SIZE_T index)
             {
+                BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
+                
                 Indexes()[key] = index;
                 Get(key)->SetKey(key);
             }
@@ -122,6 +122,8 @@ namespace Urasandesu { namespace CppAnonym {
 
             inline obj_type *New(key_param_type key)
             {
+                BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
+                
                 if (Exists(key))
                     Get(key)->SetKey(Key());
                 obj_type *pObj = Factory().New();
@@ -136,6 +138,8 @@ namespace Urasandesu { namespace CppAnonym {
 
             inline void DeleteLast()
             {
+                BOOST_MPL_ASSERT((boost::is_base_of<IHeapContent<Key>, obj_type>));
+                
                 obj_type *pObj = Peek();
                 if (pObj != NULL)
                 {

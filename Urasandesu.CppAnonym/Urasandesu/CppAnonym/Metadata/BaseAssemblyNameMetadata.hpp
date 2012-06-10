@@ -110,9 +110,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
             name = std::auto_ptr<WCHAR>(new WCHAR[nameSize]);
-            amd.szLocale = amd.cbLocale ? new WCHAR[amd.cbLocale] : NULL;
-            amd.rOS = amd.ulOS ? new OSINFO[amd.ulOS] : NULL;
-            amd.rProcessor = amd.ulProcessor ? new ULONG[amd.ulProcessor] : NULL;
+            amd.szLocale = amd.cbLocale ? new WCHAR[amd.cbLocale] : NULL;           // TODO: Use ::_malloca instead of new.
+            amd.rOS = amd.ulOS ? new OSINFO[amd.ulOS] : NULL;                       // TODO: Use ::_malloca instead of new.
+            amd.rProcessor = amd.ulProcessor ? new ULONG[amd.ulProcessor] : NULL;   // TODO: Use ::_malloca instead of new.
             
             void const *pPubKey = NULL;
             DWORD pubKeySize = 0;
