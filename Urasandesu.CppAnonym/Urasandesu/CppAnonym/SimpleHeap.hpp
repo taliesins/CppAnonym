@@ -2,8 +2,12 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #define URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
+#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP

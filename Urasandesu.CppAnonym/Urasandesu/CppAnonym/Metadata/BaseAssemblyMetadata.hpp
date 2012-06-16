@@ -114,34 +114,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef HeapProvider<mdToken, boost::mpl::vector<type_metadata_type> > heap_provider_type;
         typedef typename heap_provider_type::type_decided_by<type_metadata_type>::type type_metadata_heap_type;
 
-//#define CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(t, member) \
-//    template<class T, class Tag = boost::mpl::void_> \
-//    struct Has_##t_##member \
-//    { \
-//        typedef boost::mpl::false_ type; \
-//        static const bool value = false; \
-//    }; \
-//    \
-//    template<class T> \
-//    struct Has_##t_##member<T, typename boost::mpl::apply<boost::mpl::always<boost::mpl::void_>, typename T::member>::type> \
-//    { \
-//        typedef boost::mpl::true_ type; \
-//        static const bool value = true; \
-//    };
-//
-//#define CPP_ANONYM_HAS_MEMBER_TYPE(t, member) \
-//    Has_##t_##member<t>
-
-//#define CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(t, member) \
-//    template<class T> \
-//    struct Get_##t_##member \
-//    { \
-//        typedef typename T::member type; \
-//    };
-//
-//#define CPP_ANONYM_GET_MEMBER_TYPE(t, member) \
-//    Get_##t_##member<t>
-
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type);
         typedef typename boost::mpl::eval_if<
@@ -149,7 +121,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             CPP_ANONYM_GET_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type), 
             boost::mpl::void_
         >::type type_name_metadata_heap_type;
-        //typedef typename assembly_name_metadata_type::type_name_metadata_heap_type type_name_metadata_heap_type;
 
         BaseAssemblyMetadata() : 
             m_pMetaDisp(NULL), 

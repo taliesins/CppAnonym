@@ -473,133 +473,133 @@ namespace {
     }
 
 
-    //class ATL_NO_VTABLE MyMetaDataImport;
-    //typedef Urasandesu::CppAnonym::Utilities::CComObjectSlim<MyMetaDataImport> MyMetaDataImportObject;
+    ////class ATL_NO_VTABLE MyMetaDataImport;
+    ////typedef Urasandesu::CppAnonym::Utilities::CComObjectSlim<MyMetaDataImport> MyMetaDataImportObject;
 
-    class ATL_NO_VTABLE MyMetaDataImport : 
-        public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
-        public Urasandesu::CppAnonym::Metadata::IMetaDataImport2Impl<IMetaDataImport2>
-    {
-    public:
-        MyMetaDataImport() { }
+    //class ATL_NO_VTABLE MyMetaDataImport : 
+    //    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    //    public Urasandesu::CppAnonym::Metadata::IMetaDataImport2Impl<IMetaDataImport2>
+    //{
+    //public:
+    //    MyMetaDataImport() { }
 
-    BEGIN_COM_MAP(MyMetaDataImport)
-        COM_INTERFACE_ENTRY_IID(IID_IMetaDataImport2, IMetaDataImport2)
-    END_COM_MAP()
+    //BEGIN_COM_MAP(MyMetaDataImport)
+    //    COM_INTERFACE_ENTRY_IID(IID_IMetaDataImport2, IMetaDataImport2)
+    //END_COM_MAP()
 
-        DECLARE_PROTECT_FINAL_CONSTRUCT()
+    //    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-        HRESULT FinalConstruct() { return S_OK; }
-        void FinalRelease() { }
-    };
+    //    HRESULT FinalConstruct() { return S_OK; }
+    //    void FinalRelease() { }
+    //};
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_07)
-    {
-        // TODO: せっかく NotImplementedException スローしてるのに Google Test で丸められちゃう。カスタム class 作ったほうが良さそうね。
-        namespace fs = boost::filesystem;
-        namespace mpl = boost::mpl;
-        using namespace Urasandesu::CppAnonym;
-        using namespace Urasandesu::CppAnonym::Metadata;
-        using boost::any_cast;
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Hosting_BaseTypeMetadataProtoB8DF5A21Test, Test_07)
+    //{
+    //    // TODO: せっかく NotImplementedException スローしてるのに Google Test で丸められちゃう。カスタム class 作ったほうが良さそうね。
+    //    namespace fs = boost::filesystem;
+    //    namespace mpl = boost::mpl;
+    //    using namespace Urasandesu::CppAnonym;
+    //    using namespace Urasandesu::CppAnonym::Metadata;
+    //    using boost::any_cast;
 
-        typedef OpCodes OpCodes;
-        typedef OpCode OpCode;
+    //    typedef OpCodes OpCodes;
+    //    typedef OpCode OpCode;
 
-        struct TestAssemblyMetadataApiHolder;
+    //    struct TestAssemblyMetadataApiHolder;
 
-        struct TestMetadataDispenserApiHolder
-        {
-            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>, 
-                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>> api_cartridges;
-        };
+    //    struct TestMetadataDispenserApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>, 
+    //                         mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>> api_cartridges;
+    //    };
 
-        struct TestTypeMetadataApiHolder;
-    
-        struct TestAssemblyMetadataApiHolder
-        {
-            typedef mpl::map<mpl::pair<Interfaces::TypeMetadataApiHolderLabel, TestTypeMetadataApiHolder>,
-                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
-                             mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>> api_cartridges;
-        };
+    //    struct TestTypeMetadataApiHolder;
+    //
+    //    struct TestAssemblyMetadataApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<Interfaces::TypeMetadataApiHolderLabel, TestTypeMetadataApiHolder>,
+    //                         mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
+    //                         mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
+    //                         mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>> api_cartridges;
+    //    };
 
-        struct TestMethodMetadataApiHolder;
-        struct TestILGeneratorApiHolder;
+    //    struct TestMethodMetadataApiHolder;
+    //    struct TestILGeneratorApiHolder;
 
-        struct TestMethodNameMetadataApiHolder
-        {
-            typedef mpl::map<mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> > > api_cartridges;
-        };
+    //    struct TestMethodNameMetadataApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> > > api_cartridges;
+    //    };
 
-        struct TestTypeMetadataApiHolder
-        {
-            typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
-                             mpl::pair<Interfaces::MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
-                             mpl::pair<Interfaces::ILGeneratorApiHolderLabel, TestILGeneratorApiHolder>, 
-                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
-                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
-                             mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
-                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >,
-                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
-        };
+    //    struct TestTypeMetadataApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
+    //                         mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
+    //                         mpl::pair<Interfaces::MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
+    //                         mpl::pair<Interfaces::ILGeneratorApiHolderLabel, TestILGeneratorApiHolder>, 
+    //                         mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
+    //                         mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
+    //                         mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
+    //                         mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >,
+    //                         mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
+    //    };
 
-        struct TestMethodMetadataApiHolder
-        {
-            typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >, 
-                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
-        };
+    //    struct TestMethodMetadataApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
+    //                         mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >, 
+    //                         mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
+    //    };
 
-        struct TestILGeneratorApiHolder
-        {
-            typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>,
-                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>, 
-                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
-                             mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
-        };
+    //    struct TestILGeneratorApiHolder
+    //    {
+    //        typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>,
+    //                         mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>, 
+    //                         mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
+    //                         mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
+    //    };
 
-        typedef BaseILGenerator<TestILGeneratorApiHolder> ILGenerator;
-        typedef ILGenerator::method_metadata_type MethodMetadata;
-        typedef MethodMetadata::type_metadata_type TypeMetadata;
-        typedef MethodMetadata::metadata_import_api_type MetaDataImportApi;
-        typedef TypeMetadata::assembly_metadata_type AssemblyMetadata;
+    //    typedef BaseILGenerator<TestILGeneratorApiHolder> ILGenerator;
+    //    typedef ILGenerator::method_metadata_type MethodMetadata;
+    //    typedef MethodMetadata::type_metadata_type TypeMetadata;
+    //    typedef MethodMetadata::metadata_import_api_type MetaDataImportApi;
+    //    typedef TypeMetadata::assembly_metadata_type AssemblyMetadata;
 
-        AssemblyMetadata asmMeta;
-        
-        MyMetaDataImportObject *pMetaImpApi_ = NULL;
-        ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportObject::CreateInstance(&pMetaImpApi_)); 
-        ATL::CComPtr<MetaDataImportApi> pMetaImpApi(pMetaImpApi_);
-        //MetaDataImportApi *pMetaImpApi = NULL;
+    //    AssemblyMetadata asmMeta;
+    //    
+    //    MyMetaDataImportObject *pMetaImpApi_ = NULL;
+    //    ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportObject::CreateInstance(&pMetaImpApi_)); 
+    //    ATL::CComPtr<MetaDataImportApi> pMetaImpApi(pMetaImpApi_);
+    //    //MetaDataImportApi *pMetaImpApi = NULL;
 
-        TypeMetadata typeMeta;
-        typeMeta.Init(asmMeta, *pMetaImpApi);
+    //    TypeMetadata typeMeta;
+    //    typeMeta.Init(asmMeta, *pMetaImpApi);
 
-        MethodMetadata methodMeta;
-        methodMeta.Init(typeMeta, *pMetaImpApi); 
-        
-        ILGenerator gen;
-        gen.Init(methodMeta);
-        gen.EmitWriteLine(L"Hello, world!!");
-        gen.Emit(OpCodes::Ret);
+    //    MethodMetadata methodMeta;
+    //    methodMeta.Init(typeMeta, *pMetaImpApi); 
+    //    
+    //    ILGenerator gen;
+    //    gen.Init(methodMeta);
+    //    gen.EmitWriteLine(L"Hello, world!!");
+    //    gen.Emit(OpCodes::Ret);
 
-        std::vector<Instruction const *> const &insts = gen.GetInstructions();
-        ASSERT_EQ(3, insts.size());
-        {
-            OpCode const &op = insts[0]->GetOpCode();
-            std::wstring const &s = any_cast<std::wstring const &>(insts[0]->GetOprand());
-            ASSERT_EQ(&OpCodes::Ldstr, &op);
-            ASSERT_STREQ(L"Hello, world!!", s.c_str());
-        }
-        {
-            OpCode const &op = insts[1]->GetOpCode();
-            MethodMetadata const *pMethodMeta = any_cast<MethodMetadata const *>(insts[1]->GetOprand());
-            ASSERT_EQ(&OpCodes::Call, &op);
-            ASSERT_STREQ(L"WriteLine", pMethodMeta->GetName().c_str());
-        }
-        {
-            OpCode const &op = insts[2]->GetOpCode();
-            ASSERT_EQ(&OpCodes::Ret, &op);
-        }
-    }
+    //    std::vector<Instruction const *> const &insts = gen.GetInstructions();
+    //    ASSERT_EQ(3, insts.size());
+    //    {
+    //        OpCode const &op = insts[0]->GetOpCode();
+    //        std::wstring const &s = any_cast<std::wstring const &>(insts[0]->GetOprand());
+    //        ASSERT_EQ(&OpCodes::Ldstr, &op);
+    //        ASSERT_STREQ(L"Hello, world!!", s.c_str());
+    //    }
+    //    {
+    //        OpCode const &op = insts[1]->GetOpCode();
+    //        MethodMetadata const *pMethodMeta = any_cast<MethodMetadata const *>(insts[1]->GetOprand());
+    //        ASSERT_EQ(&OpCodes::Call, &op);
+    //        ASSERT_STREQ(L"WriteLine", pMethodMeta->GetName().c_str());
+    //    }
+    //    {
+    //        OpCode const &op = insts[2]->GetOpCode();
+    //        ASSERT_EQ(&OpCodes::Ret, &op);
+    //    }
+    //}
 }

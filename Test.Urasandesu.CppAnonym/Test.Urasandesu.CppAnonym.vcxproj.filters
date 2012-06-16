@@ -203,5 +203,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\MetadataTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseILGeneratorTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

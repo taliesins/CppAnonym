@@ -6,8 +6,12 @@
 #include <Urasandesu/CppAnonym/Traits/Distinct.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
-#include <Urasandesu/CppAnonym/SimpleHeapFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP
