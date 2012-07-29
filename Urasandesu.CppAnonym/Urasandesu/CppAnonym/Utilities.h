@@ -34,4 +34,8 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
+#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

@@ -419,6 +419,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
   </ItemGroup>
   <ItemGroup>

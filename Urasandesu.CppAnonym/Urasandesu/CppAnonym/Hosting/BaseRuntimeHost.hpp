@@ -14,6 +14,10 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
+#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
@@ -141,13 +145,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             typedef mpl::end<sequence_type>::type IEnd;
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
-            Utilities::TypeInfo infoType = mpl::identity<InfoType>();
-            if (m_infos.find(infoType) == m_infos.end())
+            Utilities::TypeInfo info = mpl::identity<InfoType>();
+            if (m_infos.find(info) == m_infos.end())
             {
-                m_infos[infoType] = NULL;
+                m_infos[info] = NULL;
             }
 
-            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[infoType]);
+            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[info]);
             if (pInfo == NULL)
             {
                 this_type *pMutableThis = const_cast<this_type *>(this);
@@ -155,7 +159,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 InfoHeap &heap = pMutableThis->Of<InfoType>();
                 pInfo = heap.New(GetCORVersion());
                 pInfo->Init(*pMutableThis);
-                m_infos[infoType] = pInfo;
+                m_infos[info] = pInfo;
             }
 
             return *pInfo;
