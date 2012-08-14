@@ -73,7 +73,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         {
             typedef map<
                 pair<MetadataDispenserLabel, MetadataDispenser>, 
-                pair<AssemblyNameMetadataLabel, AssemblyNameMetadata>,
+                //pair<AssemblyNameMetadataLabel, AssemblyNameMetadata>,
                 pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
                 pair<ModuleMetadataLabel, ModuleMetadata>, 
                 pair<ModuleNameMetadataLabel, ModuleNameMetadata>, 

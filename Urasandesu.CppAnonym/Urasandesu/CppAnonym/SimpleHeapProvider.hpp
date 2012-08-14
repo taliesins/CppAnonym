@@ -59,6 +59,26 @@ namespace Urasandesu { namespace CppAnonym {
                 return Factory()[ix];
             }
 
+            inline void *Alloc(SIZE_T num)
+            {
+                return Factory().Alloc(num);
+            }
+
+            inline void Construct(object_type *pObj)
+            {
+                Factory().Construct(pObj);
+            }
+
+            inline void Destroy(object_type *pObj)
+            {
+                Factory().Destroy(pObj);
+            }
+
+            inline void Deallocate(void *p, SIZE_T num)
+            {
+                Factory().Deallocate(p, num);
+            }
+
             inline object_type *New()
             {
                 return Factory().New();

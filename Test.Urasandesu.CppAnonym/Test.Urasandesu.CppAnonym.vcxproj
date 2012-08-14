@@ -118,7 +118,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Test.Urasandesu.CppAnonym.cpp" />
+    <ClCompile Include="Test.Urasandesu.CppAnonym.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Test.Urasandesu.CppAnonym2.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />

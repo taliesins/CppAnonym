@@ -236,6 +236,219 @@ namespace Urasandesu { namespace CppAnonym {
             boost::pool<> m_pool;
             TArray m_array;
         };
+
+
+        template<class T>
+        class SimpleHeapImpl<T, QuickHeap2>
+        {
+        public:
+            struct Box
+            {
+                Box(T *pObj, bool needsDestruct) : 
+                    m_pObj(pObj),
+                    m_needsDestruct(needsDestruct)
+                { }
+                
+                T *m_pObj;
+                bool m_needsDestruct;
+            };
+            typedef std::vector<Box> BoxArray;
+
+            SimpleHeapImpl() : 
+                m_pool(sizeof(T))
+            { }
+            
+            ~SimpleHeapImpl()
+            {
+                if (m_array.empty())
+                    return;
+
+                for (Box *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
+                {
+                    Box &box = *i_end;
+                    if (box.m_needsDestruct)
+                        Utilities::DestructionDistributor<T *>::Destruct(box.m_pObj);
+                    m_pool.free(box.m_pObj);
+                }
+            }
+
+            inline void *Alloc(SIZE_T num)
+            {
+                T *pObj = reinterpret_cast<T *>(m_pool.ordered_malloc(num));
+                m_array.push_back(Box(pObj, false));
+                return pObj;
+            }
+
+            void Construct(T *pObj)
+            {
+                if (m_array.empty())
+                    return;
+
+                for (Box *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
+                {
+                    Box &box = *i_end;
+                    if (box.m_pObj == pObj)
+                    {
+                        box.m_needsDestruct = true;
+#pragma warning(push)
+#pragma warning(disable: 4345)
+                        new(pObj)T();
+#pragma warning(pop)
+                        break;
+                    }
+                }
+            }
+
+            void Destroy(T *pObj)
+            {
+                if (m_array.empty())
+                    return;
+
+                for (Box *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
+                {
+                    Box &box = *i_end;
+                    if (box.m_pObj == pObj)
+                    {
+                        box.m_needsDestruct = false;
+                        pObj->~T();
+                        break;
+                    }
+                }
+            }
+
+            void Deallocate(void *pObj, SIZE_T num)
+            {
+                if (m_array.empty())
+                    return;
+
+                if ((*this)[Size() - 1] == reinterpret_cast<T *>(pObj))
+                {
+                    DeallocateLastCore(num);
+                    return;
+                }
+
+                class EqualTo : 
+                    std::unary_function<Box, bool>
+                {
+                public:
+                    EqualTo(T *pObj_) : 
+                        m_pObj_(pObj_)
+                    { }
+
+                    inline bool operator()(Box const &box) const
+                    {
+                        return m_pObj_ == box.m_pObj;
+                    }
+                private:
+                    T *m_pObj_;
+                };
+                typedef BoxArray::iterator Iterator;
+                Iterator result = std::remove_if(m_array.begin(), m_array.end(), EqualTo(reinterpret_cast<T *>(pObj)));
+                if (result != m_array.end())
+                {
+                    // This loop is performed only one time.
+                    for (Iterator i = result, i_end = m_array.end(); i != i_end; ++i)
+                    {
+                        Box &box = *i;
+                        m_pool.ordered_free(box.m_pObj, num);
+                    }
+                    m_array.erase(result, m_array.end());
+                }
+            }
+
+//            inline T *New()
+//            {
+//                T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+//#pragma warning(push)
+//#pragma warning(disable: 4345)
+//                new(pObj)T();
+//#pragma warning(pop)
+//                m_array.push_back(pObj);
+//                return pObj;
+//            }
+
+            //void DeleteLast()
+            //{
+            //    if (m_array.empty())
+            //        return;
+            //    
+            //    DeleteLastCore();
+            //}
+
+            //void Delete(T *pObj)
+            //{
+            //    if (m_array.empty())
+            //        return;
+
+            //    if ((*this)[Size() - 1] == pObj)
+            //    {
+            //        DeleteLastCore();
+            //        return;
+            //    }
+
+            //    class EqualTo : 
+            //        std::unary_function<T *, bool>
+            //    {
+            //    public:
+            //        EqualTo(T *pObj_) : 
+            //            m_pObj_(pObj_)
+            //        { }
+
+            //        inline bool operator()(T const *x) const
+            //        {
+            //            return m_pObj_ == x;
+            //        }
+            //    private:
+            //        T *m_pObj_;
+            //    };
+            //    typedef BoxArray::iterator TIterator;
+            //    TIterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+            //    if (obj != m_array.end())
+            //    {
+            //        // This loop is performed only one time.
+            //        for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
+            //        {
+            //            Utilities::DestructionDistributor<T *>::Destruct(*i);
+            //            m_pool.free(*i);
+            //        }
+            //        m_array.erase(obj, m_array.end());
+            //    }
+            //}
+            
+            inline SIZE_T Size() const
+            {
+                return m_array.size();
+            }
+            
+            inline T *operator[] (SIZE_T ix)
+            {
+                return m_array[ix].m_pObj;
+            }
+            
+            inline T const *operator[] (SIZE_T ix) const
+            {
+                return m_array[ix].m_pObj;
+            }
+        
+        private:    
+            void DeallocateLastCore(SIZE_T num)
+            {
+                T *pObj = (*this)[Size() - 1];
+                m_array.pop_back();
+                m_pool.ordered_free(pObj, num);
+            }
+
+            //void DeleteLastCore()
+            //{
+            //    T *pObj = (*this)[Size() - 1];
+            //    m_array.pop_back();
+            //    Utilities::DestructionDistributor<T *>::Destruct(pObj);
+            //    m_pool.free(pObj);
+            //}
+
+            boost::pool<> m_pool;
+            BoxArray m_array;
+        };
     
         template<class T>
         class SimpleHeapImpl<T, DefaultHeap>
@@ -313,6 +526,26 @@ namespace Urasandesu { namespace CppAnonym {
         Detail::SimpleHeapImpl<T, Tag> m_impl;
         
     public:
+        inline void *Alloc(SIZE_T num)
+        {
+            return m_impl.Alloc(num);
+        }
+
+        inline void Construct(T *pObj)
+        {
+            m_impl.Construct(pObj);
+        }
+
+        inline void Destroy(T *pObj)
+        {
+            m_impl.Destroy(pObj);
+        }
+
+        inline void Deallocate(void *p, SIZE_T num)
+        {
+            m_impl.Deallocate(p, num);
+        }
+
         inline T *New()
         {
             return m_impl.New();

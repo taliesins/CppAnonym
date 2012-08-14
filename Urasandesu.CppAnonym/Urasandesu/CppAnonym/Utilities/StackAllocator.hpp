@@ -23,7 +23,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         StackAllocator() throw() { }
-        StackAllocator(StackAllocator const&) throw() { }
         template <class U> StackAllocator(StackAllocator<U> const&) throw() { }
         ~StackAllocator() throw() { }
 
