@@ -3,94 +3,6 @@
 
 #include "stdafx.h"
 
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
-//#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-//#include <Urasandesu/CppAnonym/SafeEnum.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-//#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
-//#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
-//#include <Urasandesu/CppAnonym/ObjectTag.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
-//#include <Urasandesu/CppAnonym/Collections/Iterable.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
-//#include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-//#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_TRAITS_DISTINCT_H
-//#include <Urasandesu/CppAnonym/Traits/Distinct.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
-//#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
-//#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
-//#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
-//#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_METADATA_CALLINGCONVENTIONS_H
-//#include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
-//#include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
-//#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
-//#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
-//#endif
-
 // foward declarations
 namespace Urasandesu { namespace CppAnonym {
 
@@ -704,18 +616,6 @@ namespace Urasandesu { namespace CppAnonym {
 
     struct SmartPtrChainMapper
     {
-        //template<
-        //    class T,
-        //    class Previous,
-        //    class Current
-        //>
-        //static bool CanMapFirstAncestor(Current const &current)
-        //{
-        //    boost::shared_ptr<Previous> pPrevious;
-        //    pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-        //    return pPrevious && pPrevious->MapFirst<T>();
-        //}
-
         template<
             class T,
             class Previous,
@@ -726,22 +626,7 @@ namespace Urasandesu { namespace CppAnonym {
             boost::shared_ptr<Previous> pPrevious;
             pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
             return pPrevious ? pPrevious->MapFirst<T>() : boost::shared_ptr<T>();
-            //if (!pPrevious)
-            //    BOOST_THROW_EXCEPTION(CppAnonymInvalidOperationException());
-            //return pPrevious->MapFirst<T>();
         }
-
-        //template<
-        //    class T,
-        //    class Previous,
-        //    class Current
-        //>
-        //static bool CanMapAncestor(Current const &current)
-        //{
-        //    boost::shared_ptr<Previous> pPrevious;
-        //    pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-        //    return pPrevious && pPrevious->Map<T>();
-        //}
 
         template<
             class T,
@@ -752,20 +637,8 @@ namespace Urasandesu { namespace CppAnonym {
         { 
             boost::shared_ptr<Previous> pPrevious;
             pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-            //if (!pPrevious)
-            //    BOOST_THROW_EXCEPTION(CppAnonymInvalidOperationException());
             return pPrevious ? pPrevious->Map<T>() : boost::shared_ptr<T>();
         }
-
-        //template<
-        //    class Current
-        //>
-        //static bool CanMapFirst(Current const &current) 
-        //{ 
-        //    boost::shared_ptr<Current> pCurrent;
-        //    pCurrent = current.GetCurrent().lock();
-        //    return pCurrent;
-        //}
 
         template<
             class Current
@@ -774,20 +647,8 @@ namespace Urasandesu { namespace CppAnonym {
         { 
             boost::shared_ptr<Current> pCurrent;
             pCurrent = current.GetCurrent().lock();
-            //if (!pCurrent)
-            //    BOOST_THROW_EXCEPTION(CppAnonymInvalidOperationException());
             return pCurrent;
         }
-
-        //template<
-        //    class Current
-        //>
-        //static bool CanMap(Current const &current) 
-        //{ 
-        //    boost::shared_ptr<Current> pCurrent;
-        //    pCurrent = current.GetCurrent().lock();
-        //    return pCurrent;
-        //}
 
         template<
             class Current
@@ -796,8 +657,6 @@ namespace Urasandesu { namespace CppAnonym {
         { 
             boost::shared_ptr<Current> pCurrent;
             pCurrent = current.GetCurrent().lock();
-            //if (!pCurrent)
-            //    BOOST_THROW_EXCEPTION(CppAnonymInvalidOperationException());
             return pCurrent;
         }
     };
@@ -871,23 +730,11 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename chain_info_type::mapper_type mapper_type;
             typedef typename chain_info_type::constructor_type constructor_type;
 
-            //template<class T>
-            //bool CanMapAncestor() const
-            //{
-            //    return mapper_type::CanMapAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
-            //}
-
             template<class T>
-            boost::shared_ptr<T> MapAncestor() const
+            boost::shared_ptr<T> MapFirstAncestor() const
             {
-                return mapper_type::MapAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
+                return mapper_type::MapFirstAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
             }
-
-            //template<class T>
-            //bool CanMapFirst() const
-            //{
-            //    return mapper_type::CanMapFirstAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
-            //}
 
             template<class T>
             boost::shared_ptr<T> MapFirst() const
@@ -895,35 +742,17 @@ namespace Urasandesu { namespace CppAnonym {
                 return mapper_type::MapFirstAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
             }
 
-            //template<>
-            //bool CanMapFirst<current_type>() const
-            //{
-            //    return mapper_type::CanMapFirst<current_type>(static_cast<current_type const &>(*this));
-            //}
-
             template<>
             boost::shared_ptr<current_type> MapFirst<current_type>() const
             { 
                 return mapper_type::MapFirst<current_type>(static_cast<current_type const &>(*this));
             }
 
-            //template<class T>
-            //bool CanMap() const
-            //{
-            //    return mapper_type::CanMapAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
-            //}
-
             template<class T>
             boost::shared_ptr<T> Map() const
             {
                 return mapper_type::MapAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
             }
-
-            //template<>
-            //bool CanMap<current_type>() const
-            //{
-            //    return mapper_type::CanMap<current_type>(static_cast<current_type const &>(*this));
-            //}
 
             template<>
             boost::shared_ptr<current_type> Map<current_type>() const
@@ -1016,11 +845,10 @@ namespace Urasandesu { namespace CppAnonym {
                                 chain_info_sequence_type,
                                 mpl::fold<
                                     chain_info_sequence_type, 
-                                    mpl::vector<current_type>, 
-                                    mpl::insert_range<
-                                        mpl::_1, 
-                                        mpl::end<mpl::_1>, 
-                                        FlattenChainInfoImpl<current_type, mpl::_2> > > >::type type;
+                                    mpl::vector<current_type>,
+                                    mpl::copy<
+                                        FlattenChainInfoImpl<current_type, mpl::_2>, 
+                                        mpl::back_inserter<mpl::_1> > > >::type type; 
         };
 
         template<class T>
@@ -1033,7 +861,6 @@ namespace Urasandesu { namespace CppAnonym {
         class IsMappable
         {
         private:
-            //typedef SmartPtrChainInfo<Current> current;
             typedef Current current;
             typedef typename FlattenChainInfo<current>::type all_mappable_types;
             typedef typename mpl::find<all_mappable_types, T>::type i;
@@ -1057,23 +884,17 @@ namespace Urasandesu { namespace CppAnonym {
         typedef SmartPtrChain<Current, ChainInfoSequence> this_type;
         typedef ChainInfoSequence chain_info_sequence_type;
 
-        template<class ChainInfo>
-        struct get_previous
-        {
-            typedef typename ChainInfo::previous_type type;
-        };
-
         template<class Previous>
         struct chain_from
         {
             typedef Detail::SmartPtrChainImpl<
                 Current,
-                ChainInfoSequence,
+                chain_info_sequence_type,
                 typename boost::mpl::find_if<
-                    typename Traits::Distinct<ChainInfoSequence>::type,
-                    boost::is_same<get_previous<boost::mpl::_1>, Previous>
+                    typename Traits::Distinct<chain_info_sequence_type>::type,
+                    boost::is_same<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, boost::mpl::_1), Previous>
                 >::type,
-                typename Traits::DistinctEnd<ChainInfoSequence>::type
+                typename Traits::DistinctEnd<chain_info_sequence_type>::type
             > type;
         };
 
@@ -1083,129 +904,37 @@ namespace Urasandesu { namespace CppAnonym {
             this_type *pMutableThis = const_cast<this_type *>(this);
             return static_cast<typename chain_from<Previous>::type &>(*pMutableThis);
         }
-        // [2012/08/23 08:05:39] だいたい O.K. きれいにしないとね。
-        //template<class T>
-        //bool CanMapFirstAncestor() const
-        //{
-        //    namespace mpl = boost::mpl;
-        //    //return CanMapFirstAncestorImpl<T>(Detail::IsMappable<Current, T>::type());
-        //    typedef mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type MappableTargets;
-        //    //BOOST_MPL_ASSERT((boost::is_same<mpl::size<mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type>::type, int>));
-
-        //    container<T> container;
-        //    map_first_ancestor_selector<T> selector(*this, container);
-        //    mpl::for_each<MappableTargets, wrap<get_previous<mpl::_> > >(selector);
-        //    return container.m_p;
-
-        //    //container<T> container;
-        //    //map_first_ancestor_selector<T> selector(*this, container);
-        //    //boost::mpl::for_each<MappableTargets, wrap<mpl::_> >(selector);
-        //    //return container.m_p;
-        //}
-
-        //template<class T>
-        //bool CanMapFirstAncestorImpl(boost::mpl::false_ const &) const
-        //{
-        //    return false;
-        //}
-
-        //template<class T>
-        //bool CanMapFirstAncestorImpl(boost::mpl::true_ const &) const
-        //{
-        //    container<T> container;
-        //    map_first_ancestor_selector<T> selector(*this, container);
-        //    boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
-        //    return container.m_p;
-        //}
 
         template<class T>
         boost::shared_ptr<T> MapFirstAncestor() const
         {
             namespace mpl = boost::mpl;
-            //return CanMapFirstAncestorImpl<T>(Detail::IsMappable<Current, T>::type());
-            typedef mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type MappableTargets;
+
+            typedef mpl::filter_view<chain_info_sequence_type, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_ancestor_selector<T> selector(*this, container);
-            mpl::for_each<MappableTargets, wrap<get_previous<mpl::_> > >(selector);
+            mpl::for_each<MappableTypes, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             return container.m_p;
-            //typedef Detail::IsMappable<Current, T>::type MappableTargets;
-
-            //container<T> container;
-            //map_first_ancestor_selector<T> selector(*this, container);
-            //boost::mpl::for_each<MappableTargets, wrap<mpl::_> >(selector);
-            //return container.m_p;
         }
-
-        //template<class T>
-        //boost::shared_ptr<T> MapFirstAncestorImpl(boost::mpl::false_ const &) const
-        //{
-        //    return boost::shared_ptr<T>();
-        //}
-
-        //template<class T>
-        //boost::shared_ptr<T> MapFirstAncestorImpl(boost::mpl::true_ const &) const
-        //{
-        //    container<T> container;
-        //    map_first_ancestor_selector<T> selector(*this, container);
-        //    boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
-        //    return container.m_p;
-        //}
-
-        //template<class T>
-        //bool CanMapFirst() const
-        //{
-        //    namespace mpl = boost::mpl;
-        //    typedef mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type MappableTargets;
-        //    
-        //    container<T> container;
-        //    map_first_selector<T> selector(*this, container);
-        //    mpl::for_each<MappableTargets, wrap<get_previous<mpl::_> > >(selector);
-        //    return container.m_p;
-
-        //    //container<T> container;
-        //    //map_first_selector<T> selector(*this, container);
-        //    //boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
-        //    //return container.m_p;
-        //}
 
         template<class T>
         boost::shared_ptr<T> MapFirst() const
         {
             namespace mpl = boost::mpl;
-            typedef mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type MappableTargets;
+
+            typedef mpl::filter_view<chain_info_sequence_type, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_selector<T> selector(*this, container);
-            mpl::for_each<MappableTargets, wrap<get_previous<mpl::_> > >(selector);
-            //_ASSERTE(container.m_p);
+            mpl::for_each<MappableTypes, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             return container.m_p;
-
-            //container<T> container;
-            //map_first_selector<T> selector(*this, container);
-            //boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
-            //_ASSERTE(container.m_p);
-            //return container.m_p;
         }
 
         template<>
         boost::shared_ptr<Current> MapFirst<Current>() const
         {
             return Map<Current>();
-            //namespace mpl = boost::mpl;
-            //typedef mpl::filter_view<ChainInfoSequence, Detail::IsMappable<mpl::_, T> >::type MappableTargets;
-            //
-            //container<T> container;
-            //map_first_selector<T> selector(*this, container);
-            //mpl::for_each<MappableTargets, wrap<get_previous<mpl::_> > >(selector);
-            ////_ASSERTE(container.m_p);
-            //return container.m_p;
-
-            //container<T> container;
-            //map_first_selector<T> selector(*this, container);
-            //boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
-            //_ASSERTE(container.m_p);
-            //return container.m_p;
         }
 
         template<
@@ -1214,9 +943,11 @@ namespace Urasandesu { namespace CppAnonym {
         >
         boost::shared_ptr<T> NewObjectFirst(HeapProvider &provider) const
         {
+            namespace mpl = boost::mpl;
+
             container<T> container;
             new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-            boost::mpl::for_each<ChainInfoSequence, wrap<get_previous<boost::mpl::_> > >(selector);
+            mpl::for_each<chain_info_sequence_type, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             _ASSERTE(container.m_p);
             return container.m_p;
         }
@@ -1248,9 +979,7 @@ namespace Urasandesu { namespace CppAnonym {
                 {
                     typedef typename chain_from<Previous>::type PreviousChain;
                     PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                    m_pContainer->m_p = chain.MapAncestor<T>();
-                    //if (chain.CanMapAncestor<T>())
-                    //    m_pContainer->m_p = chain.MapAncestor<T>();
+                    m_pContainer->m_p = chain.MapFirstAncestor<T>();
                 }
             }
 
@@ -1274,8 +1003,6 @@ namespace Urasandesu { namespace CppAnonym {
                     typedef typename chain_from<Previous>::type PreviousChain;
                     PreviousChain &chain = m_pThis->ChainFrom<Previous>();
                     m_pContainer->m_p = chain.MapFirst<T>();
-                    //if (chain.CanMap<T>())
-                    //    m_pContainer->m_p = chain.Map<T>();
                 }
             }
 
@@ -1303,8 +1030,6 @@ namespace Urasandesu { namespace CppAnonym {
                     typedef typename chain_from<Previous>::type PreviousChain;
                     PreviousChain &chain = m_pThis->ChainFrom<Previous>();
                     m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
-                    //if (chain.CanMapAncestor<Previous>())
-                    //    m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
                 }
             }
 

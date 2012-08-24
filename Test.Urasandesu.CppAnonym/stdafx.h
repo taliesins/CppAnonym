@@ -22,9 +22,11 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/range/algorithm_ext.hpp>
 
+#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/filter_view.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/transform_view.hpp>
 
 #include <boost/intrusive_ptr.hpp>
 #include <boost/detail/atomic_count.hpp>
