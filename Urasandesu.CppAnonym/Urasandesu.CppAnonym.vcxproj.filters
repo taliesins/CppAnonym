@@ -1020,6 +1020,12 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">
