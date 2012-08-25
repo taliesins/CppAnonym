@@ -66,6 +66,26 @@
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainConstructor.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAININFO_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_STACKFRAME_H
 #include <Urasandesu/CppAnonym/StackFrame.h>
 #endif

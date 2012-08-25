@@ -3,72 +3,96 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainConstructor.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAININFO_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
+#endif
+
 // foward declarations
 namespace Urasandesu { namespace CppAnonym {
 
-    struct SmartPtrChainMapper;
+    //struct SmartPtrChainMapper;
 
     
     
     
     
-    struct SmartPtrChainConstructor;
+    //struct SmartPtrChainConstructor;
 
 
 
 
 
-    template<
-        class Previous, 
-        class Mapper = SmartPtrChainMapper,
-        class Constructor = SmartPtrChainConstructor
-    >
-    struct SmartPtrChainInfo;
+    //template<
+    //    class Previous, 
+    //    class Mapper = SmartPtrChainMapper,
+    //    class Constructor = SmartPtrChainConstructor
+    //>
+    //struct SmartPtrChainInfo;
     
     
     
     
     
-    namespace Detail {
-        
-        template<class ObjectTagSequence, class I, class IEnd>
-        class ATL_NO_VTABLE SimpleHeapProvider5B4288A9Impl;
+    //namespace Detail {
+    //    
+    //    template<class ObjectTagSequence, class I, class IEnd>
+    //    class ATL_NO_VTABLE SimpleHeapProviderImpl;
 
-    }   // namespace Detail
-
-
-    template<class ObjectTagSequence>
-    class ATL_NO_VTABLE SimpleHeapProvider5B4288A9;
+    //}   // namespace Detail
 
 
+    //template<class ObjectTagSequence>
+    //class ATL_NO_VTABLE SimpleHeapProvider;
 
 
 
-    namespace Detail {
-        
-        template<class Sequence, class I, class IEnd>
-        class SmartHeapProviderImpl;
-
-    }   // namespace Detail
 
 
-    template<class Sequence>
-    class SmartHeapProvider;
+    //namespace Detail {
+    //    
+    //    template<class Sequence, class I, class IEnd>
+    //    class SmartHeapProviderImpl;
+
+    //}   // namespace Detail
+
+
+    //template<class Sequence>
+    //class SmartHeapProvider;
 
     
     
     
     
-    namespace Detail {
-        
-        template<class Sequence, class I, class IEnd>
-        class DisposableHeapProviderImpl;
+    //namespace Detail {
+    //    
+    //    template<class Sequence, class I, class IEnd>
+    //    class DisposableHeapProviderImpl;
 
-    }   // namespace Detail
+    //}   // namespace Detail
 
 
-    template<class Sequence>
-    class DisposableHeapProvider;
+    //template<class Sequence>
+    //class DisposableHeapProvider;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
@@ -614,100 +638,100 @@ namespace Urasandesu { namespace CppAnonym {
 
 
 
-    struct SmartPtrChainMapper
-    {
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapFirstAncestor(Current const &current) 
-        { 
-            boost::shared_ptr<Previous> pPrevious;
-            pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-            return pPrevious ? pPrevious->MapFirst<T>() : boost::shared_ptr<T>();
-        }
+    //struct SmartPtrChainMapper
+    //{
+    //    template<
+    //        class T,
+    //        class Previous,
+    //        class Current
+    //    >
+    //    static boost::shared_ptr<T> MapFirstAncestor(Current const &current) 
+    //    { 
+    //        boost::shared_ptr<Previous> pPrevious;
+    //        pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
+    //        return pPrevious ? pPrevious->MapFirst<T>() : boost::shared_ptr<T>();
+    //    }
 
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapAncestor(Current const &current) 
-        { 
-            boost::shared_ptr<Previous> pPrevious;
-            pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-            return pPrevious ? pPrevious->Map<T>() : boost::shared_ptr<T>();
-        }
+    //    template<
+    //        class T,
+    //        class Previous,
+    //        class Current
+    //    >
+    //    static boost::shared_ptr<T> MapAncestor(Current const &current) 
+    //    { 
+    //        boost::shared_ptr<Previous> pPrevious;
+    //        pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
+    //        return pPrevious ? pPrevious->Map<T>() : boost::shared_ptr<T>();
+    //    }
 
-        template<
-            class Current
-        >
-        static boost::shared_ptr<Current> MapFirst(Current const &current) 
-        { 
-            boost::shared_ptr<Current> pCurrent;
-            pCurrent = current.GetCurrent().lock();
-            return pCurrent;
-        }
+    //    template<
+    //        class Current
+    //    >
+    //    static boost::shared_ptr<Current> MapFirst(Current const &current) 
+    //    { 
+    //        boost::shared_ptr<Current> pCurrent;
+    //        pCurrent = current.GetCurrent().lock();
+    //        return pCurrent;
+    //    }
 
-        template<
-            class Current
-        >
-        static boost::shared_ptr<Current> Map(Current const &current) 
-        { 
-            boost::shared_ptr<Current> pCurrent;
-            pCurrent = current.GetCurrent().lock();
-            return pCurrent;
-        }
-    };
+    //    template<
+    //        class Current
+    //    >
+    //    static boost::shared_ptr<Current> Map(Current const &current) 
+    //    { 
+    //        boost::shared_ptr<Current> pCurrent;
+    //        pCurrent = current.GetCurrent().lock();
+    //        return pCurrent;
+    //    }
+    //};
 
     
     
     
     
-    struct SmartPtrChainConstructor
-    {
-        template<
-            class T,
-            class HeapProvider
-        >
-        static boost::shared_ptr<T> NewRootObject()
-        {
-            boost::shared_ptr<T> pObj = HeapProvider::NewStaticObject();
-            pObj->SetCurrent(pObj);
-            return pObj;
-        }
+    //struct SmartPtrChainConstructor
+    //{
+    //    template<
+    //        class T,
+    //        class HeapProvider
+    //    >
+    //    static boost::shared_ptr<T> NewRootObject()
+    //    {
+    //        boost::shared_ptr<T> pObj = HeapProvider::NewStaticObject();
+    //        pObj->SetCurrent(pObj);
+    //        return pObj;
+    //    }
 
-        template<
-            class T,
-            class Current,
-            class HeapProvider
-        >
-        static boost::shared_ptr<T> NewObject(Current const &current, HeapProvider &provider)
-        {
-            typedef typename Current::current_type previous_type;
-            boost::shared_ptr<T> pObj = provider.NewObject();
-            pObj->ChainFrom<previous_type>().SetPrevious(current.GetCurrent());
-            pObj->ChainFrom<previous_type>().SetCurrent(pObj);
-            return pObj;
-        }
-    };
-
-
+    //    template<
+    //        class T,
+    //        class Current,
+    //        class HeapProvider
+    //    >
+    //    static boost::shared_ptr<T> NewObject(Current const &current, HeapProvider &provider)
+    //    {
+    //        typedef typename Current::current_type previous_type;
+    //        boost::shared_ptr<T> pObj = provider.NewObject();
+    //        pObj->ChainFrom<previous_type>().SetPrevious(current.GetCurrent());
+    //        pObj->ChainFrom<previous_type>().SetCurrent(pObj);
+    //        return pObj;
+    //    }
+    //};
 
 
 
-    template<
-        class Previous, 
-        class Mapper,
-        class Constructor
-    >
-    struct SmartPtrChainInfo
-    {
-        typedef Previous previous_type;
-        typedef Mapper mapper_type;
-        typedef Constructor constructor_type;
-    };
+
+
+    //template<
+    //    class Previous, 
+    //    class Mapper,
+    //    class Constructor
+    //>
+    //struct SmartPtrChainInfo
+    //{
+    //    typedef Previous previous_type;
+    //    typedef Mapper mapper_type;
+    //    typedef Constructor constructor_type;
+    //};
 
 
 
@@ -1055,273 +1079,273 @@ namespace Urasandesu { namespace CppAnonym {
 
 
 
-    namespace Detail {
-        
-        namespace mpl = boost::mpl;
-        using namespace boost;
+    //namespace Detail {
+    //    
+    //    namespace mpl = boost::mpl;
+    //    using namespace boost;
 
-        template<class ObjectTagSequence, class I, class IEnd>
-        class ATL_NO_VTABLE SimpleHeapProvider5B4288A9Impl : 
-            public SimpleHeapProvider5B4288A9Impl<ObjectTagSequence, typename mpl::next<I>::type, IEnd>
-        {
-        public:
-            typedef SimpleHeapProvider5B4288A9Impl<ObjectTagSequence, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_tag_type;
-            typedef typename object_tag_type::object_type object_type;
-            typedef typename object_tag_type::tag_type tag_type;
-            typedef SimpleHeap<object_type, tag_type> object_heap_type;
+    //    template<class ObjectTagSequence, class I, class IEnd>
+    //    class ATL_NO_VTABLE SimpleHeapProviderImpl : 
+    //        public SimpleHeapProviderImpl<ObjectTagSequence, typename mpl::next<I>::type, IEnd>
+    //    {
+    //    public:
+    //        typedef SimpleHeapProviderImpl<ObjectTagSequence, I, IEnd> this_type;
+    //        typedef typename mpl::deref<I>::type object_tag_type;
+    //        typedef typename object_tag_type::object_type object_type;
+    //        typedef typename object_tag_type::tag_type tag_type;
+    //        typedef SimpleHeap<object_type, tag_type> object_heap_type;
 
-            static object_heap_type &StaticHeap()
-            {
-                static object_heap_type heap;
-                return heap;
-            }
+    //        static object_heap_type &StaticHeap()
+    //        {
+    //            static object_heap_type heap;
+    //            return heap;
+    //        }
 
-            object_heap_type &Heap()
-            {
-                if (!m_pHeap.get())
-                    m_pHeap = make_shared<object_heap_type>();
-                return *m_pHeap.get();
-            }
-        
-        private:
-            shared_ptr<object_heap_type> m_pHeap;
-        };
+    //        object_heap_type &Heap()
+    //        {
+    //            if (!m_pHeap.get())
+    //                m_pHeap = make_shared<object_heap_type>();
+    //            return *m_pHeap.get();
+    //        }
+    //    
+    //    private:
+    //        shared_ptr<object_heap_type> m_pHeap;
+    //    };
 
-        template<class ObjectTagSequence>
-        class ATL_NO_VTABLE SimpleHeapProvider5B4288A9Impl<ObjectTagSequence, 
-                                             typename Traits::DistinctEnd<ObjectTagSequence>::type, 
-                                             typename Traits::DistinctEnd<ObjectTagSequence>::type> : 
-            noncopyable
-        {
-        };
+    //    template<class ObjectTagSequence>
+    //    class ATL_NO_VTABLE SimpleHeapProviderImpl<ObjectTagSequence, 
+    //                                         typename Traits::DistinctEnd<ObjectTagSequence>::type, 
+    //                                         typename Traits::DistinctEnd<ObjectTagSequence>::type> : 
+    //        noncopyable
+    //    {
+    //    };
 
-    }   // namespace Detail
+    //}   // namespace Detail
 
 
-    template<class ObjectTagSequence>
-    class ATL_NO_VTABLE SimpleHeapProvider5B4288A9 : 
-        public Detail::SimpleHeapProvider5B4288A9Impl<ObjectTagSequence, 
-                                 typename Traits::DistinctBegin<ObjectTagSequence>::type, 
-                                 typename Traits::DistinctEnd<ObjectTagSequence>::type>
-    {
-    public:
-        typedef SimpleHeapProvider5B4288A9<ObjectTagSequence> this_type;
+    //template<class ObjectTagSequence>
+    //class ATL_NO_VTABLE SimpleHeapProvider : 
+    //    public Detail::SimpleHeapProviderImpl<ObjectTagSequence, 
+    //                             typename Traits::DistinctBegin<ObjectTagSequence>::type, 
+    //                             typename Traits::DistinctEnd<ObjectTagSequence>::type>
+    //{
+    //public:
+    //    typedef SimpleHeapProvider<ObjectTagSequence> this_type;
 
-        template<class ObjectTag>
-        struct provider_of
-        {
-            typedef Detail::SimpleHeapProvider5B4288A9Impl<
-                ObjectTagSequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<ObjectTagSequence>::type,
-                    ObjectTag
-                >::type,
-                typename Traits::DistinctEnd<ObjectTagSequence>::type
-            > type;
-        };
+    //    template<class ObjectTag>
+    //    struct provider_of
+    //    {
+    //        typedef Detail::SimpleHeapProviderImpl<
+    //            ObjectTagSequence,
+    //            typename boost::mpl::find<
+    //                typename Traits::Distinct<ObjectTagSequence>::type,
+    //                ObjectTag
+    //            >::type,
+    //            typename Traits::DistinctEnd<ObjectTagSequence>::type
+    //        > type;
+    //    };
 
-        template<class ObjectTag>
-        inline typename provider_of<ObjectTag>::type &ProviderOf() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<ObjectTag>::type &>(*pMutableThis);
-        }
-    };
+    //    template<class ObjectTag>
+    //    inline typename provider_of<ObjectTag>::type &ProviderOf() const
+    //    {
+    //        this_type *pMutableThis = const_cast<this_type *>(this);
+    //        return static_cast<typename provider_of<ObjectTag>::type &>(*pMutableThis);
+    //    }
+    //};
     
     
     
     
     
-    namespace Detail {
+    //namespace Detail {
 
-        namespace mpl = boost::mpl;
-        using namespace boost;
+    //    namespace mpl = boost::mpl;
+    //    using namespace boost;
 
-        template<class Sequence, class I, class IEnd>
-        class ATL_NO_VTABLE SmartHeapProviderImpl : 
-            SimpleHeapProvider5B4288A9<
-                mpl::vector<
-                    ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
-                >
-            >,
-            public SmartHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
-        {
-        public:
-            typedef SmartHeapProviderImpl<Sequence, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_type;
-            typedef shared_ptr<object_type> sp_object_type;
-            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef typename provider_of<obj_tag_type>::type provider_type;
+    //    template<class Sequence, class I, class IEnd>
+    //    class ATL_NO_VTABLE SmartHeapProviderImpl : 
+    //        SimpleHeapProvider<
+    //            mpl::vector<
+    //                ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
+    //            >
+    //        >,
+    //        public SmartHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
+    //    {
+    //    public:
+    //        typedef SmartHeapProviderImpl<Sequence, I, IEnd> this_type;
+    //        typedef typename mpl::deref<I>::type object_type;
+    //        typedef shared_ptr<object_type> sp_object_type;
+    //        typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
+    //        typedef typename provider_of<obj_tag_type>::type provider_type;
 
-            static sp_object_type NewStaticObject()
-            {
-                return sp_object_type(provider_type::StaticHeap().New(), deleter(provider_type::StaticHeap()));
-            }
+    //        static sp_object_type NewStaticObject()
+    //        {
+    //            return sp_object_type(provider_type::StaticHeap().New(), deleter(provider_type::StaticHeap()));
+    //        }
 
-            sp_object_type NewObject()
-            {
-                provider_type &provider = ProviderOf<obj_tag_type>();
-                return sp_object_type(provider.Heap().New(), deleter(provider.Heap()));
-            }
+    //        sp_object_type NewObject()
+    //        {
+    //            provider_type &provider = ProviderOf<obj_tag_type>();
+    //            return sp_object_type(provider.Heap().New(), deleter(provider.Heap()));
+    //        }
 
-        private:
-            class deleter
-            {
-            public:
-                deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) {}
-                void operator()(object_type *p) { m_pHeap->Delete(p); }
-            private:
-                typename provider_type::object_heap_type *m_pHeap;
-            };
-        };
+    //    private:
+    //        class deleter
+    //        {
+    //        public:
+    //            deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) {}
+    //            void operator()(object_type *p) { m_pHeap->Delete(p); }
+    //        private:
+    //            typename provider_type::object_heap_type *m_pHeap;
+    //        };
+    //    };
 
-        template<class Sequence>
-        class SmartHeapProviderImpl<Sequence, 
-                                    typename Traits::DistinctEnd<Sequence>::type, 
-                                    typename Traits::DistinctEnd<Sequence>::type> : 
-            noncopyable
-        {
-        };
+    //    template<class Sequence>
+    //    class SmartHeapProviderImpl<Sequence, 
+    //                                typename Traits::DistinctEnd<Sequence>::type, 
+    //                                typename Traits::DistinctEnd<Sequence>::type> : 
+    //        noncopyable
+    //    {
+    //    };
 
-    }   // namespace Detail
+    //}   // namespace Detail
 
 
-    template<class Sequence>
-    class ATL_NO_VTABLE SmartHeapProvider : 
-        public Detail::SmartHeapProviderImpl<Sequence, 
-                                             typename Traits::DistinctBegin<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type>
-    {
-    public:
-        typedef SmartHeapProvider<Sequence> this_type;
-        typedef Sequence sequence_type;
+    //template<class Sequence>
+    //class ATL_NO_VTABLE SmartHeapProvider : 
+    //    public Detail::SmartHeapProviderImpl<Sequence, 
+    //                                         typename Traits::DistinctBegin<Sequence>::type, 
+    //                                         typename Traits::DistinctEnd<Sequence>::type>
+    //{
+    //public:
+    //    typedef SmartHeapProvider<Sequence> this_type;
+    //    typedef Sequence sequence_type;
 
-        template<class T>
-        struct provider_of
-        {
-            typedef Detail::SmartHeapProviderImpl<
-                Sequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<Sequence>::type,
-                    T
-                >::type,
-                typename Traits::DistinctEnd<Sequence>::type
-            > type;
-        };
+    //    template<class T>
+    //    struct provider_of
+    //    {
+    //        typedef Detail::SmartHeapProviderImpl<
+    //            Sequence,
+    //            typename boost::mpl::find<
+    //                typename Traits::Distinct<Sequence>::type,
+    //                T
+    //            >::type,
+    //            typename Traits::DistinctEnd<Sequence>::type
+    //        > type;
+    //    };
 
-        template<class T>
-        inline typename provider_of<T>::type &ProviderOf() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<T>::type &>(*pMutableThis);
-        }
-    };
+    //    template<class T>
+    //    inline typename provider_of<T>::type &ProviderOf() const
+    //    {
+    //        this_type *pMutableThis = const_cast<this_type *>(this);
+    //        return static_cast<typename provider_of<T>::type &>(*pMutableThis);
+    //    }
+    //};
     
     
     
     
     
-    namespace Detail {
+    //namespace Detail {
 
-        namespace mpl = boost::mpl;
-        using namespace boost;
+    //    namespace mpl = boost::mpl;
+    //    using namespace boost;
 
-        template<class Sequence, class I, class IEnd>
-        class ATL_NO_VTABLE DisposableHeapProviderImpl : 
-            SmartHeapProvider<
-                mpl::vector<
-                    typename mpl::deref<I>::type
-                >
-            >,
-            public DisposableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
-        {
-        public:
-            typedef DisposableHeapProviderImpl<Sequence, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_type;
-            typedef typename provider_of<object_type>::type provider_type;
-            typedef std::vector<typename provider_type::sp_object_type> sp_object_vector_type;
+    //    template<class Sequence, class I, class IEnd>
+    //    class ATL_NO_VTABLE DisposableHeapProviderImpl : 
+    //        SmartHeapProvider<
+    //            mpl::vector<
+    //                typename mpl::deref<I>::type
+    //            >
+    //        >,
+    //        public DisposableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
+    //    {
+    //    public:
+    //        typedef DisposableHeapProviderImpl<Sequence, I, IEnd> this_type;
+    //        typedef typename mpl::deref<I>::type object_type;
+    //        typedef typename provider_of<object_type>::type provider_type;
+    //        typedef std::vector<typename provider_type::sp_object_type> sp_object_vector_type;
 
-            virtual ~DisposableHeapProviderImpl()
-            {
-                typedef sp_object_vector_type::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
-                    (*ri)->Dispose();
-            }
+    //        virtual ~DisposableHeapProviderImpl()
+    //        {
+    //            typedef sp_object_vector_type::reverse_iterator ReverseIterator;
+    //            for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
+    //                (*ri)->Dispose();
+    //        }
 
-            static typename provider_type::sp_object_type NewStaticObject()
-            {
-                return provider_type::NewStaticObject();
-            }
+    //        static typename provider_type::sp_object_type NewStaticObject()
+    //        {
+    //            return provider_type::NewStaticObject();
+    //        }
 
-            typename provider_type::sp_object_type NewObject()
-            {
-                return ProviderOf<object_type>().NewObject();
-            }
+    //        typename provider_type::sp_object_type NewObject()
+    //        {
+    //            return ProviderOf<object_type>().NewObject();
+    //        }
 
-            typename sp_object_vector_type::size_type Register(typename provider_type::sp_object_type const &p)
-            {
-                Objects().push_back(p);
-                return Objects().size() - 1;
-            }
+    //        typename sp_object_vector_type::size_type Register(typename provider_type::sp_object_type const &p)
+    //        {
+    //            Objects().push_back(p);
+    //            return Objects().size() - 1;
+    //        }
 
-            typename provider_type::sp_object_type operator[](typename sp_object_vector_type::size_type n)
-            {
-                return Objects()[n];
-            }
-        
-        private:
-            shared_ptr<sp_object_vector_type> m_pObjects;
+    //        typename provider_type::sp_object_type operator[](typename sp_object_vector_type::size_type n)
+    //        {
+    //            return Objects()[n];
+    //        }
+    //    
+    //    private:
+    //        shared_ptr<sp_object_vector_type> m_pObjects;
 
-            sp_object_vector_type &Objects()
-            {
-                if (!m_pObjects.get())
-                    m_pObjects = make_shared<sp_object_vector_type>();
-                return *m_pObjects.get();
-            }
-        };
+    //        sp_object_vector_type &Objects()
+    //        {
+    //            if (!m_pObjects.get())
+    //                m_pObjects = make_shared<sp_object_vector_type>();
+    //            return *m_pObjects.get();
+    //        }
+    //    };
 
-        template<class Sequence>
-        class DisposableHeapProviderImpl<Sequence, 
-                                             typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type> : 
-            noncopyable
-        {
-        };
+    //    template<class Sequence>
+    //    class DisposableHeapProviderImpl<Sequence, 
+    //                                         typename Traits::DistinctEnd<Sequence>::type, 
+    //                                         typename Traits::DistinctEnd<Sequence>::type> : 
+    //        noncopyable
+    //    {
+    //    };
 
-    }   // namespace Detail
+    //}   // namespace Detail
 
 
-    template<class Sequence>
-    class ATL_NO_VTABLE DisposableHeapProvider : 
-        public Detail::DisposableHeapProviderImpl<Sequence, 
-                                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                                  typename Traits::DistinctEnd<Sequence>::type>
-    {
-    public:
-        typedef DisposableHeapProvider<Sequence> this_type;
-        typedef Sequence sequence_type;
+    //template<class Sequence>
+    //class ATL_NO_VTABLE DisposableHeapProvider : 
+    //    public Detail::DisposableHeapProviderImpl<Sequence, 
+    //                                              typename Traits::DistinctBegin<Sequence>::type, 
+    //                                              typename Traits::DistinctEnd<Sequence>::type>
+    //{
+    //public:
+    //    typedef DisposableHeapProvider<Sequence> this_type;
+    //    typedef Sequence sequence_type;
 
-        template<class T>
-        struct provider_of
-        {
-            typedef Detail::DisposableHeapProviderImpl<
-                Sequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<Sequence>::type,
-                    T
-                >::type,
-                typename Traits::DistinctEnd<Sequence>::type
-            > type;
-        };
+    //    template<class T>
+    //    struct provider_of
+    //    {
+    //        typedef Detail::DisposableHeapProviderImpl<
+    //            Sequence,
+    //            typename boost::mpl::find<
+    //                typename Traits::Distinct<Sequence>::type,
+    //                T
+    //            >::type,
+    //            typename Traits::DistinctEnd<Sequence>::type
+    //        > type;
+    //    };
 
-        template<class T>
-        inline typename provider_of<T>::type &ProviderOf() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<T>::type &>(*pMutableThis);
-        }
-    };
+    //    template<class T>
+    //    inline typename provider_of<T>::type &ProviderOf() const
+    //    {
+    //        this_type *pMutableThis = const_cast<this_type *>(this);
+    //        return static_cast<typename provider_of<T>::type &>(*pMutableThis);
+    //    }
+    //};
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
@@ -3895,6 +3919,16 @@ namespace {
             pget_UtcNow = pDateTime->GetMethod(L"get_UtcNow", CallingConventions::CC_STANDARD, pDateTime, params);
         }
         ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
+
+        shared_ptr<MethodMetadata const> pToLocalTime;
+        {
+            std::vector<shared_ptr<ITypeMetadata const> > params;
+            pToLocalTime = pDateTime->GetMethod(L"ToLocalTime", CallingConventions::CC_HAS_THIS, pDateTime, params);
+        }
+        ASSERT_EQ(0x060002E7, pToLocalTime->GetToken());
+
+
+
 
 #if 0
 #endif

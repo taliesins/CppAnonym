@@ -4032,7 +4032,6 @@ namespace {
         ASSERT_TRUE(pget_UtcNow != NULL);
         ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
 
-#if 0
         MethodMetadata const *pToLocalTime = NULL;
         {
             std::vector<ITypeMetadata const *> params;
@@ -4044,6 +4043,7 @@ namespace {
 
 
 
+#if 0
         StrongNameInfo const &snInfo = pRuntimeHost->Map<StrongNameInfo>();
 
         AssemblyNameMetadataGenerator *pMSCorLibPrigNameGen = NULL;

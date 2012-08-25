@@ -23,65 +23,41 @@ namespace Urasandesu { namespace CppAnonym {
     namespace Detail {
         
         namespace mpl = boost::mpl;
+        using namespace boost;
 
         template<class ObjectTagSequence, class I, class IEnd>
         class ATL_NO_VTABLE SimpleHeapProviderImpl : 
             public SimpleHeapProviderImpl<ObjectTagSequence, typename mpl::next<I>::type, IEnd>
         {
-        private:
+        public:
             typedef SimpleHeapProviderImpl<ObjectTagSequence, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_tag_type;
             typedef typename object_tag_type::object_type object_type;
             typedef typename object_tag_type::tag_type tag_type;
+            typedef SimpleHeap<object_type, tag_type> object_heap_type;
 
-            boost::shared_ptr<SimpleHeap<object_type, tag_type>> mutable m_pFactory;
-            
-            inline SimpleHeap<object_type, tag_type> &Factory() const
+            static object_heap_type &StaticHeap()
             {
-                if (!m_pFactory.get())
-                    m_pFactory = boost::make_shared<SimpleHeap<object_type, tag_type>>();
-                return *m_pFactory.get();
+                static object_heap_type heap;
+                return heap;
             }
 
-        public:
-            inline SIZE_T Size() const
+            object_heap_type &Heap()
             {
-                return Factory().Size();
+                if (!m_pHeap.get())
+                    m_pHeap = make_shared<object_heap_type>();
+                return *m_pHeap.get();
             }
-
-            inline object_type *operator[] (SIZE_T ix)
-            {
-                return Factory()[ix];
-            }
-
-            inline object_type const *operator[] (SIZE_T ix) const
-            {
-                return Factory()[ix];
-            }
-
-            inline object_type *New()
-            {
-                return Factory().New();
-            }
-            
-            inline object_type *Peek() const
-            {
-                return Size() == 0 ? NULL : Factory()[Size() - 1];
-            }
-
-            inline void DeleteLast()
-            {
-                object_type *pObj = Peek();
-                if (pObj != NULL)
-                    Factory().DeleteLast();
-            }
+        
+        private:
+            shared_ptr<object_heap_type> m_pHeap;
         };
 
         template<class ObjectTagSequence>
         class ATL_NO_VTABLE SimpleHeapProviderImpl<ObjectTagSequence, 
                                              typename Traits::DistinctEnd<ObjectTagSequence>::type, 
                                              typename Traits::DistinctEnd<ObjectTagSequence>::type> : 
-            boost::noncopyable
+            noncopyable
         {
         };
 
@@ -90,7 +66,7 @@ namespace Urasandesu { namespace CppAnonym {
 
     template<class ObjectTagSequence>
     class ATL_NO_VTABLE SimpleHeapProvider : 
-        Detail::SimpleHeapProviderImpl<ObjectTagSequence, 
+        public Detail::SimpleHeapProviderImpl<ObjectTagSequence, 
                                  typename Traits::DistinctBegin<ObjectTagSequence>::type, 
                                  typename Traits::DistinctEnd<ObjectTagSequence>::type>
     {
@@ -98,7 +74,7 @@ namespace Urasandesu { namespace CppAnonym {
         typedef SimpleHeapProvider<ObjectTagSequence> this_type;
 
         template<class ObjectTag>
-        struct type_decided_by
+        struct provider_of
         {
             typedef Detail::SimpleHeapProviderImpl<
                 ObjectTagSequence,
@@ -111,15 +87,10 @@ namespace Urasandesu { namespace CppAnonym {
         };
 
         template<class ObjectTag>
-        inline typename type_decided_by<ObjectTag>::type &Of()
+        inline typename provider_of<ObjectTag>::type &ProviderOf() const
         {
-            return static_cast<typename type_decided_by<ObjectTag>::type &>(*this);
-        }
-
-        template<class ObjectTag>
-        inline typename type_decided_by<ObjectTag>::type const &Of() const
-        {
-            return const_cast<this_type *>(this)->Of<ObjectTag>();
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return static_cast<typename provider_of<ObjectTag>::type &>(*pMutableThis);
         }
     };
 

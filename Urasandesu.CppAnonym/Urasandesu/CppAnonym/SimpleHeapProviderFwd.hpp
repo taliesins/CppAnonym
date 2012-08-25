@@ -5,7 +5,7 @@
 namespace Urasandesu { namespace CppAnonym {
 
     namespace Detail {
-
+        
         template<class ObjectTagSequence, class I, class IEnd>
         class ATL_NO_VTABLE SimpleHeapProviderImpl;
 

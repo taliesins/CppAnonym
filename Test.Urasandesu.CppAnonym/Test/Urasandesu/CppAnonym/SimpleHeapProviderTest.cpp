@@ -85,11 +85,11 @@ namespace {
         {
             MyPOD2GeneratorDefault gen;
             typedef MyPOD2GeneratorDefault::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorDefault::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
-            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
+            typedef MyPOD2GeneratorDefault::provider_of<KeyObjectTag>::type MyPOD2Provider;
+            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = heap.New();
+                MyPOD2 *pPod2 = provider.Heap().New();
             }
         }
         
@@ -101,11 +101,11 @@ namespace {
         {
             MyPOD2GeneratorQuick gen;
             typedef MyPOD2GeneratorQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorQuick::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
-            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
+            typedef MyPOD2GeneratorQuick::provider_of<KeyObjectTag>::type MyPOD2Provider;
+            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = heap.New();
+                MyPOD2 *pPod2 = provider.Heap().New();
             }
         }
         
@@ -117,11 +117,11 @@ namespace {
         {
             MyPOD2GeneratorVeryQuick gen;
             typedef MyPOD2GeneratorVeryQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorVeryQuick::type_decided_by<KeyObjectTag>::type MyPOD2Heap;
-            MyPOD2Heap &heap = gen.Of<KeyObjectTag>();
+            typedef MyPOD2GeneratorVeryQuick::provider_of<KeyObjectTag>::type MyPOD2Provider;
+            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = heap.New();
+                MyPOD2 *pPod2 = provider.Heap().New();
             }
         }
         
