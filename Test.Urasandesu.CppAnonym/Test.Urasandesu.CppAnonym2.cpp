@@ -35,6 +35,14 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIASSEMBLYMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIAssemblyMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIAssemblyMetadata.hpp>
+#endif
+
 // foward declarations
 namespace Urasandesu { namespace CppAnonym {
 
@@ -70,10 +78,10 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
-    struct IAssemblyMetadataApiHolderLabel { };
-    struct IAssemblyMetadataLabel { };
-    struct IAssemblyMetadataHashLabel { };
-    struct IAssemblyMetadataEqualToLabel { };
+    //struct IAssemblyMetadataApiHolderLabel { };
+    //struct IAssemblyMetadataLabel { };
+    //struct IAssemblyMetadataHashLabel { };
+    //struct IAssemblyMetadataEqualToLabel { };
 
     struct IModuleMetadataApiHolderLabel { };
     struct IModuleMetadataLabel { };
@@ -94,7 +102,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Inte
     //struct MetadataInfoLabel { };
 
     struct MetadataDispenserApiHolderLabel { };
-    struct MetadataDispenserLabel { };
+    //struct MetadataDispenserLabel { };
 
     struct AssemblyMetadataApiHolderLabel { };
     struct AssemblyMetadataLabel { };
@@ -153,7 +161,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Inte
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultIAssemblyMetadataApiHolder;
+    //struct DefaultIAssemblyMetadataApiHolder;
 
     struct DefaultIModuleMetadataApiHolder;
 
@@ -181,34 +189,34 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    template<
-        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadata;
+    //template<
+    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadata;
 
-    typedef BaseIAssemblyMetadata<> IAssemblyMetadata;
-
-
+    //typedef BaseIAssemblyMetadata<> IAssemblyMetadata;
 
 
-    
-    template<
-        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadataHash;
 
-    typedef BaseIAssemblyMetadataHash<> IAssemblyMetadataHash;
 
-    
-    
-    
-    
-    template<
-        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadataEqualTo;
+    //
+    //template<
+    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadataHash;
 
-    typedef BaseIAssemblyMetadataEqualTo<> IAssemblyMetadataEqualTo;
+    //typedef BaseIAssemblyMetadataHash<> IAssemblyMetadataHash;
+
+    //
+    //
+    //
+    //
+    //template<
+    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadataEqualTo;
+
+    //typedef BaseIAssemblyMetadataEqualTo<> IAssemblyMetadataEqualTo;
 
 
 
@@ -447,27 +455,27 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    namespace Detail {
+    //namespace Detail {
 
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-        using namespace Urasandesu::CppAnonym::StrongNaming;
-        using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
+    //    using namespace boost::mpl;
+    //    using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+    //    using namespace Urasandesu::CppAnonym::StrongNaming;
+    //    using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
 
-        struct DefaultIAssemblyMetadataApiHolderImpl
-        {
-            typedef map<
-                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
-                pair<MetadataDispenserLabel, MetadataDispenser>
-            > api_cartridges;
-        };
+    //    struct DefaultIAssemblyMetadataApiHolderImpl
+    //    {
+    //        typedef map<
+    //            pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
+    //            pair<MetadataDispenserLabel, MetadataDispenser>
+    //        > api_cartridges;
+    //    };
 
-    }   // namespace Detail {
+    //}   // namespace Detail {
 
-    struct DefaultIAssemblyMetadataApiHolder : 
-        Detail::DefaultIAssemblyMetadataApiHolderImpl
-    {
-    };
+    //struct DefaultIAssemblyMetadataApiHolder : 
+    //    Detail::DefaultIAssemblyMetadataApiHolderImpl
+    //{
+    //};
 
 
 
@@ -744,74 +752,74 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct IAssemblyMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadataApiHolderLabel, ApiLabel>
-    {
-    };
+    //template<class ApiCartridgesHolder, class ApiLabel>
+    //struct IAssemblyMetadataApiAt : 
+    //    Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadataApiHolderLabel, ApiLabel>
+    //{
+    //};
 
-    template<
-        class IAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadata
-    {
-    public:
-        typedef BaseIAssemblyMetadata<IAssemblyMetadataApiHolder> this_type;
+    //template<
+    //    class IAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadata
+    //{
+    //public:
+    //    typedef BaseIAssemblyMetadata<IAssemblyMetadataApiHolder> this_type;
 
-        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
-        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
+    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
+    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
 
-        virtual mdAssembly GetToken() const = 0;
-        virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<strong_name_key_type const> GetStrongNameKey() const = 0;
-        virtual boost::shared_ptr<metadata_dispenser_type const> GetResolutionScope() const = 0;
-    };
-
-
+    //    virtual mdAssembly GetToken() const = 0;
+    //    virtual std::wstring const &GetName() const = 0;
+    //    virtual boost::shared_ptr<strong_name_key_type const> GetStrongNameKey() const = 0;
+    //    virtual boost::shared_ptr<metadata_dispenser_type const> GetResolutionScope() const = 0;
+    //};
 
 
-    
-    template<
-        class IAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
-    {
-    public:
-        result_type operator()(param_type v) const
-        {
-            using namespace boost;
-            using namespace Urasandesu::CppAnonym::Utilities;
 
-            _ASSERTE(v);
 
-            std::size_t seed = 0;
-            hash_combine(seed, hash_value(v->GetName()));
-            hash_combine(seed, HashValue(v->GetResolutionScope().get()));
-            return seed;
-        }
-    };
+    //
+    //template<
+    //    class IAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadataHash : 
+    //    Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
+    //{
+    //public:
+    //    result_type operator()(param_type v) const
+    //    {
+    //        using namespace boost;
+    //        using namespace Urasandesu::CppAnonym::Utilities;
 
-    
-    
-    
-    
-    template<
-        class IAssemblyMetadataApiHolder
-    >    
-    class BaseIAssemblyMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
-    {
-    public:
-        result_type operator()(param_type x, param_type y) const
-        {
-            _ASSERTE(x && y);
+    //        _ASSERTE(v);
 
-            return x->GetName() == y->GetName() &&
-                   x->GetResolutionScope() == y->GetResolutionScope();
-        }
-    };
+    //        std::size_t seed = 0;
+    //        hash_combine(seed, hash_value(v->GetName()));
+    //        hash_combine(seed, HashValue(v->GetResolutionScope().get()));
+    //        return seed;
+    //    }
+    //};
+
+    //
+    //
+    //
+    //
+    //template<
+    //    class IAssemblyMetadataApiHolder
+    //>    
+    //class BaseIAssemblyMetadataEqualTo : 
+    //    Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
+    //{
+    //public:
+    //    result_type operator()(param_type x, param_type y) const
+    //    {
+    //        _ASSERTE(x && y);
+
+    //        return x->GetName() == y->GetName() &&
+    //               x->GetResolutionScope() == y->GetResolutionScope();
+    //    }
+    //};
 
 
 

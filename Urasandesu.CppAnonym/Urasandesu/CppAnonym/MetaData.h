@@ -102,6 +102,22 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenser.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IASSEMBLYMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IAssemblyMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIASSEMBLYMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIAssemblyMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IAssemblyMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIAssemblyMetadata.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
 #endif
