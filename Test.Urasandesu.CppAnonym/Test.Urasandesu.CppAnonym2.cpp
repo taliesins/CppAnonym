@@ -27,79 +27,31 @@
 #include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
+#include <Urasandesu/CppAnonym/SimpleDisposable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMOBJECTDISPOSEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymObjectDisposedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMINVALIDOPERATIONEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymInvalidOperationException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/NullDeleter.hpp>
+#endif
+
 // foward declarations
 namespace Urasandesu { namespace CppAnonym {
-
-    //struct SmartPtrChainMapper;
-
-    
-    
-    
-    
-    //struct SmartPtrChainConstructor;
-
-
-
-
-
-    //template<
-    //    class Previous, 
-    //    class Mapper = SmartPtrChainMapper,
-    //    class Constructor = SmartPtrChainConstructor
-    //>
-    //struct SmartPtrChainInfo;
-    
-    
-    
-    
-    
-    //namespace Detail {
-    //    
-    //    template<class ObjectTagSequence, class I, class IEnd>
-    //    class ATL_NO_VTABLE SimpleHeapProviderImpl;
-
-    //}   // namespace Detail
-
-
-    //template<class ObjectTagSequence>
-    //class ATL_NO_VTABLE SimpleHeapProvider;
-
-
-
-
-
-    //namespace Detail {
-    //    
-    //    template<class Sequence, class I, class IEnd>
-    //    class SmartHeapProviderImpl;
-
-    //}   // namespace Detail
-
-
-    //template<class Sequence>
-    //class SmartHeapProvider;
-
-    
-    
-    
-    
-    //namespace Detail {
-    //    
-    //    template<class Sequence, class I, class IEnd>
-    //    class DisposableHeapProviderImpl;
-
-    //}   // namespace Detail
-
-
-    //template<class Sequence>
-    //class DisposableHeapProvider;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    template<class T>
-    struct NullDeleter;
+    //template<class T>
+    //struct NullDeleter;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
@@ -534,106 +486,90 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 namespace Urasandesu { namespace CppAnonym {
 
-    struct CppAnonymObjectDisposedException : CppAnonymException
-    {
-        CppAnonymObjectDisposedException();
-        CppAnonymObjectDisposedException(std::string const &what);
-        CppAnonymObjectDisposedException(std::wstring const &what);
-        CppAnonymObjectDisposedException(std::string const &what, CppAnonymException &innerException);
-        CppAnonymObjectDisposedException(std::wstring const &what, CppAnonymException &innerException);
-    };
+    //struct CppAnonymObjectDisposedException : CppAnonymException
+    //{
+    //    CppAnonymObjectDisposedException();
+    //    CppAnonymObjectDisposedException(std::string const &what);
+    //    CppAnonymObjectDisposedException(std::wstring const &what);
+    //    CppAnonymObjectDisposedException(std::string const &what, CppAnonymException &innerException);
+    //    CppAnonymObjectDisposedException(std::wstring const &what, CppAnonymException &innerException);
+    //};
 
-    CppAnonymObjectDisposedException::CppAnonymObjectDisposedException() : 
-        CppAnonymException()
-    { }
+    //CppAnonymObjectDisposedException::CppAnonymObjectDisposedException() : 
+    //    CppAnonymException()
+    //{ }
 
-    CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::string const &what) : 
-        CppAnonymException(what)
-    { }
+    //CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::string const &what) : 
+    //    CppAnonymException(what)
+    //{ }
 
-    CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::wstring const &what) : 
-        CppAnonymException(what)
-    { }
+    //CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::wstring const &what) : 
+    //    CppAnonymException(what)
+    //{ }
 
-    CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::string const &what, CppAnonymException &innerException) : 
-        CppAnonymException(what, innerException)
-    { }
+    //CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::string const &what, CppAnonymException &innerException) : 
+    //    CppAnonymException(what, innerException)
+    //{ }
 
-    CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::wstring const &what, CppAnonymException &innerException) : 
-        CppAnonymException(what, innerException)
-    { }
-
-
-
-
-
-    struct CppAnonymInvalidOperationException : CppAnonymException
-    {
-        CppAnonymInvalidOperationException();
-        CppAnonymInvalidOperationException(std::string const &what);
-        CppAnonymInvalidOperationException(std::wstring const &what);
-        CppAnonymInvalidOperationException(std::string const &what, CppAnonymException &innerException);
-        CppAnonymInvalidOperationException(std::wstring const &what, CppAnonymException &innerException);
-    };
-
-    CppAnonymInvalidOperationException::CppAnonymInvalidOperationException() : 
-        CppAnonymException()
-    { }
-
-    CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::string const &what) : 
-        CppAnonymException(what)
-    { }
-
-    CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::wstring const &what) : 
-        CppAnonymException(what)
-    { }
-
-    CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::string const &what, CppAnonymException &innerException) : 
-        CppAnonymException(what, innerException)
-    { }
-
-    CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::wstring const &what, CppAnonymException &innerException) : 
-        CppAnonymException(what, innerException)
-    { }
+    //CppAnonymObjectDisposedException::CppAnonymObjectDisposedException(std::wstring const &what, CppAnonymException &innerException) : 
+    //    CppAnonymException(what, innerException)
+    //{ }
 
 
 
 
 
-    struct SignatureUtil
-    {
-        template<class SignatureHolder>
-        static void PutSignatures(SimpleBlob &sb, SignatureHolder const &sigHolder)
-        {
-            typedef std::vector<COR_SIGNATURE>::const_iterator Iterator;
-            std::vector<COR_SIGNATURE> const &sigs = sigHolder.GetSignatures();
-            for (Iterator i = sigs.cbegin(), i_end = sigs.cend(); i != i_end; ++i)
-                sb.Put<COR_SIGNATURE>(*i);
-        }
-    };
+    //struct CppAnonymInvalidOperationException : CppAnonymException
+    //{
+    //    CppAnonymInvalidOperationException();
+    //    CppAnonymInvalidOperationException(std::string const &what);
+    //    CppAnonymInvalidOperationException(std::wstring const &what);
+    //    CppAnonymInvalidOperationException(std::string const &what, CppAnonymException &innerException);
+    //    CppAnonymInvalidOperationException(std::wstring const &what, CppAnonymException &innerException);
+    //};
+
+    //CppAnonymInvalidOperationException::CppAnonymInvalidOperationException() : 
+    //    CppAnonymException()
+    //{ }
+
+    //CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::string const &what) : 
+    //    CppAnonymException(what)
+    //{ }
+
+    //CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::wstring const &what) : 
+    //    CppAnonymException(what)
+    //{ }
+
+    //CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::string const &what, CppAnonymException &innerException) : 
+    //    CppAnonymException(what, innerException)
+    //{ }
+
+    //CppAnonymInvalidOperationException::CppAnonymInvalidOperationException(std::wstring const &what, CppAnonymException &innerException) : 
+    //    CppAnonymException(what, innerException)
+    //{ }
 
 
 
 
 
-    class ATL_NO_VTABLE SimpleDisposable
-    {
-    public:
-        void Dispose() { m_disposed = true; }
-        bool Disposed() const { return m_disposed; }
-        void CheckDisposed() const 
-        {
-            if (m_disposed)
-                BOOST_THROW_EXCEPTION(CppAnonymObjectDisposedException());
-        }
-    protected:
-        SimpleDisposable() : 
-            m_disposed(false)
-        { }
-    
-    private:
-        bool m_disposed;
-    };
+    //class ATL_NO_VTABLE SimpleDisposable
+    //{
+    //public:
+    //    void Dispose() { m_disposed = true; }
+    //    bool Disposed() const { return m_disposed; }
+    //    void CheckDisposed() const 
+    //    {
+    //        if (m_disposed)
+    //            BOOST_THROW_EXCEPTION(CppAnonymObjectDisposedException());
+    //    }
+    //protected:
+    //    SimpleDisposable() : 
+    //        m_disposed(false)
+    //    { }
+    //
+    //private:
+    //    bool m_disposed;
+    //};
 
 
 
@@ -1351,29 +1287,29 @@ namespace Urasandesu { namespace CppAnonym {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    template<class T>
-    NullDeleter<T> MakeNullDeleter(T)
-    {
-        return NullDeleter<T>();
-    }
+    //template<class T>
+    //NullDeleter<T> MakeNullDeleter(T)
+    //{
+    //    return NullDeleter<T>();
+    //}
 
-    template<class T>
-    struct NullDeleter
-    {
-        void operator()(T *p) { }
-    };
+    //template<class T>
+    //struct NullDeleter
+    //{
+    //    void operator()(T *p) { }
+    //};
 
-    template<class T>
-    struct NullDeleter<T const *>
-    {
-        void operator()(T const *p) { }
-    };
+    //template<class T>
+    //struct NullDeleter<T const *>
+    //{
+    //    void operator()(T const *p) { }
+    //};
 
-    template<class T>
-    struct NullDeleter<T *>
-    {
-        void operator()(T const *p) { }
-    };
+    //template<class T>
+    //struct NullDeleter<T *>
+    //{
+    //    void operator()(T const *p) { }
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
@@ -2114,6 +2050,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    struct SignatureUtil
+    {
+        template<class SignatureHolder>
+        static void PutSignatures(SimpleBlob &sb, SignatureHolder const &sigHolder)
+        {
+            typedef std::vector<COR_SIGNATURE>::const_iterator Iterator;
+            std::vector<COR_SIGNATURE> const &sigs = sigHolder.GetSignatures();
+            for (Iterator i = sigs.cbegin(), i_end = sigs.cend(); i != i_end; ++i)
+                sb.Put<COR_SIGNATURE>(*i);
+        }
+    };
+
+    
+    
+    
+    
     template<class ApiCartridgesHolder, class ApiLabel>
     struct IAssemblyMetadata5B4288A9ApiAt : 
         Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadata5B4288A9ApiHolderLabel, ApiLabel>

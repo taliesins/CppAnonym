@@ -22,6 +22,10 @@
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/NullDeleter.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
 #include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
 #endif

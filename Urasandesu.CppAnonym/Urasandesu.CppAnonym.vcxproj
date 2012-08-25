@@ -140,8 +140,10 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymException.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\CppAnonymInvalidOperationException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Environment.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp" />
@@ -155,6 +157,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Profiling\DefaultInfoProfilingApi.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackTrace.cpp" />
   </ItemGroup>
@@ -175,8 +178,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymException.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymInvalidOperationException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymSystemException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.hpp" />
@@ -375,6 +380,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProvider.hpp" />
@@ -431,6 +437,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />

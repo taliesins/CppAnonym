@@ -94,6 +94,10 @@
 #include <Urasandesu/CppAnonym/StackTrace.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
+#include <Urasandesu/CppAnonym/SimpleDisposable.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SYSTEMERROR_H
 #include <Urasandesu/CppAnonym/SystemError.h>
 #endif
@@ -120,6 +124,14 @@
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMOBJECTDISPOSEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymObjectDisposedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMINVALIDOPERATIONEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymInvalidOperationException.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H
