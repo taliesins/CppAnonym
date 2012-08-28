@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 
-#ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
@@ -19,9 +19,9 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class Sequence, class I, class IEnd>
         class ATL_NO_VTABLE DisposableHeapProviderImpl : 
-            SmartHeapProvider<
+            SimpleHeapProvider<
                 mpl::vector<
-                    typename mpl::deref<I>::type
+                    ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
                 >
             >,
             public DisposableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
@@ -29,44 +29,46 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef DisposableHeapProviderImpl<Sequence, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_type;
-            typedef typename provider_of<object_type>::type provider_type;
-            typedef std::vector<typename provider_type::sp_object_type> sp_object_vector_type;
+            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
+            typedef typename provider_of<obj_tag_type>::type provider_type;
+            typedef std::vector<object_type *> object_ptr_vector_type;
 
             virtual ~DisposableHeapProviderImpl()
             {
-                typedef sp_object_vector_type::reverse_iterator ReverseIterator;
+                typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
                     (*ri)->Dispose();
             }
 
-            static typename provider_type::sp_object_type NewStaticObject()
+            static object_type *NewStaticObject()
             {
-                return provider_type::NewStaticObject();
+                return provider_type::StaticHeap().New();
             }
 
-            typename provider_type::sp_object_type NewObject()
+            object_type *NewObject()
             {
-                return ProviderOf<object_type>().NewObject();
+                provider_type &provider = ProviderOf<obj_tag_type>();
+                return provider.Heap().New();
             }
 
-            typename sp_object_vector_type::size_type Register(typename provider_type::sp_object_type const &p)
+            typename object_ptr_vector_type::size_type Register(object_type &p)
             {
-                Objects().push_back(p);
+                Objects().push_back(&p);
                 return Objects().size() - 1;
             }
 
-            typename provider_type::sp_object_type operator[](typename sp_object_vector_type::size_type n)
+            object_type *operator[](typename object_ptr_vector_type::size_type n)
             {
                 return Objects()[n];
             }
         
         private:
-            shared_ptr<sp_object_vector_type> m_pObjects;
+            shared_ptr<object_ptr_vector_type> m_pObjects;
 
-            sp_object_vector_type &Objects()
+            object_ptr_vector_type &Objects()
             {
                 if (!m_pObjects.get())
-                    m_pObjects = make_shared<sp_object_vector_type>();
+                    m_pObjects = make_shared<object_ptr_vector_type>();
                 return *m_pObjects.get();
             }
         };

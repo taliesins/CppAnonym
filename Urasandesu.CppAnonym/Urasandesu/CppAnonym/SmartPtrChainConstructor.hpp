@@ -14,10 +14,9 @@ namespace Urasandesu { namespace CppAnonym {
             class T,
             class HeapProvider
         >
-        static boost::shared_ptr<T> NewRootObject()
+        static T *NewRootObject()
         {
-            boost::shared_ptr<T> pObj = HeapProvider::NewStaticObject();
-            pObj->SetCurrent(pObj);
+            T *pObj = HeapProvider::NewStaticObject();
             return pObj;
         }
 

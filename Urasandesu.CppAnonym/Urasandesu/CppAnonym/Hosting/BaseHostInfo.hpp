@@ -61,7 +61,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
         typedef typename chain_from<boost::mpl::void_>::type host_info_chain_type; 
 
-        static boost::shared_ptr<this_type> NewHost()
+        static this_type *NewHost()
         {
             return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
         }

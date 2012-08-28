@@ -3,6 +3,38 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainConstructor.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAININFO_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
+#include <Urasandesu/CppAnonym/SimpleDisposable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTHOSTINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultHostInfoApiHolder.h>
 #endif
@@ -19,6 +51,7 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHost.hpp>
 #endif
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolder.h>
 #endif
@@ -97,6 +130,7 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
+#endif
 #endif
 
 // foward declarations
@@ -334,7 +368,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 
 
-
+#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
 #endif
@@ -374,6 +408,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.hpp>
 #endif
+#endif
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -401,6 +436,7 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
+#if 0
     namespace Detail {
 
         using namespace boost::mpl;
@@ -610,11 +646,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         Detail::DefaultPropertyMetadataGenerator7FAEDE99ApiHolderImpl
     {
     };
+#endif
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+#if 0
     template<class ApiCartridgesHolder, class ApiLabel>
     struct IFieldMetadataApiAt : 
         Traits::ApiAt<ApiCartridgesHolder, Interfaces::IFieldMetadataApiHolderLabel, ApiLabel>
@@ -1758,6 +1796,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         boost::shared_ptr<method_metadata_generator_type const> m_pSetMethod;
     };
 
+#endif
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
@@ -1768,6 +1808,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolder.h>
 #endif
@@ -1783,10 +1824,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEASSEMBLYINFO_HPP
 #include <Urasandesu/CppAnonym/Fusion/BaseAssemblyInfo.hpp>
 #endif
+#endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test2.*
 namespace {
 
+#if 0
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, StrongNaming_Test_01)
     {
         namespace mpl = boost::mpl;
@@ -1858,6 +1901,7 @@ namespace {
         for (UINT i = 0; i < publicKeyToken.size(); ++i)
             ASSERT_EQ(PUB_KEY_TOKEN[i], publicKeyToken[i]);
     }
+#endif
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, Test_01)
     {
@@ -1886,8 +1930,9 @@ namespace {
         typedef MethodMetadataGenerator7FAEDE99 MethodMetadataGenerator;
         typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
-        shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
+        HostInfo const *pHostInfo = HostInfo::NewHost();
 
+#if 0
         shared_ptr<RuntimeHost const> pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost);
 
@@ -1986,7 +2031,6 @@ namespace {
         }
         ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
 
-#if 0
         shared_ptr<MethodMetadata const> pToLocalTime;
         {
             std::vector<shared_ptr<ITypeMetadata const> > params;

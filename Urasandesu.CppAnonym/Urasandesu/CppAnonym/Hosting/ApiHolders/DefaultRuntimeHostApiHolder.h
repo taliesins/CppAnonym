@@ -53,10 +53,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
         struct DefaultRuntimeHostApiHolderImpl
         {
             typedef map<
-                pair<HostInfoLabel, HostInfo>,
-                pair<FusionInfoLabel, FusionInfo>,
-                pair<MetadataInfoLabel, MetadataInfo>,
-                pair<StrongNameInfoLabel, StrongNameInfo>
+                pair<HostInfoLabel, HostInfo>
+                //pair<FusionInfoLabel, FusionInfo>,
+                //pair<MetadataInfoLabel, MetadataInfo>,
+                //pair<StrongNameInfoLabel, StrongNameInfo>
             > api_cartridges;
         };
 

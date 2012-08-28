@@ -59,7 +59,7 @@ namespace Urasandesu { namespace CppAnonym {
                 class T,
                 class HeapProvider
             >
-            static boost::shared_ptr<T> NewRootObject()
+            static T *NewRootObject()
             {
                 return constructor_type::NewRootObject<T, HeapProvider>();
             }
@@ -95,22 +95,22 @@ namespace Urasandesu { namespace CppAnonym {
                                               typename Traits::DistinctEnd<ChainInfoSequence>::type> : 
             noncopyable
         {
-        public:
-            typedef typename Current current_type;
-            
-            boost::weak_ptr<current_type> GetCurrent() const
-            {
-                return m_pCurrent;
-            }
+        //public:
+        //    typedef typename Current current_type;
+        //    
+        //    boost::weak_ptr<current_type> GetCurrent() const
+        //    {
+        //        return m_pCurrent;
+        //    }
 
-            void SetCurrent(boost::weak_ptr<current_type> const &pCurrent)
-            {
-                _ASSERTE(m_pCurrent.expired());
-                m_pCurrent = pCurrent;
-            }
+        //    void SetCurrent(boost::weak_ptr<current_type> const &pCurrent)
+        //    {
+        //        _ASSERTE(m_pCurrent.expired());
+        //        m_pCurrent = pCurrent;
+        //    }
 
-        private:
-            boost::weak_ptr<current_type> m_pCurrent;
+        //private:
+        //    boost::weak_ptr<current_type> m_pCurrent;
         };
 
         template<class Current>

@@ -94,11 +94,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type,
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type,
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type
             >
         >,
+        //public DisposableHeapProvider<
+        //    boost::mpl::vector<
+        //        typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type,
+        //        typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type,
+        //        typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type
+        //    >
+        //>,
         public SimpleDisposable
     {
     public:
