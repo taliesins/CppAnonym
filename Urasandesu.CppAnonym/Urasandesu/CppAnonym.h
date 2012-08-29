@@ -50,6 +50,10 @@
 #include <Urasandesu/CppAnonym/ObjectTag.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif

@@ -369,6 +369,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeKinds.h" />
     <ClInclude Include="Urasandesu\CppAnonym\ObjectTag.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\ObjectTagFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProvider.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAppDomainProfile.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAssemblyProfile.h" />

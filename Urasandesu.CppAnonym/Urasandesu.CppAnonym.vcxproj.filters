@@ -1044,6 +1044,12 @@
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseAssemblyInfoFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProvider.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProviderFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">
