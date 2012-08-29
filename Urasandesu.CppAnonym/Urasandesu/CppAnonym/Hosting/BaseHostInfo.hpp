@@ -66,15 +66,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
         }
 
-        boost::shared_ptr<runtime_host_type const> GetRuntime(std::wstring const &version) const
+        runtime_host_type const *GetRuntime(std::wstring const &version) const
         {
             if (version.empty())
                 BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
 
-            boost::shared_ptr<runtime_host_type> pExistingRuntime;
+            runtime_host_type *pExistingRuntime = NULL;
             if (!TryGetRuntime(version, pExistingRuntime))
             {
-                boost::shared_ptr<runtime_host_type> pNewRuntime = NewRuntime();
+                runtime_host_type *pNewRuntime = NewRuntime();
 
                 std::wstring const &corVersion = pNewRuntime->GetCORVersion();
                 if (corVersion != version)
@@ -89,7 +89,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 }
 
                 runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                m_versionToIndex[version] = provider.Register(pNewRuntime);
+                m_versionToIndex[version] = provider.Register(*pNewRuntime);    // [2012/08/29 08:01:08] この辺実装中。。。Register しないと memory leak するし。
                 return pNewRuntime;
             }
             else
@@ -100,20 +100,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     private:
         
-        void SetThis(boost::weak_ptr<this_type> const &pThis) const
-        {
-            _ASSERTE(m_pThis.use_count() == 0);
-            m_pThis = pThis;
-        }
+        //void SetThis(boost::weak_ptr<this_type> const &pThis) const
+        //{
+        //    _ASSERTE(m_pThis.use_count() == 0);
+        //    m_pThis = pThis;
+        //}
 
-        boost::shared_ptr<runtime_host_type> NewRuntime() const
+        runtime_host_type *NewRuntime() const
         {
             runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
             host_info_chain_type &chain = ChainFrom<boost::mpl::void_>();
             return chain.NewObject<runtime_host_type>(provider);
         }
 
-        bool TryGetRuntime(std::wstring const &version, boost::shared_ptr<runtime_host_type> &pExistingRuntime) const
+        bool TryGetRuntime(std::wstring const &version, runtime_host_type *&pExistingRuntime) const
         {
             if (m_versionToIndex.find(version) == m_versionToIndex.end())
             {

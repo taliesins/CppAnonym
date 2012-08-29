@@ -35,9 +35,13 @@ namespace Urasandesu { namespace CppAnonym {
 
             virtual ~DisposableHeapProviderImpl()
             {
+                provider_type &provider = ProviderOf<obj_tag_type>();
                 typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
+                {
                     (*ri)->Dispose();
+                    provider.Heap().Delete(*ri);
+                }
             }
 
             static object_type *NewStaticObject()

@@ -25,12 +25,11 @@ namespace Urasandesu { namespace CppAnonym {
             class Current,
             class HeapProvider
         >
-        static boost::shared_ptr<T> NewObject(Current const &current, HeapProvider &provider)
+        static T *NewObject(Current &current, HeapProvider &provider)
         {
             typedef typename Current::current_type previous_type;
-            boost::shared_ptr<T> pObj = provider.NewObject();
-            pObj->ChainFrom<previous_type>().SetPrevious(current.GetCurrent());
-            pObj->ChainFrom<previous_type>().SetCurrent(pObj);
+            T *pObj = provider.NewObject();
+            pObj->ChainFrom<previous_type>().SetPrevious(current);
             return pObj;
         }
     };

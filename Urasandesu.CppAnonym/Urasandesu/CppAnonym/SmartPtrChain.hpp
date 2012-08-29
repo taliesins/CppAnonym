@@ -25,6 +25,10 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename chain_info_type::mapper_type mapper_type;
             typedef typename chain_info_type::constructor_type constructor_type;
 
+            SmartPtrChainImpl() : 
+                m_pPrevious(NULL)
+            { }
+
             template<class T>
             boost::shared_ptr<T> MapFirstAncestor() const
             {
@@ -68,24 +72,24 @@ namespace Urasandesu { namespace CppAnonym {
                 class T,
                 class HeapProvider
             >
-            boost::shared_ptr<T> NewObject(HeapProvider &provider) const
+            T *NewObject(HeapProvider &provider) const
             {
-                return constructor_type::NewObject<T>(static_cast<current_type const &>(*this), provider);
+                return constructor_type::NewObject<T>(static_cast<current_type &>(*const_cast<this_type *>(this)), provider);
             }
             
-            boost::weak_ptr<previous_type> GetPrevious() const
+            previous_type *GetPrevious() const
             {
                 return m_pPrevious;
             }
 
-            void SetPrevious(boost::weak_ptr<previous_type> const &pPrevious)
+            void SetPrevious(previous_type &previous)
             {
-                _ASSERTE(m_pPrevious.expired());
-                m_pPrevious = pPrevious;
+                _ASSERTE(m_pPrevious == NULL);
+                m_pPrevious = &previous;
             }
 
         private:
-            boost::weak_ptr<previous_type> m_pPrevious;
+            previous_type *m_pPrevious;
         };
 
         template<class Current, class ChainInfoSequence>

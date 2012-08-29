@@ -92,10 +92,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 SmartPtrChainInfo<typename RuntimeHostApiAt<RuntimeHostApiHolder, Interfaces::HostInfoLabel>::type, RuntimeHostChainMapper>
             >
         >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-            >
-        >,
+        //public DisposableHeapProvider<
+        //    boost::mpl::vector<
+        //    >
+        //>,
         //public DisposableHeapProvider<
         //    boost::mpl::vector<
         //        typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type,
