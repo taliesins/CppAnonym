@@ -18,6 +18,14 @@
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionDisabledPolicy.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
@@ -30,12 +38,20 @@
 #include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TemporaryPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP

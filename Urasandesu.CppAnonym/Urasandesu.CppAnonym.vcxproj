@@ -440,16 +440,24 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPointer.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleter.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleterFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionDisabledPolicy.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionDisabledPolicyFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualTo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualToFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleter.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPtr.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
   </ItemGroup>

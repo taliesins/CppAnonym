@@ -3,6 +3,22 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionDisabledPolicy.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TemporaryPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
 #include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
 #endif
@@ -1970,6 +1986,9 @@ namespace {
 
     namespace _B3C3B24D {
 
+    using namespace Urasandesu::CppAnonym;
+    using namespace Urasandesu::CppAnonym::Utilities;
+
     struct Hoge;
     struct Piyo;
 
@@ -1988,94 +2007,6 @@ namespace {
         virtual ~Piyo() { std::cout << "Piyo " << *reinterpret_cast<int *>(this) << " is destructed !!" << std::endl; }
 
         int m_value;
-    };
-
-    template<class D>
-    class DeletionDisabledPolicy
-    {
-    public:
-        typedef DeletionDisabledPolicy<D> this_type;
-
-        typedef D deleter;
-
-        explicit DeletionDisabledPolicy(deleter d) : 
-            m_d(d) 
-        { 
-            m_disabled[0] = false; 
-        }
-        
-        template<class T>
-        void operator()(T *p) 
-        { 
-            if (!m_disabled[0]) 
-                m_d(p); 
-        }
-        
-        void DisablesDeletion() 
-        { 
-            m_disabled[0] = true; 
-        }
-    
-    private:
-        deleter m_d;
-        bool m_disabled[1];
-    };
-
-    struct DefaultDeleter
-    {
-        template<class T>
-        void operator()(T *p)
-        {
-            delete p;
-        }
-    };
-
-    template<class T, class Tag, class D = DefaultDeleter>
-    class TemporaryPtr : 
-        boost::noncopyable
-    {
-    public:
-        typedef TemporaryPtr<T, Tag, D> this_type;
-        typedef DeletionDisabledPolicy<D> deletion_disabled_deleter;
-
-        typedef T element_type;
-        typedef T value_type;
-        typedef T *pointer;
-
-        explicit TemporaryPtr(T *p) : 
-            m_p(p),
-            m_ddd(deletion_disabled_deleter(D()))
-        { }
-
-        TemporaryPtr(T *p, D d) : 
-            m_p(p),
-            m_ddd(deletion_disabled_deleter(d))
-        { }
-
-        ~TemporaryPtr()
-        {
-            m_ddd(m_p);
-        }
-
-        pointer operator->()
-        {
-            return m_p;
-        }
-
-        pointer Get()
-        {
-            return m_p;
-        }
-
-        pointer Move()
-        {
-            m_ddd.DisablesDeletion();
-            return m_p;
-        }
-
-    private:
-        T *m_p;
-        deletion_disabled_deleter m_ddd;
     };
 
     }   // namespace _B3C3B24D {
@@ -2105,6 +2036,42 @@ namespace {
         }
         {
             static RootTemporaryPtr pHoge(new Hoge());
+        }
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, RootTemporaryPtr_Test_02)
+    {
+        namespace mpl = boost::mpl;
+        using boost::shared_ptr;
+        using namespace _B3C3B24D;
+
+        struct HogeHeap
+        {
+            Hoge *New() { return new Hoge(); }
+            void Delete(Hoge *p) { delete p; } 
+        };
+        typedef HeapDeleter<HogeHeap> HogeHeapDeleter;
+        struct HogePtrTag;
+        typedef TemporaryPtr<Hoge, HogePtrTag, HogeHeapDeleter> HogeTemporaryPtr;
+
+        HogeHeap heap;
+
+        {
+            HogeTemporaryPtr pHoge(heap.New(), HogeHeapDeleter(heap));
+            pHoge->m_value = 10;
+        }
+
+        {
+            Hoge *pHoge = NULL;
+            {
+                HogeTemporaryPtr pHoge_(heap.New(), HogeHeapDeleter(heap));
+                pHoge_->m_value = 10;
+                pHoge = pHoge_.Move();
+            }
+            heap.Delete(pHoge);
+        }
+        {
+            static HogeTemporaryPtr pHoge(heap.New(), HogeHeapDeleter(heap));   // こっちで使う場合は、Heap を表す object も static 領域にある必要がある。
         }
     }
 
