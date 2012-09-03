@@ -202,7 +202,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
                 fusion_info_type const *pFuInfo = Map<fusion_info_type>();
                 assembly_info_type *pAsmInfo;
-                pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name);
+                pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name); // [2012/09/03 22:17:56] この辺実装中。。。まだまだビルドは通らない。
                 m_asmPath = pAsmInfo->GetAssemblyPath();
             }
             return m_asmPath;

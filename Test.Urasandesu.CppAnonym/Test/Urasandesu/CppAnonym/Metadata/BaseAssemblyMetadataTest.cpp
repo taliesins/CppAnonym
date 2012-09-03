@@ -60,8 +60,8 @@
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
-#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
@@ -105,7 +105,7 @@
 //        }
 //
 //    private:
-//        mutable Utilities::AnyPointer m_pType;
+//        mutable Utilities::AnyPtr m_pType;
 //        Hoge m_obj;
 //    };
 //
@@ -151,7 +151,7 @@ namespace MockB805337D {
         }
 
     private:
-        mutable Utilities::AnyPointer m_pType;
+        mutable Utilities::AnyPtr m_pType;
         Hoge m_obj;
     };
 

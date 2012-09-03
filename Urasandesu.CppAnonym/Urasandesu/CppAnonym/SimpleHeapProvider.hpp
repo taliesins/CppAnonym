@@ -20,7 +20,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _F67D7870 {
         
         namespace mpl = boost::mpl;
         using namespace boost;
@@ -67,35 +67,47 @@ namespace Urasandesu { namespace CppAnonym {
         {
         };
 
-    }   // namespace Detail
+        template<class ProvidingObjectTagTypes, LONG N>
+        class ProvidingTypeAtImpl
+        {
+            typedef typename mpl::at_c<ProvidingObjectTagTypes, N>::type providing_object_tag_type;
+        public:
+            typedef typename providing_object_tag_type::object_type type;
+        };
+
+        template<class ProvidingObjectTagTypes, class ProvidingType>
+        class ProviderOfImpl
+        {
+            typedef typename Traits::Distinct<ProvidingObjectTagTypes>::type distinct_providing_object_tag_types;
+            typedef typename mpl::find_if<distinct_providing_object_tag_types, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type i_end;
+        public:
+            typedef SimpleHeapProviderImpl<ProvidingObjectTagTypes, i, i_end> type;
+        };
+
+    }   // namespace _F67D7870
 
 
     template<class ProvidingObjectTagTypes>
     class ATL_NO_VTABLE SimpleHeapProvider : 
-        public Detail::SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
-                                              typename Traits::DistinctBegin<ProvidingObjectTagTypes>::type, 
-                                              typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type>
+        public _F67D7870::SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
+                                                 typename Traits::DistinctBegin<ProvidingObjectTagTypes>::type, 
+                                                 typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type>
     {
     public:
         typedef SimpleHeapProvider<ProvidingObjectTagTypes> this_type;
         typedef ProvidingObjectTagTypes providing_object_tag_types;
 
         template<LONG N>
-        class providing_type_at
+        class providing_type_at : 
+            public _F67D7870::ProvidingTypeAtImpl<ProvidingObjectTagTypes, N>
         {
-            typedef typename boost::mpl::at_c<providing_object_tag_types, N>::type providing_object_tag_type;
-        public:
-            typedef typename providing_object_tag_type::object_type type;
         };
 
         template<class ProvidingType>
-        class provider_of
+        class provider_of : 
+            public _F67D7870::ProviderOfImpl<ProvidingObjectTagTypes, ProvidingType>
         {
-            typedef typename Traits::Distinct<providing_object_tag_types>::type distinct_providing_object_tag_types;
-            typedef typename boost::mpl::find_if<distinct_providing_object_tag_types, Detail::HasObjectT<boost::mpl::_1, ProvidingType> >::type i;
-            typedef typename Traits::DistinctEnd<providing_object_tag_types>::type i_end;
-        public:
-            typedef Detail::SimpleHeapProviderImpl<providing_object_tag_types, i, i_end> type;
         };
 
         template<class ProvidingType>

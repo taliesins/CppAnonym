@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Utilities/UtilitiesDependsOn.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
-#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP

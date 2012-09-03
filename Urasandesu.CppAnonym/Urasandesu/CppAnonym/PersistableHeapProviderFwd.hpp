@@ -4,12 +4,12 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _BB53EDCD {
         
         template<class Sequence, class I, class IEnd>
         class PersistableHeapProviderImpl;
 
-    }   // namespace Detail
+    }   // namespace _BB53EDCD
 
 
     template<class Sequence>

@@ -52,8 +52,8 @@
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
-#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP

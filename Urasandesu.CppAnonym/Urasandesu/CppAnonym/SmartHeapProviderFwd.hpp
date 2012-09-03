@@ -4,12 +4,12 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _32AA62CA {
         
         template<class Sequence, class I, class IEnd>
         class SmartHeapProviderImpl;
 
-    }   // namespace Detail
+    }   // namespace _32AA62CA
 
 
     template<class Sequence>

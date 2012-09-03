@@ -20,7 +20,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _BB53EDCD {
 
         namespace mpl = boost::mpl;
         using namespace boost;
@@ -146,14 +146,24 @@ namespace Urasandesu { namespace CppAnonym {
         {
         };
 
-    }   // namespace Detail
+        template<class ProvidingTypes, class ProvidingType>
+        class ProviderOfImpl
+        {
+            typedef typename Traits::Distinct<ProvidingTypes>::type distinct_providing_types;
+            typedef typename mpl::find<distinct_providing_types, ProvidingType>::type i;
+            typedef typename Traits::DistinctEnd<ProvidingTypes>::type i_end;
+        public:
+            typedef PersistableHeapProviderImpl<ProvidingTypes, i, i_end> type;
+        };
+
+    }   // namespace _BB53EDCD
 
 
     template<class ProvidingTypes>
     class ATL_NO_VTABLE PersistableHeapProvider : 
-        public Detail::PersistableHeapProviderImpl<ProvidingTypes, 
-                                                   typename Traits::DistinctBegin<ProvidingTypes>::type, 
-                                                   typename Traits::DistinctEnd<ProvidingTypes>::type>
+        public _BB53EDCD::PersistableHeapProviderImpl<ProvidingTypes, 
+                                                      typename Traits::DistinctBegin<ProvidingTypes>::type, 
+                                                      typename Traits::DistinctEnd<ProvidingTypes>::type>
     {
     public:
         typedef PersistableHeapProvider<ProvidingTypes> this_type;
@@ -166,13 +176,9 @@ namespace Urasandesu { namespace CppAnonym {
         };
 
         template<class ProvidingType>
-        class provider_of
+        class provider_of : 
+            public _BB53EDCD::ProviderOfImpl<providing_types, ProvidingType>
         {
-            typedef typename Traits::Distinct<providing_types>::type distinct_providing_types;
-            typedef typename boost::mpl::find<distinct_providing_types, ProvidingType>::type i;
-            typedef typename Traits::DistinctEnd<providing_types>::type i_end;
-        public:
-            typedef Detail::PersistableHeapProviderImpl<providing_types, i, i_end> type;
         };
 
         template<class ProvidingType>

@@ -1965,7 +1965,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-#if 0
 #ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolder.h>
 #endif
@@ -1980,7 +1979,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEASSEMBLYINFO_HPP
 #include <Urasandesu/CppAnonym/Fusion/BaseAssemblyInfo.hpp>
-#endif
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test2.*

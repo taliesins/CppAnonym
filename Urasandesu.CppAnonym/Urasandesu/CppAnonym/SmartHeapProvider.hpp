@@ -6,87 +6,110 @@
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDERFWD_HPP
 #include <Urasandesu/CppAnonym/SmartHeapProviderFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _32AA62CA {
 
         namespace mpl = boost::mpl;
         using namespace boost;
 
-        template<class Sequence, class I, class IEnd>
+        template<class ProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE SmartHeapProviderImpl : 
             SimpleHeapProvider<
                 mpl::vector<
                     ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
                 >
             >,
-            public SmartHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
+            public SmartHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef SmartHeapProviderImpl<Sequence, I, IEnd> this_type;
+            typedef SmartHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_type;
-            typedef shared_ptr<object_type> sp_object_type;
             typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef typename provider_of<obj_tag_type>::type provider_type;
+            typedef SimpleHeapProvider<mpl::vector<obj_tag_type> > base_type;
 
-            static sp_object_type NewStaticObject()
+            typedef base_type::object_heap_type object_heap_type;
+            typedef Utilities::HeapDeleter<object_heap_type> object_heap_deleter_type;
+            typedef object_type *object_ptr_type;
+            typedef object_type const *object_const_ptr_type;
+
+            struct static_temp_object_ptr_tag;
+            typedef Utilities::TemporaryPointer<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
+
+            struct temp_object_ptr_tag;
+            typedef Utilities::TemporaryPointer<object_type, temp_object_ptr_tag> object_temp_ptr_type;
+
+            static static_object_temp_ptr_type NewStaticObject()
             {
-                return sp_object_type(provider_type::StaticHeap().New(), deleter(provider_type::StaticHeap()));
+                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            sp_object_type NewObject()
+            object_temp_ptr_type NewObject()
             {
-                provider_type &provider = ProviderOf<obj_tag_type>();
-                return sp_object_type(provider.Heap().New(), deleter(provider.Heap()));
+                return object_temp_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
             }
 
         private:
-            class deleter
+            static object_heap_type &StaticHeap()
             {
-            public:
-                deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) {}
-                void operator()(object_type *p) { m_pHeap->Delete(p); }
-            private:
-                typename provider_type::object_heap_type *m_pHeap;
-            };
+                static object_heap_type heap;
+                return heap;
+            }
         };
 
-        template<class Sequence>
-        class SmartHeapProviderImpl<Sequence, 
-                                    typename Traits::DistinctEnd<Sequence>::type, 
-                                    typename Traits::DistinctEnd<Sequence>::type> : 
+        template<class ProvidingTypes>
+        class SmartHeapProviderImpl<ProvidingTypes, 
+                                    typename Traits::DistinctEnd<ProvidingTypes>::type, 
+                                    typename Traits::DistinctEnd<ProvidingTypes>::type> : 
             noncopyable
         {
         };
 
-    }   // namespace Detail
+        template<class ProvidingTypes, class ProvidingType>
+        class ProviderOfImpl
+        {
+            typedef typename Traits::Distinct<ProvidingTypes>::type distinct_providing_types;
+            typedef typename mpl::find<distinct_providing_types, ProvidingType>::type i;
+            typedef typename Traits::DistinctEnd<ProvidingTypes>::type i_end;
+        public:
+            typedef SmartHeapProviderImpl<ProvidingTypes, i, i_end> type;
+        };
+
+    }   // namespace _32AA62CA
 
 
-    template<class Sequence>
+    template<class ProvidingTypes>
     class ATL_NO_VTABLE SmartHeapProvider : 
-        public Detail::SmartHeapProviderImpl<Sequence, 
-                                             typename Traits::DistinctBegin<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type>
+        public _32AA62CA::SmartHeapProviderImpl<ProvidingTypes, 
+                                                typename Traits::DistinctBegin<ProvidingTypes>::type, 
+                                                typename Traits::DistinctEnd<ProvidingTypes>::type>
     {
     public:
-        typedef SmartHeapProvider<Sequence> this_type;
-        typedef Sequence sequence_type;
+        typedef SmartHeapProvider<ProvidingTypes> this_type;
+        typedef ProvidingTypes providing_types;
 
-        template<class T>
-        struct provider_of
+        template<LONG N>
+        struct providing_type_at : 
+            boost::mpl::at_c<providing_types, N>
         {
-            typedef Detail::SmartHeapProviderImpl<
-                Sequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<Sequence>::type,
-                    T
-                >::type,
-                typename Traits::DistinctEnd<Sequence>::type
-            > type;
+        };
+
+        template<class ProvidingType>
+        class provider_of : 
+            public _32AA62CA::ProviderOfImpl<providing_types, ProvidingType>
+        {
         };
 
         template<class T>

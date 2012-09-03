@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
 #define URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
 
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabel.hpp>
 #endif

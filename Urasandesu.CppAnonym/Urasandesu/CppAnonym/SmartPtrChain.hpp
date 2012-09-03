@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _5C5EF764 {
         
         namespace mpl = boost::mpl;
         using namespace boost;
@@ -172,12 +172,30 @@ namespace Urasandesu { namespace CppAnonym {
         {
         };
 
-    }   // namespace Detail
+        template<class ChainInfoTypes, LONG N>
+        class ChainingPreviousTypeAtImpl
+        {
+            typedef typename mpl::at_c<ChainInfoTypes, N>::type chain_info_type;
+        public:
+            typedef typename chain_info_type::previous_type type;
+        };
+
+        template<class Current, class ChainInfoTypes, class ChainingPreviousType>
+        class ChainFromImpl
+        {
+            typedef typename Traits::Distinct<ChainInfoTypes>::type distinct_chain_info_types;
+            typedef typename mpl::find_if<distinct_chain_info_types, HasPreviousT<mpl::_1, ChainingPreviousType> >::type i;
+            typedef typename Traits::DistinctEnd<ChainInfoTypes>::type i_end;
+        public:
+            typedef SmartPtrChainImpl<Current, ChainInfoTypes, i, i_end> type;
+        };
+
+    }   // namespace _5C5EF764
 
 
     template<class Current, class ChainInfoTypes>
     class ATL_NO_VTABLE SmartPtrChain : 
-        public Detail::SmartPtrChainImpl<Current, 
+        public _5C5EF764::SmartPtrChainImpl<Current, 
                                          ChainInfoTypes, 
                                          typename Traits::DistinctBegin<ChainInfoTypes>::type, 
                                          typename Traits::DistinctEnd<ChainInfoTypes>::type>
@@ -187,21 +205,15 @@ namespace Urasandesu { namespace CppAnonym {
         typedef ChainInfoTypes chain_info_types;
 
         template<LONG N>
-        class chaining_previous_type_at
+        class chaining_previous_type_at : 
+            public _5C5EF764::ChainingPreviousTypeAtImpl<chain_info_types, N>
         {
-            typedef typename boost::mpl::at_c<chain_info_types, N>::type chain_info_type;
-        public:
-            typedef typename chain_info_type::previous_type type;
         };
 
         template<class ChainingPreviousType>
-        class chain_from
+        class chain_from : 
+            public _5C5EF764::ChainFromImpl<Current, chain_info_types, ChainingPreviousType>
         {
-            typedef typename Traits::Distinct<chain_info_types>::type distinct_chain_info_types;
-            typedef typename boost::mpl::find_if<distinct_chain_info_types, Detail::HasPreviousT<boost::mpl::_1, ChainingPreviousType> >::type i;
-            typedef typename Traits::DistinctEnd<chain_info_types>::type i_end;
-        public:
-            typedef Detail::SmartPtrChainImpl<Current, chain_info_types, i, i_end> type;
         };
 
         template<class ChainingPreviousType>
@@ -216,11 +228,11 @@ namespace Urasandesu { namespace CppAnonym {
         {
             namespace mpl = boost::mpl;
 
-            typedef mpl::filter_view<chain_info_types, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
+            typedef mpl::filter_view<chain_info_types, _5C5EF764::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_ancestor_selector<T> selector(*this, container);
-            mpl::for_each<MappableTypes, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+            mpl::for_each<MappableTypes, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             return container.m_p;
         }
 
@@ -229,11 +241,11 @@ namespace Urasandesu { namespace CppAnonym {
         {
             namespace mpl = boost::mpl;
 
-            typedef mpl::filter_view<chain_info_types, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
+            typedef mpl::filter_view<chain_info_types, _5C5EF764::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_selector<T> selector(*this, container);
-            mpl::for_each<MappableTypes, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+            mpl::for_each<MappableTypes, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             return container.m_p;
         }
 
@@ -253,7 +265,7 @@ namespace Urasandesu { namespace CppAnonym {
 
             container<T> container;
             new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-            mpl::for_each<chain_info_types, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+            mpl::for_each<chain_info_types, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             _ASSERTE(container.m_p);
             return container.m_p;
         }

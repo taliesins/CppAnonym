@@ -4,7 +4,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _5C5EF764 {
 
         template<class Current, class ChainInfoSequence, class I, class IEnd>
         class ATL_NO_VTABLE SmartPtrChainImpl;
@@ -30,7 +30,7 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current, class T>
         class IsMappable;
 
-    }   // namespace Detail
+    }   // namespace _5C5EF764
 
 
     template<class Current, class ChainInfoSequence>

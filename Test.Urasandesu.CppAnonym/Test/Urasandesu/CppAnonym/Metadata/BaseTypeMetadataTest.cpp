@@ -60,8 +60,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
-#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DEFAULTSTDMETHODWRAPPER_H
@@ -163,8 +163,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     private:
         static std::wstring const CONSOLE_NAME;
-        mutable Utilities::AnyPointer m_pType;
-        mutable Utilities::AnyPointer m_pConsole;
+        mutable Utilities::AnyPtr m_pType;
+        mutable Utilities::AnyPtr m_pConsole;
     };
     
     template<
@@ -195,7 +195,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
     private:
-        mutable Utilities::AnyPointer m_pMSCorLib;
+        mutable Utilities::AnyPtr m_pMSCorLib;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
