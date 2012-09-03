@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
-#include <Urasandesu/CppAnonym/Utilities/DeletionDisabledPolicy.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
@@ -15,8 +15,8 @@
 //#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 //#endif
 
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
-//#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+//#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
 //#endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
@@ -2018,7 +2018,7 @@ namespace {
         using namespace _B3C3B24D;
 
         struct RootPtrTag;
-        typedef PersistableTemporaryPointer<Hoge, RootPtrTag> RootTemporaryPtr;
+        typedef PersistPtr<Hoge, RootPtrTag> RootTemporaryPtr;
 
         {
             RootTemporaryPtr pHoge(new Hoge());
@@ -2030,7 +2030,8 @@ namespace {
             {
                 RootTemporaryPtr pHoge_(new Hoge());
                 pHoge_->m_value = 10;
-                pHoge = pHoge_.Persist();
+                pHoge_.Persist();
+                pHoge = pHoge_.Get();
             }
             delete pHoge;
         }
@@ -2062,7 +2063,7 @@ namespace {
         };
         typedef HeapDeleter<HogeHeap> HogeHeapDeleter;
         struct HogePtrTag;
-        typedef PersistableTemporaryPointer<Hoge, HogePtrTag> HogeTemporaryPtr;
+        typedef PersistPtr<Hoge, HogePtrTag> HogeTemporaryPtr;
 
         HogeHeap heap;
 
@@ -2076,7 +2077,8 @@ namespace {
             {
                 HogeTemporaryPtr pHoge_(heap.New(), HogeHeapDeleter(heap));
                 pHoge_->m_value = 10;
-                pHoge = pHoge_.Persist();
+                pHoge_.Persist();
+                pHoge = pHoge_.Get();
             }
             heap.Delete(pHoge);
         }

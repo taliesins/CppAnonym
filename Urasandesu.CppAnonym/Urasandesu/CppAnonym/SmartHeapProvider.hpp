@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDERFWD_HPP
@@ -46,10 +46,10 @@ namespace Urasandesu { namespace CppAnonym {
             typedef object_type const *object_const_ptr_type;
 
             struct static_temp_object_ptr_tag;
-            typedef Utilities::TemporaryPointer<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
+            typedef Utilities::TempPtr<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
 
             struct temp_object_ptr_tag;
-            typedef Utilities::TemporaryPointer<object_type, temp_object_ptr_tag> object_temp_ptr_type;
+            typedef Utilities::TempPtr<object_type, temp_object_ptr_tag> object_temp_ptr_type;
 
             static static_object_temp_ptr_type NewStaticObject()
             {

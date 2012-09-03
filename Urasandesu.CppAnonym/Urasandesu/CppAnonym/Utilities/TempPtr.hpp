@@ -1,25 +1,25 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#define URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTERFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPointerFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtrFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    namespace Detail {
+    namespace _565A04BF {
 
-        struct TemporaryHolder
+        struct Holder
         {
-            typedef TemporaryHolder this_type;
+            typedef Holder this_type;
 
-            TemporaryHolder() : m_useCount(0) { }
-            virtual ~TemporaryHolder() { };
+            Holder() : m_useCount(0) { }
+            virtual ~Holder() { };
             virtual void *Pointer() const = 0;
             virtual void Delete() = 0;
             virtual void DisableDeletion() = 0;
@@ -38,26 +38,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class T, class Tag, class D>
-        struct TemporaryHolderImpl : 
-            TemporaryHolder
+        struct HolderImpl : 
+            Holder
         {
-            typedef TemporaryHolderImpl<T, Tag, D> this_type;
-            typedef TemporaryHolderImplFactory<T, Tag, D> holder_factory_type;
-            typedef DeletionDisabledPolicy<D> deletion_disabled_deleter;
+            typedef HolderImpl<T, Tag, D> this_type;
+            typedef HolderImplFactory<T, Tag, D> holder_factory_type;
+            typedef DeletionSwitchablePolicy<D> deletion_disabled_deleter;
 
-            explicit TemporaryHolderImpl(T *p) : 
-                TemporaryHolder(), 
+            explicit HolderImpl(T *p) : 
+                Holder(), 
                 m_p(p),
                 m_ddd(deletion_disabled_deleter(D()))
             { _ASSERTE(p != NULL); }
 
-            TemporaryHolderImpl(T *p, D d) : 
-                TemporaryHolder(), 
+            HolderImpl(T *p, D d) : 
+                Holder(), 
                 m_p(p),
                 m_ddd(deletion_disabled_deleter(d))
             { _ASSERTE(p != NULL); }
 
-            virtual ~TemporaryHolderImpl()
+            virtual ~HolderImpl()
             {
                 m_ddd(m_p);
             }
@@ -82,22 +82,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class T, class Tag, class D>
-        struct TemporaryHolderImplFactory
+        struct HolderImplFactory
         {
-            typedef TemporaryHolderImpl<T, Tag, D> holder_type;
+            typedef HolderImpl<T, Tag, D> holder_type;
             typedef holder_type *holder_ptr_type;
             typedef SimpleHeap<holder_type, QuickHeapWithoutSubscriptOperator> holder_heap_type;
             static holder_heap_type &Heap() { static holder_heap_type heap; return heap; }
         };
 
-    }   // namespace Detail {
+    }   // namespace _565A04BF {
 
     template<class T, class Tag>
-    class TemporaryPointer
+    class TempPtr
     {
     public:
-        typedef TemporaryPointer<T, Tag> this_type;
-        typedef Detail::TemporaryHolder holder_type;
+        typedef TempPtr<T, Tag> this_type;
+        typedef _565A04BF::Holder holder_type;
         typedef boost::intrusive_ptr<holder_type> holder_ptr_type;
 
         typedef T element_type;
@@ -105,13 +105,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         typedef T *pointer;
         typedef T &reference;
 
-        explicit TemporaryPointer(T *p) : 
-            m_pHolder(Detail::TemporaryHolderImplFactory<T, Tag, DefaultDeleter>::Heap().New(p))
+        explicit TempPtr(T *p) : 
+            m_pHolder(_565A04BF::HolderImplFactory<T, Tag, DefaultDeleter>::Heap().New(p))
         { }
 
         template<class D>
-        TemporaryPointer(T *p, D d) : 
-            m_pHolder(Detail::TemporaryHolderImplFactory<T, Tag, D>::Heap().New(p, d))
+        TempPtr(T *p, D d) : 
+            m_pHolder(_565A04BF::HolderImplFactory<T, Tag, D>::Heap().New(p, d))
         { }
 
         pointer operator->()
@@ -136,29 +136,33 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     };
 
     template<class T, class Tag>
-    class PersistableTemporaryPointer : 
-        public TemporaryPointer<T, Tag>
+    class PersistPtr : 
+        public TempPtr<T, Tag>
     {
     public:
-        typedef PersistableTemporaryPointer<T, Tag> this_type;
-        typedef TemporaryPointer<T, Tag> base_type;
+        typedef PersistPtr<T, Tag> this_type;
+        typedef TempPtr<T, Tag> base_type;
 
-        explicit PersistableTemporaryPointer(T *p) : 
-            TemporaryPointer(p)
+        explicit PersistPtr(T *p) : 
+            TempPtr(p)
         { }
 
         template<class D>
-        PersistableTemporaryPointer(T *p, D d) : 
-            TemporaryPointer(p, d)
+        PersistPtr(T *p, D d) : 
+            TempPtr(p, d)
         { }
 
-        pointer Persist() const
+        void Revert()
+        {
+            m_pHolder->EnableDeletion();
+        }
+
+        void Persist()
         {
             m_pHolder->DisableDeletion();
-            return Get();
         }
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP

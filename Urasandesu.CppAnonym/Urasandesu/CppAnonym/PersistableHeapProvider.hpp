@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDERFWD_HPP
@@ -48,10 +48,10 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename object_ptr_vector_type::size_type size_type;
             
             struct static_temp_object_ptr_tag;
-            typedef Utilities::PersistableTemporaryPointer<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
+            typedef Utilities::PersistPtr<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
 
             struct temp_object_ptr_tag;
-            typedef Utilities::PersistableTemporaryPointer<object_type, temp_object_ptr_tag> object_temp_ptr_type;
+            typedef Utilities::PersistPtr<object_type, temp_object_ptr_tag> object_temp_ptr_type;
 
             static void Destruct(object_heap_type &heap, object_ptr_vector_type &objects)
             {
@@ -70,7 +70,7 @@ namespace Urasandesu { namespace CppAnonym {
                 return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            static size_type RegisterStaticObject(static_object_temp_ptr_type const &p)
+            static size_type RegisterStaticObject(static_object_temp_ptr_type &p)
             {
                 p.Persist();
                 StaticObjects().push_back(p.Get());
@@ -87,7 +87,7 @@ namespace Urasandesu { namespace CppAnonym {
                 return object_temp_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
             }
 
-            size_type RegisterObject(object_temp_ptr_type const &p)
+            size_type RegisterObject(object_temp_ptr_type &p)
             {
                 p.Persist();
                 Objects().push_back(p.Get());

@@ -1,22 +1,22 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
+#define URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICYFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/DeletionDisabledPolicyFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICYFWD_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicyFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     template<class D>
-    class DeletionDisabledPolicy
+    class DeletionSwitchablePolicy
     {
     public:
-        typedef DeletionDisabledPolicy<D> this_type;
+        typedef DeletionSwitchablePolicy<D> this_type;
 
         typedef D deleter;
 
-        explicit DeletionDisabledPolicy(deleter d) : 
+        explicit DeletionSwitchablePolicy(deleter d) : 
             m_d(d) 
         { 
             m_disabled[0] = false; 
@@ -27,6 +27,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         { 
             if (!m_disabled[0]) 
                 m_d(p); 
+        }
+        
+        void EnableDeletion() 
+        { 
+            m_disabled[0] = false; 
         }
         
         void DisableDeletion() 
@@ -41,4 +46,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP

@@ -22,8 +22,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONDISABLEDPOLICY_HPP
-#include <Urasandesu/CppAnonym/Utilities/DeletionDisabledPolicy.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
@@ -50,8 +50,8 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
