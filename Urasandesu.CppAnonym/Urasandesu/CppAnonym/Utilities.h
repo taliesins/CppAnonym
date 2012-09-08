@@ -50,12 +50,16 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
 #include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

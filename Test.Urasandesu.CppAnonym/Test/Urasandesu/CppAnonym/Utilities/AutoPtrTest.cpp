@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 

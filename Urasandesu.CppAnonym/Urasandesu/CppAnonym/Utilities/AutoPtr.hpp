@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
+#define URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
@@ -294,183 +294,183 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
     };
 
-    template<class T>
-    class SemiAutoPtr : 
-        public AutoPtr<T>
-    {
-    public:
-        typedef SemiAutoPtr<T> this_type;
-        typedef AutoPtr<T> base_type;
+    //template<class T>
+    //class SemiAutoPtr : 
+    //    public AutoPtr<T>
+    //{
+    //public:
+    //    typedef SemiAutoPtr<T> this_type;
+    //    typedef AutoPtr<T> base_type;
 
-        SemiAutoPtr() : 
-            base_type()
-        { }
+    //    SemiAutoPtr() : 
+    //        base_type()
+    //    { }
 
-        explicit SemiAutoPtr(T *p) : 
-            base_type(p)
-        { }
+    //    explicit SemiAutoPtr(T *p) : 
+    //        base_type(p)
+    //    { }
 
-        template<class D>
-        SemiAutoPtr(T *p, D d) : 
-            base_type(p, d)
-        { }
+    //    template<class D>
+    //    SemiAutoPtr(T *p, D d) : 
+    //        base_type(p, d)
+    //    { }
 
-        template<class U>
-        SemiAutoPtr(SemiAutoPtr<U> const &other) : 
-            base_type(other)
-        { }
+    //    template<class U>
+    //    SemiAutoPtr(SemiAutoPtr<U> const &other) : 
+    //        base_type(other)
+    //    { }
 
-        inline SemiAutoPtr &operator =(SemiAutoPtr &other)
-        {
-            base_type::operator =(other);
-            return *this;
-        }
+    //    inline SemiAutoPtr &operator =(SemiAutoPtr &other)
+    //    {
+    //        base_type::operator =(other);
+    //        return *this;
+    //    }
 
-        template<class U>
-        inline SemiAutoPtr &operator =(SemiAutoPtr<U> &other)
-        {
-            base_type::operator =(other);
-            return *this;
-        }
+    //    template<class U>
+    //    inline SemiAutoPtr &operator =(SemiAutoPtr<U> &other)
+    //    {
+    //        base_type::operator =(other);
+    //        return *this;
+    //    }
 
-        inline void SetAuto()
-        {
-            m_pHolder->EnableDeletion();
-        }
+    //    inline void SetAuto()
+    //    {
+    //        m_pHolder->EnableDeletion();
+    //    }
 
-        inline void SetManual()
-        {
-            m_pHolder->DisableDeletion();
-        }
-    };
+    //    inline void SetManual()
+    //    {
+    //        m_pHolder->DisableDeletion();
+    //    }
+    //};
 
-    template<class T>
-    class TempPtr : 
-        public SemiAutoPtr<T>
-    {
-    public:
-        typedef TempPtr<T> this_type;
-        typedef SemiAutoPtr<T> base_type;
-        typedef AutoPtrDetail::PersisterHolder persister_holder_type;
+    //template<class T>
+    //class TempPtr : 
+    //    public SemiAutoPtr<T>
+    //{
+    //public:
+    //    typedef TempPtr<T> this_type;
+    //    typedef SemiAutoPtr<T> base_type;
+    //    typedef AutoPtrDetail::PersisterHolder persister_holder_type;
 
-        TempPtr() : 
-            base_type(),
-            m_isPersisted(false)
-        { }
+    //    TempPtr() : 
+    //        base_type(),
+    //        m_isPersisted(false)
+    //    { }
 
-        explicit TempPtr(T *p) : 
-            base_type(p),
-            m_isPersisted(false)
-        { }
+    //    explicit TempPtr(T *p) : 
+    //        base_type(p),
+    //        m_isPersisted(false)
+    //    { }
 
-        template<class D>
-        TempPtr(T *p, D d) : 
-            base_type(p, d),
-            m_isPersisted(false)
-        { }
+    //    template<class D>
+    //    TempPtr(T *p, D d) : 
+    //        base_type(p, d),
+    //        m_isPersisted(false)
+    //    { }
 
-        template<class U>
-        TempPtr(TempPtr<U> const &other) : 
-            base_type(other),
-            m_isPersisted(other.IsPersisted())
-        { }
+    //    template<class U>
+    //    TempPtr(TempPtr<U> const &other) : 
+    //        base_type(other),
+    //        m_isPersisted(other.IsPersisted())
+    //    { }
 
-        inline TempPtr &operator =(TempPtr &other)
-        {
-            base_type::operator =(other);
-            m_isPersisted = other.IsPersisted();
-            return *this;
-        }
+    //    inline TempPtr &operator =(TempPtr &other)
+    //    {
+    //        base_type::operator =(other);
+    //        m_isPersisted = other.IsPersisted();
+    //        return *this;
+    //    }
 
-        template<class U>
-        inline TempPtr &operator =(TempPtr<U> &other)
-        {
-            base_type::operator =(other);
-            m_isPersisted = other.IsPersisted();
-            return *this;
-        }
+    //    template<class U>
+    //    inline TempPtr &operator =(TempPtr<U> &other)
+    //    {
+    //        base_type::operator =(other);
+    //        m_isPersisted = other.IsPersisted();
+    //        return *this;
+    //    }
 
-        inline bool IsPersisted() const
-        {
-            return m_isPersisted;
-        }
+    //    inline bool IsPersisted() const
+    //    {
+    //        return m_isPersisted;
+    //    }
 
-        inline void Persist()
-        {
-            if (!m_isPersisted)
-            {
-                base_type::SetManual();
-                m_isPersisted = true;
-                if (m_pPersisterHolder)
-                    (*m_pPersisterHolder)(this);
-            }
-        }
+    //    inline void Persist()
+    //    {
+    //        if (!m_isPersisted)
+    //        {
+    //            base_type::SetManual();
+    //            m_isPersisted = true;
+    //            if (m_pPersisterHolder)
+    //                (*m_pPersisterHolder)(this);
+    //        }
+    //    }
 
-        template<class Persister>
-        inline void SetPersister(Persister persister)
-        {
-            _ASSERTE(!m_pPersisterHolder);
-            m_pPersisterHolder = AutoPtrDetail::PersisterHolderImplFactory<Persister>::Heap().New(persister);
-        }
+    //    template<class Persister>
+    //    inline void SetPersister(Persister persister)
+    //    {
+    //        _ASSERTE(!m_pPersisterHolder);
+    //        m_pPersisterHolder = AutoPtrDetail::PersisterHolderImplFactory<Persister>::Heap().New(persister);
+    //    }
 
-    private:
-        void SetAuto();
-        void SetManual();
-        bool m_isPersisted;
-        boost::intrusive_ptr<persister_holder_type> m_pPersisterHolder;
-    };
+    //private:
+    //    void SetAuto();
+    //    void SetManual();
+    //    bool m_isPersisted;
+    //    boost::intrusive_ptr<persister_holder_type> m_pPersisterHolder;
+    //};
 
-    template<class T>
-    class TempPtrVector
-    {
-    public:
-        typedef TempPtrVector<T> this_type;
+    //template<class T>
+    //class TempPtrVector
+    //{
+    //public:
+    //    typedef TempPtrVector<T> this_type;
 
-        typedef std::vector<TempPtr<T> > temp_ptr_vector_type;
-        typedef typename temp_ptr_vector_type::size_type size_type;
-        typedef T *pointer;
-        typedef T const *const_pointer;
-        typedef T const *&const_reference;
-        typedef T *&reference;
-        typedef typename temp_ptr_vector_type::value_type value_type;
+    //    typedef std::vector<TempPtr<T> > temp_ptr_vector_type;
+    //    typedef typename temp_ptr_vector_type::size_type size_type;
+    //    typedef T *pointer;
+    //    typedef T const *const_pointer;
+    //    typedef T const *&const_reference;
+    //    typedef T *&reference;
+    //    typedef typename temp_ptr_vector_type::value_type value_type;
 
-	    inline void reserve(size_type size)
-        {
-            m_vec.reserve(size);
-        }
+	   // inline void reserve(size_type size)
+    //    {
+    //        m_vec.reserve(size);
+    //    }
 
-        inline void push_back(typename boost::call_traits<value_type>::param_type val)
-        {
-            m_vec.push_back(val);
-        };
+    //    inline void push_back(typename boost::call_traits<value_type>::param_type val)
+    //    {
+    //        m_vec.push_back(val);
+    //    };
 
-        inline const_pointer operator[](size_type pos) const
-        {
-            TempPtr<T> &p = const_cast<TempPtr<T> &>(m_vec[pos]);
-            if (!p.IsPersisted())
-                p.Persist();
-            return p.Get();
-        }
+    //    inline const_pointer operator[](size_type pos) const
+    //    {
+    //        TempPtr<T> &p = const_cast<TempPtr<T> &>(m_vec[pos]);
+    //        if (!p.IsPersisted())
+    //            p.Persist();
+    //        return p.Get();
+    //    }
 
-        inline pointer operator[](size_type pos)
-        {
-            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-        }
+    //    inline pointer operator[](size_type pos)
+    //    {
+    //        BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+    //    }
 
-        inline size_type size() const
-        {
-            return m_vec.size();
-        }
+    //    inline size_type size() const
+    //    {
+    //        return m_vec.size();
+    //    }
 
-	    inline bool empty() const
-        {
-            return m_vec.empty();
-        }
+	   // inline bool empty() const
+    //    {
+    //        return m_vec.empty();
+    //    }
 
-    private:
-        temp_ptr_vector_type m_vec;
-    };
+    //private:
+    //    temp_ptr_vector_type m_vec;
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
