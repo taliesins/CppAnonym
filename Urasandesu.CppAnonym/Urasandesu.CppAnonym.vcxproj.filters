@@ -1086,6 +1086,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
@@ -67,30 +71,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-// NOTE: enum { n = sizeof(T) }; is intended for to exclude any incomplete types.
-#define CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(name, member, member_ret, member_params) \
-    template<class T, class Tag = boost::mpl::void_> \
-    struct Has_##name##_##member \
-    { \
-        enum { n = sizeof(T) }; \
-        typedef boost::mpl::false_ type; \
-        static const bool value = false; \
-    }; \
-     \
-    template<class T, T> struct Identify; \
-     \
-    template<class T> \
-    struct Has_##name##_##member<T, typename boost::mpl::apply<boost::mpl::always<boost::mpl::void_>, Identify<member_ret(T::*)member_params, &T::member> >::type> \
-    { \
-        typedef boost::mpl::true_ type; \
-        static const bool value = true; \
-    };
-
-#define CPP_ANONYM_USING_HAS_MEMBER_FUNCTION(name, member) \
-    Has_##name##_##member
-
-#define CPP_ANONYM_HAS_MEMBER_FUNCTION(name, member, t) \
-    Has_##name##_##member<t>
+//    template<class T, T> struct Identify;
+//
+//// NOTE: enum { n = sizeof(T) }; is intended for to exclude any incomplete types.
+//#define CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(name, member, member_ret, member_params) \
+//    template<class T, class Tag = boost::mpl::void_> \
+//    struct Has_##name##_##member \
+//    { \
+//        enum { n = sizeof(T) }; \
+//        typedef boost::mpl::false_ type; \
+//        static const bool value = false; \
+//    }; \
+//     \
+//    template<class T> \
+//    struct Has_##name##_##member<T, typename boost::mpl::apply<boost::mpl::always<boost::mpl::void_>, Urasandesu::CppAnonym::Traits::Identify<member_ret(T::*)member_params, &T::member> >::type> \
+//    { \
+//        typedef boost::mpl::true_ type; \
+//        static const bool value = true; \
+//    };
+//
+//#define CPP_ANONYM_USING_HAS_MEMBER_FUNCTION(name, member) \
+//    Has_##name##_##member
+//
+//#define CPP_ANONYM_HAS_MEMBER_FUNCTION(name, member, t) \
+//    Has_##name##_##member<t>
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -424,6 +428,24 @@ HAS_MEM_FUNC(ToString, HasToStringImpl);
             }
         };
 
+        struct Huga
+        {
+            template<class T>
+            T ToString()
+            {
+                return T();
+            }
+        };
+
+        template<class T>
+        struct Foo
+        {
+            T ToString()
+            {
+                return T();
+            }
+        };
+
 #define HOGE(ret, params) \
     typedef ret(*MyFunc##params)
 
@@ -441,6 +463,8 @@ HAS_MEM_FUNC(ToString, HasToStringImpl);
         using _7CD85B33::HasToString;
         using _7CD85B33::Hoge;
         using _7CD85B33::Piyo;
+        using _7CD85B33::Huga;
+        using _7CD85B33::Foo;
         using _7CD85B33::CPP_ANONYM_USING_HAS_MEMBER_FUNCTION(Has, ToString);
 
         BOOST_MPL_ASSERT((mpl::not_<HasToString<Hoge> >));
@@ -448,6 +472,8 @@ HAS_MEM_FUNC(ToString, HasToStringImpl);
         BOOST_MPL_ASSERT((mpl::not_<HasToString<int> >));
         BOOST_MPL_ASSERT((mpl::not_<CPP_ANONYM_HAS_MEMBER_FUNCTION(Has, ToString, Hoge)>));
         BOOST_MPL_ASSERT((CPP_ANONYM_HAS_MEMBER_FUNCTION(Has, ToString, Piyo)));
+        BOOST_MPL_ASSERT((CPP_ANONYM_HAS_MEMBER_FUNCTION(Has, ToString, Huga)));
+        BOOST_MPL_ASSERT((mpl::not_<CPP_ANONYM_HAS_MEMBER_FUNCTION(Has, ToString, Foo<int>)>));
 
         HOGE(std::string *, (int, int));                      // こっちかな？    
         //HOGE((mpl::identity<std::string(*(int, int))>));  // 括弧が入っちゃう・・・。

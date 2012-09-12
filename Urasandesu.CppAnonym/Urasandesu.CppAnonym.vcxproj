@@ -431,6 +431,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />

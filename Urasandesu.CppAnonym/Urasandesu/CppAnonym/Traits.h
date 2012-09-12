@@ -42,4 +42,8 @@
 #include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_H
