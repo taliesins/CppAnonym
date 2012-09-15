@@ -163,6 +163,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\StaticDependentObjectsStorageTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

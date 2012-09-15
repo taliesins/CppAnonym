@@ -30,6 +30,10 @@
 #include <Urasandesu/CppAnonym/DefaultSTDMETHODWrapper.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DependentObjectsProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_ENVIRONMENT_H
 #include <Urasandesu/CppAnonym/Environment.h>
 #endif
@@ -84,6 +88,10 @@
 
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
