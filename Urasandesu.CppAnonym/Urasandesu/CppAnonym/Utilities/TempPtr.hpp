@@ -2,6 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeValueHolderImpl.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
 #include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
 #endif
@@ -12,60 +20,42 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    template<
-        class T, 
-        class ImplD, 
-        template<class, class> class ValueHolderImpl
-    >
-    struct MakeValueHolderImpl
-    {
-        typedef ValueHolderImpl<T, ImplD> type;
-    };
+    //template<
+    //    class T, 
+    //    class ImplD, 
+    //    template<class, class> class ValueHolderImpl
+    //>
+    //struct MakeValueHolderImpl
+    //{
+    //    typedef ValueHolderImpl<T, ImplD> type;
+    //};
 
-    template<
-        class T, 
-        template<class, class> class ValueHolderImpl,
-        class Tag = QuickHeapWithoutSubscriptOperator
-    >
-    struct MakeHeapValueHolderImpl
-    {
-        struct deleter_type;
-        typedef ValueHolderImpl<T, deleter_type> type;
-        typedef SimpleHeap<type, Tag> heap_type;
-        struct deleter_type : 
-            Utilities::HeapDeleter<heap_type>
-        {
-            typedef Utilities::HeapDeleter<heap_type> base_type;
-                
-            deleter_type(heap_type &heap) : 
-                base_type(heap)
-            { }
+    //template<
+    //    class T, 
+    //    template<class, class> class ValueHolderImpl,
+    //    class Tag = QuickHeapWithoutSubscriptOperator
+    //>
+    //struct MakeHeapValueHolderImpl
+    //{
+    //    struct deleter_type;
+    //    typedef ValueHolderImpl<T, deleter_type> type;
+    //    typedef SimpleHeap<type, Tag> heap_type;
+    //    struct deleter_type : 
+    //        Utilities::HeapDeleter<heap_type>
+    //    {
+    //        typedef Utilities::HeapDeleter<heap_type> base_type;
+    //            
+    //        deleter_type(heap_type &heap) : 
+    //            base_type(heap)
+    //        { }
 
-            template<class T>
-            void operator()(T *p) 
-            { 
-                base_type::operator()(p);
-            }
-        };
-
-        //typedef typename persisted_handler_impl_type<T, deleter_type>::type type;
-        //typedef SimpleHeap<type, QuickHeapWithoutSubscriptOperator> heap_type;
-        //struct deleter_type : 
-        //    HeapDeleter<heap_type>
-        //{
-        //    typedef HeapDeleter<heap_type> base_type;
-        //        
-        //    deleter_type(heap_type &heap) : 
-        //        base_type(heap)
-        //    { }
-
-        //    template<class T>
-        //    void operator()(T *p) 
-        //    { 
-        //        base_type::operator()(p);
-        //    }
-        //};
-    };
+    //        template<class T>
+    //        void operator()(T *p) 
+    //        { 
+    //            base_type::operator()(p);
+    //        }
+    //    };
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -183,35 +173,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 MakeHeapPersistedHandlerImpl<Handler, Tag>
             {
             };
-
-            //template<class Handler, class ImplD>
-            //struct persisted_handler_impl_type
-            //{
-            //    typedef PersistedHandlerImpl<Handler, ImplD> type;
-            //};
-
-            //template<class Handler>
-            //struct default_heap_persisted_handler_impl
-            //{
-            //    struct deleter_type;
-            //    typedef typename persisted_handler_impl_type<Handler, deleter_type>::type type;
-            //    typedef SimpleHeap<type, QuickHeapWithoutSubscriptOperator> heap_type;
-            //    struct deleter_type : 
-            //        HeapDeleter<heap_type>
-            //    {
-            //        typedef HeapDeleter<heap_type> base_type;
-            //    
-            //        deleter_type(heap_type &heap) : 
-            //            base_type(heap)
-            //        { }
-
-            //        template<class T>
-            //        void operator()(T *p) 
-            //        { 
-            //            base_type::operator()(p);
-            //        }
-            //    };
-            //};
 
             TempPtrImpl() : 
                 base_type(),

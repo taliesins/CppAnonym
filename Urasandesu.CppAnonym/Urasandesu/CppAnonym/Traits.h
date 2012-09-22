@@ -38,6 +38,14 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeValueHolderImpl.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
 #include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
 #endif
