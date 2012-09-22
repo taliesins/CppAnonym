@@ -443,6 +443,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImpl.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImplFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImpl.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImplFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />

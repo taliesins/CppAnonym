@@ -30,6 +30,14 @@
 #include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
 #include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
 #endif

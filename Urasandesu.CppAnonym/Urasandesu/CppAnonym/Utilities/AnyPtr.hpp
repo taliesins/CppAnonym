@@ -10,9 +10,17 @@
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
 #endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
+#endif
+
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+//#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
@@ -42,15 +50,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             LONG m_useCount;
-            
-            //virtual ~AnyPtrHolder() { }
-            //virtual std::type_info const &GetType() const = 0;
-            //virtual AnyPtrHolder *Clone() const = 0;
         };
 
-        //template<class PointerType>
         template<class T, class TD, class ImplD>
-        //struct PointerHolder : 
         struct AnyPtrHolderImpl : 
             AnyPtrHolder
         {
@@ -59,9 +61,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef T object_type;
             typedef TD object_deleter_type;
             typedef ImplD impl_deleter_type; 
-
-            //BOOST_MPL_ASSERT((boost::is_pointer<T>));
-            //typedef typename Traits::RemoveConst<T>::type pointer_type;
 
             AnyPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
                 base_type(), 
@@ -95,15 +94,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             object_type *m_p;
             mutable object_deleter_type m_d;
             impl_deleter_type m_impld;
-
-            //BOOST_MPL_ASSERT((boost::is_pointer<PointerType>));
-            //typedef typename Traits::RemoveConst<PointerType>::type pointer_type;
-            //typedef PointerHolder<pointer_type> type;
-            //PointerHolder(pointer_type p) : m_p(p) { }
-            //virtual ~PointerHolder() { delete m_p; }
-            //virtual std::type_info const &GetType() const { return typeid(pointer_type); }            
-            //virtual AnyPtrHolder *Clone() const { return new PointerHolder(m_p); }            
-            //pointer_type m_p;
         };
 
         template<class T, class TD, class ImplD>
@@ -221,69 +211,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             return *this;
         }
     };
-
-    //class AnyPtr
-    //{
-    //public:
-    //    typedef AnyPtrDetail::AnyPtrHolder holder_type;
-
-    //    AnyPtr() : 
-    //        m_pHolder(NULL)
-    //    { }
-
-    //    template<class PointerType>
-    //    AnyPtr(PointerType p) : 
-    //        m_pHolder(new AnyPtrDetail::PointerHolder<PointerType>(p))
-    //    { }
-
-    //    AnyPtr(AnyPtr const &other) : 
-    //        m_pHolder(other.IsEmpty() ? NULL : other.m_pHolder->Clone())
-    //    { }
-
-    //    ~AnyPtr() 
-    //    { 
-    //        if (m_pHolder != NULL)
-    //            delete m_pHolder;
-    //    }
-
-    //    inline bool IsEmpty() const { return m_pHolder == NULL; }
-
-    //    template<class PointerType>
-    //    inline bool Is() const 
-    //    {
-    //        return !IsEmpty() && 
-    //               typeid(typename AnyPtrDetail::PointerHolder<PointerType>::pointer_type) == m_pHolder->GetType();
-    //    }
-    //    
-    //    inline AnyPtr &Swap(AnyPtr &other) 
-    //    { 
-    //        std::swap(m_pHolder, other.m_pHolder); 
-    //        return *this; 
-    //    }
-
-    //    inline AnyPtr &operator =(AnyPtr &other)
-    //    {
-    //        other.Swap(*this);
-    //        return *this;
-    //    }
-
-    //    template<class PointerType>
-    //    inline AnyPtr &operator =(PointerType p)
-    //    {
-    //        AnyPtr(p).Swap(*this);
-    //        return *this;
-    //    }
-
-    //    template<class PointerType>
-    //    inline operator PointerType()
-    //    {
-    //        typedef typename AnyPtrDetail::PointerHolder<PointerType>::type HolderType;
-    //        return Is<PointerType>() ? static_cast<HolderType *>(m_pHolder)->m_p : NULL;
-    //    }
-
-    //private:
-    //    holder_type *m_pHolder;
-    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
