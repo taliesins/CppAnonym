@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
+#include <Urasandesu/CppAnonym/Traits/IsLikePointer.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
 #endif
@@ -35,50 +39,50 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     
     
-    namespace IsLikePointerDetail {
+    //namespace IsLikePointerDetail {
 
-        using namespace boost;
-        using namespace boost::mpl;
+    //    using namespace boost;
+    //    using namespace boost::mpl;
 
-        template<class T>
-        class IsLikePointerImpl : 
-            public is_pointer<T>
-        {
-        };
+    //    template<class T>
+    //    class IsLikePointerImpl : 
+    //        public is_pointer<T>
+    //    {
+    //    };
 
-        template<class T, template<class> class CandidateSmartPtr>
-        class IsLikePointerImpl<CandidateSmartPtr<T> >
-        {
-            CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(IndirectionOperator, operator*, T &, () const); 
-            CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(MemberAccessOperator, operator->, T *, () const);
-        public:
-            typedef typename and_<
-                CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, CandidateSmartPtr<T>), 
-                CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, CandidateSmartPtr<T>), 
-                not_<
-                    or_<
-                        has_trivial_constructor<CandidateSmartPtr<T> >,
-                        has_trivial_copy<CandidateSmartPtr<T> >, 
-                        has_trivial_assign<CandidateSmartPtr<T> >, 
-                        has_trivial_destructor<CandidateSmartPtr<T> >
-                    >
-                >
-            >::type type;
-        };
+    //    template<class T, template<class> class CandidateSmartPtr>
+    //    class IsLikePointerImpl<CandidateSmartPtr<T> >
+    //    {
+    //        CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(IndirectionOperator, operator*, T &, () const); 
+    //        CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(MemberAccessOperator, operator->, T *, () const);
+    //    public:
+    //        typedef typename and_<
+    //            CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, CandidateSmartPtr<T>), 
+    //            CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, CandidateSmartPtr<T>), 
+    //            not_<
+    //                or_<
+    //                    has_trivial_constructor<CandidateSmartPtr<T> >,
+    //                    has_trivial_copy<CandidateSmartPtr<T> >, 
+    //                    has_trivial_assign<CandidateSmartPtr<T> >, 
+    //                    has_trivial_destructor<CandidateSmartPtr<T> >
+    //                >
+    //            >
+    //        >::type type;
+    //    };
 
-    }   // namespace IsLikePointerDetail {
+    //}   // namespace IsLikePointerDetail {
 
-    template<class T>
-    struct IsLikePointer : 
-        IsLikePointerDetail::IsLikePointerImpl<T>
-    {
-    };
+    //template<class T>
+    //struct IsLikePointer : 
+    //    IsLikePointerDetail::IsLikePointerImpl<T>
+    //{
+    //};
 
-    template<class T, template<class> class CandidateSmartPtr>
-    struct IsLikePointer<CandidateSmartPtr<T> > : 
-        IsLikePointerDetail::IsLikePointerImpl<CandidateSmartPtr<T> >
-    {
-    };
+    //template<class T, template<class> class CandidateSmartPtr>
+    //struct IsLikePointer<CandidateSmartPtr<T> > : 
+    //    IsLikePointerDetail::IsLikePointerImpl<CandidateSmartPtr<T> >
+    //{
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -312,20 +316,6 @@ namespace {
             //    Hoge *&p = v1.Get<Hoge *>();
             //}
         }
-
-        BOOST_MPL_ASSERT((mpl::not_<IsLikePointer<int> >));
-        BOOST_MPL_ASSERT((IsLikePointer<int *>));
-        typedef Hoge *(intrusive_ptr<Hoge>::*PointerMemberAccessor)() const;
-        //typedef Identify<Hoge *(intrusive_ptr<Hoge>::*)() const, &intrusive_ptr<Hoge>::operator-> > AAAA;
-        //PointerMemberAccessor pma = &intrusive_ptr<Hoge>::operator->;
-        //typedef CPP_ANONYM_HAS_MEMBER_FUNCTION(PointerMemberAccessorS, intrusive_ptr<Hoge>)::type AAAAA;
-        //BOOST_MPL_ASSERT((AAAAA));
-        //BOOST_MPL_ASSERT((boost::is_same<mpl::identity<IsLikePointer<intrusive_ptr<Hoge> >::type>::type, int>));
-        BOOST_MPL_ASSERT((IsLikePointer<intrusive_ptr<Hoge> >));
-        BOOST_MPL_ASSERT((IsLikePointer<shared_ptr<Hoge> >));
-
-        //Piyo piyo(10);
-
     }
 
     

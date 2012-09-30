@@ -30,6 +30,10 @@
 #include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
+#include <Urasandesu/CppAnonym/Traits/IsLikePointer.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
 #include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
 #endif
