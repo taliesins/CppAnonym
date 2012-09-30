@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Utilities/AnyPtr.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
 #include <Urasandesu/CppAnonym/Utilities/IsAnyT.hpp>
 #endif

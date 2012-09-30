@@ -460,6 +460,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.hpp" />

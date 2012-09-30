@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
@@ -44,50 +48,50 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    namespace AssignationDistributorDetail {
+    //namespace AssignationDistributorDetail {
 
-        using namespace boost;
+    //    using namespace boost;
 
-        template<class T, class IsPointer, class HasTrivialAssign>
-        struct AssignImpl
-        {
-            static void Assign(void *pDst, void *pSrc)
-            {
-                if (pDst != pSrc)
-                    ::memcpy_s(pDst, sizeof(T), pSrc, sizeof(T));
-            }
-        };
+    //    template<class T, class IsPointer, class HasTrivialAssign>
+    //    struct AssignImpl
+    //    {
+    //        static void Assign(void *pDst, void *pSrc)
+    //        {
+    //            if (pDst != pSrc)
+    //                ::memcpy_s(pDst, sizeof(T), pSrc, sizeof(T));
+    //        }
+    //    };
 
-        template<class T>
-        struct AssignImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
-        {
-            static void Assign(void *pDst, void *pSrc)
-            {
-                if (pDst != pSrc)
-                    *reinterpret_cast<T *>(pDst) = *reinterpret_cast<T *>(pSrc);
-            }
-        };
+    //    template<class T>
+    //    struct AssignImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+    //    {
+    //        static void Assign(void *pDst, void *pSrc)
+    //        {
+    //            if (pDst != pSrc)
+    //                *reinterpret_cast<T *>(pDst) = *reinterpret_cast<T *>(pSrc);
+    //        }
+    //    };
 
-        template<class T>
-        struct AssignationDistributorImpl
-        {
-            typedef typename is_pointer<T>::type is_pointer_type;
-            typedef typename has_trivial_assign<T>::type has_trivial_assign_type;
-            typedef AssignImpl<T, is_pointer_type, has_trivial_assign_type> impl_type;
-            
-            static void Assign(void *pDst, void *pSrc)
-            {
-                impl_type::Assign(pDst, pSrc);
-            }
-        };
+    //    template<class T>
+    //    struct AssignationDistributorImpl
+    //    {
+    //        typedef typename is_pointer<T>::type is_pointer_type;
+    //        typedef typename has_trivial_assign<T>::type has_trivial_assign_type;
+    //        typedef AssignImpl<T, is_pointer_type, has_trivial_assign_type> impl_type;
+    //        
+    //        static void Assign(void *pDst, void *pSrc)
+    //        {
+    //            impl_type::Assign(pDst, pSrc);
+    //        }
+    //    };
 
-    }   // namespace AssignationDistributorDetail {
+    //}   // namespace AssignationDistributorDetail {
 
-    template<class T>
-    struct AssignationDistributor : 
-        AssignationDistributorDetail::AssignationDistributorImpl<T>
-    {
-    };
+    //template<class T>
+    //struct AssignationDistributor : 
+    //    AssignationDistributorDetail::AssignationDistributorImpl<T>
+    //{
+    //};
 
 
 
@@ -225,8 +229,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         { }
 
         template<class T>
-        VariantPtr(T &v) : 
-            base_type(v)
+        VariantPtr(T &p) : 
+            base_type(p)
         { }
     };
 
