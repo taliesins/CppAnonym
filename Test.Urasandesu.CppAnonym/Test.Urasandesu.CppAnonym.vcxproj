@@ -192,9 +192,9 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AutoPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\ConstructionDistributorTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\SemiAutoPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\TempPtrTest.cpp" />
   </ItemGroup>

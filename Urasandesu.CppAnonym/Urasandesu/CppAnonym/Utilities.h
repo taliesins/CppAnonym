@@ -30,6 +30,10 @@
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
@@ -44,10 +48,6 @@
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP

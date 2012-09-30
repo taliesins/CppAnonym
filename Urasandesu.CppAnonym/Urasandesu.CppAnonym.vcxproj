@@ -467,6 +467,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualTo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualToFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.hpp" />

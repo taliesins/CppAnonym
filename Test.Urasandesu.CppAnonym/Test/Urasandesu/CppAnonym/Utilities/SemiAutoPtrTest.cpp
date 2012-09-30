@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
 #include <Urasandesu/CppAnonym/Traits/IsLikePointer.hpp>
 #endif
@@ -40,50 +44,49 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    namespace DestructionDistributorEB4DDetail {
+    //namespace DestructionDistributorDetail {
 
-        using namespace boost;
+    //    using namespace boost;
 
-        template<class T, class IsPointer, class HasTrivialConstructor>
-        struct DestructImpl
-        {
-            static void Destruct(void *p)
-            {
-                // nop
-            }
-        };
+    //    template<class T, class IsPointer, class HasTrivialConstructor>
+    //    struct DestructImpl
+    //    {
+    //        static void Destruct(void *p)
+    //        {
+    //            // nop
+    //        }
+    //    };
 
-        template<class T>
-        struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
-        {
-            static void Destruct(void *p)
-            {
-                T *temp = reinterpret_cast<T *>(p);
-                temp->~T();
-                //reinterpret_cast<T &>(p).~T();
-            }
-        };
+    //    template<class T>
+    //    struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+    //    {
+    //        static void Destruct(void *p)
+    //        {
+    //            T *temp = reinterpret_cast<T *>(p);
+    //            temp->~T();
+    //        }
+    //    };
 
-        template<class T>
-        struct DestructionDistributorEB4DImpl
-        {
-            typedef typename is_pointer<T>::type is_pointer_type;
-            typedef typename has_trivial_destructor<T>::type has_trivial_destructor_type;
-            typedef DestructImpl<T, is_pointer_type, has_trivial_destructor_type> impl_type;
-            
-            static void Destruct(void *p)
-            {
-                impl_type::Destruct(p);
-            }
-        };
+    //    template<class T>
+    //    struct DestructionDistributorImpl
+    //    {
+    //        typedef typename is_pointer<T>::type is_pointer_type;
+    //        typedef typename has_trivial_destructor<T>::type has_trivial_destructor_type;
+    //        typedef DestructImpl<T, is_pointer_type, has_trivial_destructor_type> impl_type;
+    //        
+    //        static void Destruct(void *p)
+    //        {
+    //            impl_type::Destruct(p);
+    //        }
+    //    };
 
-    }   // namespace DestructionDistributorEB4DDetail {
+    //}   // namespace DestructionDistributorDetail {
 
-    template<class T>
-    struct DestructionDistributorEB4D : 
-        DestructionDistributorEB4DDetail::DestructionDistributorEB4DImpl<T>
-    {
-    };
+    //template<class T>
+    //struct DestructionDistributor : 
+    //    DestructionDistributorDetail::DestructionDistributorImpl<T>
+    //{
+    //};
 
 
 
@@ -222,84 +225,84 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest.*
 namespace {
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_01)
-    {
-        using namespace Urasandesu::CppAnonym::Utilities;
-        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
-        
-        BYTE buf[sizeof(Tester *)] = { 0 };
-        ASSERT_EQ(0, Tester::Counter().Value());
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_01)
+    //{
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_01) Tag;
+    //    typedef ConstructionTester<Tag, 0> Tester;
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //    
+    //    BYTE buf[sizeof(Tester *)] = { 0 };
+    //    ASSERT_EQ(0, Tester::Counter().Value());
 
-        DestructionDistributorEB4D<Tester *>::Destruct(buf);
-        ASSERT_EQ(0, Tester::Counter().Value());
-    }
-
-
-
-
-
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_02)
-    {
-        using namespace Urasandesu::CppAnonym::Utilities;
-        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_02) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
-        
-        BYTE buf[sizeof(Tester *)];
-        Tester *p_ = new Tester();
-        ::memcpy_s(buf, sizeof(Tester *), &p_, sizeof(Tester *));
-        ASSERT_EQ(1, Tester::Counter().Value());
-
-        DestructionDistributorEB4D<Tester *>::Destruct(buf);
-        ASSERT_EQ(1, Tester::Counter().Value());
-
-        delete p_;
-        ASSERT_EQ(0, Tester::Counter().Value());
-    }
+    //    DestructionDistributor<Tester *>::Destruct(buf);
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //}
 
 
 
 
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_01)
-    {
-        using namespace boost;
-        using namespace Urasandesu::CppAnonym::Utilities;
-        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
-        
-        BYTE buf[sizeof(shared_ptr<Tester>)] = { 0 };
-        ASSERT_EQ(0, Tester::Counter().Value());
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_02)
+    //{
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_02) Tag;
+    //    typedef ConstructionTester<Tag, 0> Tester;
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //    
+    //    BYTE buf[sizeof(Tester *)];
+    //    Tester *p_ = new Tester();
+    //    ::memcpy_s(buf, sizeof(Tester *), &p_, sizeof(Tester *));
+    //    ASSERT_EQ(1, Tester::Counter().Value());
 
-        DestructionDistributorEB4D<shared_ptr<Tester> >::Destruct(buf);
-        ASSERT_EQ(0, Tester::Counter().Value());
-    }
+    //    DestructionDistributor<Tester *>::Destruct(buf);
+    //    ASSERT_EQ(1, Tester::Counter().Value());
+
+    //    delete p_;
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //}
 
 
 
 
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_02)
-    {
-        using namespace boost;
-        using namespace Urasandesu::CppAnonym::Utilities;
-        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_02) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
-        
-        BYTE buf[sizeof(shared_ptr<Tester>)];
-        shared_ptr<Tester> p_(new Tester());
-        ::memcpy_s(buf, sizeof(shared_ptr<Tester>), &p_, sizeof(shared_ptr<Tester>));
-        ASSERT_EQ(1, Tester::Counter().Value());
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_01)
+    //{
+    //    using namespace boost;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_01) Tag;
+    //    typedef ConstructionTester<Tag, 0> Tester;
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //    
+    //    BYTE buf[sizeof(shared_ptr<Tester>)] = { 0 };
+    //    ASSERT_EQ(0, Tester::Counter().Value());
 
-        DestructionDistributorEB4D<shared_ptr<Tester> >::Destruct(buf);
-        ASSERT_EQ(0, Tester::Counter().Value());
+    //    DestructionDistributor<shared_ptr<Tester> >::Destruct(buf);
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //}
 
-        ::ZeroMemory(&p_, sizeof(shared_ptr<Tester>));  // suppress primary auto destruction
-    }
+
+
+
+
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_02)
+    //{
+    //    using namespace boost;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_02) Tag;
+    //    typedef ConstructionTester<Tag, 0> Tester;
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+    //    
+    //    BYTE buf[sizeof(shared_ptr<Tester>)];
+    //    shared_ptr<Tester> p_(new Tester());
+    //    ::memcpy_s(buf, sizeof(shared_ptr<Tester>), &p_, sizeof(shared_ptr<Tester>));
+    //    ASSERT_EQ(1, Tester::Counter().Value());
+
+    //    DestructionDistributor<shared_ptr<Tester> >::Destruct(buf);
+    //    ASSERT_EQ(0, Tester::Counter().Value());
+
+    //    ::ZeroMemory(&p_, sizeof(shared_ptr<Tester>));  // suppress original auto destruction
+    //}
 
     
     

@@ -134,9 +134,6 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
@@ -244,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\IsLikePointerTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributorTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

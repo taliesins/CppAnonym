@@ -2,52 +2,54 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
-#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTORFWD_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributorFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    template<class T>
-    struct DestructionDistributor
-    {
-        typedef typename boost::call_traits<T>::param_type param_type;
-        typedef typename boost::remove_pointer<typename Traits::RemoveConst<T>::type>::type raw_type;
+    namespace DestructionDistributorDetail {
 
-        static inline void Destruct(param_type obj)
-        {
-            typedef typename boost::is_pointer<T>::type is_pointer;
-            typedef typename boost::has_trivial_destructor<raw_type>::type has_trivial_destructor;
-            
-            DestructImpl<is_pointer, has_trivial_destructor>::Destruct(obj);
-        }
+        using namespace boost;
 
-        template<class IsPointer, class HasTrivialDestructor>
+        template<class T, class IsPointer, class HasTrivialConstructor>
         struct DestructImpl
         {
-            static inline void Destruct(param_type obj)
+            static void Destruct(void *p)
             {
-                // Do nothing. Because T has trivial destructor in this case.
+                // nop
             }
         };
 
-        template<>
-        struct DestructImpl<boost::integral_constant<bool, false>, boost::integral_constant<bool, false>> 
-        { 
-            static inline void Destruct(param_type obj)
+        template<class T>
+        struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+        {
+            static void Destruct(void *p)
             {
-                obj.~raw_type();
+                T *temp = reinterpret_cast<T *>(p);
+                temp->~T();
             }
         };
 
-        template<>
-        struct DestructImpl<boost::integral_constant<bool, true>, boost::integral_constant<bool, false>> 
-        { 
-            static inline void Destruct(param_type obj)
+        template<class T>
+        struct DestructionDistributorImpl
+        {
+            typedef typename is_pointer<T>::type is_pointer_type;
+            typedef typename has_trivial_destructor<T>::type has_trivial_destructor_type;
+            typedef DestructImpl<T, is_pointer_type, has_trivial_destructor_type> impl_type;
+            
+            static void Destruct(void *p)
             {
-                obj->~raw_type();
+                impl_type::Destruct(p);
             }
         };
+
+    }   // namespace DestructionDistributorDetail {
+
+    template<class T>
+    struct DestructionDistributor : 
+        DestructionDistributorDetail::DestructionDistributorImpl<T>
+    {
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
