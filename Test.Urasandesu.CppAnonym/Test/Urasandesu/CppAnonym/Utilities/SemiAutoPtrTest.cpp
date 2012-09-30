@@ -17,14 +17,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     namespace MaxSizeTypeDetail {
 
         namespace mpl = boost::mpl;
+        using namespace boost::mpl;
 
         template<class Types>
         class MaxSizeTypeImpl
         {
-            typedef typename mpl::transform_view<Types, mpl::sizeof_<mpl::_1> > type_size_view;
+            typedef typename transform_view<Types, sizeof_<_1> > type_size_view;
             typedef typename mpl::max_element<type_size_view>::type i;
         public:
-            typedef typename mpl::deref<typename i::base>::type type;
+            typedef typename deref<typename i::base>::type type;
         };
 
     }   // namespace MaxSizeTypeDetail {
@@ -35,59 +36,59 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     {
     };
 
-
-
-    
-    
-    //namespace IsLikePointerDetail {
-
-    //    using namespace boost;
-    //    using namespace boost::mpl;
-
-    //    template<class T>
-    //    class IsLikePointerImpl : 
-    //        public is_pointer<T>
-    //    {
-    //    };
-
-    //    template<class T, template<class> class CandidateSmartPtr>
-    //    class IsLikePointerImpl<CandidateSmartPtr<T> >
-    //    {
-    //        CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(IndirectionOperator, operator*, T &, () const); 
-    //        CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(MemberAccessOperator, operator->, T *, () const);
-    //    public:
-    //        typedef typename and_<
-    //            CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, CandidateSmartPtr<T>), 
-    //            CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, CandidateSmartPtr<T>), 
-    //            not_<
-    //                or_<
-    //                    has_trivial_constructor<CandidateSmartPtr<T> >,
-    //                    has_trivial_copy<CandidateSmartPtr<T> >, 
-    //                    has_trivial_assign<CandidateSmartPtr<T> >, 
-    //                    has_trivial_destructor<CandidateSmartPtr<T> >
-    //                >
-    //            >
-    //        >::type type;
-    //    };
-
-    //}   // namespace IsLikePointerDetail {
-
-    //template<class T>
-    //struct IsLikePointer : 
-    //    IsLikePointerDetail::IsLikePointerImpl<T>
-    //{
-    //};
-
-    //template<class T, template<class> class CandidateSmartPtr>
-    //struct IsLikePointer<CandidateSmartPtr<T> > : 
-    //    IsLikePointerDetail::IsLikePointerImpl<CandidateSmartPtr<T> >
-    //{
-    //};
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
+    namespace DestructionDistributorEB4DDetail {
+
+        using namespace boost;
+
+        template<class T, class IsPointer, class HasTrivialConstructor>
+        struct DestructImpl
+        {
+            static void Destruct(void *p)
+            {
+                // nop
+            }
+        };
+
+        template<class T>
+        struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+        {
+            static void Destruct(void *p)
+            {
+                T *temp = reinterpret_cast<T *>(p);
+                temp->~T();
+                //reinterpret_cast<T &>(p).~T();
+            }
+        };
+
+        template<class T>
+        struct DestructionDistributorEB4DImpl
+        {
+            typedef typename is_pointer<T>::type is_pointer_type;
+            typedef typename has_trivial_destructor<T>::type has_trivial_destructor_type;
+            typedef DestructImpl<T, is_pointer_type, has_trivial_destructor_type> impl_type;
+            
+            static void Destruct(void *p)
+            {
+                impl_type::Destruct(p);
+            }
+        };
+
+    }   // namespace DestructionDistributorEB4DDetail {
+
+    template<class T>
+    struct DestructionDistributorEB4D : 
+        DestructionDistributorEB4DDetail::DestructionDistributorEB4DImpl<T>
+    {
+    };
+
+
+
+
+    
     namespace VariantPtrDetail {
 
         namespace mpl = boost::mpl;
@@ -221,6 +222,89 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest.*
 namespace {
 
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_01)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE buf[sizeof(Tester *)] = { 0 };
+        ASSERT_EQ(0, Tester::Counter().Value());
+
+        DestructionDistributorEB4D<Tester *>::Destruct(buf);
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_02)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, RawPointerTest_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE buf[sizeof(Tester *)];
+        Tester *p_ = new Tester();
+        ::memcpy_s(buf, sizeof(Tester *), &p_, sizeof(Tester *));
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        DestructionDistributorEB4D<Tester *>::Destruct(buf);
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        delete p_;
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_01)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE buf[sizeof(shared_ptr<Tester>)] = { 0 };
+        ASSERT_EQ(0, Tester::Counter().Value());
+
+        DestructionDistributorEB4D<shared_ptr<Tester> >::Destruct(buf);
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_02)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorEB4DTest, SmartPointerTest_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE buf[sizeof(shared_ptr<Tester>)];
+        shared_ptr<Tester> p_(new Tester());
+        ::memcpy_s(buf, sizeof(shared_ptr<Tester>), &p_, sizeof(shared_ptr<Tester>));
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        DestructionDistributorEB4D<shared_ptr<Tester> >::Destruct(buf);
+        ASSERT_EQ(0, Tester::Counter().Value());
+
+        ::ZeroMemory(&p_, sizeof(shared_ptr<Tester>));  // suppress primary auto destruction
+    }
+
+    
+    
+    
+    
     namespace _AE9B0ABB {
 
         namespace mpl = boost::mpl;
@@ -247,7 +331,7 @@ namespace {
     
     }   // namespace _AE9B0ABB {
 
-    TEST(Urasandesu_CppAnonym_Utilities_VariantPtrTest, Test_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_VariantPtrTest, Test_01)
     {
         namespace mpl = boost::mpl;
         using namespace boost;
@@ -322,7 +406,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_01)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
 
@@ -334,7 +418,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_02)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
 
@@ -368,7 +452,7 @@ namespace {
 
     }   // namespace _DE3EFDB5 {
 
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_03)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_03)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -388,7 +472,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_04)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_04)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -413,7 +497,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_05)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_05)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -433,7 +517,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_06)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_06)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -455,7 +539,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_07)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_07)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -482,7 +566,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_08)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_08)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _DE3EFDB5;
@@ -567,7 +651,7 @@ namespace {
     
     }   // namespace _B444C480 {
 
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_09)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_09)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _B444C480;
@@ -618,7 +702,7 @@ namespace {
 
     }   // namespace _B444C480 {
 
-    TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_10)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest, Test_10)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Utilities;
