@@ -50,6 +50,10 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/MaxSizeType.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
 #include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
 #endif

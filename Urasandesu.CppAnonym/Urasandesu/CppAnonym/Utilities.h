@@ -74,4 +74,8 @@
 #include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/VariantPtr.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

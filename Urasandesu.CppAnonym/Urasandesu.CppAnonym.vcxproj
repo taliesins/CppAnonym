@@ -453,6 +453,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImplFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImpl.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
@@ -490,6 +492,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc" />

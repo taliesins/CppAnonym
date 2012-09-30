@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/VariantPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
 #include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
 #endif
@@ -22,169 +26,158 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    namespace MaxSizeTypeDetail {
+    //namespace MaxSizeTypeDetail {
 
-        namespace mpl = boost::mpl;
-        using namespace boost::mpl;
+    //    namespace mpl = boost::mpl;
+    //    using namespace boost::mpl;
 
-        template<class Types>
-        class MaxSizeTypeImpl
-        {
-            typedef typename transform_view<Types, sizeof_<_1> > type_size_view;
-            typedef typename mpl::max_element<type_size_view>::type i;
-        public:
-            typedef typename deref<typename i::base>::type type;
-        };
+    //    template<class Types>
+    //    class MaxSizeTypeImpl
+    //    {
+    //        typedef typename transform_view<Types, sizeof_<_1> > type_size_view;
+    //        typedef typename mpl::max_element<type_size_view>::type i;
+    //    public:
+    //        typedef typename deref<typename i::base>::type type;
+    //    };
 
-    }   // namespace MaxSizeTypeDetail {
+    //}   // namespace MaxSizeTypeDetail {
 
-    template<class Types>
-    struct MaxSizeType : 
-        MaxSizeTypeDetail::MaxSizeTypeImpl<Types>
-    {
-    };
+    //template<class Types>
+    //struct MaxSizeType : 
+    //    MaxSizeTypeDetail::MaxSizeTypeImpl<Types>
+    //{
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    namespace VariantPtrDetail {
-
-        namespace mpl = boost::mpl;
-        using namespace boost;
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Traits;
-
-        template<class Types>
-        class VariantPtrImpl : 
-            noncopyable
-        {
-        public:
-            typedef fold<Types, true_, and_<_1, IsLikePointer<_2> > > all_types_are_like_pointer;
-            BOOST_MPL_ASSERT((typename all_types_are_like_pointer::type));
-
-            typedef typename MaxSizeType<Types>::type max_size_type;
-
-#ifdef _DEBUG
-            VariantPtrImpl() : 
-                m_which(-1)
-#else
-            VariantPtrImpl()
-#endif
-            {
-                ::ZeroMemory(m_storage, sizeof(max_size_type));
-            }
-
-            template<class T>
-            VariantPtrImpl(T &p)
-            {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
-                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
-#ifdef _DEBUG
-                m_which = I::pos::value;
-#else
-#endif
-                ConstructionDistributor<T>::Construct<T &>(m_storage, p);
-            }
-
-            template<class T>
-            T &Get()
-            {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
-                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
-#ifdef _DEBUG
-                _ASSERTE(m_which == I::pos::value);
-#else
-#endif
-                return reinterpret_cast<T &>(m_storage);
-            }
-
-            template<class T>
-            void Clear()
-            {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
-                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
-#ifdef _DEBUG
-                _ASSERTE(m_which == -1 || m_which == I::pos::value);
-                m_which = -1;
-#else
-#endif
-                DestructionDistributor<T>::Destruct(m_storage);
-                ::ZeroMemory(m_storage, sizeof(max_size_type));
-            }
-
-            template<class T>
-            void AssignTo(VariantPtrImpl<Types> &other)
-            {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
-                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
-#ifdef _DEBUG
-                _ASSERTE(m_which == I::pos::value);
-#else
-#endif
-                // 指定された T が Types に含まれるかの検証が必要。
-                // 指定された T の位置が現在処理中の T と等しいかの検証を行う処理が必要。
-                // !has_trivial_assign であれば operator= 使う処理が必要。
-                    // !has_trivial_destructor であれば destructor 呼ぶって処理が必要。
-                    // !has_trivial_copy であれば copy constructor 呼ぶって処理が必要。
-                if (this != &other)
-                {
-                    AssignationDistributor<T>::Assign(other.m_storage, m_storage);
-                    //reinterpret_cast<T &>(other.m_storage) = reinterpret_cast<T &>(m_storage);
-                }
-                //new(other.m_storage)T(reinterpret_cast<T &>(m_storage));
-                //other.Clear<T>();
-                //other.Get<T>() = Get<T>();
-            }
-
-            template<class T>
-            T Detach()
-            {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
-                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
-#ifdef _DEBUG
-                _ASSERTE(m_which == I::pos::value);
-                m_which = -1;
-#else
-#endif
-                T p;
-                ::memcpy_s(&p, sizeof(T), m_storage, sizeof(T));
-                DestructionDistributor<T>::Destruct(m_storage);
-                ::ZeroMemory(m_storage, sizeof(max_size_type));
-                return p;
-            }
-
-        private:
-            BYTE m_storage[sizeof(max_size_type)];
-#ifdef _DEBUG
-            INT m_which;
-#else
-#endif
-        };
-
-    }   // namespace VariantPtrDetail {
-
-    template<class Types>
-    struct VariantPtr : 
-        VariantPtrDetail::VariantPtrImpl<Types>
-    {
-        typedef VariantPtr<Types> this_type;
-        typedef VariantPtrDetail::VariantPtrImpl<Types> base_type;
-
-        VariantPtr() : 
-            base_type()
-        { }
-
-        template<class T>
-        VariantPtr(T &p) : 
-            base_type(p)
-        { }
-    };
+//    namespace VariantPtrDetail {
+//
+//        namespace mpl = boost::mpl;
+//        using namespace boost;
+//        using namespace boost::mpl;
+//        using namespace Urasandesu::CppAnonym::Traits;
+//
+//        template<class Types>
+//        class VariantPtrImpl : 
+//            noncopyable
+//        {
+//        public:
+//            typedef fold<Types, true_, and_<_1, IsLikePointer<_2> > > all_types_are_like_pointer;
+//            BOOST_MPL_ASSERT((typename all_types_are_like_pointer::type));
+//
+//            typedef typename MaxSizeType<Types>::type max_size_type;
+//
+//#ifdef _DEBUG
+//            VariantPtrImpl() : 
+//                m_which(-1)
+//#else
+//            VariantPtrImpl()
+//#endif
+//            {
+//                ::ZeroMemory(m_storage, sizeof(max_size_type));
+//            }
+//
+//            template<class T>
+//            VariantPtrImpl(T &p)
+//            {
+//                typedef typename mpl::find<Types, T>::type I;
+//                typedef typename mpl::end<Types>::type IEnd;
+//                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+//#ifdef _DEBUG
+//                m_which = I::pos::value;
+//#else
+//#endif
+//                ConstructionDistributor<T>::Construct<T &>(m_storage, p);
+//            }
+//
+//            template<class T>
+//            T &Get()
+//            {
+//                typedef typename mpl::find<Types, T>::type I;
+//                typedef typename mpl::end<Types>::type IEnd;
+//                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+//#ifdef _DEBUG
+//                _ASSERTE(m_which == I::pos::value);
+//#else
+//#endif
+//                return reinterpret_cast<T &>(m_storage);
+//            }
+//
+//            template<class T>
+//            void Clear()
+//            {
+//                typedef typename mpl::find<Types, T>::type I;
+//                typedef typename mpl::end<Types>::type IEnd;
+//                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+//#ifdef _DEBUG
+//                _ASSERTE(m_which == -1 || m_which == I::pos::value);
+//                m_which = -1;
+//#else
+//#endif
+//                DestructionDistributor<T>::Destruct(m_storage);
+//                ::ZeroMemory(m_storage, sizeof(max_size_type));
+//            }
+//
+//            template<class T>
+//            void AssignTo(VariantPtrImpl<Types> &other)
+//            {
+//                typedef typename mpl::find<Types, T>::type I;
+//                typedef typename mpl::end<Types>::type IEnd;
+//                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+//#ifdef _DEBUG
+//                _ASSERTE(m_which == I::pos::value);
+//#else
+//#endif
+//                if (this != &other)
+//                    AssignationDistributor<T>::Assign(other.m_storage, m_storage);
+//            }
+//
+//            template<class T>
+//            T Detach()
+//            {
+//                typedef typename mpl::find<Types, T>::type I;
+//                typedef typename mpl::end<Types>::type IEnd;
+//                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+//#ifdef _DEBUG
+//                _ASSERTE(m_which == I::pos::value);
+//                m_which = -1;
+//#else
+//#endif
+//                T p;
+//                ::memcpy_s(&p, sizeof(T), m_storage, sizeof(T));
+//                DestructionDistributor<T>::Destruct(m_storage);
+//                ::ZeroMemory(m_storage, sizeof(max_size_type));
+//                return p;
+//            }
+//
+//        private:
+//            BYTE m_storage[sizeof(max_size_type)];
+//#ifdef _DEBUG
+//            INT m_which;
+//#else
+//#endif
+//        };
+//
+//    }   // namespace VariantPtrDetail {
+//
+//    template<class Types>
+//    struct VariantPtr : 
+//        VariantPtrDetail::VariantPtrImpl<Types>
+//    {
+//        typedef VariantPtr<Types> this_type;
+//        typedef VariantPtrDetail::VariantPtrImpl<Types> base_type;
+//
+//        VariantPtr() : 
+//            base_type()
+//        { }
+//
+//        template<class T>
+//        VariantPtr(T &p) : 
+//            base_type(p)
+//        { }
+//    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
