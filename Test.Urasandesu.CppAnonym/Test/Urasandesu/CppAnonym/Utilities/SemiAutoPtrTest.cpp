@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
 #include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
 #endif
@@ -31,67 +35,67 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 
 
-    namespace ConstructionDistributorDetail {
+    //namespace ConstructionDistributorDetail {
 
-        using namespace boost;
+    //    using namespace boost;
 
-        template<class T, class IsPointer, class HasTrivialConstructor>
-        struct ConstructImpl
-        {
-            static void Construct(void *p)
-            {
-                ::ZeroMemory(p, sizeof(T));
-            }
-            
-            template<class A1>
-            static void Construct(void *p, A1 arg1)
-            {
-                BOOST_MPL_ASSERT((is_same<T, A1>));
-                ::memcpy_s(p, sizeof(T), &arg1, sizeof(T));
-            }
-        };
+    //    template<class T, class IsPointer, class HasTrivialConstructor>
+    //    struct ConstructImpl
+    //    {
+    //        static void Construct(void *p)
+    //        {
+    //            ::ZeroMemory(p, sizeof(T));
+    //        }
+    //        
+    //        template<class A1>
+    //        static void Construct(void *p, A1 arg1)
+    //        {
+    //            BOOST_MPL_ASSERT((is_same<T, A1>));
+    //            ::memcpy_s(p, sizeof(T), &arg1, sizeof(T));
+    //        }
+    //    };
 
-        template<class T>
-        struct ConstructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
-        {
-            static void Construct(void *p)
-            {
-                new(p)T();
-            }
+    //    template<class T>
+    //    struct ConstructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+    //    {
+    //        static void Construct(void *p)
+    //        {
+    //            new(p)T();
+    //        }
 
-            template<class A1>
-            static void Construct(void *p, A1 arg1)
-            {
-                new(p)T(arg1);
-            }
-        };
+    //        template<class A1>
+    //        static void Construct(void *p, A1 arg1)
+    //        {
+    //            new(p)T(arg1);
+    //        }
+    //    };
 
-        template<class T>
-        struct ConstructionDistributorImpl
-        {
-            typedef typename is_pointer<T>::type is_pointer_type;
-            typedef typename has_trivial_constructor<T>::type has_trivial_constructor_type;
-            typedef ConstructImpl<T, is_pointer_type, has_trivial_constructor_type> impl_type;
-            
-            static void Construct(void *p)
-            {
-                impl_type::Construct(p);
-            }
-            
-            template<class A1>
-            static void Construct(void *p, A1 arg1)
-            {
-                impl_type::Construct<A1>(p, arg1);
-            }
-        };
+    //    template<class T>
+    //    struct ConstructionDistributorImpl
+    //    {
+    //        typedef typename is_pointer<T>::type is_pointer_type;
+    //        typedef typename has_trivial_constructor<T>::type has_trivial_constructor_type;
+    //        typedef ConstructImpl<T, is_pointer_type, has_trivial_constructor_type> impl_type;
+    //        
+    //        static void Construct(void *p)
+    //        {
+    //            impl_type::Construct(p);
+    //        }
+    //        
+    //        template<class A1>
+    //        static void Construct(void *p, A1 arg1)
+    //        {
+    //            impl_type::Construct<A1>(p, arg1);
+    //        }
+    //    };
 
-    }   // namespace ConstructionDistributorDetail {
+    //}   // namespace ConstructionDistributorDetail {
 
-    template<class T>
-    struct ConstructionDistributor : 
-        ConstructionDistributorDetail::ConstructionDistributorImpl<T>
-    {
-    };
+    //template<class T>
+    //struct ConstructionDistributor : 
+    //    ConstructionDistributorDetail::ConstructionDistributorImpl<T>
+    //{
+    //};
 
 
 
@@ -263,73 +267,77 @@ namespace {
     namespace _9550794F {
     }   // namespace _9550794F {
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01)
-    {
-        using namespace Urasandesu::CppAnonym::Traits;
-        
-        BYTE buf[sizeof(int *)];
+    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01)
+    //{
+    //    using namespace Urasandesu::CppAnonym::Traits;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    
+    //    BYTE buf[sizeof(int *)];
 
-        ConstructionDistributor<int *>::Construct(buf);
+    //    ConstructionDistributor<int *>::Construct(buf);
 
-        int *&p = reinterpret_cast<int *&>(buf);
-        ASSERT_FALSE(p);
-    }
-
-
-
-
-
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02)
-    {
-        using namespace Urasandesu::CppAnonym::Traits;
-        
-        BYTE buf[sizeof(int *)];
-
-        ConstructionDistributor<int *>::Construct(buf, new int(10));
-
-        int *&p = reinterpret_cast<int *&>(buf);
-        ASSERT_TRUE(p != NULL);
-        ASSERT_EQ(10, *p);
-
-        delete p;
-    }
+    //    int *&p = reinterpret_cast<int *&>(buf);
+    //    ASSERT_FALSE(p);
+    //}
 
 
 
 
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_01)
-    {
-        using namespace boost;
-        using namespace Urasandesu::CppAnonym::Traits;
-        
-        BYTE buf[sizeof(shared_ptr<int>)];
+    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02)
+    //{
+    //    using namespace Urasandesu::CppAnonym::Traits;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    
+    //    BYTE buf[sizeof(int *)];
 
-        ConstructionDistributor<shared_ptr<int> >::Construct(buf);
+    //    ConstructionDistributor<int *>::Construct(buf, new int(10));
 
-        shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
-        ASSERT_FALSE(p);
-    }
+    //    int *&p = reinterpret_cast<int *&>(buf);
+    //    ASSERT_TRUE(p != NULL);
+    //    ASSERT_EQ(10, *p);
+
+    //    delete p;
+    //}
 
 
 
 
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_02)
-    {
-        using namespace boost;
-        using namespace Urasandesu::CppAnonym::Traits;
-        
-        BYTE buf[sizeof(shared_ptr<int>)];
+    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_01)
+    //{
+    //    using namespace boost;
+    //    using namespace Urasandesu::CppAnonym::Traits;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    
+    //    BYTE buf[sizeof(shared_ptr<int>)];
 
-        ConstructionDistributor<shared_ptr<int> >::Construct(buf, new int(10));
+    //    ConstructionDistributor<shared_ptr<int> >::Construct(buf);
 
-        shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
-        ASSERT_TRUE(p);
-        ASSERT_EQ(10, *p);
+    //    shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
+    //    ASSERT_FALSE(p);
+    //}
 
-        p.~shared_ptr<int>();
-    }
+
+
+
+
+    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_02)
+    //{
+    //    using namespace boost;
+    //    using namespace Urasandesu::CppAnonym::Traits;
+    //    using namespace Urasandesu::CppAnonym::Utilities;
+    //    
+    //    BYTE buf[sizeof(shared_ptr<int>)];
+
+    //    ConstructionDistributor<shared_ptr<int> >::Construct(buf, new int(10));
+
+    //    shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
+    //    ASSERT_TRUE(p);
+    //    ASSERT_EQ(10, *p);
+
+    //    p.~shared_ptr<int>();
+    //}
     
     
     

@@ -239,5 +239,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\SmartHeapProviderTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\ConstructionDistributorTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

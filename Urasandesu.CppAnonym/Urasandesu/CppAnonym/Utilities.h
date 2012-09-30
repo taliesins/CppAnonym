@@ -18,6 +18,10 @@
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
