@@ -245,5 +245,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributorTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AssignationDistributorTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
