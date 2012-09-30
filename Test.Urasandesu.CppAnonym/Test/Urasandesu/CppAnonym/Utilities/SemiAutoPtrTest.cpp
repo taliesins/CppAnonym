@@ -33,116 +33,50 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 
 
-
-
-    //namespace ConstructionDistributorDetail {
-
-    //    using namespace boost;
-
-    //    template<class T, class IsPointer, class HasTrivialConstructor>
-    //    struct ConstructImpl
-    //    {
-    //        static void Construct(void *p)
-    //        {
-    //            ::ZeroMemory(p, sizeof(T));
-    //        }
-    //        
-    //        template<class A1>
-    //        static void Construct(void *p, A1 arg1)
-    //        {
-    //            BOOST_MPL_ASSERT((is_same<T, A1>));
-    //            ::memcpy_s(p, sizeof(T), &arg1, sizeof(T));
-    //        }
-    //    };
-
-    //    template<class T>
-    //    struct ConstructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
-    //    {
-    //        static void Construct(void *p)
-    //        {
-    //            new(p)T();
-    //        }
-
-    //        template<class A1>
-    //        static void Construct(void *p, A1 arg1)
-    //        {
-    //            new(p)T(arg1);
-    //        }
-    //    };
-
-    //    template<class T>
-    //    struct ConstructionDistributorImpl
-    //    {
-    //        typedef typename is_pointer<T>::type is_pointer_type;
-    //        typedef typename has_trivial_constructor<T>::type has_trivial_constructor_type;
-    //        typedef ConstructImpl<T, is_pointer_type, has_trivial_constructor_type> impl_type;
-    //        
-    //        static void Construct(void *p)
-    //        {
-    //            impl_type::Construct(p);
-    //        }
-    //        
-    //        template<class A1>
-    //        static void Construct(void *p, A1 arg1)
-    //        {
-    //            impl_type::Construct<A1>(p, arg1);
-    //        }
-    //    };
-
-    //}   // namespace ConstructionDistributorDetail {
-
-    //template<class T>
-    //struct ConstructionDistributor : 
-    //    ConstructionDistributorDetail::ConstructionDistributorImpl<T>
-    //{
-    //};
-
-
-
     
     
-    namespace IsSmartPtrDetail {
+    namespace IsLikePointerDetail {
 
-        namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
 
         template<class T>
-        class IsSmartPtrImpl : 
-            public mpl::false_
+        class IsLikePointerImpl : 
+            public is_pointer<T>
         {
         };
 
-        template<class T, template<class> class Ptr>
-        class IsSmartPtrImpl<Ptr<T> >
+        template<class T, template<class> class CandidateSmartPtr>
+        class IsLikePointerImpl<CandidateSmartPtr<T> >
         {
             CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(IndirectionOperator, operator*, T &, () const); 
             CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(MemberAccessOperator, operator->, T *, () const);
         public:
-            typedef typename mpl::and_<
-                CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, Ptr<T>), 
-                CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, Ptr<T>), 
-                mpl::not_<
-                    mpl::or_<
-                        has_trivial_constructor<Ptr<T> >,
-                        has_trivial_copy<Ptr<T> >, 
-                        has_trivial_assign<Ptr<T> >, 
-                        has_trivial_destructor<Ptr<T> >
+            typedef typename and_<
+                CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, CandidateSmartPtr<T>), 
+                CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, CandidateSmartPtr<T>), 
+                not_<
+                    or_<
+                        has_trivial_constructor<CandidateSmartPtr<T> >,
+                        has_trivial_copy<CandidateSmartPtr<T> >, 
+                        has_trivial_assign<CandidateSmartPtr<T> >, 
+                        has_trivial_destructor<CandidateSmartPtr<T> >
                     >
                 >
             >::type type;
         };
 
-    }   // namespace IsSmartPtrDetail {
+    }   // namespace IsLikePointerDetail {
 
     template<class T>
-    struct IsSmartPtr : 
-        IsSmartPtrDetail::IsSmartPtrImpl<T>
+    struct IsLikePointer : 
+        IsLikePointerDetail::IsLikePointerImpl<T>
     {
     };
 
-    template<class T, template<class> class Ptr>
-    struct IsSmartPtr<Ptr<T> > : 
-        IsSmartPtrDetail::IsSmartPtrImpl<Ptr<T> >
+    template<class T, template<class> class CandidateSmartPtr>
+    struct IsLikePointer<CandidateSmartPtr<T> > : 
+        IsLikePointerDetail::IsLikePointerImpl<CandidateSmartPtr<T> >
     {
     };
 
@@ -152,7 +86,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace VariantPtrDetail {
 
+        namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
         template<class Types>
@@ -160,9 +96,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             noncopyable
         {
         public:
+            typedef fold<Types, true_, and_<_1, IsLikePointer<_2> > > all_types_are_like_pointer;
+            BOOST_MPL_ASSERT((typename all_types_are_like_pointer::type));
+
             typedef typename MaxSizeType<Types>::type max_size_type;
 
+#ifdef _DEBUG
+            VariantPtrImpl() : 
+                m_which(-1)
+#else
             VariantPtrImpl()
+#endif
             {
                 ::ZeroMemory(m_storage, sizeof(max_size_type));
             }
@@ -170,21 +114,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class T>
             VariantPtrImpl(T &p)
             {
-//typedef vector<char,int,unsigned,long,unsigned long> types;
-//typedef find<types,unsigned>::type iter;
-//
-//BOOST_MPL_ASSERT(( is_same< deref<iter>::type, unsigned > ));
-//BOOST_MPL_ASSERT_RELATION( iter::pos::value, ==, 2 );
-                // 指定された T が Types に含まれるかの検証が必要。
-                // 指定された T の位置を保持しておく処理が必要。
+                typedef typename mpl::find<Types, T>::type I;
+                typedef typename mpl::end<Types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                m_which = I::pos::value;
+#else
+#endif
                 ConstructionDistributor<T>::Construct<T &>(m_storage, p);
             }
 
             template<class T>
             T &Get()
             {
-                // 指定された T が Types に含まれるかの検証が必要。
-                // 指定された T の位置が現在処理中の T と等しいかの検証を行う処理が必要。
+                typedef typename mpl::find<Types, T>::type I;
+                typedef typename mpl::end<Types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                _ASSERTE(m_which == I::pos::value);
+#else
+#endif
                 return reinterpret_cast<T &>(m_storage);
             }
 
@@ -234,6 +183,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         private:
             BYTE m_storage[sizeof(max_size_type)];
+#ifdef _DEBUG
+            INT m_which;
+#else
+#endif
         };
 
     }   // namespace VariantPtrDetail {
@@ -263,86 +216,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest.*
 namespace {
-    
-    namespace _9550794F {
-    }   // namespace _9550794F {
 
-    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01)
-    //{
-    //    using namespace Urasandesu::CppAnonym::Traits;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    
-    //    BYTE buf[sizeof(int *)];
-
-    //    ConstructionDistributor<int *>::Construct(buf);
-
-    //    int *&p = reinterpret_cast<int *&>(buf);
-    //    ASSERT_FALSE(p);
-    //}
-
-
-
-
-
-    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02)
-    //{
-    //    using namespace Urasandesu::CppAnonym::Traits;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    
-    //    BYTE buf[sizeof(int *)];
-
-    //    ConstructionDistributor<int *>::Construct(buf, new int(10));
-
-    //    int *&p = reinterpret_cast<int *&>(buf);
-    //    ASSERT_TRUE(p != NULL);
-    //    ASSERT_EQ(10, *p);
-
-    //    delete p;
-    //}
-
-
-
-
-
-    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_01)
-    //{
-    //    using namespace boost;
-    //    using namespace Urasandesu::CppAnonym::Traits;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    
-    //    BYTE buf[sizeof(shared_ptr<int>)];
-
-    //    ConstructionDistributor<shared_ptr<int> >::Construct(buf);
-
-    //    shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
-    //    ASSERT_FALSE(p);
-    //}
-
-
-
-
-
-    //TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_02)
-    //{
-    //    using namespace boost;
-    //    using namespace Urasandesu::CppAnonym::Traits;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    
-    //    BYTE buf[sizeof(shared_ptr<int>)];
-
-    //    ConstructionDistributor<shared_ptr<int> >::Construct(buf, new int(10));
-
-    //    shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
-    //    ASSERT_TRUE(p);
-    //    ASSERT_EQ(10, *p);
-
-    //    p.~shared_ptr<int>();
-    //}
-    
-    
-    
-    
-    
     namespace _AE9B0ABB {
 
         namespace mpl = boost::mpl;
@@ -366,69 +240,7 @@ namespace {
             
             LONG m_useCount;
         };
-
-        //template<class Types>
-        //class MaxSizeType
-        //{
-        //    typedef typename mpl::transform_view<Types, mpl::sizeof_<mpl::_1> > type_size_view;
-        //    typedef typename mpl::max_element<type_size_view>::type i;
-        //public:
-        //    typedef typename mpl::deref<typename i::base>::type type;
-        //};
-
-        //template<class T>
-        //class IsSmartPtr : 
-        //    public mpl::false_
-        //{
-        //};
-
-        //template<class T, template<class> class Ptr>
-        //class IsSmartPtr<Ptr<T> >
-        //{
-        //    CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(IndirectionOperator, operator*, T &, () const); 
-        //    CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(MemberAccessOperator, operator->, T *, () const);
-        //public:
-        //    typedef typename mpl::and_<
-        //        CPP_ANONYM_HAS_MEMBER_FUNCTION(IndirectionOperator, Ptr<T>), 
-        //        CPP_ANONYM_HAS_MEMBER_FUNCTION(MemberAccessOperator, Ptr<T>), 
-        //        mpl::not_<
-        //            mpl::or_<
-        //                has_trivial_constructor<Ptr<T> >,
-        //                has_trivial_copy<Ptr<T> >, 
-        //                has_trivial_assign<Ptr<T> >, 
-        //                has_trivial_destructor<Ptr<T> >
-        //            >
-        //        >
-        //    >::type type;
-        //};
-
-        //template<class Types>
-        //struct VariantPtr
-        //{
-        //    typedef typename MaxSizeType<Types>::type max_size_type;
-
-        //    VariantPtr()
-        //    {
-        //        ::ZeroMemory(m_storage, sizeof(max_size_type));
-        //    }
-
-        //    template<class T>
-        //    VariantPtr(T &v)
-        //    {
-        //        ::ZeroMemory(m_storage, sizeof(max_size_type));
-        //        reinterpret_cast<T &>(m_storage) = v;
-        //    }
-
-        //    template<class T>
-        //    T &Get()
-        //    {
-        //        return reinterpret_cast<T &>(m_storage);
-        //    }
-
-        //    BYTE m_storage[sizeof(max_size_type)];
-        //};
-            
-
+    
     }   // namespace _AE9B0ABB {
 
     TEST(Urasandesu_CppAnonym_Utilities_VariantPtrTest, Test_01)
@@ -464,7 +276,11 @@ namespace {
         {
             typedef VariantPtr<mpl::vector<Hoge *, intrusive_ptr<Hoge> > > Var;
             Var v;
+#ifdef _DEBUG
+            BOOST_MPL_ASSERT_RELATION(sizeof(Var), ==, sizeof(intrusive_ptr<Hoge>) + sizeof(INT));
+#else
             BOOST_MPL_ASSERT_RELATION(sizeof(Var), ==, sizeof(intrusive_ptr<Hoge>));
+#endif
         }
         
         {
@@ -491,17 +307,22 @@ namespace {
                 v1.Clear<intrusive_ptr<Hoge> >();
                 ASSERT_EQ(1, p->m_useCount);
             }
+
+            //{
+            //    Hoge *&p = v1.Get<Hoge *>();
+            //}
         }
 
-        BOOST_MPL_ASSERT((mpl::not_<IsSmartPtr<int> >));
+        BOOST_MPL_ASSERT((mpl::not_<IsLikePointer<int> >));
+        BOOST_MPL_ASSERT((IsLikePointer<int *>));
         typedef Hoge *(intrusive_ptr<Hoge>::*PointerMemberAccessor)() const;
         //typedef Identify<Hoge *(intrusive_ptr<Hoge>::*)() const, &intrusive_ptr<Hoge>::operator-> > AAAA;
         //PointerMemberAccessor pma = &intrusive_ptr<Hoge>::operator->;
         //typedef CPP_ANONYM_HAS_MEMBER_FUNCTION(PointerMemberAccessorS, intrusive_ptr<Hoge>)::type AAAAA;
         //BOOST_MPL_ASSERT((AAAAA));
-        //BOOST_MPL_ASSERT((boost::is_same<mpl::identity<IsSmartPtr<intrusive_ptr<Hoge> >::type>::type, int>));
-        BOOST_MPL_ASSERT((IsSmartPtr<intrusive_ptr<Hoge> >));
-        BOOST_MPL_ASSERT((IsSmartPtr<shared_ptr<Hoge> >));
+        //BOOST_MPL_ASSERT((boost::is_same<mpl::identity<IsLikePointer<intrusive_ptr<Hoge> >::type>::type, int>));
+        BOOST_MPL_ASSERT((IsLikePointer<intrusive_ptr<Hoge> >));
+        BOOST_MPL_ASSERT((IsLikePointer<shared_ptr<Hoge> >));
 
         //Piyo piyo(10);
 
