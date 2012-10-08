@@ -95,6 +95,15 @@
     <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming\ApiHolders">
       <UniqueIdentifier>{9f4dc930-e7fe-4073-a779-f6a0653c3e4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\ApiHolders">
+      <UniqueIdentifier>{02b60fa1-6bb0-48e1-9125-7cc33416e7b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\ApiHolders">
+      <UniqueIdentifier>{4f082b22-bf2f-46be-a850-148ae812a158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\Interfaces">
+      <UniqueIdentifier>{89c2cc7b-9813-4314-beb3-9a01f00a8cde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -177,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\ApiHolders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1175,6 +1187,24 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Interfaces\CppAnonymStorageApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Interfaces\CppAnonymStorageLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

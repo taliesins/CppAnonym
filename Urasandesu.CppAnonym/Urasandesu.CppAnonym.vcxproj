@@ -137,6 +137,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymException.cpp" />
@@ -168,6 +169,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UrasandesuCppAnonym_i.h" />
     <ClInclude Include="Urasandesu\CppAnonym.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
@@ -228,6 +233,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\IDisposable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IDisposableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Interfaces\CppAnonymStorageApiHolderLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Interfaces\CppAnonymStorageLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyMetadataApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyMetadataApiHolderFwd.h" />

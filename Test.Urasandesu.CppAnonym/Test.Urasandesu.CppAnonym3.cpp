@@ -6,25 +6,25 @@
 // foward declarations
 namespace Urasandesu { namespace CppAnonym { namespace Interfaces {
 
-    struct CppAnonymStorageApiHolderLabel { };
-    struct CppAnonymStorageLabel { };
+    //struct CppAnonymStorageApiHolderLabel { };
+    //struct CppAnonymStorageLabel { };
 
 }}} // namespace Urasandesu { namespace CppAnonym { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
 
-    struct DefaultCppAnonymStorageApiHolder;
+    //struct DefaultCppAnonymStorageApiHolder;
 
 }}} // namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym {
 
-    template<
-        class CppAnonymStorageApiHolder = ApiHolders::DefaultCppAnonymStorageApiHolder
-    >    
-    class BaseCppAnonymStorage;
+    //template<
+    //    class CppAnonymStorageApiHolder = ApiHolders::DefaultCppAnonymStorageApiHolder
+    //>    
+    //class BaseCppAnonymStorage;
 
-    typedef BaseCppAnonymStorage<> CppAnonymStorage;
+    //typedef BaseCppAnonymStorage<> CppAnonymStorage;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
@@ -104,62 +104,70 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
+#ifndef URASANDESU_CPPANONYM_APIHOLDERS_DEFAULTCPPANONYMSTORAGEAPIHOLDER_H
+#include <Urasandesu/CppAnonym/ApiHolders/DefaultCppAnonymStorageApiHolder.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
 
-    namespace DefaultCppAnonymStorageApiHolderDetail {
+    //namespace DefaultCppAnonymStorageApiHolderDetail {
 
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+    //    using namespace boost::mpl;
+    //    using namespace Urasandesu::CppAnonym::Hosting;
+    //    using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
 
-        struct DefaultCppAnonymStorageApiHolderImpl
-        {
-            typedef map<
-                pair<HostInfoLabel, HostInfo>
-            > api_cartridges;
-        };
+    //    struct DefaultCppAnonymStorageApiHolderImpl
+    //    {
+    //        typedef map<
+    //            pair<HostInfoLabel, HostInfo>
+    //        > api_cartridges;
+    //    };
 
-    }   // namespace DefaultCppAnonymStorageApiHolderDetail {
+    //}   // namespace DefaultCppAnonymStorageApiHolderDetail {
 
-    struct DefaultCppAnonymStorageApiHolder : 
-        DefaultCppAnonymStorageApiHolderDetail::DefaultCppAnonymStorageApiHolderImpl
-    {
-    };
+    //struct DefaultCppAnonymStorageApiHolder : 
+    //    DefaultCppAnonymStorageApiHolderDetail::DefaultCppAnonymStorageApiHolderImpl
+    //{
+    //};
 
 }}} // namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
 
+#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
+#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct CppAnonymStorageApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Urasandesu::CppAnonym::Interfaces::CppAnonymStorageApiHolderLabel, ApiLabel>
-    {
-    };
+    //template<class ApiCartridgesHolder, class ApiLabel>
+    //struct CppAnonymStorageApiAt : 
+    //    Traits::ApiAt<ApiCartridgesHolder, Urasandesu::CppAnonym::Interfaces::CppAnonymStorageApiHolderLabel, ApiLabel>
+    //{
+    //};
 
-    namespace CppAnonymStorageDetail {
+    //namespace CppAnonymStorageDetail {
 
-        namespace mpl = boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+    //    namespace mpl = boost::mpl;
+    //    using namespace Urasandesu::CppAnonym::Hosting;
+    //    using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
 
-        template<
-            class CppAnonymStorageApiHolder
-        >    
-        struct CppAnonymStorageFacade
-        {
-            typedef typename CppAnonymStorageApiAt<CppAnonymStorageApiHolder, HostInfoLabel>::type host_info_type;
-            typedef StaticDependentObjectsStorage<host_info_type> base_type;
-        };
+    //    template<
+    //        class CppAnonymStorageApiHolder
+    //    >    
+    //    struct CppAnonymStorageFacade
+    //    {
+    //        typedef typename CppAnonymStorageApiAt<CppAnonymStorageApiHolder, HostInfoLabel>::type host_info_type;
+    //        typedef StaticDependentObjectsStorage<host_info_type> base_type;
+    //    };
 
-    }   // namespace CppAnonymStorageDetail {
+    //}   // namespace CppAnonymStorageDetail {
 
-    template<
-        class CppAnonymStorageApiHolder
-    >    
-    class BaseCppAnonymStorage : 
-        public CppAnonymStorageDetail::CppAnonymStorageFacade<CppAnonymStorageApiHolder>::base_type
-    {
-    };
+    //template<
+    //    class CppAnonymStorageApiHolder
+    //>    
+    //class BaseCppAnonymStorage : 
+    //    public CppAnonymStorageDetail::CppAnonymStorageFacade<CppAnonymStorageApiHolder>::base_type
+    //{
+    //};
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
