@@ -32,7 +32,8 @@ namespace Urasandesu { namespace CppAnonym {
             typedef shared_ptr<object_type> sp_object_type;
             typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
             typedef typename provider_of<obj_tag_type>::type provider_type;
-            typedef std::vector<object_type *> object_ptr_vector_type;
+            typedef object_type *object_ptr_type;
+            typedef std::vector<object_ptr_type> object_ptr_vector_type;
 
             virtual ~PersistableHeapProviderImpl()
             {
@@ -67,13 +68,10 @@ namespace Urasandesu { namespace CppAnonym {
                 }
             }
 
-            object_type *operator[](typename object_ptr_vector_type::size_type n)
+            object_ptr_type operator[](typename object_ptr_vector_type::size_type n)
             {
                 return Objects()[n];
             }
-        
-        private:
-            shared_ptr<object_ptr_vector_type> m_pObjects;
 
             object_ptr_vector_type &Objects()
             {
@@ -81,12 +79,15 @@ namespace Urasandesu { namespace CppAnonym {
                     m_pObjects = make_shared<object_ptr_vector_type>();
                 return *m_pObjects.get();
             }
-
+        
+        private:
+            shared_ptr<object_ptr_vector_type> m_pObjects;
+            
             class deleter
             {
             public:
                 deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) { m_disabled[0] = false; }
-                void operator()(object_type *p) { if (!m_disabled[0]) m_pHeap->Delete(p); }
+                void operator()(object_ptr_type p) { if (!m_disabled[0]) m_pHeap->Delete(p); }
                 void DisablesDeletion() { m_disabled[0] = true; }
             private:
                 typename provider_type::object_heap_type *m_pHeap;
@@ -96,8 +97,8 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class Sequence>
         class PersistableHeapProviderImpl<Sequence, 
-                                             typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type> : 
+                                          typename Traits::DistinctEnd<Sequence>::type, 
+                                          typename Traits::DistinctEnd<Sequence>::type> : 
             noncopyable
         {
         };
@@ -108,8 +109,8 @@ namespace Urasandesu { namespace CppAnonym {
     template<class Sequence>
     class ATL_NO_VTABLE PersistableHeapProvider : 
         public Detail::PersistableHeapProviderImpl<Sequence, 
-                                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                                  typename Traits::DistinctEnd<Sequence>::type>
+                                                   typename Traits::DistinctBegin<Sequence>::type, 
+                                                   typename Traits::DistinctEnd<Sequence>::type>
     {
     public:
         typedef PersistableHeapProvider<Sequence> this_type;

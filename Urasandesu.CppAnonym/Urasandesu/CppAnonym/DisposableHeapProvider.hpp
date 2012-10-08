@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
@@ -19,9 +19,9 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class Sequence, class I, class IEnd>
         class ATL_NO_VTABLE DisposableHeapProviderImpl : 
-            SimpleHeapProvider<
+            PersistableHeapProvider<
                 mpl::vector<
-                    ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
+                    typename mpl::deref<I>::type
                 >
             >,
             public DisposableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
@@ -29,51 +29,41 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef DisposableHeapProviderImpl<Sequence, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_type;
-            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef typename provider_of<obj_tag_type>::type provider_type;
-            typedef std::vector<object_type *> object_ptr_vector_type;
+            typedef typename provider_of<object_type>::type provider_type;
+            typedef typename provider_type::sp_object_type sp_object_type;
+            typedef typename provider_type::object_ptr_type object_ptr_type;
+            typedef typename provider_type::object_ptr_vector_type object_ptr_vector_type;
 
             virtual ~DisposableHeapProviderImpl()
             {
-                provider_type &provider = ProviderOf<obj_tag_type>();
+                provider_type &provider = ProviderOf<object_type>();
+                object_ptr_vector_type &objects = provider.Objects();
                 typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
-                {
+                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
                     (*ri)->Dispose();
-                    provider.Heap().Delete(*ri);
-                }
             }
 
-            static object_type *NewStaticObject()
+            static sp_object_type NewStaticObject()
             {
-                return provider_type::StaticHeap().New();
+                return provider_type::NewStaticObject();
             }
 
-            object_type *NewObject()
+            sp_object_type NewObject()
+            {
+                return ProviderOf<object_type>().NewObject();
+            }
+
+            typename object_ptr_vector_type::size_type Register(sp_object_type const &p)
             {
                 provider_type &provider = ProviderOf<obj_tag_type>();
-                return provider.Heap().New();
+                return provider.Register(p);
             }
 
-            typename object_ptr_vector_type::size_type Register(object_type &p)
+            object_ptr_type operator[](typename object_ptr_vector_type::size_type n)
             {
-                Objects().push_back(&p);
-                return Objects().size() - 1;
-            }
-
-            object_type *operator[](typename object_ptr_vector_type::size_type n)
-            {
-                return Objects()[n];
-            }
-        
-        private:
-            shared_ptr<object_ptr_vector_type> m_pObjects;
-
-            object_ptr_vector_type &Objects()
-            {
-                if (!m_pObjects.get())
-                    m_pObjects = make_shared<object_ptr_vector_type>();
-                return *m_pObjects.get();
+                provider_type &provider = ProviderOf<object_type>();
+                object_ptr_vector_type &objects = provider.Objects();
+                return objects[n];
             }
         };
 

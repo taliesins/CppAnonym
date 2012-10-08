@@ -59,9 +59,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
         typedef typename provider_of<this_type>::type host_info_provider_type;
         typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
+        
         typedef typename chain_from<boost::mpl::void_>::type host_info_chain_type; 
 
-        static this_type *NewHost()
+        static typename host_info_provider_type::sp_object_type NewHost()
         {
             return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
         }
@@ -89,7 +90,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 }
 
                 runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                m_versionToIndex[version] = provider.Register(*pNewRuntime);    // [2012/08/29 08:01:08] この辺実装中。。。Register しないと memory leak するし。
+                m_versionToIndex[version] = provider.Register(pNewRuntime);
                 return pNewRuntime;
             }
             else

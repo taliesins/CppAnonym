@@ -1968,6 +1968,150 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test2.*
 namespace {
 
+    namespace _B3C3B24D {
+
+    struct Hoge;
+    struct Piyo;
+
+    struct Hoge
+    {
+        Hoge() : m_pPiyo(boost::make_shared<Piyo>()) { std::cout << "Hoge " << *reinterpret_cast<int *>(this) << " is constructed !!" << std::endl; }
+        virtual ~Hoge() { std::cout << "Hoge " << *reinterpret_cast<int *>(this) << " is destructed !!" << std::endl; }
+
+        int m_value;
+        boost::shared_ptr<Piyo> m_pPiyo;
+    };
+
+    struct Piyo
+    {
+        Piyo() { std::cout << "Piyo " << *reinterpret_cast<int *>(this) << " is constructed !!" << std::endl; }
+        virtual ~Piyo() { std::cout << "Piyo " << *reinterpret_cast<int *>(this) << " is destructed !!" << std::endl; }
+
+        int m_value;
+    };
+
+    template<class D>
+    class DeletionDisabledPolicy
+    {
+    public:
+        typedef DeletionDisabledPolicy<D> this_type;
+
+        typedef D deleter;
+
+        explicit DeletionDisabledPolicy(deleter d) : 
+            m_d(d) 
+        { 
+            m_disabled[0] = false; 
+        }
+        
+        template<class T>
+        void operator()(T *p) 
+        { 
+            if (!m_disabled[0]) 
+                m_d(p); 
+        }
+        
+        void DisablesDeletion() 
+        { 
+            m_disabled[0] = true; 
+        }
+    
+    private:
+        deleter m_d;
+        bool m_disabled[1];
+    };
+
+    struct DefaultDeleter
+    {
+        template<class T>
+        void operator()(T *p)
+        {
+            delete p;
+        }
+    };
+
+    template<class T, class Tag, class D = DefaultDeleter>
+    class TemporaryPtr : 
+        boost::noncopyable
+    {
+    public:
+        typedef TemporaryPtr<T, Tag, D> this_type;
+        typedef DeletionDisabledPolicy<D> deletion_disabled_deleter;
+
+        typedef T element_type;
+        typedef T value_type;
+        typedef T *pointer;
+
+        explicit TemporaryPtr(T *p) : 
+            m_p(p),
+            m_ddd(deletion_disabled_deleter(D()))
+        { }
+
+        TemporaryPtr(T *p, D d) : 
+            m_p(p),
+            m_ddd(deletion_disabled_deleter(d))
+        { }
+
+        ~TemporaryPtr()
+        {
+            m_ddd(m_p);
+        }
+
+        pointer operator->()
+        {
+            return m_p;
+        }
+
+        pointer Get()
+        {
+            return m_p;
+        }
+
+        pointer Move()
+        {
+            m_ddd.DisablesDeletion();
+            return m_p;
+        }
+
+    private:
+        T *m_p;
+        deletion_disabled_deleter m_ddd;
+    };
+
+    }   // namespace _B3C3B24D {
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, RootTemporaryPtr_Test_01)
+    {
+        namespace mpl = boost::mpl;
+        using boost::shared_ptr;
+        using namespace _B3C3B24D;
+
+        struct RootPtrTag;
+        typedef TemporaryPtr<Hoge, RootPtrTag> RootTemporaryPtr;
+
+        {
+            RootTemporaryPtr pHoge(new Hoge());
+            pHoge->m_value = 10;
+        }
+
+        {
+            Hoge *pHoge = NULL;
+            {
+                RootTemporaryPtr pHoge_(new Hoge());
+                pHoge_->m_value = 10;
+                pHoge = pHoge_.Move();
+            }
+            delete pHoge;
+        }
+        {
+            static RootTemporaryPtr pHoge(new Hoge());
+        }
+    }
+
+    
+    
+    
+    
     namespace _3A0FFF2F {
 
     using namespace Urasandesu::CppAnonym;
@@ -2147,12 +2291,12 @@ namespace {
         typedef MethodMetadataGenerator7FAEDE99 MethodMetadataGenerator;
         typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
-        HostInfo const hostInfo;
-
-        RuntimeHost const *pRuntimeHost = hostInfo.GetRuntime(L"v2.0.50727");
-        ASSERT_TRUE(pRuntimeHost != NULL);
+        shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
 
 #if 0
+        RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
+        ASSERT_TRUE(pRuntimeHost != NULL);
+
         shared_ptr<MetadataInfo const> pMetaInfo = pRuntimeHost->Map<MetadataInfo>();
         ASSERT_TRUE(pMetaInfo);
 

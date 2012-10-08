@@ -12,12 +12,11 @@ namespace Urasandesu { namespace CppAnonym {
     {
         template<
             class T,
-            class HeapProvider
+            class PersistableHeapProvider
         >
-        static T *NewRootObject()
+        static typename PersistableHeapProvider::sp_object_type NewRootObject()
         {
-            T *pObj = HeapProvider::NewStaticObject();
-            return pObj;
+            return PersistableHeapProvider::NewStaticObject();
         }
 
         template<
