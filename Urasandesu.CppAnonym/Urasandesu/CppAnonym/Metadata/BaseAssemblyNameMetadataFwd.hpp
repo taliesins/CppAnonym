@@ -13,6 +13,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseAssemblyNameMetadata;
 
+    typedef BaseAssemblyNameMetadata<> AssemblyNameMetadata;
+
+    
+    
+    
+    
+    template<
+        class AssemblyNameMetadataApiHolder = ApiHolders::DefaultAssemblyNameMetadataApiHolder
+    >    
+    class BaseAssemblyNameMetadataHash;
+
+    typedef BaseAssemblyNameMetadataHash<> AssemblyNameMetadataHash;
+
+    
+    
+    
+    
+    template<
+        class AssemblyNameMetadataApiHolder = ApiHolders::DefaultAssemblyNameMetadataApiHolder
+    >    
+    class BaseAssemblyNameMetadataEqualTo;
+
+    typedef BaseAssemblyNameMetadataEqualTo<> AssemblyNameMetadataEqualTo;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATAFWD_HPP

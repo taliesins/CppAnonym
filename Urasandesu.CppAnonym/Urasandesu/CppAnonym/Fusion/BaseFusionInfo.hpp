@@ -18,28 +18,32 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFOFWD_H
 #include <Urasandesu/CppAnonym/Fusion/AssemblyInfoFwd.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP
+#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
@@ -122,8 +126,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         mutable runtime_host_type *m_pRuntimeHost;
         mutable ATL::CComPtr<IAssemblyCache> m_pAsmCacheApi;
     };
-
-    typedef BaseFusionInfo<> FusionInfo;
         
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 

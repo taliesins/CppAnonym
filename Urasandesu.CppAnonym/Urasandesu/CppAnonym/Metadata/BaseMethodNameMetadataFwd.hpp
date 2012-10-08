@@ -15,19 +15,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     typedef BaseMethodNameMetadata<> MethodNameMetadata;
 
-    template<
-        class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
-    >    
-    struct BaseMethodNameMetadataEqualTo;
-
-    typedef BaseMethodNameMetadataEqualTo<> MethodNameMetadataEqualTo;
-
+    
+    
+    
+    
     template<
         class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
     >    
     struct BaseMethodNameMetadataHash;
 
     typedef BaseMethodNameMetadataHash<> MethodNameMetadataHash;
+
+    
+    
+    
+    
+    template<
+        class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
+    >    
+    struct BaseMethodNameMetadataEqualTo;
+
+    typedef BaseMethodNameMetadataEqualTo<> MethodNameMetadataEqualTo;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

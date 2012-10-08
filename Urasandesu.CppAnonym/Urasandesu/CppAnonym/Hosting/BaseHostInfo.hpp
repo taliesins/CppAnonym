@@ -1,21 +1,33 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_H
-#define URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_H
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
+#define URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOSTFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_HOSTINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/HostInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFOFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseHostInfoFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
@@ -27,7 +39,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     };
 
     template<
-        class HostInfoApiHolder = ApiHolders::DefaultHostInfoApiHolder
+        class HostInfoApiHolder
     >    
     class BaseHostInfo : 
         public HeapProvider<
@@ -82,8 +94,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
     };
 
-    typedef BaseHostInfo<> HostInfo;
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-#endif  // URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_H
+#endif  // URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP

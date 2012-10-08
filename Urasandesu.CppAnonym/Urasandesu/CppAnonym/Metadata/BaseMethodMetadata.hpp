@@ -18,24 +18,24 @@
 #include <Urasandesu/CppAnonym/Metadata/OpCodes.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOBFWD_HPP
-#include <Urasandesu/CppAnonym/SimpleBlobFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodMetadataApiHolderLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAFWD_HPP
@@ -53,8 +53,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     template<
         class MethodMetadataApiHolder
     >    
-    class BaseMethodMetadata : 
-        public IHeapContent<mdToken>
+    class BaseMethodMetadata
     {
     public:
         typedef BaseMethodMetadata<MethodMetadataApiHolder> this_type;
@@ -65,26 +64,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         BaseMethodMetadata() : 
             m_pTypeMeta(NULL),
-            m_pMethodNameMeta(NULL)
+            m_pMethodNameMeta(NULL), 
+            m_mdt(mdTokenNil)
         { }
 
-        __declspec(deprecated("This method is temporarily deprecated."))
-        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
-        {
-            _ASSERTE(m_pTypeMeta == NULL);
+        //__declspec(deprecated("This method is temporarily deprecated."))
+        //void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
+        //{
+        //    _ASSERTE(m_pTypeMeta == NULL);
 
-            m_pTypeMeta = &typeMeta;
-        }
+        //    m_pTypeMeta = &typeMeta;
+        //}
 
-        __declspec(deprecated("This method is temporarily deprecated."))
-        void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi, method_name_metadata_type const &methodName) const
-        {
-            _ASSERTE(m_pTypeMeta == NULL);
+        //__declspec(deprecated("This method is temporarily deprecated."))
+        //void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi, method_name_metadata_type const &methodName) const
+        //{
+        //    _ASSERTE(m_pTypeMeta == NULL);
 
-            m_pTypeMeta = &typeMeta;
-            m_pMetaImpApi = &metaImpApi;
-            m_methodName = methodName;
-        }
+        //    m_pTypeMeta = &typeMeta;
+        //    m_pMetaImpApi = &metaImpApi;
+        //    m_methodName = methodName;
+        //}
         
         void Init(type_metadata_type &typeMeta) const
         {
@@ -95,7 +95,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         template<class T>
-        T const *FindType() const { return static_cast<type_metadata_type const *>(m_pTypeMeta)->FindType<T>(); }
+        T const *FindType() const { _ASSERTE(m_pTypeMeta != NULL); return static_cast<type_metadata_type const *>(m_pTypeMeta)->FindType<T>(); }
 
         template<class T>
         T *FindType() { return m_pTypeMeta->FindType<T>(); }
@@ -112,29 +112,48 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             if (m_pMethodNameMeta == NULL)
             {
-                m_pMethodNameMeta = m_pTypeMeta->MethodNameMetadataHeap().New();
-                m_pMethodNameMeta->SetResolutionScope(*m_pTypeMeta);
-                m_pMethodNameMeta->SetToken(GetKey());
+                this_type *mutableThis = const_cast<this_type *>(this);
+                type_metadata_type *pTypeMeta = mutableThis->FindType<type_metadata_type>();
+
+                m_pMethodNameMeta = pTypeMeta->MethodNameMetadataHeap().New();
+                m_pMethodNameMeta->SetResolutionScope(*pTypeMeta);
+                m_pMethodNameMeta->SetToken(GetToken());
+                m_pMethodNameMeta->SetResolvedMethod(*mutableThis);
             }
             return m_pMethodNameMeta;
         }
 
         mdToken GetToken() const
         {
-            return mdTokenNil;
+            return m_mdt;
         }
 
-        std::wstring const &GetName() const
-        {
-            return m_name;
-        }
+        //std::wstring const &GetName() const
+        //{
+        //    return m_name;
+        //}
 
     private:
+        template<
+            class TypeMetadataApiHolder
+        >    
+        friend class BaseTypeMetadata;
+
+        void SetToken(mdToken mdt)
+        {
+            _ASSERTE(m_mdt == mdTokenNil);
+            _ASSERTE(mdt != mdTokenNil);
+
+            m_mdt = mdt;
+        }
+
+
         mutable type_metadata_type *m_pTypeMeta;
         mutable method_name_metadata_type *m_pMethodNameMeta;
-        mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
-        mutable method_name_metadata_type m_methodName;
-        mutable std::wstring m_name;
+        //mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
+        //mutable method_name_metadata_type m_methodName;
+        //mutable std::wstring m_name;
+        mdToken m_mdt;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

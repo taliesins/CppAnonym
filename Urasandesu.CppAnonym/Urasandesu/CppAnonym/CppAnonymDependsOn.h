@@ -18,6 +18,9 @@
 #define ATL_NO_ASSERT_ON_DESTROY_NONEXISTENT_WINDOW
 #endif
 
+#define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
+#define BOOST_MPL_LIMIT_MAP_SIZE 30
+
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlctl.h>

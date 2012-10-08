@@ -10,60 +10,48 @@
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/SimpleHeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
 #include <Urasandesu/CppAnonym/ObjectTag.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
@@ -78,14 +66,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class MetadataDispenserApiHolder
     >    
     class BaseMetadataDispenser :
-        public HeapProvider<
-            mdAssembly, 
-            boost::mpl::vector<
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type
-            >
-        >,
         public SimpleHeapProvider<
             boost::mpl::vector<
+                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type, QuickHeap>,
                 ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type, QuickHeap>
             >
         >
@@ -96,13 +79,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type metadata_info_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;        
 
+        typedef ObjectTag<assembly_metadata_type, QuickHeap> assembly_metadata_obj_tag_type;
+        typedef typename type_decided_by<assembly_metadata_obj_tag_type>::type assembly_metadata_heap_type;
         typedef ObjectTag<assembly_name_metadata_type, QuickHeap> assembly_name_metadata_obj_tag_type;
-        typedef SimpleHeapProvider<boost::mpl::vector<assembly_name_metadata_obj_tag_type> > simple_heap_provider_type;
-        typedef typename simple_heap_provider_type::type_decided_by<assembly_name_metadata_obj_tag_type>::type assembly_name_metadata_heap_type;
-
-        typedef HeapProvider<mdAssembly, boost::mpl::vector<assembly_metadata_type> > heap_provider_type;
-        typedef typename heap_provider_type::type_decided_by<assembly_metadata_type>::type assembly_metadata_heap_type;
+        typedef typename type_decided_by<assembly_name_metadata_obj_tag_type>::type assembly_name_metadata_heap_type;
 
         BaseMetadataDispenser() : 
             m_pMetaInfo(NULL)
@@ -110,24 +92,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         void Init(metadata_info_type &metaInfo) const
         {
-            // This method implementation is temporary.
             _ASSERTE(m_pMetaInfo == NULL);
-            //_ASSERTE(m_pMetaDispApi.p == NULL);
-
             m_pMetaInfo = &metaInfo;
-
-            //HRESULT hr = ::CoCreateInstance(CLSID_CorMetaDataDispenser, NULL, CLSCTX_INPROC_SERVER, 
-            //                                IID_IMetaDataDispenserEx, 
-            //                                reinterpret_cast<void **>(&m_pMetaDispApi));
-            //if (FAILED(hr))
-            //    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
         }
 
         template<class T>
-        T const *FindType() const { return static_cast<metadata_info_type const *>(m_pMetaInfo)->FindType<T>(); }
+        T const *FindType() const { _ASSERTE(m_pMetaInfo != NULL); return static_cast<metadata_info_type const *>(m_pMetaInfo)->FindType<T>(); }
 
         template<class T>
-        T *FindType() { return m_pMetaInfo->FindType<T>(); }
+        T *FindType() { _ASSERTE(m_pMetaInfo != NULL); return m_pMetaInfo->FindType<T>(); }
       
         template<>
         this_type const *FindType<this_type>() const { return this; }
@@ -146,48 +119,56 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return pAsmNameMeta;
         }
 
+        assembly_metadata_type const *LoadAssembly(std::wstring const &name) const
+        {
+            if (m_asmStrNameToIndex.find(name) == m_asmStrNameToIndex.end())
+            {
+                m_asmStrNameToIndex[name] = MAXULONG_PTR;
+            }
+
+            SIZE_T index = m_asmStrNameToIndex[name];
+            if (index == MAXULONG_PTR)
+            {
+                assembly_name_metadata_type *pAsmNameMeta = NULL;
+                pAsmNameMeta = NewAssemblyName(name);
+
+                assembly_metadata_type const *pAsmMeta = NULL;
+                pAsmMeta = pAsmNameMeta->Resolve(); // Internally, LoadAssemblyFromFile is dispatched. 
+                m_asmStrNameToIndex[name] = AssemblyMetadataHeap().Size() - 1;
+
+                return pAsmMeta;
+            }
+            else
+            {
+                return AssemblyMetadataHeap()[index];
+            }
+        }
+
         assembly_metadata_type const *LoadAssemblyFromFile(boost::filesystem::path const &asmPath) const
         {
-            // This method implementation is temporary.
-            this_type *mutableThis = const_cast<this_type *>(this);
+            if (m_asmPathToToIndex.find(asmPath) == m_asmPathToToIndex.end())
+            {
+                m_asmPathToToIndex[asmPath] = MAXULONG_PTR;
+            }
 
-            assembly_metadata_type *pAsmMeta = NULL;
-            pAsmMeta = mutableThis->AssemblyMetadataHeap().New(0x20000001);
-            pAsmMeta->Init(*mutableThis);
-            return pAsmMeta;
-            //_ASSERTE(m_pMetaDispApi.p != NULL);
+            SIZE_T index = m_asmPathToToIndex[asmPath];
+            if (index == MAXULONG_PTR)
+            {
+                this_type *mutableThis = const_cast<this_type *>(this);
 
-            //if (m_assemblyMetas.find(asmPath) == m_assemblyMetas.end())
-            //{
-            //    m_assemblyMetas[asmPath] = mdAssemblyNil;
-            //}
+                assembly_metadata_type *pAsmMeta = NULL;
+                pAsmMeta = mutableThis->AssemblyMetadataHeap().New();
+                pAsmMeta->Init(*mutableThis);
+                pAsmMeta->SetAssemblyFilePath(asmPath);
 
-            //mdAssembly mda = m_assemblyMetas[asmPath];
-            //if (mda == mdAssemblyNil)
-            //{
-            //    ATL::CComPtr<IMetaDataImport2> pMetaImpApi;
-            //    HRESULT hr = m_pMetaDispApi->OpenScope(asmPath.c_str(), ofRead, 
-            //                                        IID_IMetaDataImport2, 
-            //                                        reinterpret_cast<IUnknown **>(&pMetaImpApi));
-            //    if (FAILED(hr))
-            //        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+                m_asmPathToToIndex[asmPath] = mutableThis->AssemblyMetadataHeap().Size() - 1;
 
-            //    this_type *mutableThis = const_cast<this_type *>(this);
-            //    typedef typename type_decided_by<assembly_metadata_type>::type AssemblyMetadataHeap;
-            //    AssemblyMetadataHeap &heap = mutableThis->Of<assembly_metadata_type>();
-            //    assembly_metadata_type *pAsmMeta = heap.NewPseudo();
-            //    pAsmMeta->Init(*mutableThis, *pMetaImpApi);
-
-            //    mda = pAsmMeta->GetToken();
-            //    m_assemblyMetas[asmPath] = mda;
-
-            //    heap.SetToLast(mda);
-            //    return pAsmMeta;
-            //}
-            //else
-            //{
-            //    return LoadAssemblyFromTokenCore(mda);
-            //}
+                return pAsmMeta;
+            }
+            else
+            {
+                return AssemblyMetadataHeap()[index];
+            }
         }
 
     private:
@@ -198,37 +179,44 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         
         assembly_name_metadata_heap_type &AssemblyNameMetadataHeap()
         {
-            return simple_heap_provider_type::Of<assembly_name_metadata_obj_tag_type>();
+            return Of<assembly_name_metadata_obj_tag_type>();
         }
         
         assembly_name_metadata_heap_type const &AssemblyNameMetadataHeap() const
         {
-            return simple_heap_provider_type::Of<assembly_name_metadata_obj_tag_type>();
+            return Of<assembly_name_metadata_obj_tag_type>();
         }
 
         assembly_metadata_heap_type &AssemblyMetadataHeap()
         {
-            return heap_provider_type::Of<assembly_metadata_type>();
+            return Of<assembly_metadata_obj_tag_type>();
         }
         
         assembly_metadata_heap_type const &AssemblyMetadataHeap() const
         {
-            return heap_provider_type::Of<assembly_metadata_type>();
+            return Of<assembly_metadata_obj_tag_type>();
         }
 
-        assembly_metadata_type const *LoadAssemblyFromTokenCore(mdAssembly mda) const
+        com_meta_data_dispenser_type &GetCOMMetaDataDispenser()
         {
-            typedef typename type_decided_by<assembly_metadata_type>::type AssemblyMetadataHeap;
-            AssemblyMetadataHeap const &heap = Of<assembly_metadata_type>();
-            return heap.Get(mda);
+            if (m_pComMetaDisp.p == NULL)
+            {
+                HRESULT hr = ::CoCreateInstance(CLSID_CorMetaDataDispenser, NULL, CLSCTX_INPROC_SERVER, 
+                                                IID_IMetaDataDispenserEx, 
+                                                reinterpret_cast<void **>(&m_pComMetaDisp));
+                if (FAILED(hr))
+                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+            }
+            return *m_pComMetaDisp;
         }
 
         mutable metadata_info_type *m_pMetaInfo;
         typedef boost::filesystem::path path;
         typedef Utilities::Hash<path> path_hash;
         typedef Utilities::EqualTo<path> path_equal_to;
-        mutable boost::unordered_map<path, mdAssembly, path_hash, path_equal_to> m_assemblyMetas;
-        mutable ATL::CComPtr<IMetaDataDispenserEx> m_pMetaDispApi;
+        mutable boost::unordered_map<std::wstring, mdToken> m_asmStrNameToIndex;
+        mutable boost::unordered_map<path, mdToken, path_hash, path_equal_to> m_asmPathToToIndex;
+        mutable ATL::CComPtr<com_meta_data_dispenser_type> m_pComMetaDisp;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

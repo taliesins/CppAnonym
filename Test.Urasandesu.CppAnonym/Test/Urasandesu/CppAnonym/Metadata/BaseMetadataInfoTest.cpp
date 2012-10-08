@@ -1,5 +1,13 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
@@ -80,8 +88,8 @@ namespace {
         typedef MetadataInfo::metadata_dispenser_type MetadataDispenser;
         //BOOST_MPL_ASSERT((boost::is_same<MetadataInfo::this_type, boost::use_default>));
         //BOOST_MPL_ASSERT((boost::is_same<MetadataInfo::metadata_dispenser_api_type, boost::use_default>));
-        boost::shared_ptr<MetadataDispenser const> pMetaDisp = metaInfo.CreateDispenser();
-        ASSERT_FALSE(pMetaDisp.get() == NULL);
+        MetadataDispenser const *pMetaDisp = metaInfo.CreateDispenser();
+        ASSERT_FALSE(pMetaDisp == NULL);
     }
 
 

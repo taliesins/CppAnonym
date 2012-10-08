@@ -30,4 +30,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

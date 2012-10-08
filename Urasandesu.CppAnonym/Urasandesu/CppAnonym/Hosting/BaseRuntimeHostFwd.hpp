@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     >
     class BaseRuntimeHost;
 
+    typedef BaseRuntimeHost<> RuntimeHost;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 #endif  // URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOSTFWD_HPP

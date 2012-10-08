@@ -2,6 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
 #define URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
 #endif
@@ -20,25 +28,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         namespace mpl = boost::mpl;
         using namespace mpl::placeholders;
 
-        template<class T, class Tag = mpl::void_>
-        struct HasApiCartridges
-        {
-            typedef mpl::false_ type;
-            static const bool value = false;
-        };
-
-        template<class T>
-        struct HasApiCartridges<T, typename mpl::apply<mpl::always<mpl::void_>, typename T::api_cartridges>::type>
-        {
-            typedef mpl::true_ type;
-            static const bool value = true;
-        };
-
-        template<class ApiCartridgesHolder>
-        struct GetApiCartridges
-        {
-            typedef typename ApiCartridgesHolder::api_cartridges type;
-        };
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ApiCartridges, api_cartridges);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ApiCartridges, api_cartridges);
 
         template<class ApiCartridgesHolder, class ApiLabel>
         struct DefaultHolderDispenser
@@ -70,8 +61,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         class ApiAtImplCore
         {
             typedef typename mpl::eval_if<
-                                HasApiCartridges<ApiCartridgesHolder>,
-                                GetApiCartridges<ApiCartridgesHolder>, 
+                                CPP_ANONYM_HAS_MEMBER_TYPE(ApiCartridges, api_cartridges, ApiCartridgesHolder), 
+                                CPP_ANONYM_GET_MEMBER_TYPE(ApiCartridges, api_cartridges, ApiCartridgesHolder), 
                                 mpl::identity<mpl::map<>>>::type api_cartridges;
             typedef typename mpl::at<api_cartridges, ApiLabel>::type result;
         public:

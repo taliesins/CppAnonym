@@ -14,15 +14,19 @@
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultHostInfoApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_H
-#include <Urasandesu/CppAnonym/Hosting/BaseHostInfo.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_HOSTINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/HostInfoLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseHostInfo.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPI_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
 

@@ -6,44 +6,36 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/HeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOSTFWD_HPP
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolderFwd.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
@@ -175,8 +167,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         mutable bool m_corSystemDirectoryPathInitialized;
         mutable boost::filesystem::path m_corSystemDirectoryPath;
     };
-
-    typedef BaseRuntimeHost<> RuntimeHost;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

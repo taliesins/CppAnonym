@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     >    
     class BaseStrongNameKey;
 
+    typedef BaseStrongNameKey<> StrongNameKey;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYFWD_HPP

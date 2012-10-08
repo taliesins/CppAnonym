@@ -6,12 +6,12 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERFWD_H
@@ -20,10 +20,23 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultMetadataInfoApiHolder
+    namespace Detail {
+        
+        using namespace boost::mpl;
+
+        struct DefaultMetadataInfoApiHolderImpl
+        {
+            typedef map<
+                pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::RuntimeHost>, 
+                pair<Interfaces::MetadataDispenserLabel, MetadataDispenser>
+            > api_cartridges;
+        };
+
+    } // namespace Detail {
+
+    struct DefaultMetadataInfoApiHolder : 
+        Detail::DefaultMetadataInfoApiHolderImpl
     {
-        typedef boost::mpl::map<boost::mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::BaseRuntimeHost<> >, 
-                                boost::mpl::pair<Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<> > > api_cartridges;
     };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {

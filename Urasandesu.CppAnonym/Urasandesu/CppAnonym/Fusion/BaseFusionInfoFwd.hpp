@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
     >    
     class BaseFusionInfo;
 
+    typedef BaseFusionInfo<> FusionInfo;
+
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 #endif  // URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP

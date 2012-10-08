@@ -2,36 +2,40 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATA_HPP
 #define URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATA_HPP
 
-//#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
-//#include <Urasandesu/CppAnonym/IHeapContent.h>
-//#endif
-
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/SimpleHeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_OBJECTTAGFWD_HPP
-#include <Urasandesu/CppAnonym/ObjectTagFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATAFWD_HPP
@@ -63,7 +67,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, Fusion::Interfaces::FusionInfoLabel>::type fusion_info_type;
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, IMetaDataAssemblyImport>::type metadata_assembly_import_api_type;
+        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
 
@@ -71,28 +75,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename type_decided_by<type_name_metadata_obj_tag_type>::type type_name_metadata_heap_type;
 
         BaseAssemblyNameMetadata() : 
+            m_nameInitialized(false),
             m_pDispAsScope(NULL), 
-            m_pAsmResolved(NULL),
-            m_pAsmMeta(NULL), 
+            m_pResolvedAsm(NULL),
             m_asmPropsInitialized(false)
         { }
 
-        void Init(assembly_metadata_type &asmMeta, metadata_assembly_import_api_type &metaAsmImpApi) const
-        {
-            _ASSERTE(m_pAsmMeta == NULL);
-            _ASSERTE(m_pMetaAsmImpApi.p == NULL);
-            
-            m_pAsmMeta = &asmMeta;
-            m_pMetaAsmImpApi = &metaAsmImpApi;
-        }
-
-        //template<class T>
-        //T const *FindType() const { return static_cast<assembly_metadata_type const *>(m_pAsmMeta)->FindType<T>(); }
         template<class T>
         T const *FindType() const { return GetResolutionScope().FindType<T>(); }
 
-        //template<class T>
-        //T *FindType() { return m_pAsmMeta->FindType<T>(); }
         template<class T>
         T *FindType() { return const_cast<metadata_dispenser_type &>(GetResolutionScope()).FindType<T>(); }
       
@@ -104,21 +95,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         std::wstring const &GetName() const
         {
-            // This method implementation is temporary.
-            if (m_name.empty())
+            if (!m_nameInitialized)
             {
-                m_name = L"mscorlib, Version=2.0.0.0, Culture=neutral, " 
-                         L"PublicKeyToken=b77a5c561934e089, processorArchitecture=x86";
+                FillPropertiesIfNecessary();
+                m_nameInitialized = true;
             }
             return m_name;
-            //FillPropertiesIfNecessary();
-            //return m_name;
         }
 
         void SetName(std::wstring const &name)
         {
-            // Should be immutable...
+            _ASSERTE(!m_nameInitialized);
             m_name = name;
+            m_nameInitialized = true;
+        }
+
+        mdAssembly GetToken() const
+        {
+            return m_mda;
         }
 
         metadata_dispenser_type const &GetResolutionScope() const
@@ -138,9 +132,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             type_name_metadata_type *pTypeNameMeta = NULL;
             pTypeNameMeta = mutableThis->TypeNameMetadataHeap().New();
-            pTypeNameMeta->SetName(name);
-            pTypeNameMeta->SetKind(kind);
-            pTypeNameMeta->SetResolutionScope(*mutableThis);
+            pTypeNameMeta->Init(name, kind, *mutableThis);
+            //pTypeNameMeta->SetName(name);
+            //pTypeNameMeta->SetKind(kind);
+            //pTypeNameMeta->SetResolutionScope(*mutableThis);
             return pTypeNameMeta;
         }
         
@@ -149,15 +144,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Fusion;
 
-            if (m_pAsmResolved == NULL)
+            if (m_pResolvedAsm == NULL)
             {
                 fusion_info_type const *pFuInfo = FindType<fusion_info_type>();
                 shared_ptr<AssemblyInfo> pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, GetName());
 
-                m_pAsmResolved = GetResolutionScope().LoadAssemblyFromFile(pAsmInfo->GetAssemblyPath());
+                assembly_metadata_type const *pAsmMeta = NULL;
+                pAsmMeta = GetResolutionScope().LoadAssemblyFromFile(pAsmInfo->GetAssemblyPath());
+                m_pResolvedAsm = const_cast<assembly_metadata_type *>(pAsmMeta);
             }
 
-            return m_pAsmResolved;
+            return m_pResolvedAsm;
         }
 
         strong_name_key_type const *GetStrongNameKey() const
@@ -170,39 +167,62 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             if (m_asmPropsInitialized)
                 return;
+            
+            this_type *mutableThis = const_cast<this_type *>(this);
+            assembly_metadata_type &resolvedAsm = mutableThis->GetResolvedAssembly();
+            com_meta_data_assembly_import_type &comMetaAsmImp = resolvedAsm.GetCOMMetaDataAssemblyImport();
+            
+            HRESULT hr = E_FAIL;
 
-            //HRESULT hr = E_FAIL;
+            ULONG nameSize = 0;
+            ASSEMBLYMETADATA amd;
+            ::ZeroMemory(&amd, sizeof(ASSEMBLYMETADATA));
+            DWORD asmFlags = 0;
+            DWORD asmFlagsTmp = 0;
+            hr = comMetaAsmImp.GetAssemblyProps(GetToken(), NULL, NULL, NULL, NULL, 0, 
+                                                &nameSize, &amd, 
+                                                &asmFlagsTmp);
+            if (FAILED(hr))
+                BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
-            //std::auto_ptr<WCHAR> name;
-            //ULONG nameSize = 0;
-            //ASSEMBLYMETADATA amd;
-            //::ZeroMemory(&amd, sizeof(ASSEMBLYMETADATA));
-            //DWORD asmFlags = 0;
-            //DWORD asmFlagsTmp = 0;
-            //hr = m_pMetaAsmImpApi->GetAssemblyProps(GetKey(), NULL, NULL, NULL, NULL, 0, 
-            //                                        &nameSize, &amd, 
-            //                                        &asmFlagsTmp);
-            //if (FAILED(hr))
-            //    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+            
+            
+            typedef std::vector<WCHAR, Utilities::StackAllocator<WCHAR> > WCharVector;
+            typedef std::vector<OSINFO, Utilities::StackAllocator<OSINFO> > OSInfoVector;
+            typedef std::vector<ULONG, Utilities::StackAllocator<ULONG> > ULongVector;
+            WCharVector name(nameSize);
+            WCharVector locale;
+            if (amd.cbLocale)
+            {
+                locale.resize(amd.cbLocale);
+                amd.szLocale = &locale[0];
+            }
+            OSInfoVector os;
+            if (amd.ulOS)
+            {
+                os.resize(amd.ulOS);
+                amd.rOS = &os[0];
+            }
+            ULongVector processor;
+            if (amd.ulProcessor)
+            {
+                processor.resize(amd.ulProcessor);
+                amd.rProcessor = &processor[0];
+            }
 
-            //name = std::auto_ptr<WCHAR>(new WCHAR[nameSize]);
-            //amd.szLocale = amd.cbLocale ? new WCHAR[amd.cbLocale] : NULL;           // TODO: Use ::_malloca instead of new.
-            //amd.rOS = amd.ulOS ? new OSINFO[amd.ulOS] : NULL;                       // TODO: Use ::_malloca instead of new.
-            //amd.rProcessor = amd.ulProcessor ? new ULONG[amd.ulProcessor] : NULL;   // TODO: Use ::_malloca instead of new.
-            //
-            //void const *pPubKey = NULL;
-            //DWORD pubKeySize = 0;
-            //hr = m_pMetaAsmImpApi->GetAssemblyProps(GetKey(), &pPubKey, &pubKeySize, NULL, 
-            //                                        name.get(), nameSize, NULL, 
-            //                                        &amd, NULL);
-            //if (FAILED(hr))
-            //    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+            void const *pPubKey = NULL;
+            DWORD pubKeySize = 0;
+            hr = comMetaAsmImp.GetAssemblyProps(GetToken(), &pPubKey, &pubKeySize, NULL, 
+                                                &name[0], nameSize, NULL, 
+                                                &amd, NULL);
+            if (FAILED(hr))
+                BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
-            //m_name = std::wstring(name.get(), nameSize);
-            //strong_name_info_type const *pSnInfo = FindType<strong_name_info_type>();
-            //m_pSnKey = pSnInfo->CreateKey(reinterpret_cast<PublicKeyBlob const *>(pPubKey), pubKeySize);
+            m_name = std::wstring(&name[0], nameSize);
+            strong_name_info_type const *pSnInfo = FindType<strong_name_info_type>();
+            m_pSnKey = pSnInfo->CreateKey(reinterpret_cast<PublicKeyBlob const *>(pPubKey), pubKeySize);
 
-            //m_asmPropsInitialized = true;
+            m_asmPropsInitialized = true;
         }
 
     private:
@@ -226,32 +246,75 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_mda = mda;
         }
 
+        assembly_metadata_type &GetResolvedAssembly()
+        {
+            _ASSERTE(m_pResolvedAsm != NULL);
+            return *m_pResolvedAsm;
+        }
+
+        void SetResolvedAssembly(assembly_metadata_type &resolvedAsm)
+        {
+            _ASSERTE(m_pResolvedAsm == NULL);
+            m_pResolvedAsm = &resolvedAsm;
+        }
+
         metadata_dispenser_type *m_pDispAsScope;
-        mutable assembly_metadata_type const *m_pAsmResolved;
+        mutable assembly_metadata_type *m_pResolvedAsm;
         mdAssembly m_mda;
 
-        mutable assembly_metadata_type *m_pAsmMeta;
-        mutable ATL::CComPtr<IMetaDataAssemblyImport> m_pMetaAsmImpApi;
+        //mutable assembly_metadata_type *m_pAsmMeta;
+        //mutable ATL::CComPtr<IMetaDataAssemblyImport> m_pMetaAsmImpApi;
         mutable bool m_asmPropsInitialized;
         mutable std::wstring m_name;
+        mutable bool m_nameInitialized;
         mutable boost::shared_ptr<strong_name_key_type const> m_pSnKey;
     };
 
-    typedef BaseAssemblyNameMetadata<> AssemblyNameMetadata;
-
+    
+    
+    
+    
     template<
-        class AssemblyNameMetadataApiHolder = ApiHolders::DefaultAssemblyNameMetadataApiHolder
+        class AssemblyNameMetadataApiHolder
     >    
-    struct BaseAssemblyNameMetadataEqualTo;
+    class BaseAssemblyNameMetadataHash : 
+        Traits::HashComputable<BaseAssemblyNameMetadata<AssemblyNameMetadataApiHolder> const *>
+    {
+    public:
+        result_type operator()(param_type v) const
+        {
+            using namespace boost;
+            using namespace Urasandesu::CppAnonym::Collections;
+            using namespace Urasandesu::CppAnonym::Utilities;
 
-    typedef BaseAssemblyNameMetadataEqualTo<> AssemblyNameMetadataEqualTo;
+            _ASSERTE(v != NULL);
 
+            std::size_t seed = 0;
+            hash_combine(seed, hash_value(v->GetName()));
+            hash_combine(seed, HashValue(&v->GetResolutionScope()));
+            return seed;
+        }
+    };
+
+    
+    
+    
+    
     template<
-        class AssemblyNameMetadataApiHolder = ApiHolders::DefaultAssemblyNameMetadataApiHolder
+        class AssemblyNameMetadataApiHolder
     >    
-    struct BaseAssemblyNameMetadataHash;
+    class BaseAssemblyNameMetadataEqualTo : 
+        Traits::EqualityComparable<BaseAssemblyNameMetadata<AssemblyNameMetadataApiHolder> const *>
+    {
+    public:
+        result_type operator()(param_type x, param_type y) const
+        {
+            _ASSERTE(x != NULL && y != NULL);
 
-    typedef BaseAssemblyNameMetadataHash<> AssemblyNameMetadataHash;
+            return x->GetName() == y->GetName() &&
+                   &x->GetResolutionScope() == &y->GetResolutionScope();
+        }
+    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

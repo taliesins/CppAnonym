@@ -2,72 +2,48 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
 #define URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
 
-#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
-#include <Urasandesu/CppAnonym/IHeapContent.h>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEKEYAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabelFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
@@ -82,6 +58,10 @@
 #include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
@@ -94,61 +74,53 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class AssemblyMetadataApiHolder
     >    
     class BaseAssemblyMetadata :
-        public IHeapContent<mdAssembly>, 
-        public HeapProvider<
-            mdToken, 
+        public SimpleHeapProvider<
             boost::mpl::vector<
-                typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type
+                ObjectTag<typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type, QuickHeap>
             >
         >
     {
     public:
         typedef BaseAssemblyMetadata<AssemblyMetadataApiHolder> this_type;
         
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
         typedef IMetaDataImport2 metadata_import_api_type;
 
-        typedef HeapProvider<mdToken, boost::mpl::vector<type_metadata_type> > heap_provider_type;
-        typedef typename heap_provider_type::type_decided_by<type_metadata_type>::type type_metadata_heap_type;
+        typedef ObjectTag<type_metadata_type, QuickHeap> type_metadata_obj_tag_type;
+        typedef typename type_decided_by<type_metadata_obj_tag_type>::type type_metadata_heap_type;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(AsmNameMeta, type_name_metadata_heap_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(AsmNameMeta, type_name_metadata_heap_type);
         typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(assembly_name_metadata_type, type_name_metadata_heap_type), 
+            CPP_ANONYM_HAS_MEMBER_TYPE(AsmNameMeta, type_name_metadata_heap_type, assembly_name_metadata_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(AsmNameMeta, type_name_metadata_heap_type, assembly_name_metadata_type), 
             boost::mpl::void_
         >::type type_name_metadata_heap_type;
 
         BaseAssemblyMetadata() : 
+            m_mda(mdAssemblyNil),
             m_pMetaDisp(NULL), 
-            m_token(mdAssemblyNil), 
-            m_pAsmNameMeta(NULL)
+            m_pAsmNameMeta(NULL), 
+            m_openFlags(ofRead)
         { }
-
-        __declspec(deprecated("This method is temporarily deprecated."))
-        void Init(metadata_dispenser_type &metaDisp, metadata_import_api_type &metaImpApi) const
-        {
-            _ASSERTE(m_pMetaDisp == NULL);
-            _ASSERTE(m_pMetaImpApi.p == NULL);
-            
-            m_pMetaDisp = &metaDisp;
-            m_pMetaImpApi = &metaImpApi;
-        }
 
         void Init(metadata_dispenser_type &metaDisp) const
         {
-            // This method implementation is temporary.
+            _ASSERTE(m_pMetaDisp == NULL);
             m_pMetaDisp = &metaDisp;
         }
 
         template<class T>
-        T const *FindType() const { return static_cast<metadata_dispenser_type const *>(m_pMetaDisp)->FindType<T>(); }
+        T const *FindType() const { _ASSERTE(m_pMetaDisp != NULL); return static_cast<metadata_dispenser_type const *>(m_pMetaDisp)->FindType<T>(); }
 
         template<class T>
-        T *FindType() { return m_pMetaDisp->FindType<T>(); }
+        T *FindType() { _ASSERTE(m_pMetaDisp != NULL); return m_pMetaDisp->FindType<T>(); }
       
         template<>
         this_type const *FindType<this_type>() const { return this; }
@@ -163,94 +135,107 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         mdAssembly GetToken() const
         {
-            _ASSERTE(m_pMetaImpApi.p != NULL);
-
-            if (m_token == mdAssemblyNil)
+            if (m_mda == mdAssemblyNil)
             {
-                HRESULT hr = E_FAIL;
-
-                if (m_pMetaAsmImpApi.p == NULL)
-                {
-                    hr = m_pMetaImpApi->QueryInterface(IID_IMetaDataAssemblyImport, 
-                                                       reinterpret_cast<void **>(&m_pMetaAsmImpApi));
-                    if (FAILED(hr))
-                        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-                }
-
-                hr = m_pMetaAsmImpApi->GetAssemblyFromScope(&m_token);
+                this_type *mutableThis = const_cast<this_type *>(this);
+                com_meta_data_assembly_import_type &comMetaAsmImp = mutableThis->GetCOMMetaDataAssemblyImport();
+                mdAssembly mda = mdAssemblyNil;
+                HRESULT hr = comMetaAsmImp.GetAssemblyFromScope(&mda);
                 if (FAILED(hr))
                     BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+
+                m_mda = mda;
             }
 
-            return m_token;
+            return m_mda;
         }
 
         type_metadata_type const *GetType(std::wstring const &name) const
         {
-            // This method implementation is temporary.
-            this_type *mutableThis = const_cast<this_type *>(this);
+            if (m_typeStrNameToIndex.find(name) == m_typeStrNameToIndex.end())
+            {
+                m_typeStrNameToIndex[name] = MAXULONG_PTR;
+            }
 
-            type_metadata_type *pTypeMeta = NULL;
-            pTypeMeta = mutableThis->TypeMetadataHeap().New(0x02000001);
-            pTypeMeta->Init(*mutableThis);
-            return pTypeMeta;
-            //_ASSERTE(m_pMetaImpApi.p != NULL);
+            SIZE_T index = m_typeStrNameToIndex[name];
+            if (index == MAXULONG_PTR)
+            {
+                this_type *mutableThis = const_cast<this_type *>(this);
 
-            //if (m_typeMetas.find(name) == m_typeMetas.end())
-            //{
-            //    m_typeMetas[name] = mdTokenNil;
-            //}
+                com_meta_data_import_type &comMetaImp = mutableThis->GetCOMMetaDataImport();
 
-            //mdToken mdt = m_typeMetas[name];
-            //if (mdt == mdTokenNil)
-            //{
-            //    mdTypeDef mdtd = mdTypeDefNil;
-            //    HRESULT hr = m_pMetaImpApi->FindTypeDefByName(name.c_str(), NULL, &mdtd);
-            //    if (FAILED(hr))
-            //        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+                mdTypeDef mdtd = mdTypeDefNil;
+                HRESULT hr = comMetaImp.FindTypeDefByName(name.c_str(), NULL, &mdtd);
+                if (FAILED(hr))
+                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
-            //    this_type *mutableThis = const_cast<this_type *>(this);
-            //    typedef typename type_decided_by<type_metadata_type>::type TypeMetadataHeap;
-            //    TypeMetadataHeap &heap = mutableThis->Of<type_metadata_type>();
-            //    type_metadata_type *pTypeMeta = heap.New(mdtd);
-            //    pTypeMeta->Init(*mutableThis, *m_pMetaImpApi);
+                type_metadata_type *pTypeMeta = mutableThis->TypeMetadataHeap().New();
+                pTypeMeta->Init(*mutableThis);
+                pTypeMeta->SetToken(mdtd);
 
-            //    m_typeMetas[name] = mdtd;
+                m_typeStrNameToIndex[name] = mutableThis->TypeMetadataHeap().Size() - 1;
+                m_typeTokenToIndex[mdtd] = mutableThis->TypeMetadataHeap().Size() - 1;
 
-            //    return pTypeMeta;
-            //}
-            //else
-            //{
-            //    return GetTypeFromTokenCore(mdt);
-            //}
+                return pTypeMeta;
+            }
+            else
+            {
+                return TypeMetadataHeap()[index];
+            }
+        }
+
+        type_metadata_type const *GetType(mdToken mdtType) const
+        {
+            if (TypeFromToken(mdtType) == mdtTypeRef)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            else if (TypeFromToken(mdtType) == mdtTypeDef)
+            {
+                if (m_typeTokenToIndex.find(mdtType) == m_typeTokenToIndex.end())
+                {
+                    m_typeTokenToIndex[mdtType] = MAXULONG_PTR;
+                }
+
+                SIZE_T index = m_typeTokenToIndex[mdtType];
+                if (index == MAXULONG_PTR)
+                {
+                    this_type *mutableThis = const_cast<this_type *>(this);
+
+                    type_metadata_type *pTypeMeta = mutableThis->TypeMetadataHeap().New();
+                    pTypeMeta->Init(*mutableThis);
+                    pTypeMeta->SetToken(mdtType);
+
+                    std::wstring name = pTypeMeta->GetTypeName()->GetName();
+                    m_typeStrNameToIndex[name] = mutableThis->TypeMetadataHeap().Size() - 1;
+
+                    return pTypeMeta;
+                }
+                else
+                {
+                    return TypeMetadataHeap()[index];
+                }
+            }
+            else
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
         }
 
         assembly_name_metadata_type const *GetAssemblyName() const
         {
-            // This method implementation is temporary.
-            _ASSERTE(m_pMetaDisp != NULL);
-            
             if (m_pAsmNameMeta == NULL)
             {
-                m_pAsmNameMeta = m_pMetaDisp->AssemblyNameMetadataHeap().New();
+                this_type *mutableThis = const_cast<this_type *>(this);
+                metadata_dispenser_type *pMetaDisp = NULL;
+                pMetaDisp = mutableThis->FindType<metadata_dispenser_type>();
+
+                m_pAsmNameMeta = pMetaDisp->AssemblyNameMetadataHeap().New();
                 m_pAsmNameMeta->SetResolutionScope(*m_pMetaDisp);
-                m_pAsmNameMeta->SetToken(GetKey());
+                m_pAsmNameMeta->SetToken(GetToken());
+                m_pAsmNameMeta->SetResolvedAssembly(*mutableThis);
             }
             return m_pAsmNameMeta;
-            //typedef typename type_decided_by<assembly_name_metadata_type>::type AssemblyNameMetadataHeap;
-            //AssemblyNameMetadataHeap const &heap = Of<assembly_name_metadata_type>();
-            //if (heap.Exists(GetToken()))
-            //{
-            //    return heap.Get(GetToken());
-            //}
-            //else
-            //{
-            //    AssemblyNameMetadataHeap *pHeap = const_cast<AssemblyNameMetadataHeap *>(&heap);
-            //    assembly_name_metadata_type const *pAsmNameMeta = pHeap->New(GetToken());
-            //    this_type *mutableThis = const_cast<this_type *>(this);
-            //    pAsmNameMeta->Init(*mutableThis, *m_pMetaAsmImpApi);
-            //    return pAsmNameMeta;
-            //}
         }
 
     private:
@@ -259,14 +244,29 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         >    
         friend class BaseTypeMetadata;
 
+        template<
+            class TypeNameMetadataApiHolder
+        >
+        friend class BaseTypeNameMetadata;
+
+        template<
+            class MetadataDispenserApiHolder
+        >    
+        friend class BaseMetadataDispenser;
+
+        template<
+            class AssemblyNameMetadataApiHolder
+        >    
+        friend class BaseAssemblyNameMetadata;
+
         type_metadata_heap_type &TypeMetadataHeap()
         {
-            return heap_provider_type::Of<type_metadata_type>();
+            return Of<type_metadata_obj_tag_type>();
         }
         
         type_metadata_heap_type const &TypeMetadataHeap() const
         {
-            return heap_provider_type::Of<type_metadata_type>();
+            return Of<type_metadata_obj_tag_type>();
         }
 
         type_name_metadata_heap_type &TypeNameMetadataHeap()
@@ -279,22 +279,96 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return GetAssemblyName()->TypeNameMetadataHeap();
         }
 
-        type_metadata_type const *GetTypeFromTokenCore(mdToken mdt) const
+        com_meta_data_assembly_import_type &GetCOMMetaDataAssemblyImport()
         {
-            typedef typename type_decided_by<type_metadata_type>::type TypeMetadataHeap;
-            TypeMetadataHeap const &heap = Of<type_metadata_type>();
-            return heap.Get(mdt);
+            if (m_pComMetaAsmImp.p == NULL)
+            {
+                this_type *mutableThis = const_cast<this_type *>(this);
+                
+                com_meta_data_import_type &comMetaImp = mutableThis->GetCOMMetaDataImport();
+                HRESULT hr = comMetaImp.QueryInterface(IID_IMetaDataAssemblyImport, 
+                                               reinterpret_cast<void **>(&m_pComMetaAsmImp));
+                if (FAILED(hr))
+                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+            }
+            return *m_pComMetaAsmImp;
         }
+
+        com_meta_data_import_type &GetCOMMetaDataImport()
+        {
+            namespace fs = boost::filesystem;
+
+            if (m_pComMetaImp.p == NULL)
+            {
+                this_type *mutableThis = const_cast<this_type *>(this);
+
+                metadata_dispenser_type *pMetaDisp = NULL;
+                pMetaDisp = mutableThis->FindType<metadata_dispenser_type>();
+
+                com_meta_data_dispenser_type &comMetaDisp = pMetaDisp->GetCOMMetaDataDispenser();
+
+                fs::path const &asmPath = GetAssemblyFilePath();
+                DWORD openFlags = GetOpenFlags();
+                REFIID riid = GetCOMMetaDataImportIID();
+                HRESULT hr = comMetaDisp.OpenScope(asmPath.c_str(), openFlags, 
+                                                   riid, reinterpret_cast<IUnknown **>(&m_pComMetaImp));
+                if (FAILED(hr))
+                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+            }
+            return *m_pComMetaImp.p;
+        }
+
+        boost::filesystem::path const &GetAssemblyFilePath() const
+        {
+            return m_asmPath;
+        }
+
+        void SetAssemblyFilePath(boost::filesystem::path const &asmPath)
+        {
+            _ASSERTE(!asmPath.empty());
+            _ASSERTE(m_asmPath.empty());
+            
+            m_asmPath = asmPath;
+        }
+
+        DWORD GetOpenFlags() const
+        {
+            return m_openFlags;
+        }
+
+        void SetOpenFlags(DWORD openFlags)
+        {
+            _ASSERTE(openFlags != ofRead);
+            _ASSERTE(m_openFlags == ofRead);
+
+            m_openFlags = openFlags;
+        }
+
+        REFIID GetCOMMetaDataImportIID()
+        {
+            return IID_IMetaDataImport2;
+        }
+
+        //type_metadata_type const *GetTypeFromTokenCore(mdToken mdt) const
+        //{
+        //    typedef typename type_decided_by<type_metadata_type>::type TypeMetadataHeap;
+        //    TypeMetadataHeap const &heap = Of<type_metadata_type>();
+        //    return heap.Get(mdt);
+        //}
+
+        mutable mdAssembly m_mda;
+
+        boost::filesystem::path m_asmPath;
+        DWORD m_openFlags;
 
         mutable metadata_dispenser_type *m_pMetaDisp;
         mutable assembly_name_metadata_type *m_pAsmNameMeta;
-        mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
-        mutable ATL::CComPtr<IMetaDataAssemblyImport> m_pMetaAsmImpApi;
-        mutable mdAssembly m_token;
-        mutable boost::unordered_map<std::wstring, mdToken> m_typeMetas;
+        mutable ATL::CComPtr<com_meta_data_import_type> m_pComMetaImp;
+        mutable ATL::CComPtr<com_meta_data_assembly_import_type> m_pComMetaAsmImp;
+        //mutable boost::unordered_map<std::wstring, mdToken> m_typeMetas;
+        mutable boost::unordered_map<std::wstring, SIZE_T> m_typeStrNameToIndex;
+        mutable boost::unordered_map<mdToken, SIZE_T>  m_typeTokenToIndex;
     };
-
-    typedef BaseAssemblyMetadata<> AssemblyMetadata;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

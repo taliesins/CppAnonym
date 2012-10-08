@@ -13,6 +13,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseTypeMetadata;
 
+    typedef BaseTypeMetadata<> TypeMetadata;
+
+    template<
+        class TypeMetadataApiHolder = ApiHolders::DefaultTypeMetadataApiHolder
+    >    
+    class BaseTypeMetadataVectorHash;
+
+    typedef BaseTypeMetadataVectorHash<> TypeMetadataVectorHash;
+
+    template<
+        class TypeMetadataApiHolder = ApiHolders::DefaultTypeMetadataApiHolder
+    >    
+    class BaseTypeMetadataVectorEqualTo;
+
+    typedef BaseTypeMetadataVectorEqualTo<> TypeMetadataVectorEqualTo;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATAFWD_HPP

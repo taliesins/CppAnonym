@@ -28,7 +28,7 @@
 #include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPI_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
 
@@ -70,6 +70,10 @@
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYNAMEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyNameMetadataApiHolder.h>
 #endif
 
 //namespace Urasandesu { namespace CppAnonym { namespace Metadata {
@@ -302,7 +306,10 @@ namespace {
         {
             typedef INT metadata_dispenser_api_type;
             typedef boost::mpl::vector<IMetaDataImport2> external_api_types;
-            typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
+            typedef mpl::map<
+                mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>,
+                mpl::pair<IMetaDataImport2, IMetaDataImport2>
+            > api_cartridges;
         };
 
         typedef BaseAssemblyMetadata<TestAssemblyMetadataApi> AssemblyMetadata;

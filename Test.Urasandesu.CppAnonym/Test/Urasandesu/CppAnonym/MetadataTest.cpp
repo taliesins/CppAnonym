@@ -8,10 +8,6 @@
 #include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPENAMEMETADATA_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadata.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
 #endif
@@ -40,20 +36,40 @@
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
-#include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_CALLINGCONVENTIONS_H
-#include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymException.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
+#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/HeapProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPENAMEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
+#include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CALLINGCONVENTIONS_H
+#include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
@@ -68,28 +84,16 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
+#include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
 #include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
-#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPOINTER_H
-#include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/HeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
-#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABEL_HPP
@@ -118,26 +122,6 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYNAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyNameMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPENAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeNameMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODNAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodNameMetadataApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
@@ -172,10 +156,6 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
-#include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_IMETADATAIMPORT2IMPL_HPP
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
@@ -187,6 +167,23 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODNAMEMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadata.hpp>
 #endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFO_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEY_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
+#endif
+
 
 // Forward Declarations
 namespace Mock9254318F {
@@ -246,10 +243,60 @@ namespace Mock9254318F {
         HRESULT FinalConstruct() { return S_OK; }
         void FinalRelease() { }
     };
+
+    struct TestApiHolder;
+
+    namespace Detail {
+
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Fusion;
+        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
+        using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::StrongNaming;
+        using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
+
+        struct TestApiHolderImpl
+        {
+            typedef map<
+                pair<MetadataDispenserLabel, BaseMetadataDispenser<TestApiHolder> >, 
+                pair<AssemblyMetadataLabel, BaseAssemblyMetadata<TestApiHolder> >, 
+                pair<AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
+                pair<AssemblyNameMetadataHashLabel, BaseAssemblyNameMetadataHash<TestApiHolder> >, 
+                pair<AssemblyNameMetadataEqualToLabel, BaseAssemblyNameMetadataEqualTo<TestApiHolder> >, 
+                pair<TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
+                pair<TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
+                pair<TypeNameMetadataHashLabel, BaseTypeNameMetadataHash<TestApiHolder> >, 
+                pair<TypeNameMetadataEqualToLabel, BaseTypeNameMetadataEqualTo<TestApiHolder> >, 
+                pair<MethodMetadataLabel, BaseMethodMetadata<TestApiHolder> >, 
+                pair<MethodNameMetadataLabel, BaseMethodNameMetadata<TestApiHolder> >,
+                pair<MethodNameMetadataHashLabel, BaseMethodNameMetadataHash<TestApiHolder> >,
+                pair<MethodNameMetadataEqualToLabel, BaseMethodNameMetadataEqualTo<TestApiHolder> >,                 
+                pair<RuntimeHostLabel, Mock9254318F::MockRuntimeHost>, 
+                pair<MetadataInfoLabel, Mock9254318F::MockMetadataInfo>, 
+                pair<FusionInfoLabel, BaseFusionInfo<TestApiHolder> >,
+                pair<StrongNameKeyLabel, BaseStrongNameKey<TestApiHolder> >, 
+                pair<StrongNameInfoLabel, BaseStrongNameInfo<TestApiHolder> >, 
+                pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
+                pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>,
+                pair<IMetaDataImport2, IMetaDataImport2> 
+            > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct TestApiHolder : 
+        Detail::TestApiHolderImpl
+    {
+    };
+
 }   // namespace Mock9254318F {
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_Test.*
 namespace {
+
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_All_01)
     {
@@ -258,37 +305,20 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Fusion;
         using namespace Urasandesu::CppAnonym::Metadata;
-
-
-        struct TestApiHolder
-        {
-            typedef mpl::map<
-                mpl::pair<Metadata::Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestApiHolder> >, 
-                
-                mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Mock9254318F::MockRuntimeHost>, 
-                mpl::pair<Metadata::Interfaces::MetadataInfoLabel, Mock9254318F::MockMetadataInfo>, 
-                mpl::pair<Fusion::Interfaces::FusionInfoLabel, BaseFusionInfo<TestApiHolder> >,
-                mpl::pair<IMetaDataImport2, IMetaDataImport2> 
-            > api_cartridges;
-        };
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::StrongNaming;
 
         typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
         typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<TestApiHolder> FusionInfo;
+        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
 
-        typedef BaseMetadataDispenser<TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<TestApiHolder> MethodNameMetadata;
+        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
+        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
+        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
+        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
+        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
+        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
+        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -314,7 +344,7 @@ namespace {
         
         AssemblyMetadata const *pMSCorLib = NULL;
         pMSCorLib = pMSCorLibName->Resolve();
-        ASSERT_EQ(0x20000001, pMSCorLib->GetKey());
+        ASSERT_EQ(0x20000001, pMSCorLib->GetToken());
         
         TypeNameMetadata *pConsoleName = NULL;
         {
@@ -327,7 +357,7 @@ namespace {
 
         TypeMetadata const *pConsole = NULL;
         pConsole = pConsoleName->Resolve();
-        ASSERT_EQ(0x02000001, pConsole->GetKey());
+        ASSERT_EQ(0x02000089, pConsole->GetToken());
 
         MethodNameMetadata *pWriteLineName = NULL;
         {
@@ -351,36 +381,17 @@ namespace {
         using namespace Urasandesu::CppAnonym::Fusion;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-
-        struct TestApiHolder
-        {
-            typedef mpl::map<
-                mpl::pair<Metadata::Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestApiHolder> >, 
-                
-                mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Mock9254318F::MockRuntimeHost>, 
-                mpl::pair<Metadata::Interfaces::MetadataInfoLabel, Mock9254318F::MockMetadataInfo>, 
-                mpl::pair<Fusion::Interfaces::FusionInfoLabel, BaseFusionInfo<TestApiHolder> >, 
-                mpl::pair<IMetaDataImport2, IMetaDataImport2>
-            > api_cartridges;
-        };
-
         typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
         typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<TestApiHolder> FusionInfo;
+        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
 
-        typedef BaseMetadataDispenser<TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<TestApiHolder> MethodNameMetadata;
+        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
+        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
+        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
+        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
+        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
+        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
+        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -414,7 +425,7 @@ namespace {
 
         TypeMetadata const *pConsole = NULL;
         pConsole = pConsoleName->Resolve();
-        ASSERT_EQ(0x02000001, pConsole->GetKey());
+        ASSERT_EQ(0x02000089, pConsole->GetToken());
     }
 
 
@@ -428,36 +439,17 @@ namespace {
         using namespace Urasandesu::CppAnonym::Fusion;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-
-        struct TestApiHolder
-        {
-            typedef mpl::map<
-                mpl::pair<Metadata::Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestApiHolder> >, 
-                
-                mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Mock9254318F::MockRuntimeHost>, 
-                mpl::pair<Metadata::Interfaces::MetadataInfoLabel, Mock9254318F::MockMetadataInfo>, 
-                mpl::pair<Fusion::Interfaces::FusionInfoLabel, BaseFusionInfo<TestApiHolder> >,
-                mpl::pair<IMetaDataImport2, IMetaDataImport2>
-            > api_cartridges;
-        };
-
         typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
         typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<TestApiHolder> FusionInfo;
+        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
 
-        typedef BaseMetadataDispenser<TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<TestApiHolder> MethodNameMetadata;
+        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
+        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
+        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
+        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
+        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
+        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
+        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -502,7 +494,7 @@ namespace {
 
         MethodMetadata const *pWriteLine = NULL;
         pWriteLine = pWriteLineName->Resolve();
-        ASSERT_EQ(0x06000001, pWriteLine->GetKey());
+        ASSERT_EQ(0x06000001, pWriteLine->GetToken());
     }
 
 
@@ -516,36 +508,17 @@ namespace {
         using namespace Urasandesu::CppAnonym::Fusion;
         using namespace Urasandesu::CppAnonym::Metadata;
 
-
-        struct TestApiHolder
-        {
-            typedef mpl::map<
-                mpl::pair<Metadata::Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestApiHolder> >, 
-                mpl::pair<Metadata::Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestApiHolder> >, 
-                
-                mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Mock9254318F::MockRuntimeHost>, 
-                mpl::pair<Metadata::Interfaces::MetadataInfoLabel, Mock9254318F::MockMetadataInfo>, 
-                mpl::pair<Fusion::Interfaces::FusionInfoLabel, BaseFusionInfo<TestApiHolder> >,
-                mpl::pair<IMetaDataImport2, IMetaDataImport2> 
-            > api_cartridges;
-        };
-
         typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
         typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<TestApiHolder> FusionInfo;
+        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
 
-        typedef BaseMetadataDispenser<TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<TestApiHolder> MethodNameMetadata;
+        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
+        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
+        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
+        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
+        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
+        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
+        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";

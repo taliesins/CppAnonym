@@ -54,6 +54,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 TK_R8_HFA = ELEMENT_TYPE_R8_HFA, 
                 TK_UNREACHED
             };
+
+            std::vector<COR_SIGNATURE> const &GetSignatures() const
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
         };
 
     }   // Detail

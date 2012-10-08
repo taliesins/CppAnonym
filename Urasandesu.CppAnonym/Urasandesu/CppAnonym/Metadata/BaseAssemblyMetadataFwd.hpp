@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseAssemblyMetadata;
 
+    typedef BaseAssemblyMetadata<> AssemblyMetadata;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
