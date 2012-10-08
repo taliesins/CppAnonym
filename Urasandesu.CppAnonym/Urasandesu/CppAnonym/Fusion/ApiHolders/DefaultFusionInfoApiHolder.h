@@ -27,7 +27,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
         {
             typedef map<
                 pair<RuntimeHostLabel, RuntimeHost>,
-                //pair<AssemblyInfoLabel, AssemblyInfo>,
+                pair<AssemblyInfoLabel, AssemblyInfo>,
                 pair<IAssemblyCache, IAssemblyCache>
             > api_cartridges;
         };

@@ -75,7 +75,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             if (m_mdt == mdTokenNil)
             {
-                if (boost::shared_ptr<this_type> p = MapFirstAncestor<this_type>())
+                if (this_type *p = MapFirstAncestor<this_type>())
                 {
                     return p->GetToken();
                 }
@@ -85,7 +85,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
                     this_type *pMutableThis = const_cast<this_type *>(this);
 
-                    boost::shared_ptr<assembly_metadata_type> pAsmMeta = MapFirst<assembly_metadata_type>();
+                    assembly_metadata_type *pAsmMeta = MapFirst<assembly_metadata_type>();
                 
                     com_meta_data_import_type &comMetaImp = pAsmMeta->GetCOMMetaDataImport();
 
@@ -104,14 +104,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
 
-        boost::shared_ptr<typename base_type::this_type const> GetBaseType() const
+        typename base_type::this_type const *GetBaseType() const
         {
             if (!m_pBaseType)
                 FillPropertiesIfNecessary();
-            return m_pBaseType;
+            
+            if (!m_pBaseType.IsPersisted())
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_pBaseType.Get();
         }
 
-        boost::shared_ptr<typename base_type::i_module_metadata_type const> GetResolutionScope() const
+        typename base_type::i_module_metadata_type const *GetResolutionScope() const
         {
             return MapFirst<module_metadata_type>();
         }
@@ -124,14 +129,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_sigs;
         }
 
-        std::vector<boost::shared_ptr<base_type const> > const &GetGenericArguments() const
+        Utilities::TempPtrVector<base_type const> const &GetGenericArguments() const
         {
             if (!m_genericArgsInit)
             {
                 this_type *pMutableThis = const_cast<this_type *>(this);
 
-                boost::shared_ptr<assembly_metadata_type> pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
-                boost::shared_ptr<module_metadata_type> pMod = pMutableThis->MapFirst<module_metadata_type>();
+                assembly_metadata_type *pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
+                module_metadata_type *pMod = pMutableThis->MapFirst<module_metadata_type>();
                 
                 com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
 
@@ -155,8 +160,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     m_genericArgs.reserve(m_genericArgs.size() + count);
                     for (UINT i = 0; i < count; ++i)
                     {
-                        boost::shared_ptr<this_type> pType;
-                        pType = pMod->NewType(m_mdgps[i]);
+                        Utilities::TempPtr<this_type> pType = pMod->NewType(m_mdgps[i]);
                         m_genericArgs.push_back(pType);
                     }
                 } while (0 < count);
@@ -185,7 +189,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             else
             {
                 nested_type_metadata_chain_type &chain = ChainFrom<this_type>();
-                boost::shared_ptr<base_type> pGenericTypeDef = chain.GetPrevious().lock();
+                base_type *pGenericTypeDef = chain.GetPrevious();
                 return !pGenericTypeDef;
             }
         }
@@ -286,8 +290,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             this_type *pMutableThis = const_cast<this_type *>(this);
 
-            boost::shared_ptr<module_metadata_type> pMod = MapFirst<module_metadata_type>();
-            boost::shared_ptr<assembly_metadata_type> pAsm = pMod->MapFirst<assembly_metadata_type>();
+            module_metadata_type *pMod = MapFirst<module_metadata_type>();
+            assembly_metadata_type *pAsm = pMod->MapFirst<assembly_metadata_type>();
 
             com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
 
@@ -357,7 +361,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     }
                     else
                     {
-                        boost::shared_ptr<base_type const> pBaseType = GetBaseType();
+                        base_type const *pBaseType = GetBaseType();
                         if (pBaseType && pBaseType->GetName() == MetadataSpecialValues::TYPE_NAME_OF_VALUETYPE)
                         {
                             m_kind = TypeKinds::TK_VALUETYPE;
@@ -410,13 +414,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         mutable std::wstring m_name;
-        mutable boost::shared_ptr<base_type const> m_pBaseType;
+        mutable Utilities::TempPtr<base_type const> m_pBaseType;
         mutable mdToken m_mdt;
         mutable bool m_genericArgsInit;
         mutable bool m_kindInitialized;
         mutable TypeKinds m_kind;
         mutable std::vector<COR_SIGNATURE> m_sigs;
-        mutable std::vector<boost::shared_ptr<base_type const> > m_genericArgs;
+        mutable Utilities::TempPtrVector<base_type const> m_genericArgs;
         mutable boost::unordered_map<boost::shared_ptr<method_metadata_type const>, 
                                      size_t, 
                                      i_method_metadata_hash_type, 

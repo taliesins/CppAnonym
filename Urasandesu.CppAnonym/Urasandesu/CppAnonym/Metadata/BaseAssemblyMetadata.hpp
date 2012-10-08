@@ -84,28 +84,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
         
-        boost::shared_ptr<typename base_type::strong_name_key_type const> GetStrongNameKey() const
+        Utilities::AutoPtr<typename base_type::strong_name_key_type const> GetStrongNameKey() const
         {
             BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
         
-        boost::shared_ptr<typename base_type::metadata_dispenser_type const> GetResolutionScope() const
+        typename base_type::metadata_dispenser_type const *GetResolutionScope() const
         {
             return MapFirst<typename base_type::metadata_dispenser_type>();
         }
 
-        boost::shared_ptr<module_metadata_type const> GetModule(std::wstring const &name) const
+        module_metadata_type const *GetModule(std::wstring const &name) const
         {
-            boost::shared_ptr<module_metadata_type> pMod;
-            pMod = NewModule(name);
+            Utilities::TempPtr<module_metadata_type> pMod = NewModule(name);
 
-            boost::shared_ptr<module_metadata_type> pExistingMod;
+            module_metadata_type *pExistingMod = NULL;
             if (!TryGetModule(*pMod, pExistingMod))
             {
-                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
                 module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-                m_modToIndex[pMod] = provider.Register(pMod);
-                return pMod;
+                m_modToIndex[pMod.Get()] = provider.RegisterObject(pMod);
+                return pMod.Get();
             }
             else
             {
@@ -126,29 +125,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
-        boost::shared_ptr<module_metadata_type> NewModule(std::wstring const &name) const
+        Utilities::TempPtr<module_metadata_type> NewModule(std::wstring const &name) const
         {
-            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
             module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
             assembly_metadata_chain_type &chain = ChainFrom<typename base_type::metadata_dispenser_type>();
-            boost::shared_ptr<module_metadata_type> pMod = chain.NewObject<module_metadata_type>(provider);
+            Utilities::TempPtr<module_metadata_type> pMod = chain.NewObject<module_metadata_type>(provider);
             pMod->SetName(name);
             return pMod;
         }
 
-        bool TryGetModule(module_metadata_type const &keyMod, boost::shared_ptr<module_metadata_type> &pExistingMod) const
+        bool TryGetModule(module_metadata_type const &keyMod, module_metadata_type *&pExistingMod) const
         {
-            boost::shared_ptr<module_metadata_type const> pKeyMod(&keyMod, Utilities::MakeNullDeleter(&keyMod));
-            if (m_modToIndex.find(pKeyMod) == m_modToIndex.end())
+            if (m_modToIndex.find(&keyMod) == m_modToIndex.end())
             {
                 return false;
             }
             else
             {
-                size_t index = m_modToIndex[pKeyMod];
-                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                size_t index = m_modToIndex[&keyMod];
+                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
                 module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-                pExistingMod = provider[index];
+                pExistingMod = provider.GetObject(index);
                 return true;
             }
         }
@@ -176,7 +174,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             {
                 this_type *pMutableThis = const_cast<this_type *>(this);
 
-                boost::shared_ptr<metadata_dispenser_type> pMetaDisp;
+                metadata_dispenser_type *pMetaDisp = NULL;
                 pMetaDisp = pMutableThis->MapFirst<metadata_dispenser_type>();
 
                 com_meta_data_dispenser_type &comMetaDisp = pMetaDisp->GetCOMMetaDataDispenser();
@@ -201,8 +199,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 _ASSERTE(!m_name.empty());
 
                 fusion_info_type const *pFuInfo = Map<fusion_info_type>();
-                assembly_info_type *pAsmInfo;
-                pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name); // [2012/09/03 22:17:56] この辺実装中。。。まだまだビルドは通らない。
+                AutoPtr<assembly_info_type> pAsmInfo;
+                pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name);
                 m_asmPath = pAsmInfo->GetAssemblyPath();
             }
             return m_asmPath;
@@ -240,7 +238,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         DWORD m_openFlags;
         mutable ATL::CComPtr<com_meta_data_assembly_import_type> m_pComMetaAsmImp;
         mutable ATL::CComPtr<com_meta_data_import_type> m_pComMetaImp;
-        mutable boost::unordered_map<boost::shared_ptr<module_metadata_type const>, 
+        mutable boost::unordered_map<module_metadata_type const *, 
                                      size_t, 
                                      i_module_metadata_hash_type, 
                                      i_module_metadata_equal_to_type> m_modToIndex;

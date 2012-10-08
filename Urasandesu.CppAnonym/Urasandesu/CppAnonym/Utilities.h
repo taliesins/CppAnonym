@@ -50,8 +50,8 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP

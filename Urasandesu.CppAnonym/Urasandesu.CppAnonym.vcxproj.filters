@@ -1062,16 +1062,16 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

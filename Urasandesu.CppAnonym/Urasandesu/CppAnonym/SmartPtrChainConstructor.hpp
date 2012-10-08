@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
 #define URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTORFWD_HPP
 #include <Urasandesu/CppAnonym/SmartPtrChainConstructorFwd.hpp>
 #endif
@@ -14,7 +18,7 @@ namespace Urasandesu { namespace CppAnonym {
             class T,
             class PersistableHeapProvider
         >
-        static typename PersistableHeapProvider::static_object_temp_ptr_type NewRootObject()
+        static Utilities::TempPtr<T> NewRootObject()
         {
             return PersistableHeapProvider::NewStaticObject();
         }
@@ -24,10 +28,10 @@ namespace Urasandesu { namespace CppAnonym {
             class Current,
             class PersistableHeapProvider
         >
-        static typename PersistableHeapProvider::object_temp_ptr_type NewObject(Current &current, PersistableHeapProvider &provider)
+        static Utilities::TempPtr<T> NewObject(Current &current, PersistableHeapProvider &provider)
         {
             typedef typename Current::current_type previous_type;
-            typename PersistableHeapProvider::object_temp_ptr_type pObj(provider.NewObject());
+            Utilities::TempPtr<T> pObj(provider.NewObject());
             pObj->ChainFrom<previous_type>().SetPrevious(current);
             return pObj;
         }

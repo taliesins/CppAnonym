@@ -12,10 +12,11 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace _BEFF6DE6 {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class ProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE DisposableHeapProviderImpl : 
@@ -33,18 +34,10 @@ namespace Urasandesu { namespace CppAnonym {
 
             typedef base_type::object_heap_type object_heap_type;
             typedef base_type::object_heap_deleter_type object_heap_deleter_type;
-            typedef base_type::object_ptr_type object_ptr_type;
-            typedef base_type::object_const_ptr_type object_const_ptr_type;
-            typedef base_type::object_ptr_vector_type object_ptr_vector_type;
-            typedef typename base_type::size_type size_type;
-            
-            typedef base_type::static_object_temp_ptr_type static_object_temp_ptr_type;
 
-            typedef base_type::object_temp_ptr_type object_temp_ptr_type;
-
-            static void Destruct(object_ptr_vector_type &objects)
+            static void Destruct(std::vector<object_type *> &objects)
             {
-                typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
+                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
                     (*ri)->Dispose();
             }
@@ -54,34 +47,34 @@ namespace Urasandesu { namespace CppAnonym {
                 Destruct(base_type::Objects());
             }
 
-            static static_object_temp_ptr_type NewStaticObject()
+            static TempPtr<object_type> NewStaticObject()
             {
-                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
+                return TempPtr<object_type>(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            static size_type RegisterStaticObject(static_object_temp_ptr_type const &p)
+            static size_t RegisterStaticObject(TempPtr<object_type> &p)
             {
                 p.Persist();
                 StaticObjects().push_back(p.Get());
                 return StaticObjects().size() - 1;
             }
 
-            static object_ptr_type GetStaticObject(size_type n)
+            static TempPtr<object_type> GetStaticObject(size_t n)
             {
                 return StaticObjects()[n];
             }
 
-            object_temp_ptr_type NewObject()
+            TempPtr<object_type> NewObject()
             {
                 return base_type::NewObject();
             }
 
-            size_type RegisterObject(object_temp_ptr_type const &p)
+            size_t RegisterObject(TempPtr<object_type> &p)
             {
                 return base_type::RegisterObject(p);
             }
 
-            object_ptr_type GetObject(size_type n)
+            object_type *GetObject(size_t n)
             {
                 return base_type::GetObject(n);
             }
@@ -108,7 +101,7 @@ namespace Urasandesu { namespace CppAnonym {
                 return StaticHeapAndObjects().m_heap;
             }
 
-            static object_ptr_vector_type &StaticObjects()
+            static std::vector<object_type *> &StaticObjects()
             {
                 return StaticHeapAndObjects().m_objects;
             }
@@ -122,12 +115,12 @@ namespace Urasandesu { namespace CppAnonym {
         {
         };
 
-    }   // namespace Detail
+    }   // namespace _BEFF6DE6
 
 
     template<class ProvidingTypes>
     class ATL_NO_VTABLE DisposableHeapProvider : 
-        public Detail::DisposableHeapProviderImpl<ProvidingTypes, 
+        public _BEFF6DE6::DisposableHeapProviderImpl<ProvidingTypes, 
                                                   typename Traits::DistinctBegin<ProvidingTypes>::type, 
                                                   typename Traits::DistinctEnd<ProvidingTypes>::type>
     {
@@ -148,7 +141,7 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename boost::mpl::find<distinct_providing_types, T>::type i;
             typedef typename Traits::DistinctEnd<providing_types>::type i_end;
         public:
-            typedef Detail::DisposableHeapProviderImpl<providing_types, i, i_end> type;
+            typedef _BEFF6DE6::DisposableHeapProviderImpl<providing_types, i, i_end> type;
         };
 
         template<class T>

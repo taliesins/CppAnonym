@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDERFWD_HPP
@@ -42,23 +42,16 @@ namespace Urasandesu { namespace CppAnonym {
 
             typedef base_type::object_heap_type object_heap_type;
             typedef Utilities::HeapDeleter<object_heap_type> object_heap_deleter_type;
-            typedef object_type *object_ptr_type;
-            typedef object_type const *object_const_ptr_type;
+            typedef Utilities::AutoPtr<object_type> object_ptr_type;
 
-            struct static_temp_object_ptr_tag;
-            typedef Utilities::TempPtr<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
-
-            struct temp_object_ptr_tag;
-            typedef Utilities::TempPtr<object_type, temp_object_ptr_tag> object_temp_ptr_type;
-
-            static static_object_temp_ptr_type NewStaticObject()
+            static object_ptr_type NewStaticObject()
             {
-                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
+                return object_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            object_temp_ptr_type NewObject()
+            object_ptr_type NewObject()
             {
-                return object_temp_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
+                return object_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
             }
 
         private:

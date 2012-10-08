@@ -169,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AnyPtrTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AutoPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />

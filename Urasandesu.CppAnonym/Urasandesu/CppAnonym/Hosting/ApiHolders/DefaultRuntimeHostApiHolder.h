@@ -54,7 +54,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
         {
             typedef map<
                 pair<HostInfoLabel, HostInfo>,
-                //pair<FusionInfoLabel, FusionInfo>,
+                pair<FusionInfoLabel, FusionInfo>,
                 pair<MetadataInfoLabel, MetadataInfo>
                 //pair<StrongNameInfoLabel, StrongNameInfo>
             > api_cartridges;

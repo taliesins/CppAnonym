@@ -30,14 +30,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type
             >
         >,
         //public DisposableHeapProvider<
         //    boost::mpl::vector<
-        //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type,
-        //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type,
-        //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type,
         //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type,
         //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type,
         //        typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type,
@@ -56,7 +55,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         //typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        //typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type assembly_metadata_generator_type;
@@ -68,11 +67,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
 
         typedef typename providing_type_at<0>::type assembly_metadata_type;
-        typedef typename provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
-        typedef typename assembly_metadata_provider_type::object_temp_ptr_type assembly_metadata_temp_ptr_type;
-        typedef typename assembly_metadata_provider_type::object_ptr_type assembly_metadata_ptr_type;
-        typedef typename assembly_metadata_provider_type::object_const_ptr_type assembly_metadata_const_ptr_type;
+        typedef typename providing_type_at<1>::type module_metadata_type;        
 
+        typedef typename provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
         typedef typename provider_of<module_metadata_type>::type module_metadata_provider_type;
         typedef typename provider_of<type_metadata_type>::type type_metadata_provider_type;
         typedef typename provider_of<method_metadata_type>::type method_metadata_provider_type;
@@ -90,11 +87,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         BaseMetadataDispenser()
         { }
 
-        assembly_metadata_const_ptr_type GetAssembly(std::wstring const &fullName) const
+        assembly_metadata_type const *GetAssembly(std::wstring const &fullName) const
         {
-            assembly_metadata_temp_ptr_type pNewAsm = NewAssembly(fullName);
+            TempPtr<assembly_metadata_type> pNewAsm = NewAssembly(fullName);
 
-            assembly_metadata_ptr_type pExistingAsm;
+            assembly_metadata_type *pExistingAsm;
             if (!TryGetAssembly(*pNewAsm, pExistingAsm))
             {
                 assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
@@ -129,16 +126,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         friend typename metadata_dispenser_previous_type;
         friend typename assembly_metadata_type;
 
-        assembly_metadata_temp_ptr_type NewAssembly(std::wstring const &fullName) const
+        Utilities::TempPtr<assembly_metadata_type> NewAssembly(std::wstring const &fullName) const
         {
             assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
             metadata_dispenser_chain_type &chain = ChainFrom<metadata_dispenser_previous_type>();
-            assembly_metadata_temp_ptr_type pAsm = chain.NewObject<assembly_metadata_type>(provider);
+            TempPtr<assembly_metadata_type> pAsm = chain.NewObject<assembly_metadata_type>(provider);
             pAsm->SetName(fullName);
             return pAsm;
         }
 
-        bool TryGetAssembly(assembly_metadata_type const &keyAsm, assembly_metadata_ptr_type &pExistingAsm) const
+        bool TryGetAssembly(assembly_metadata_type const &keyAsm, assembly_metadata_type *&pExistingAsm) const
         {
             if (m_asmToIndex.find(&keyAsm) == m_asmToIndex.end())
             {
@@ -191,7 +188,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return *m_pComMetaDisp;
         }
 
-        mutable boost::unordered_map<assembly_metadata_const_ptr_type, 
+        mutable boost::unordered_map<assembly_metadata_type const *, 
                                      size_t, 
                                      i_assembly_metadata_hash_type, 
                                      i_assembly_metadata_equal_to_type> m_asmToIndex;

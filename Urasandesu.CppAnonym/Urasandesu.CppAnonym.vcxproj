@@ -456,8 +456,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
   </ItemGroup>

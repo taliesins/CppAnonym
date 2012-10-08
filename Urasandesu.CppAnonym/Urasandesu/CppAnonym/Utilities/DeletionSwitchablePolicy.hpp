@@ -28,7 +28,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             if (!m_disabled[0]) 
                 m_d(p); 
         }
-        
+
         void EnableDeletion() 
         { 
             m_disabled[0] = false; 

@@ -8,24 +8,25 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _5C5EF764 {
+    namespace SmartPtrChainDetail {
         
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class Current, class ChainInfoTypes, class I, class IEnd>
-        class ATL_NO_VTABLE SmartPtrChainImpl : 
-            public SmartPtrChainImpl<Current, ChainInfoTypes, typename mpl::next<I>::type, IEnd>
+        class ATL_NO_VTABLE SmartPtrChainImplImpl : 
+            public SmartPtrChainImplImpl<Current, ChainInfoTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef SmartPtrChainImpl<Current, ChainInfoTypes, I, IEnd> this_type;
+            typedef SmartPtrChainImplImpl<Current, ChainInfoTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type chain_info_type;
             typedef typename Current current_type;
             typedef typename chain_info_type::previous_type previous_type;
             typedef typename chain_info_type::mapper_type mapper_type;
             typedef typename chain_info_type::constructor_type constructor_type;
 
-            SmartPtrChainImpl() : 
+            SmartPtrChainImplImpl() : 
                 m_pPrevious(NULL)
             { }
 
@@ -63,7 +64,7 @@ namespace Urasandesu { namespace CppAnonym {
                 class T,
                 class PersistableHeapProvider
             >
-            static typename PersistableHeapProvider::static_object_temp_ptr_type NewRootObject()
+            static TempPtr<T> NewRootObject()
             {
                 return constructor_type::NewRootObject<T, PersistableHeapProvider>();
             }
@@ -72,7 +73,7 @@ namespace Urasandesu { namespace CppAnonym {
                 class T,
                 class PersistableHeapProvider
             >
-            typename PersistableHeapProvider::object_temp_ptr_type NewObject(PersistableHeapProvider &provider) const
+            TempPtr<T> NewObject(PersistableHeapProvider &provider) const
             {
                 return constructor_type::NewObject<T>(static_cast<current_type &>(*const_cast<this_type *>(this)), provider);
             }
@@ -100,7 +101,7 @@ namespace Urasandesu { namespace CppAnonym {
         };
 
         template<class Current, class ChainInfoTypes>
-        class ATL_NO_VTABLE SmartPtrChainImpl<Current, 
+        class ATL_NO_VTABLE SmartPtrChainImplImpl<Current, 
                                               ChainInfoTypes, 
                                               typename Traits::DistinctEnd<ChainInfoTypes>::type, 
                                               typename Traits::DistinctEnd<ChainInfoTypes>::type> : 
@@ -187,174 +188,176 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename mpl::find_if<distinct_chain_info_types, HasPreviousT<mpl::_1, ChainingPreviousType> >::type i;
             typedef typename Traits::DistinctEnd<ChainInfoTypes>::type i_end;
         public:
-            typedef SmartPtrChainImpl<Current, ChainInfoTypes, i, i_end> type;
+            typedef SmartPtrChainImplImpl<Current, ChainInfoTypes, i, i_end> type;
         };
 
-    }   // namespace _5C5EF764
-
-
-    template<class Current, class ChainInfoTypes>
-    class ATL_NO_VTABLE SmartPtrChain : 
-        public _5C5EF764::SmartPtrChainImpl<Current, 
+        template<class Current, class ChainInfoTypes>
+        class ATL_NO_VTABLE SmartPtrChainImpl : 
+            public SmartPtrChainImplImpl<Current, 
                                          ChainInfoTypes, 
                                          typename Traits::DistinctBegin<ChainInfoTypes>::type, 
                                          typename Traits::DistinctEnd<ChainInfoTypes>::type>
+        {
+        public:
+            typedef SmartPtrChainImpl<Current, ChainInfoTypes> this_type;
+            typedef ChainInfoTypes chain_info_types;
+
+            template<LONG N>
+            class chaining_previous_type_at : 
+                public ChainingPreviousTypeAtImpl<chain_info_types, N>
+            {
+            };
+
+            template<class ChainingPreviousType>
+            class chain_from : 
+                public ChainFromImpl<Current, chain_info_types, ChainingPreviousType>
+            {
+            };
+
+            template<class ChainingPreviousType>
+            inline typename chain_from<ChainingPreviousType>::type &ChainFrom() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                return static_cast<typename chain_from<ChainingPreviousType>::type &>(*pMutableThis);
+            }
+
+            template<class T>
+            T *MapFirstAncestor() const
+            {
+                typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            
+                container<T> container;
+                map_first_ancestor_selector<T> selector(*this, container);
+                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                return container.m_p;
+            }
+
+            template<class T>
+            T *MapFirst() const
+            {
+                typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            
+                container<T> container;
+                map_first_selector<T> selector(*this, container);
+                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                return container.m_p;
+            }
+
+            template<>
+            Current *MapFirst<Current>() const
+            {
+                return Map<Current>();
+            }
+
+            template<
+                class T,
+                class HeapProvider
+            >
+            T *NewObjectFirst(HeapProvider &provider) const
+            {
+                container<T> container;
+                new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
+                mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                _ASSERTE(container.m_p);
+                return container.m_p;
+            }
+
+        private:
+            template<class T>
+            struct wrap
+            {
+            };
+
+            template<class T>
+            struct container
+            {
+                container() : 
+                    m_p(NULL)
+                { }
+                T *m_p;
+            };
+
+            template<class T>
+            struct map_first_ancestor_selector
+            {
+                map_first_ancestor_selector(this_type const &this_, container<T> &container) : 
+                    m_pThis(&this_),
+                    m_pContainer(&container)
+                { }
+
+                template<class Previous>
+                void operator()(wrap<Previous> const &)
+                {
+                    if (!m_pContainer->m_p)
+                    {
+                        typedef typename chain_from<Previous>::type PreviousChain;
+                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
+                        m_pContainer->m_p = chain.MapFirstAncestor<T>();
+                    }
+                }
+
+                this_type const *m_pThis;
+                container<T> *m_pContainer;
+            };
+
+            template<class T>
+            struct map_first_selector
+            {
+                map_first_selector(this_type const &this_, container<T> &container) : 
+                    m_pThis(&this_),
+                    m_pContainer(&container)
+                { }
+
+                template<class Previous>
+                void operator()(wrap<Previous> const &)
+                {
+                    if (!m_pContainer->m_p)
+                    {
+                        typedef typename chain_from<Previous>::type PreviousChain;
+                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
+                        m_pContainer->m_p = chain.MapFirst<T>();
+                    }
+                }
+
+                this_type const *m_pThis;
+                container<T> *m_pContainer;
+            };
+
+            template<
+                class T,
+                class HeapProvider
+            >
+            struct new_object_first_selector
+            {
+                new_object_first_selector(this_type const &this_, HeapProvider &provider, container<T> &container) : 
+                    m_pThis(&this_),
+                    m_pProvider(&provider),
+                    m_pContainer(&container)
+                { }
+
+                template<class Previous>
+                void operator()(wrap<Previous> const &)
+                {
+                    if (!m_pContainer->m_p)
+                    {
+                        typedef typename chain_from<Previous>::type PreviousChain;
+                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
+                        m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
+                    }
+                }
+
+                this_type const *m_pThis;
+                HeapProvider *m_pProvider;
+                container<T> *m_pContainer;
+            };
+        };
+    
+    }   // namespace SmartPtrChainDetail
+
+    template<class Current, class ChainInfoTypes>
+    class ATL_NO_VTABLE SmartPtrChain : 
+        public SmartPtrChainDetail::SmartPtrChainImpl<Current, ChainInfoTypes>
     {
-    public:
-        typedef SmartPtrChain<Current, ChainInfoTypes> this_type;
-        typedef ChainInfoTypes chain_info_types;
-
-        template<LONG N>
-        class chaining_previous_type_at : 
-            public _5C5EF764::ChainingPreviousTypeAtImpl<chain_info_types, N>
-        {
-        };
-
-        template<class ChainingPreviousType>
-        class chain_from : 
-            public _5C5EF764::ChainFromImpl<Current, chain_info_types, ChainingPreviousType>
-        {
-        };
-
-        template<class ChainingPreviousType>
-        inline typename chain_from<ChainingPreviousType>::type &ChainFrom() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename chain_from<ChainingPreviousType>::type &>(*pMutableThis);
-        }
-
-        template<class T>
-        boost::shared_ptr<T> MapFirstAncestor() const
-        {
-            namespace mpl = boost::mpl;
-
-            typedef mpl::filter_view<chain_info_types, _5C5EF764::IsMappable<mpl::_, T> >::type MappableTypes;
-            
-            container<T> container;
-            map_first_ancestor_selector<T> selector(*this, container);
-            mpl::for_each<MappableTypes, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
-            return container.m_p;
-        }
-
-        template<class T>
-        boost::shared_ptr<T> MapFirst() const
-        {
-            namespace mpl = boost::mpl;
-
-            typedef mpl::filter_view<chain_info_types, _5C5EF764::IsMappable<mpl::_, T> >::type MappableTypes;
-            
-            container<T> container;
-            map_first_selector<T> selector(*this, container);
-            mpl::for_each<MappableTypes, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
-            return container.m_p;
-        }
-
-        template<>
-        boost::shared_ptr<Current> MapFirst<Current>() const
-        {
-            return Map<Current>();
-        }
-
-        template<
-            class T,
-            class HeapProvider
-        >
-        boost::shared_ptr<T> NewObjectFirst(HeapProvider &provider) const
-        {
-            namespace mpl = boost::mpl;
-
-            container<T> container;
-            new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-            mpl::for_each<chain_info_types, wrap<_5C5EF764::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
-            _ASSERTE(container.m_p);
-            return container.m_p;
-        }
-
-    private:
-        template<class T>
-        struct wrap
-        {
-        };
-
-        template<class T>
-        struct container
-        {
-            boost::shared_ptr<T> m_p;
-        };
-
-        template<class T>
-        struct map_first_ancestor_selector
-        {
-            map_first_ancestor_selector(this_type const &this_, container<T> &container) : 
-                m_pThis(&this_),
-                m_pContainer(&container)
-            { }
-
-            template<class Previous>
-            void operator()(wrap<Previous> const &)
-            {
-                if (!m_pContainer->m_p)
-                {
-                    typedef typename chain_from<Previous>::type PreviousChain;
-                    PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                    m_pContainer->m_p = chain.MapFirstAncestor<T>();
-                }
-            }
-
-            this_type const *m_pThis;
-            container<T> *m_pContainer;
-        };
-
-        template<class T>
-        struct map_first_selector
-        {
-            map_first_selector(this_type const &this_, container<T> &container) : 
-                m_pThis(&this_),
-                m_pContainer(&container)
-            { }
-
-            template<class Previous>
-            void operator()(wrap<Previous> const &)
-            {
-                if (!m_pContainer->m_p)
-                {
-                    typedef typename chain_from<Previous>::type PreviousChain;
-                    PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                    m_pContainer->m_p = chain.MapFirst<T>();
-                }
-            }
-
-            this_type const *m_pThis;
-            container<T> *m_pContainer;
-        };
-
-        template<
-            class T,
-            class HeapProvider
-        >
-        struct new_object_first_selector
-        {
-            new_object_first_selector(this_type const &this_, HeapProvider &provider, container<T> &container) : 
-                m_pThis(&this_),
-                m_pProvider(&provider),
-                m_pContainer(&container)
-            { }
-
-            template<class Previous>
-            void operator()(wrap<Previous> const &)
-            {
-                if (!m_pContainer->m_p)
-                {
-                    typedef typename chain_from<Previous>::type PreviousChain;
-                    PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                    m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
-                }
-            }
-
-            this_type const *m_pThis;
-            HeapProvider *m_pProvider;
-            container<T> *m_pContainer;
-        };
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

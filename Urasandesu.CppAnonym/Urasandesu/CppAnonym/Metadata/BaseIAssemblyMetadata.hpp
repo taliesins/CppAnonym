@@ -36,8 +36,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         virtual mdAssembly GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<strong_name_key_type const> GetStrongNameKey() const = 0;
-        virtual boost::shared_ptr<metadata_dispenser_type const> GetResolutionScope() const = 0;
+        virtual Utilities::AutoPtr<strong_name_key_type const> GetStrongNameKey() const = 0;
+        virtual metadata_dispenser_type const *GetResolutionScope() const = 0;
     };
 
 
@@ -48,7 +48,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class IAssemblyMetadataApiHolder
     >    
     class BaseIAssemblyMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
+        Traits::HashComputable<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const *>
     {
     public:
         result_type operator()(param_type v) const
@@ -56,11 +56,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;
 
-            _ASSERTE(v);
+            _ASSERTE(v != NULL);
 
             std::size_t seed = 0;
             hash_combine(seed, hash_value(v->GetName()));
-            hash_combine(seed, HashValue(v->GetResolutionScope().get()));
+            hash_combine(seed, HashValue(v->GetResolutionScope()));
             return seed;
         }
     };
@@ -73,12 +73,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class IAssemblyMetadataApiHolder
     >    
     class BaseIAssemblyMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
+        Traits::EqualityComparable<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const *>
     {
     public:
         result_type operator()(param_type x, param_type y) const
         {
-            _ASSERTE(x && y);
+            _ASSERTE(x != NULL && y != NULL);
 
             return x->GetName() == y->GetName() &&
                    x->GetResolutionScope() == y->GetResolutionScope();

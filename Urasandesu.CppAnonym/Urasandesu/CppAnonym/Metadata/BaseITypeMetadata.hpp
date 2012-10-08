@@ -30,8 +30,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         virtual mdToken GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<this_type const> GetBaseType() const = 0;
-        virtual boost::shared_ptr<i_module_metadata_type const> GetResolutionScope() const = 0;
+        virtual this_type const *GetBaseType() const = 0;
+        virtual i_module_metadata_type const *GetResolutionScope() const = 0;
         virtual std::vector<COR_SIGNATURE> const &GetSignatures() const = 0;
         virtual bool IsGenericParameter() const = 0;
     };
@@ -44,7 +44,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class ITypeMetadataApiHolder
     >    
     class BaseITypeMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
+        Traits::HashComputable<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const *>
     {
     public:
         typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
@@ -53,7 +53,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             using namespace boost;
 
-            _ASSERTE(v);
+            _ASSERTE(v != NULL);
 
             std::size_t seed = 0;
             hash_combine(seed, hash_value(v->GetName()));
@@ -70,7 +70,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class ITypeMetadataApiHolder
     >    
     class BaseITypeMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
+        Traits::EqualityComparable<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const *>
     {
     public:
         //typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;

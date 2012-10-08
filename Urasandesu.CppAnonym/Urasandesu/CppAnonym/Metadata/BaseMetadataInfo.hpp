@@ -47,9 +47,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         //typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
         typedef typename providing_type_at<0>::type metadata_dispenser_type;
+
         typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
-        typedef typename metadata_dispenser_provider_type::object_temp_ptr_type metadata_dispenser_temp_ptr_type;
-        typedef typename metadata_dispenser_provider_type::object_ptr_type metadata_dispenser_ptr_type;
 
         typedef typename chaining_previous_type_at<0>::type metadata_info_previous_type;
         typedef typename chain_from<metadata_info_previous_type>::type metadata_info_chain_type; 
@@ -58,10 +57,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         BaseMetadataInfo()
         { }
 
-        metadata_dispenser_ptr_type CreateDispenser() const
+        metadata_dispenser_type *CreateDispenser() const
         {
             metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            metadata_dispenser_temp_ptr_type pDisp = NewDispenser();
+            TempPtr<metadata_dispenser_type> pDisp = NewDispenser();
             provider.RegisterObject(pDisp);
             return pDisp.Get();
         }
@@ -69,7 +68,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     private:
         friend typename metadata_info_previous_type;
 
-        metadata_dispenser_temp_ptr_type NewDispenser() const
+        Utilities::TempPtr<metadata_dispenser_type> NewDispenser() const
         {
             metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
             metadata_info_chain_type &chain = ChainFrom<metadata_info_previous_type>();

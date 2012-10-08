@@ -56,19 +56,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
         
         typedef typename providing_type_at<0>::type host_info_type;
-        typedef typename provider_of<host_info_type>::type host_info_provider_type;
-        typedef typename host_info_provider_type::static_object_temp_ptr_type host_info_temp_ptr_type;
-
         typedef typename providing_type_at<1>::type runtime_host_type;
-        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
-        typedef typename runtime_host_provider_type::object_temp_ptr_type runtime_host_temp_ptr_type;
+
+        typedef typename provider_of<host_info_type>::type host_info_provider_type;
+        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;        
 
         typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
         typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
 
         static host_info_type *NewHost()
         {
-            host_info_temp_ptr_type pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+            TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
             host_info_provider_type::RegisterStaticObject(pHost);
             return pHost.Get();
         }
@@ -81,7 +79,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             runtime_host_type *pExistingRuntime = NULL;
             if (!TryGetRuntime(version, pExistingRuntime))
             {
-                runtime_host_temp_ptr_type pNewRuntime = NewRuntime();
+                TempPtr<runtime_host_type> pNewRuntime = NewRuntime(version);
 
                 std::wstring const &corVersion = pNewRuntime->GetCORVersion();
                 if (corVersion != version)
@@ -95,8 +93,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                     BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
                 }
 
-                runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                m_versionToIndex[version] = provider.RegisterObject(pNewRuntime);
+                //runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
+                //m_versionToIndex[version] = provider.RegisterObject(pNewRuntime);
+                pNewRuntime.Persist();
                 return pNewRuntime.Get();
             }
             else
@@ -107,11 +106,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     private:
 
-        runtime_host_temp_ptr_type NewRuntime() const
+        Utilities::TempPtr<runtime_host_type> NewRuntime(std::wstring const &version) const
         {
             runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
             host_info_chain_type &chain = ChainFrom<host_info_previous_type>();
-            return chain.NewObject<runtime_host_type>(provider);
+            Utilities::TempPtr<runtime_host_type> pRuntime = chain.NewObject<runtime_host_type>(provider);
+            struct RuntimePersister
+            {
+                RuntimePersister(this_type &this_, std::wstring const &version) : 
+                    m_pThis(&this_),
+                    m_version(version)
+                { }
+                
+                void operator()(void *p)
+                {
+                    Utilities::TempPtr<runtime_host_type> &pRuntime = *static_cast<Utilities::TempPtr<runtime_host_type> *>(p);
+                    runtime_host_provider_type &provider = m_pThis->ProviderOf<runtime_host_type>();
+                    m_pThis->m_versionToIndex[m_version] = provider.RegisterObject(pRuntime);
+                }
+                
+                this_type *m_pThis;
+                std::wstring m_version;
+            };
+            pRuntime.SetPersister(RuntimePersister(const_cast<this_type &>(*this), version));
+            return pRuntime;
         }
 
         bool TryGetRuntime(std::wstring const &version, runtime_host_type *&pExistingRuntime) const

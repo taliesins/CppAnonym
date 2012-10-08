@@ -74,7 +74,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type,
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type
             >
         >,
         //public DisposableHeapProvider<
@@ -149,7 +150,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
         template<class Info>
-        typename provider_of<Info>::type::object_ptr_type GetInfo() const
+        Info *GetInfo() const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
@@ -159,12 +160,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
             typedef typename provider_of<Info>::type InfoProvider;
-            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
 
             Info *pExistingInfo = NULL;
             if (!TryGetInfo<Info>(pExistingInfo))
             {
-                ObjectTempPtr pNewInfo = NewInfo<Info>();
+                TempPtr<Info> pNewInfo = NewInfo<Info>();
                 
                 InfoProvider &provider = ProviderOf<Info>();
                 Utilities::TypeInfo key = mpl::identity<Info>();
@@ -181,7 +181,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         friend typename runtime_host_previous_type;
 
         template<class Info>
-        typename provider_of<Info>::type::object_temp_ptr_type NewInfo() const
+        Utilities::TempPtr<Info> NewInfo() const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
@@ -191,7 +191,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
             typedef typename provider_of<Info>::type InfoProvider;
-            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
 
             InfoProvider &provider = ProviderOf<Info>();
             runtime_host_chain_type &chain = ChainFrom<runtime_host_previous_type>();
@@ -199,7 +198,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
         template<class Info>
-        bool TryGetInfo(typename provider_of<Info>::type::object_ptr_type &pExistingInfo) const
+        bool TryGetInfo(Info *&pExistingInfo) const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
@@ -209,7 +208,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
             typedef typename provider_of<Info>::type InfoProvider;
-            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
 
             Utilities::TypeInfo key = mpl::identity<Info>();
             if (m_infoToIndex.find(key) == m_infoToIndex.end())

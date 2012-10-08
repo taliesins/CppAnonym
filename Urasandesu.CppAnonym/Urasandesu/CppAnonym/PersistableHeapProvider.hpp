@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDERFWD_HPP
@@ -24,6 +24,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class ProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE PersistableHeapProviderImpl : 
@@ -41,21 +42,11 @@ namespace Urasandesu { namespace CppAnonym {
             typedef SimpleHeapProvider<mpl::vector<obj_tag_type> > base_type;
             
             typedef base_type::object_heap_type object_heap_type;
-            typedef Utilities::HeapDeleter<object_heap_type> object_heap_deleter_type;
-            typedef object_type *object_ptr_type;
-            typedef object_type const *object_const_ptr_type;
-            typedef std::vector<object_ptr_type> object_ptr_vector_type;
-            typedef typename object_ptr_vector_type::size_type size_type;
-            
-            struct static_temp_object_ptr_tag;
-            typedef Utilities::PersistPtr<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
+            typedef HeapDeleter<object_heap_type> object_heap_deleter_type;
 
-            struct temp_object_ptr_tag;
-            typedef Utilities::PersistPtr<object_type, temp_object_ptr_tag> object_temp_ptr_type;
-
-            static void Destruct(object_heap_type &heap, object_ptr_vector_type &objects)
+            static void Destruct(object_heap_type &heap, std::vector<object_type *> &objects)
             {
-                typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
+                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
                     heap.Delete(*ri);
             }
@@ -65,36 +56,36 @@ namespace Urasandesu { namespace CppAnonym {
                 Destruct(base_type::Heap(), Objects());
             }
 
-            static static_object_temp_ptr_type NewStaticObject()
+            static TempPtr<object_type> NewStaticObject()
             {
-                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
+                return TempPtr<object_type>(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            static size_type RegisterStaticObject(static_object_temp_ptr_type &p)
+            static size_t RegisterStaticObject(TempPtr<object_type> &p)
             {
                 p.Persist();
                 StaticObjects().push_back(p.Get());
                 return StaticObjects().size() - 1;
             }
 
-            static object_ptr_type GetStaticObject(size_type n)
+            static object_type *GetStaticObject(size_t n)
             {
                 return StaticObjects()[n];
             }
 
-            object_temp_ptr_type NewObject()
+            TempPtr<object_type> NewObject()
             {
-                return object_temp_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
+                return TempPtr<object_type>(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
             }
 
-            size_type RegisterObject(object_temp_ptr_type &p)
+            size_t RegisterObject(TempPtr<object_type> &p)
             {
                 p.Persist();
                 Objects().push_back(p.Get());
                 return Objects().size() - 1;
             }
 
-            object_ptr_type GetObject(size_type n)
+            object_type *GetObject(size_t n)
             {
                 return Objects()[n];
             }
@@ -108,13 +99,13 @@ namespace Urasandesu { namespace CppAnonym {
                 }
 
                 object_heap_type m_heap;
-                object_ptr_vector_type m_objects;
+                std::vector<object_type *> m_objects;
             };
 
-            object_ptr_vector_type &Objects()
+            std::vector<object_type *> &Objects()
             {
                 if (!m_pObjects.get())
-                    m_pObjects = make_shared<object_ptr_vector_type>();
+                    m_pObjects = make_shared<std::vector<object_type *>>();
                 return *m_pObjects.get();
             }
 
@@ -130,12 +121,12 @@ namespace Urasandesu { namespace CppAnonym {
                 return StaticHeapAndObjects().m_heap;
             }
 
-            static object_ptr_vector_type &StaticObjects()
+            static std::vector<object_type *> &StaticObjects()
             {
                 return StaticHeapAndObjects().m_objects;
             }
 
-            shared_ptr<object_ptr_vector_type> m_pObjects;
+            shared_ptr<std::vector<object_type *>> m_pObjects;
         };
 
         template<class ProvidingTypes>

@@ -30,7 +30,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         virtual mdModule GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<i_assembly_metadata_type const> GetResolutionScope() const = 0;
+        virtual i_assembly_metadata_type const *GetResolutionScope() const = 0;
     };
 
 
@@ -41,7 +41,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class IModuleMetadataApiHolder
     >    
     class BaseIModuleMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
+        Traits::HashComputable<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const *>
     {
     public:
         typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
@@ -50,7 +50,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             using namespace boost;
 
-            _ASSERTE(v);
+            _ASSERTE(v != NULL);
 
             std::size_t seed = 0;
             hash_combine(seed, hash_value(v->GetName()));
@@ -67,14 +67,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class IModuleMetadataApiHolder
     >    
     class BaseIModuleMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
+        Traits::EqualityComparable<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const *>
     {
     public:
         typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
-            _ASSERTE(x && y);
+            _ASSERTE(x != NULL && y != NULL);
 
             return x->GetName() == y->GetName() &&
                    i_assembly_metadata_equal_to_type()(x->GetResolutionScope(), y->GetResolutionScope());

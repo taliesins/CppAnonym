@@ -62,7 +62,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             if (m_mdm == mdModuleNil)
             {
                 this_type *pMutableThis = const_cast<this_type *>(this);
-                boost::shared_ptr<assembly_metadata_type> pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
+                assembly_metadata_type *pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
 
                 com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
 
@@ -82,23 +82,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
 
-        boost::shared_ptr<typename base_type::i_assembly_metadata_type const> GetResolutionScope() const
+        typename base_type::i_assembly_metadata_type const *GetResolutionScope() const
         {
             return MapFirst<assembly_metadata_type>();
         }
 
-        boost::shared_ptr<type_metadata_type const> GetType(std::wstring const &name) const
+        type_metadata_type const *GetType(std::wstring const &name) const
         {
-            boost::shared_ptr<type_metadata_type> pType;
-            pType = NewType(name);
+            Utilities::TempPtr<type_metadata_type> pType = NewType(name);
 
-            boost::shared_ptr<type_metadata_type> pExistingType;
+            type_metadata_type *pExistingType = NULL;
             if (!TryGetType(*pType, pExistingType))
             {
-                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
                 type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-                m_typeToIndex[pType] = provider.Register(pType);
-                return pType;
+                m_typeToIndex[pType.Get()] = provider.RegisterObject(pType);
+                return pType.Get();
             }
             else
             {
@@ -117,48 +116,47 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
-        boost::shared_ptr<type_metadata_type> NewType(std::wstring const &name) const
+        Utilities::TempPtr<type_metadata_type> NewType(std::wstring const &name) const
         {
-            boost::shared_ptr<type_metadata_type> pType = NewTypeCore();
+            Utilities::TempPtr<type_metadata_type> pType = NewTypeCore();
             pType->SetName(name);
             return pType;
         }
 
-        boost::shared_ptr<type_metadata_type> NewType(mdToken mdt) const
+        Utilities::TempPtr<type_metadata_type> NewType(mdToken mdt) const
         {
-            boost::shared_ptr<type_metadata_type> pType = NewTypeCore();
+            Utilities::TempPtr<type_metadata_type> pType = NewTypeCore();
             pType->SetToken(mdt);
             return pType;
         }
 
-        boost::shared_ptr<type_metadata_type> NewTypeCore() const
+        Utilities::TempPtr<type_metadata_type> NewTypeCore() const
         {
-            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
             type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
             module_metadata_chain_type &chain = ChainFrom<assembly_metadata_type>();
             return chain.NewObject<type_metadata_type>(provider);
         }
 
-        bool TryGetType(type_metadata_type const &keyType, boost::shared_ptr<type_metadata_type> &pExistingType) const
+        bool TryGetType(type_metadata_type const &keyType, type_metadata_type *&pExistingType) const
         {
-            boost::shared_ptr<type_metadata_type const> pKeyType(&keyType, Utilities::MakeNullDeleter(&keyType));
-            if (m_typeToIndex.find(pKeyType) == m_typeToIndex.end())
+            if (m_typeToIndex.find(&keyType) == m_typeToIndex.end())
             {
                 return false;
             }
             else
             {
-                size_t index = m_typeToIndex[pKeyType];
-                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                size_t index = m_typeToIndex[&keyType];
+                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
                 type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-                pExistingType = provider[index];
+                pExistingType = provider.GetObject(index);
                 return true;
             }
         }
 
         mutable mdModule m_mdm;
         std::wstring m_name;
-        mutable boost::unordered_map<boost::shared_ptr<type_metadata_type const>, 
+        mutable boost::unordered_map<type_metadata_type const *, 
                                      SIZE_T, 
                                      i_type_metadata_hash_type, 
                                      i_type_metadata_equal_to_type> m_typeToIndex;

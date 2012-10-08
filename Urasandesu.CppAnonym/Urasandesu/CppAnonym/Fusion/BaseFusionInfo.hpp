@@ -47,15 +47,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         typedef BaseFusionInfo<FusionInfoApiHolder> this_type;
         
         typedef typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type assembly_info_type;
+        //typedef typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type assembly_info_type;
         typedef typename FusionInfoApiAt<FusionInfoApiHolder, IAssemblyCache>::type com_assembly_cache_type;
+
+        typedef typename providing_type_at<0>::type assembly_info_type;
 
         typedef typename provider_of<assembly_info_type>::type assembly_info_provider_type;
 
         BaseFusionInfo()
         { }
 
-        boost::shared_ptr<assembly_info_type> QueryAssemblyInfo(
+        Utilities::AutoPtr<assembly_info_type> QueryAssemblyInfo(
                   AssemblyQueryTypes const &type, std::wstring const &assemblyName) const
         {
             using namespace boost::filesystem;
@@ -77,7 +79,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
                        &asmInfo.uliAssemblySizeInKB, sizeof(ULARGE_INTEGER));
 
             assembly_info_provider_type &provider = ProviderOf<assembly_info_type>();
-            boost::shared_ptr<assembly_info_type> pAsmInfo = provider.NewObject();
+            AutoPtr<assembly_info_type> pAsmInfo = provider.NewObject();
             pAsmInfo->SetAssemblySizeInKB(assemblySizeInKB);
             pAsmInfo->SetAssemblyPath(asmInfo.pszCurrentAssemblyPathBuf);
             return pAsmInfo;
@@ -111,7 +113,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             
             if (m_pComAsmCache.p == NULL)
             {
-                boost::shared_ptr<runtime_host_type> pRuntimeHost = MapFirst<runtime_host_type>();
+                runtime_host_type *pRuntimeHost = MapFirst<runtime_host_type>();
 
                 path const &corSysDirPath = pRuntimeHost->GetCORSystemDirectoryPath();
                 path fusionPath = corSysDirPath;
