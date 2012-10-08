@@ -23,12 +23,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
     namespace Detail {
         
         using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
         struct DefaultMetadataInfoApiHolderImpl
         {
             typedef map<
-                pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::RuntimeHost>, 
-                pair<Interfaces::MetadataDispenserLabel, MetadataDispenser>
+                pair<RuntimeHostLabel, RuntimeHost>, 
+                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<PEWriterHostLabel, PEWriterHost>
             > api_cartridges;
         };
 

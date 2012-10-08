@@ -1,12 +1,12 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_METADATA_PORTABLEEXECUTABLEKINDS_HPP
-#define URASANDESU_CPPANONYM_METADATA_PORTABLEEXECUTABLEKINDS_HPP
+#ifndef URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP
+#define URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP
 
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     namespace Detail {
 
@@ -33,6 +33,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     typedef SafeEnum<Detail::PortableExecutableKindsDef> PortableExecutableKinds;
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_METADATA_PORTABLEEXECUTABLEKINDS_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP

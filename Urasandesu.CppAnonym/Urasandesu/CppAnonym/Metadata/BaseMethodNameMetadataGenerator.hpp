@@ -57,31 +57,62 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     template<
         class MethodNameMetadataGeneratorApiHolder
     >
-    class BaseMethodNameMetadataGenerator
+    class BaseMethodNameMetadataGenerator : 
+        public MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::IMethodNameMetadataLabel>::type
     {
     public:
         typedef BaseMethodNameMetadataGenerator<MethodNameMetadataGeneratorApiHolder> this_type;
+        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::IMethodNameMetadataLabel>::type base_type;
 
         typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::TypeNameMetadataGeneratorLabel>::type type_name_metadata_generator_type;
+        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::TypeMetadataGeneratorLabel>::type type_metadata_generator_type;
         typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::ILGeneratorLabel>::type il_generator_type;
+        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::MethodBodyWriterLabel>::type method_body_writer_type;
+        typedef typename MethodNameMetadataGeneratorApiAt<MethodNameMetadataGeneratorApiHolder, Interfaces::MethodMetadataGeneratorLabel>::type method_metadata_generator_type;
 
         BaseMethodNameMetadataGenerator() : 
             m_pTypeNameGenAsScope(NULL), 
+            m_pTypeGenAsScope(NULL),
             m_nameInitialized(false), 
             m_callingConventionInitialized(false), 
-            m_pRetType(NULL), 
-            m_paramTypesInitialized(false), 
+            m_pRetTypeName(NULL),
+            m_paramTypeNamesInitialized(false),
             m_attrInitialized(false),
             m_attr(MethodAttributes::MA_PRIVATE_SCOPE), 
-            m_genInitialized(false)
+            m_pResolvedMethodGen(NULL)
         { }
 
         void Init(type_name_metadata_generator_type &typeNameGenAsScope) const
         {
-            _ASSERTE(m_pTypeNameGenAsScope == NULL);
+            _ASSERTE(m_pTypeNameGenAsScope == NULL && m_pTypeGenAsScope == NULL);
             m_pTypeNameGenAsScope = &typeNameGenAsScope;
         }
+
+        void Init(type_metadata_generator_type &typeGenAsScope) const
+        {
+            _ASSERTE(m_pTypeNameGenAsScope == NULL && m_pTypeGenAsScope == NULL);
+            m_pTypeGenAsScope = &typeGenAsScope;
+        }
+
+        template<class T>
+        T const &Map() const { return const_cast<this_type *>(this)->Map<T>(); }
+
+        template<class T>
+        T &Map() 
+        { 
+            _ASSERTE(m_pTypeNameGenAsScope != NULL || m_pTypeGenAsScope != NULL);
+            if (m_pTypeNameGenAsScope != NULL)
+                return m_pTypeNameGenAsScope->Map<T>();
+            else
+                return m_pTypeGenAsScope->GetTypeNameCore()->Map<T>();
+        }
+      
+        template<>
+        this_type const &Map<this_type>() const { return const_cast<this_type *>(this)->Map<this_type>(); }
+      
+        template<>
+        this_type &Map<this_type>() { return *this; }
 
         std::wstring const &GetName() const
         {
@@ -101,22 +132,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_callingConvention;
         }
 
-        type_metadata_type const &GetReturnType() const
+        typename base_type::i_type_name_metadata_type const &GetReturnTypeName() const
         {
-            if (m_pRetType == NULL)
+            if (m_pRetTypeName == NULL)
             {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
-            return *m_pRetType;
+            return *m_pRetTypeName;
         }
 
-        std::vector<type_metadata_type const *> const &GetParameterTypes() const
+        std::vector<typename base_type::i_type_name_metadata_type const *> const &GetParameterTypeNames() const
         {
-            if (!m_paramTypesInitialized)
+            if (!m_paramTypeNamesInitialized)
             {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
-            return m_paramTypes;
+            return m_paramTypeNames;
+        }
+
+        typename base_type::i_type_name_metadata_type const &GetResolutionScope() const
+        {
+            return Map<type_name_metadata_generator_type>();
+        }
+
+        typename base_type::i_method_metadata_type const &Resolve() const
+        {
+            return ResolveCore();
         }
 
         MethodAttributes const &GetAttribute() const
@@ -128,19 +169,45 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_attr;
         }
 
-        il_generator_type &GetILGenerator()
+        method_body_writer_type const &GetMethodBody() const
         {
-            if (!m_genInitialized)
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->GetMethodBody();
+        }
+
+        method_body_writer_type &GetMethodBody()
+        {
+            if (!m_pBody.get())
             {
                 this_type *pMutableThis = const_cast<this_type *>(this);
-                m_gen.Init(*pMutableThis);
-                m_genInitialized = true;
+                m_pBody = boost::make_shared<method_body_writer_type>();
+                m_pBody->Init(*pMutableThis);
             }
-            return m_gen;
+            return *m_pBody.get();
         }
 
     private:
         friend typename type_name_metadata_generator_type;
+        friend typename method_metadata_generator_type;
+
+        method_metadata_generator_type const &ResolveCore() const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->ResolveCore();
+        }
+        
+        method_metadata_generator_type &ResolveCore()
+        {
+            if (m_pTypeGenAsScope == NULL)
+                m_pTypeGenAsScope = &Map<type_name_metadata_generator_type>().ResolveCore();
+
+            if (m_pResolvedMethodGen == NULL)
+            {
+                m_pResolvedMethodGen = m_pTypeGenAsScope->DefineMethod(*this);
+            }
+
+            return *m_pResolvedMethodGen;
+        }
 
         void SetName(std::wstring const &name)
         {
@@ -156,17 +223,33 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_callingConventionInitialized = true;
         }
 
-        void SetReturnType(type_metadata_type const &retType)
+        void SetReturnType(i_type_metadata_type const &retType)
         {
-            _ASSERTE(m_pRetType == NULL);
-            m_pRetType = &retType;
+            SetReturnType(retType.GetTypeName());
         }
 
-        void SetParameterTypes(std::vector<type_metadata_type const *> const &paramTypes)
+        void SetReturnType(typename base_type::i_type_name_metadata_type const &retTypeName)
         {
-            _ASSERTE(!m_paramTypesInitialized);
-            m_paramTypes = paramTypes;
-            m_paramTypesInitialized = true;
+            _ASSERTE(m_pRetTypeName == NULL);
+            m_pRetTypeName = &retTypeName;
+        }
+
+        void SetParameterTypes(std::vector<i_type_metadata_type const *> const &paramTypes)
+        {
+            std::vector<typename base_type::i_type_name_metadata_type const *> paramTypeNames;
+            paramTypeNames.reserve(paramTypes.size());
+            typedef std::vector<i_type_metadata_type const *>::const_iterator ConstIterator;
+            for (ConstIterator ci = paramTypes.cbegin(), ci_end = paramTypes.cend(); ci != ci_end; ++ci)
+                paramTypeNames.push_back(&(*ci)->GetTypeName());
+
+            SetParameterTypes(paramTypeNames);
+        }
+
+        void SetParameterTypes(std::vector<typename base_type::i_type_name_metadata_type const *> const &paramTypeNames)
+        {
+            _ASSERTE(!m_paramTypeNamesInitialized);
+            m_paramTypeNames = paramTypeNames;
+            m_paramTypeNamesInitialized = true;
         }
 
         void SetAttribute(MethodAttributes const &attr)
@@ -175,19 +258,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_attr = attr;
             m_attrInitialized = true;
         }
-        
+
+        void SetResolvedMethod(method_metadata_generator_type &resolvedMethodGen)
+        {
+            _ASSERTE(m_pResolvedMethodGen == NULL);
+            m_pResolvedMethodGen = &resolvedMethodGen;
+        }
+
         mutable type_name_metadata_generator_type *m_pTypeNameGenAsScope;
+        mutable type_metadata_generator_type *m_pTypeGenAsScope;
         bool m_nameInitialized;
         std::wstring m_name;
         bool m_callingConventionInitialized;
         CallingConventions m_callingConvention;
-        type_metadata_type const *m_pRetType;
-        bool m_paramTypesInitialized;
-        std::vector<type_metadata_type const *> m_paramTypes;
+        typename base_type::i_type_name_metadata_type const *m_pRetTypeName;
+        bool m_paramTypeNamesInitialized;
+        std::vector<typename base_type::i_type_name_metadata_type const *> m_paramTypeNames;
         bool m_attrInitialized;
         MethodAttributes m_attr;
-        bool m_genInitialized;
-        il_generator_type m_gen;
+        boost::shared_ptr<method_body_writer_type> m_pBody;
+        method_metadata_generator_type *m_pResolvedMethodGen;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

@@ -194,9 +194,6 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\Instruction.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders</Filter>
     </ClCompile>

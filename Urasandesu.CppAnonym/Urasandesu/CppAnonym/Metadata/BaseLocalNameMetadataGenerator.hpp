@@ -6,16 +6,16 @@
 //#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ILGENERATORAPIHOLDERLABEL_HPP
-//#include <Urasandesu/CppAnonym/Metadata/Interfaces/ILGeneratorApiHolderLabel.hpp>
+//#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODBODYWRITERAPIHOLDERLABEL_HPP
+//#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodBodyWriterApiHolderLabel.hpp>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
 //#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_METADATA_INSTRUCTION_H
-//#include <Urasandesu/CppAnonym/Metadata/Instruction.h>
+//#ifndef URASANDESU_CPPANONYM_METADATA_BASEINSTRUCTION_HPP
+//#include <Urasandesu/CppAnonym/Metadata/BaseInstruction.hpp>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATALABEL_HPP
@@ -78,31 +78,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseLocalNameMetadataGenerator<LocalNameMetadataGeneratorApiHolder> this_type;
 
-        typedef typename LocalNameMetadataGeneratorApiAt<LocalNameMetadataGeneratorApiHolder, Interfaces::ILGeneratorLabel>::type il_generator_type;
-        typedef typename LocalNameMetadataGeneratorApiAt<LocalNameMetadataGeneratorApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        //typedef typename LocalNameMetadataGeneratorApiAt<LocalNameMetadataGeneratorApiHolder, Interfaces::MethodBodyWriterLabel>::type method_body_writer_type;
+        typedef typename LocalNameMetadataGeneratorApiAt<LocalNameMetadataGeneratorApiHolder, Interfaces::LocalsNameMetadataGeneratorLabel>::type locals_name_metadata_generator_type;
+        typedef typename LocalNameMetadataGeneratorApiAt<LocalNameMetadataGeneratorApiHolder, Interfaces::ITypeNameMetadataLabel>::type i_type_name_metadata_type;
 
         BaseLocalNameMetadataGenerator() : 
-            m_pGenAsScope(NULL),
+            m_pLocalsNameAsScope(NULL),
             m_pLocalType(NULL)
         { }
 
-        void Init(il_generator_type &genAsScope) const
+    private:
+        friend typename locals_name_metadata_generator_type;
+
+        void Init(locals_name_metadata_generator_type &localsNameAsScope) const
         {
-            _ASSERTE(m_pGenAsScope == NULL);
-            m_pGenAsScope = &genAsScope;
+            _ASSERTE(m_pLocalsNameAsScope == NULL);
+            m_pLocalsNameAsScope = &localsNameAsScope;
         }
 
-    private:
-        friend typename il_generator_type;
-
-        void SetLocalType(type_metadata_type const &localType)
+        void SetLocalType(i_type_name_metadata_type const &localType)
         {
             _ASSERTE(m_pLocalType == NULL);
             m_pLocalType = &localType;
         }
 
-        mutable il_generator_type *m_pGenAsScope;
-        type_metadata_type const *m_pLocalType;
+        mutable locals_name_metadata_generator_type *m_pLocalsNameAsScope;
+        i_type_name_metadata_type const *m_pLocalType;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

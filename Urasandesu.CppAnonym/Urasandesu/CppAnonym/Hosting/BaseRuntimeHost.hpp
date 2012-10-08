@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
@@ -18,20 +22,32 @@
 #include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP
+#include <Urasandesu/CppAnonym/Hosting/PortableExecutableKinds.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_IMAGEFILEMACHINE_HPP
+#include <Urasandesu/CppAnonym/Hosting/ImageFileMachine.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabel.hpp>
+#endif
+//
+//#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDER_H
+//#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
+//#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
@@ -62,6 +78,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type, 
                 typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type
             >
+        >,
+        public SimpleHeapProvider<
+            boost::mpl::vector<
+                ObjectTag<typename RuntimeHostApiAt<RuntimeHostApiHolder, Interfaces::PEWriterHostLabel>::type, QuickHeap>
+            >
         >
     {
     public:
@@ -70,6 +91,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
         typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type metadata_info_type;
         typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type fusion_info_type;
+        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Interfaces::PEWriterHostLabel>::type pe_writer_host_type;        
+
+        typedef HeapProvider<std::wstring, boost::mpl::vector<strong_name_info_type, metadata_info_type, fusion_info_type> > heap_provider_type;
+
+        typedef ObjectTag<pe_writer_host_type, QuickHeap> pe_writer_host_obj_tag_type;
+        typedef SimpleHeapProvider<boost::mpl::vector<pe_writer_host_obj_tag_type> > simple_heap_provider_type;
+        typedef typename simple_heap_provider_type::type_decided_by<pe_writer_host_obj_tag_type>::type pe_writer_host_heap_type;
 
         BaseRuntimeHost() : 
             m_corVersionInitialized(false), 
@@ -77,16 +105,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         { }
 
         template<class T>
-        T const &Map() const { return GetInfo<T>(); }
+        T const &Map() const { return const_cast<this_type *>(this)->Map<T>(); }
 
         template<class T>
-        T &Map() { return const_cast<T &>(GetInfo<T>()); }
+        T &Map() { return GetInfo<T>(); }
       
         template<>
-        this_type const &Map<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { return *this; }
       
         template<>
-        this_type &Map<this_type>() { return this; }
+        this_type &Map<this_type>() { return *this; }
         
         std::wstring const &GetCORVersion() const
         {
@@ -133,10 +161,36 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             }
             return m_corSystemDirectoryPath;
         }
+
+        pe_writer_host_type *NewPEWriter(std::wstring const &name, 
+                                         PortableExecutableKinds const &portableExecutableKind, 
+                                         ImageFileMachine const &imageFileMachine) const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+
+            pe_writer_host_type *pPEWriterHost = NULL;
+            pPEWriterHost = pMutableThis->PEWriterHostHeap().New();
+            pPEWriterHost->Init(*pMutableThis);
+            pPEWriterHost->SetName(name);
+            pPEWriterHost->SetPortableExecutableKind(portableExecutableKind);
+            pPEWriterHost->SetImageFileMachine(imageFileMachine);
+            return pPEWriterHost;
+        }
     
     private:
+
+        pe_writer_host_heap_type &PEWriterHostHeap()
+        {
+            return simple_heap_provider_type::Of<pe_writer_host_obj_tag_type>();
+        }
+        
+        pe_writer_host_heap_type const &PEWriterHostHeap() const
+        {
+            return simple_heap_provider_type::Of<pe_writer_host_obj_tag_type>();
+        }
+
         template<class InfoType>
-        InfoType const &GetInfo() const
+        InfoType &GetInfo()
         {
             namespace mpl = boost::mpl;
             using namespace boost;
@@ -151,21 +205,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 m_infos[info] = NULL;
             }
 
-            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[info]);
+            InfoType *pInfo = static_cast<InfoType *>(m_infos[info]);
             if (pInfo == NULL)
             {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                typedef typename type_decided_by<InfoType>::type InfoHeap;
-                InfoHeap &heap = pMutableThis->Of<InfoType>();
+                typedef typename heap_provider_type::type_decided_by<InfoType>::type InfoHeap;
+                InfoHeap &heap = heap_provider_type::Of<InfoType>();
                 pInfo = heap.New(GetCORVersion());
-                pInfo->Init(*pMutableThis);
+                pInfo->Init(*this);
                 m_infos[info] = pInfo;
             }
 
             return *pInfo;
         }
 
-        mutable boost::unordered_map<Utilities::TypeInfo, void const *, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infos;
+        mutable boost::unordered_map<Utilities::TypeInfo, void *, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infos;
         mutable bool m_corVersionInitialized;
         mutable std::wstring m_corVersion;
         mutable bool m_corSystemDirectoryPathInitialized;

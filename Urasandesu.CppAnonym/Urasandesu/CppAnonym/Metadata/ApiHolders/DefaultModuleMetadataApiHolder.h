@@ -50,7 +50,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             typedef map<
                 pair<AssemblyMetadataLabel, AssemblyMetadata>,
                 pair<ModuleNameMetadataLabel, ModuleNameMetadata>,
+                pair<IModuleMetadataLabel, IModuleMetadata>,
                 pair<TypeNameMetadataLabel, TypeNameMetadata>,
+                pair<ITypeNameMetadataHashLabel, ITypeNameMetadataHash>,
+                pair<ITypeNameMetadataEqualToLabel, ITypeNameMetadataEqualTo>,
                 pair<TypeMetadataLabel, TypeMetadata>,
                 pair<IMetaDataImport2, IMetaDataImport2>
             > api_cartridges;

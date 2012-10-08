@@ -15,6 +15,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     typedef BaseAssemblyNameMetadataGenerator<> AssemblyNameMetadataGenerator;
 
+    
+    
+    
+    
+    //template<
+    //    class AssemblyNameMetadataGeneratorApiHolder = ApiHolders::DefaultAssemblyNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseAssemblyNameMetadataGeneratorHash;
+
+    //typedef BaseAssemblyNameMetadataGeneratorHash<> AssemblyNameMetadataGeneratorHash;
+
+    //
+    //
+    //
+    //
+    //template<
+    //    class AssemblyNameMetadataGeneratorApiHolder = ApiHolders::DefaultAssemblyNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseAssemblyNameMetadataGeneratorEqualTo;
+
+    //typedef BaseAssemblyNameMetadataGeneratorEqualTo<> AssemblyNameMetadataGeneratorEqualTo;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATAGENERATORFWD_HPP

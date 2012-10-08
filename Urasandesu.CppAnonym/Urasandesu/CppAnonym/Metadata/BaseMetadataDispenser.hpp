@@ -74,7 +74,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             boost::mpl::vector<
                 ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type, QuickHeap>,
                 ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type, QuickHeap>,
-                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type, QuickHeap>
+                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type, QuickHeap>,
+                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type, QuickHeap>
             >
         >
     {
@@ -85,7 +86,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;        
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type assembly_name_metadata_generator_type;        
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type assembly_name_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyNameMetadataHashLabel>::type i_assembly_name_metadata_hash_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyNameMetadataEqualToLabel>::type i_assembly_name_metadata_equal_to_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type assembly_metadata_generator_type;        
 
@@ -95,6 +98,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename type_decided_by<assembly_name_metadata_obj_tag_type>::type assembly_name_metadata_heap_type;
         typedef ObjectTag<assembly_name_metadata_generator_type, QuickHeap> assembly_name_metadata_generator_obj_tag_type;
         typedef typename type_decided_by<assembly_name_metadata_generator_obj_tag_type>::type assembly_name_metadata_generator_heap_type;
+        typedef ObjectTag<assembly_metadata_generator_type, QuickHeap> assembly_metadata_generator_obj_tag_type;
+        typedef typename type_decided_by<assembly_metadata_generator_obj_tag_type>::type assembly_metadata_generator_heap_type;
 
         BaseMetadataDispenser() : 
             m_pMetaInfo(NULL)
@@ -144,11 +149,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 assembly_name_metadata_type *pAsmNameMeta = NULL;
                 pAsmNameMeta = NewAssemblyName(name);
 
-                assembly_metadata_type const *pAsmMeta = NULL;
-                pAsmMeta = pAsmNameMeta->Resolve(); // Internally, LoadAssemblyFromFile is dispatched. 
+                assembly_metadata_type const &asmMeta = pAsmNameMeta->ResolveCore(); // Internally, LoadAssemblyFromFile is dispatched. 
                 m_asmStrNameToIndex[name] = AssemblyMetadataHeap().Size() - 1;
 
-                return pAsmMeta;
+                return &asmMeta;
             }
             else
             {
@@ -194,9 +198,29 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return pAsmNameMetaGen;
         }
 
-        assembly_metadata_generator_type *DefineAssembly(std::wstring const &name, strong_name_key_type const &snKey)
+        assembly_metadata_generator_type *DefineAssembly(assembly_name_metadata_generator_type const &asmNameGen)
         {
-            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            if (m_asmNameGenToIndex.find(&asmNameGen) == m_asmNameGenToIndex.end())
+            {
+                m_asmNameGenToIndex[&asmNameGen] = MAXULONG_PTR;
+            }
+
+            SIZE_T index = m_asmNameGenToIndex[&asmNameGen];
+            if (index == MAXULONG_PTR)
+            {
+                assembly_metadata_generator_type *pAsmMetaGen = NULL;
+                pAsmMetaGen = AssemblyMetadataGeneratorHeap().New();
+                pAsmMetaGen->Init(*this);
+                pAsmMetaGen->SetAssemblyName(const_cast<assembly_name_metadata_generator_type &>(asmNameGen));
+
+                m_asmNameGenToIndex[&asmNameGen] = AssemblyMetadataGeneratorHeap().Size() - 1;
+
+                return pAsmMetaGen;
+            }
+            else
+            {
+                return AssemblyMetadataGeneratorHeap()[index];
+            }
         }
 
     private:
@@ -232,6 +256,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return Of<assembly_name_metadata_generator_obj_tag_type>();
         }
 
+        assembly_metadata_generator_heap_type &AssemblyMetadataGeneratorHeap()
+        {
+            return Of<assembly_metadata_generator_obj_tag_type>();
+        }
+        
+        assembly_metadata_generator_heap_type const &AssemblyMetadataGeneratorHeap() const
+        {
+            return Of<assembly_metadata_generator_obj_tag_type>();
+        }
+
         com_meta_data_dispenser_type &GetCOMMetaDataDispenser()
         {
             if (m_pComMetaDisp.p == NULL)
@@ -251,6 +285,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef Utilities::EqualTo<path> path_equal_to;
         mutable boost::unordered_map<std::wstring, mdToken> m_asmStrNameToIndex;
         mutable boost::unordered_map<path, mdToken, path_hash, path_equal_to> m_asmPathToToIndex;
+        mutable boost::unordered_map<assembly_name_metadata_generator_type const *, 
+                                     SIZE_T, 
+                                     i_assembly_name_metadata_hash_type, 
+                                     i_assembly_name_metadata_equal_to_type> m_asmNameGenToIndex;
         mutable ATL::CComPtr<com_meta_data_dispenser_type> m_pComMetaDisp;
     };
 

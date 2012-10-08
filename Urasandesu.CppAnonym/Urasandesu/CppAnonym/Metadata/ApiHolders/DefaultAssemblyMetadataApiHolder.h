@@ -50,6 +50,14 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadataFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadataFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolderFwd.h>
 #endif
@@ -66,10 +74,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             typedef map<
                 pair<MetadataDispenserLabel, MetadataDispenser>, 
                 pair<AssemblyNameMetadataLabel, AssemblyNameMetadata>,
+                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
                 pair<ModuleMetadataLabel, ModuleMetadata>, 
                 pair<ModuleNameMetadataLabel, ModuleNameMetadata>, 
                 pair<TypeMetadataLabel, TypeMetadata>, 
                 pair<TypeNameMetadataLabel, TypeNameMetadata>, 
+                pair<MethodMetadataLabel, MethodMetadata>, 
                 pair<IMetaDataDispenserEx, IMetaDataDispenserEx>, 
                 pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>, 
                 pair<IMetaDataImport2, IMetaDataImport2> 

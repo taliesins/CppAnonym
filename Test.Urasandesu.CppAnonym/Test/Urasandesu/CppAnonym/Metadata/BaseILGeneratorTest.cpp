@@ -4,8 +4,8 @@
 #include <Urasandesu/CppAnonym/Utilities/IsAnyT.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATOR_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseILGenerator.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODBODYWRITER_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodBodyWriter.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATALABEL_HPP
@@ -172,10 +172,10 @@ namespace MockC17C4C45 {
     
 }   // namespace MockC17C4C45 {
 
-// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_BaseILGeneratorTest.*
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_BaseMethodBodyWriterTest.*
 namespace {
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseILGeneratorTest, OpCodesTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseMethodBodyWriterTest, OpCodesTest_01)
     {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
@@ -198,7 +198,7 @@ namespace {
 
 
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseILGeneratorTest, StackBehavioursTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseMethodBodyWriterTest, StackBehavioursTest_01)
     {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
@@ -217,7 +217,7 @@ namespace {
     
     
     
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseILGeneratorTest, StackBehavioursTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseMethodBodyWriterTest, StackBehavioursTest_02)
     {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
@@ -233,7 +233,7 @@ namespace {
     
     
     
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseILGeneratorTest, EmitWriteLineTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_BaseMethodBodyWriterTest, EmitWriteLineTest_01)
     {
         namespace mpl = boost::mpl;
         using boost::any_cast;
@@ -258,14 +258,14 @@ namespace {
         typedef MockMetadataDispenser MetadataDispenser;
         typedef MockMethodMetadata MethodMetadata;
         typedef MockMethodNameMetadata MethodNameMetadata;
-        typedef BaseILGenerator<TestApiHolder> ILGenerator; 
+        typedef BaseMethodBodyWriter<TestApiHolder> MethodBodyWriter; 
 
         shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
 
         shared_ptr<MethodMetadata> pMethodMeta(make_shared<MethodMetadata>());
         pMethodMeta->m_typePtrs.push_back(pMetaDisp);
 
-        shared_ptr<ILGenerator> pGen(make_shared<ILGenerator>());
+        shared_ptr<MethodBodyWriter> pGen(make_shared<MethodBodyWriter>());
         pGen->Init(*pMethodMeta);
         pGen->EmitWriteLine(L"Hello, world!!");
         pGen->Emit(OpCodes::Ret);

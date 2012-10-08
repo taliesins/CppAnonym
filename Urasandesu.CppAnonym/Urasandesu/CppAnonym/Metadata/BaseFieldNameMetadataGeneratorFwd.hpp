@@ -15,6 +15,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     typedef BaseFieldNameMetadataGenerator<> FieldNameMetadataGenerator;
 
+    
+    
+    
+    
+    template<
+        class FieldNameMetadataGeneratorApiHolder = ApiHolders::DefaultFieldNameMetadataGeneratorApiHolder
+    >    
+    class BaseFieldNameMetadataGeneratorHash;
+
+    typedef BaseFieldNameMetadataGeneratorHash<> FieldNameMetadataGeneratorHash;
+
+    
+    
+    
+    
+    template<
+        class FieldNameMetadataGeneratorApiHolder = ApiHolders::DefaultFieldNameMetadataGeneratorApiHolder
+    >    
+    class BaseFieldNameMetadataGeneratorEqualTo;
+
+    typedef BaseFieldNameMetadataGeneratorEqualTo<> FieldNameMetadataGeneratorEqualTo;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEFIELDNAMEMETADATAGENERATORFWD_HPP

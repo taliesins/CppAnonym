@@ -57,17 +57,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     template<
         class PropertyNameMetadataGeneratorApiHolder
     >
-    class BasePropertyNameMetadataGenerator
+    class BasePropertyNameMetadataGenerator : 
+        public PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::IPropertyNameMetadataLabel>::type
     {
     public:
         typedef BasePropertyNameMetadataGenerator<PropertyNameMetadataGeneratorApiHolder> this_type;
+        typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::IPropertyNameMetadataLabel>::type base_type;
 
         typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::TypeNameMetadataGeneratorLabel>::type type_name_metadata_generator_type;
+        typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::TypeMetadataGeneratorLabel>::type type_metadata_generator_type;
         typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
         typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::MethodNameMetadataGeneratorLabel>::type method_name_metadata_generator_type;
+        typedef typename PropertyNameMetadataGeneratorApiAt<PropertyNameMetadataGeneratorApiHolder, Interfaces::PropertyMetadataGeneratorLabel>::type property_metadata_generator_type;
 
         BasePropertyNameMetadataGenerator() : 
             m_pTypeNameGenAsScope(NULL), 
+            m_pTypeGenAsScope(NULL),
+            m_pResolvedPropGen(NULL),
             m_nameInitialized(false), 
             m_pPropType(NULL), 
             m_paramTypesInitialized(false), 
@@ -78,9 +84,34 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         void Init(type_name_metadata_generator_type &typeNameGenAsScope) const
         {
-            _ASSERTE(m_pTypeNameGenAsScope == NULL);
+            _ASSERTE(m_pTypeNameGenAsScope == NULL && m_pTypeGenAsScope == NULL);
             m_pTypeNameGenAsScope = &typeNameGenAsScope;
         }
+
+        void Init(type_metadata_generator_type &typeGenAsScope) const
+        {
+            _ASSERTE(m_pTypeNameGenAsScope == NULL && m_pTypeGenAsScope == NULL);
+            m_pTypeGenAsScope = &typeGenAsScope;
+        }
+
+        template<class T>
+        T const &Map() const { return const_cast<this_type *>(this)->Map<T>(); }
+
+        template<class T>
+        T &Map() 
+        { 
+            _ASSERTE(m_pTypeNameGenAsScope != NULL || m_pTypeGenAsScope != NULL);
+            if (m_pTypeNameGenAsScope != NULL)
+                return m_pTypeNameGenAsScope->Map<T>();
+            else
+                return m_pTypeGenAsScope->GetTypeNameCore()->Map<T>();
+        }
+      
+        template<>
+        this_type const &Map<this_type>() const { return const_cast<this_type *>(this)->Map<this_type>(); }
+      
+        template<>
+        this_type &Map<this_type>() { return *this; }
 
         std::wstring const &GetName() const
         {
@@ -89,6 +120,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
             return m_name;
+        }
+
+        typename base_type::i_type_name_metadata_type const &GetResolutionScope() const
+        {
+            return Map<type_name_metadata_generator_type>();
+        }
+
+        typename base_type::i_property_metadata_type const &Resolve() const
+        {
+            return ResolveCore();
         }
 
         type_metadata_type const &GetPropertyType() const
@@ -141,6 +182,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     private:
         friend typename type_name_metadata_generator_type;
 
+        property_metadata_generator_type const &ResolveCore() const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->ResolveCore();
+        }
+        
+        property_metadata_generator_type &ResolveCore()
+        {
+            if (m_pTypeGenAsScope == NULL)
+                m_pTypeGenAsScope = &Map<type_name_metadata_generator_type>().ResolveCore();
+
+            if (m_pResolvedPropGen == NULL)
+                m_pResolvedPropGen = m_pTypeGenAsScope->DefineProperty(*this);
+
+            return *m_pResolvedPropGen;
+        }
+
         void SetName(std::wstring const &name)
         {
             _ASSERTE(!m_nameInitialized);
@@ -169,6 +227,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         mutable type_name_metadata_generator_type *m_pTypeNameGenAsScope;
+        mutable type_metadata_generator_type *m_pTypeGenAsScope;
+        property_metadata_generator_type *m_pResolvedPropGen;
         bool m_nameInitialized;
         std::wstring m_name;
         type_metadata_type const *m_pPropType;

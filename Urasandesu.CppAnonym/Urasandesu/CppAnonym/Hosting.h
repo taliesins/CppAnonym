@@ -38,4 +38,12 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHost.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP
+#include <Urasandesu/CppAnonym/Hosting/PortableExecutableKinds.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_IMAGEFILEMACHINE_HPP
+#include <Urasandesu/CppAnonym/Hosting/ImageFileMachine.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_HOSTING_H

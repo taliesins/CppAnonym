@@ -26,12 +26,12 @@
 //#include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadataFwd.hpp>
 //#endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ILGENERATORLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/ILGeneratorLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODBODYWRITERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodBodyWriterLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATORFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseILGeneratorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODBODYWRITERFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodBodyWriterFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODNAMEMETADATAGENERATORAPIHOLDERFWD_H
@@ -62,8 +62,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             //> api_cartridges;
             typedef map<
                 pair<TypeNameMetadataGeneratorLabel, TypeNameMetadataGenerator>, 
+                pair<ITypeNameMetadataHashLabel, ITypeNameMetadataHash>,
+                pair<ITypeNameMetadataEqualToLabel, ITypeNameMetadataEqualTo>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<TypeMetadataGeneratorLabel, TypeMetadataGenerator>, 
                 pair<TypeMetadataLabel, TypeMetadata>, 
-                pair<ILGeneratorLabel, ILGenerator>
+                pair<MethodMetadataGeneratorLabel, MethodMetadataGenerator>, 
+                pair<IMethodNameMetadataLabel, IMethodNameMetadata>, 
+                pair<MethodBodyWriterLabel, MethodBodyWriter>
             > api_cartridges;
         };
 

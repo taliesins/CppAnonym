@@ -42,6 +42,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class ModuleMetadataApiHolder
     >    
     class BaseModuleMetadata :
+        public ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type,
         public SimpleHeapProvider<
             boost::mpl::vector<
                 ObjectTag<typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::TypeMetadataLabel>::type, QuickHeap>
@@ -50,10 +51,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseModuleMetadata<ModuleMetadataApiHolder> this_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type base_type;
 
         typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;    
         typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ModuleNameMetadataLabel>::type module_name_metadata_type;
         typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeNameMetadataHashLabel>::type i_type_name_metadata_hash_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeNameMetadataEqualToLabel>::type i_type_name_metadata_equal_to_type;
         typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
         typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;                
 
@@ -92,11 +96,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         template<>
         this_type &Map<this_type>() { return *this; }
 
-        type_name_metadata_type *NewTypeName(std::wstring const &name) const
-        {
-            return GetModuleName()->NewTypeName(name);
-        }
-
         mdModule GetToken() const
         {
             if (m_mdm == mdModuleNil)
@@ -113,6 +112,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_mdm;
         }
 
+        typename base_type::i_module_name_metadata_type const &GetModuleName() const
+        {
+            return GetModuleNameCore();
+        }
+
+        type_name_metadata_type *NewTypeName(std::wstring const &name) const
+        {
+            return GetModuleNameCore().NewTypeName(name);
+        }
+
         type_metadata_type const *GetType(std::wstring const &name) const
         {
             return GetTypeCore(name);
@@ -121,11 +130,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         type_metadata_type const *GetType(mdToken mdtType) const
         {
             return GetTypeCore(mdtType);
-        }
-
-        module_name_metadata_type const *GetModuleName() const
-        {
-            return GetModuleNameCore();
         }
 
     private:
@@ -144,12 +148,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         type_name_metadata_heap_type &TypeNameMetadataHeap()
         {
-            return GetModuleNameCore()->TypeNameMetadataHeap();
+            return GetModuleNameCore().TypeNameMetadataHeap();
         }
         
         type_name_metadata_heap_type const &TypeNameMetadataHeap() const
         {
-            return GetModuleNameCore()->TypeNameMetadataHeap();
+            return GetModuleNameCore().TypeNameMetadataHeap();
         }
 
         type_metadata_type const *GetTypeCore(std::wstring const &name) const
@@ -160,87 +164,147 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         type_metadata_type *GetTypeCore(std::wstring const &name)
         {
-            if (m_typeStrNameToIndex.find(name) == m_typeStrNameToIndex.end())
+            type_name_metadata_type *pTypeName = NULL;
+            pTypeName = NewTypeName(name);
+
+            
+            bool alreadyExists = false;
+            type_metadata_type *pType = NULL;
+            pType = GetTypeCore(*pTypeName, alreadyExists);
+            if (alreadyExists)
             {
-                m_typeStrNameToIndex[name] = MAXULONG_PTR;
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                module_name_metadata_type &modName = pMutableThis->GetModuleNameCore();
+                modName.TypeNameMetadataHeap().DeleteLast();
             }
 
-            SIZE_T index = m_typeStrNameToIndex[name];
+            return pType;
+            //if (m_typeStrNameToIndex.find(name) == m_typeStrNameToIndex.end())
+            //{
+            //    m_typeStrNameToIndex[name] = MAXULONG_PTR;
+            //}
+
+            //SIZE_T index = m_typeStrNameToIndex[name];
+            //if (index == MAXULONG_PTR)
+            //{
+            //    assembly_metadata_type &asmMeta = Map<assembly_metadata_type>();
+            //    
+            //    com_meta_data_import_type &comMetaImp = asmMeta.GetCOMMetaDataImport();
+
+            //    mdTypeDef mdtd = mdTypeDefNil;
+            //    HRESULT hr = comMetaImp.FindTypeDefByName(name.c_str(), NULL, &mdtd);
+            //    if (FAILED(hr))
+            //        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+
+            //    type_metadata_type *pTypeMeta = TypeMetadataHeap().New();
+            //    pTypeMeta->Init(*this);
+            //    pTypeMeta->SetToken(mdtd);
+
+            //    m_typeStrNameToIndex[name] = TypeMetadataHeap().Size() - 1;
+            //    m_typeTokenToIndex[mdtd] = TypeMetadataHeap().Size() - 1;
+
+            //    return pTypeMeta;
+            //}
+            //else
+            //{
+            //    return TypeMetadataHeap()[index];
+            //}
+        }
+
+        type_metadata_type const *GetTypeCore(type_name_metadata_type const &typeName) const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->GetTypeCore(typeName);
+        }
+
+        type_metadata_type *GetTypeCore(type_name_metadata_type const &typeName)
+        {
+            bool alreadyExists = false;
+            return GetTypeCore(typeName, alreadyExists);
+        }
+
+        type_metadata_type const *GetTypeCore(type_name_metadata_type const &typeName, bool &alreadyExists) const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->GetTypeCore(typeName, alreadyExists);
+        }
+
+        type_metadata_type *GetTypeCore(type_name_metadata_type const &typeName, bool &alreadyExists)
+        {
+            if (m_typeNameToIndex.find(&typeName) == m_typeNameToIndex.end())
+            {
+                m_typeNameToIndex[&typeName] = MAXULONG_PTR;
+            }
+
+            SIZE_T index = m_typeNameToIndex[&typeName];
             if (index == MAXULONG_PTR)
             {
-                assembly_metadata_type &asmMeta = Map<assembly_metadata_type>();
-                
-                com_meta_data_import_type &comMetaImp = asmMeta.GetCOMMetaDataImport();
-
-                mdTypeDef mdtd = mdTypeDefNil;
-                HRESULT hr = comMetaImp.FindTypeDefByName(name.c_str(), NULL, &mdtd);
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-                type_metadata_type *pTypeMeta = TypeMetadataHeap().New();
+                type_metadata_type *pTypeMeta = NULL;
+                pTypeMeta= TypeMetadataHeap().New();
                 pTypeMeta->Init(*this);
-                pTypeMeta->SetToken(mdtd);
+                pTypeMeta->SetTypeName(const_cast<type_name_metadata_type &>(typeName));
 
-                m_typeStrNameToIndex[name] = TypeMetadataHeap().Size() - 1;
-                m_typeTokenToIndex[mdtd] = TypeMetadataHeap().Size() - 1;
+                m_typeNameToIndex[&typeName] = TypeMetadataHeap().Size() - 1;
 
+                alreadyExists = false;
                 return pTypeMeta;
             }
             else
             {
+                alreadyExists = true;
                 return TypeMetadataHeap()[index];
             }
         }
 
-        type_metadata_type const *GetTypeCore(mdToken mdtType) const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return pMutableThis->GetTypeCore(mdtType);
-        }
+        //type_metadata_type const *GetTypeCore(mdToken mdtType) const
+        //{
+        //    this_type *pMutableThis = const_cast<this_type *>(this);
+        //    return pMutableThis->GetTypeCore(mdtType);
+        //}
 
-        type_metadata_type *GetTypeCore(mdToken mdtType)
-        {
-            if (TypeFromToken(mdtType) == mdtTypeRef)
-            {
-                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-            }
-            else if (TypeFromToken(mdtType) == mdtTypeDef)
-            {
-                if (m_typeTokenToIndex.find(mdtType) == m_typeTokenToIndex.end())
-                {
-                    m_typeTokenToIndex[mdtType] = MAXULONG_PTR;
-                }
+        //type_metadata_type *GetTypeCore(mdToken mdtType)
+        //{
+        //    if (TypeFromToken(mdtType) == mdtTypeRef)
+        //    {
+        //        BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+        //    }
+        //    else if (TypeFromToken(mdtType) == mdtTypeDef)
+        //    {
+        //        if (m_typeTokenToIndex.find(mdtType) == m_typeTokenToIndex.end())
+        //        {
+        //            m_typeTokenToIndex[mdtType] = MAXULONG_PTR;
+        //        }
 
-                SIZE_T index = m_typeTokenToIndex[mdtType];
-                if (index == MAXULONG_PTR)
-                {
-                    type_metadata_type *pTypeMeta = TypeMetadataHeap().New();
-                    pTypeMeta->Init(*this);
-                    pTypeMeta->SetToken(mdtType);
+        //        SIZE_T index = m_typeTokenToIndex[mdtType];
+        //        if (index == MAXULONG_PTR)
+        //        {
+        //            type_metadata_type *pTypeMeta = TypeMetadataHeap().New();
+        //            pTypeMeta->Init(*this);
+        //            pTypeMeta->SetToken(mdtType);
 
-                    std::wstring name = pTypeMeta->GetTypeName()->GetName();
-                    m_typeStrNameToIndex[name] = TypeMetadataHeap().Size() - 1;
+        //            std::wstring name = pTypeMeta->GetTypeName().GetName();
+        //            m_typeStrNameToIndex[name] = TypeMetadataHeap().Size() - 1;
 
-                    return pTypeMeta;
-                }
-                else
-                {
-                    return TypeMetadataHeap()[index];
-                }
-            }
-            else
-            {
-                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-            }
-        }
+        //            return pTypeMeta;
+        //        }
+        //        else
+        //        {
+        //            return TypeMetadataHeap()[index];
+        //        }
+        //    }
+        //    else
+        //    {
+        //        BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+        //    }
+        //}
 
-        module_name_metadata_type const *GetModuleNameCore() const
+        module_name_metadata_type const &GetModuleNameCore() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
             return pMutableThis->GetModuleNameCore();
         }
 
-        module_name_metadata_type *GetModuleNameCore()
+        module_name_metadata_type &GetModuleNameCore()
         {
             if (m_pModNameMeta == NULL)
             {
@@ -251,14 +315,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 m_pModNameMeta->SetToken(GetToken());
                 m_pModNameMeta->SetResolvedModule(*this);
             }
-            return m_pModNameMeta;
+            return *m_pModNameMeta;
         }
 
         mutable assembly_metadata_type *m_pAsmAsScope;
         mutable module_name_metadata_type *m_pModNameMeta;
         mutable mdModule m_mdm;
-        mutable boost::unordered_map<std::wstring, SIZE_T> m_typeStrNameToIndex;
         mutable boost::unordered_map<mdToken, SIZE_T>  m_typeTokenToIndex;
+        mutable boost::unordered_map<type_name_metadata_type const *, 
+                                     SIZE_T, 
+                                     i_type_name_metadata_hash_type, 
+                                     i_type_name_metadata_equal_to_type> m_typeNameToIndex;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

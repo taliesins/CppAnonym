@@ -86,6 +86,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class AssemblyMetadataApiHolder
     >    
     class BaseAssemblyMetadata :
+        public AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type,
         public SimpleHeapProvider<
             boost::mpl::vector<
                 ObjectTag<typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type, QuickHeap>
@@ -94,6 +95,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseAssemblyMetadata<AssemblyMetadataApiHolder> this_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type base_type;
         
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
@@ -101,6 +103,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::ModuleNameMetadataLabel>::type module_name_metadata_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MethodMetadataLabel>::type methoe_metadata_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
@@ -130,7 +133,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         template<class T>
-        T const &Map() const { _ASSERTE(m_pMetaDisp != NULL); return static_cast<metadata_dispenser_type const *>(m_pMetaDisp)->Map<T>(); }
+        T const &Map() const { return const_cast<this_type *>(this)->Map<T>(); }
 
         template<class T>
         T &Map() { _ASSERTE(m_pMetaDisp != NULL); return m_pMetaDisp->Map<T>(); }
@@ -140,11 +143,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
       
         template<>
         this_type &Map<this_type>() { return *this; }
-
-        module_name_metadata_type *NewModuleName(std::wstring const &name) const
-        {
-            return GetAssemblyName()->NewModuleName(name);
-        }
 
         mdAssembly GetToken() const
         {
@@ -163,14 +161,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_mda;
         }
 
+        typename base_type::i_assembly_name_metadata_type const &GetAssemblyName() const
+        {
+            return GetAssemblyNameCore();
+        }
+
+        module_name_metadata_type *NewModuleName(std::wstring const &name) const
+        {
+            return GetAssemblyNameCore().NewModuleName(name);
+        }
+
         module_metadata_type const *GetModule(std::wstring const &name) const
         {
             return GetModuleCore(name);
-        }
-
-        assembly_name_metadata_type const *GetAssemblyName() const
-        {
-            return GetAssemblyNameCore();
         }
 
     private:
@@ -180,6 +183,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         friend typename type_metadata_type;
         friend typename metadata_dispenser_type;
         friend typename assembly_name_metadata_type;
+        friend typename methoe_metadata_type;
 
         module_metadata_heap_type &ModuleMetadataHeap()
         {
@@ -193,12 +197,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         module_name_metadata_heap_type &ModuleNameMetadataHeap()
         {
-            return GetAssemblyNameCore()->ModuleNameMetadataHeap();
+            return GetAssemblyNameCore().ModuleNameMetadataHeap();
         }
         
         module_name_metadata_heap_type const &ModuleNameMetadataHeap() const
         {
-            return GetAssemblyNameCore()->ModuleNameMetadataHeap();
+            return GetAssemblyNameCore().ModuleNameMetadataHeap();
         }
 
         com_meta_data_assembly_import_type &GetCOMMetaDataAssemblyImport()
@@ -289,11 +293,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 module_name_metadata_type *pModNameMeta = NULL;
                 pModNameMeta = NewModuleName(name);
 
-                module_metadata_type *pModMeta = NULL;
-                pModMeta = pModNameMeta->ResolveCore();
+                module_metadata_type &modMeta = pModNameMeta->ResolveCore();
                 m_modStrNameToIndex[name] = ModuleMetadataHeap().Size() - 1;
 
-                return pModMeta;
+                return &modMeta;
             }
             else
             {
@@ -301,13 +304,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         }
 
-        assembly_name_metadata_type const *GetAssemblyNameCore() const
+        assembly_name_metadata_type const &GetAssemblyNameCore() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
             return pMutableThis->GetAssemblyNameCore();
         }
 
-        assembly_name_metadata_type *GetAssemblyNameCore()
+        assembly_name_metadata_type &GetAssemblyNameCore()
         {
             if (m_pAsmNameMeta == NULL)
             {
@@ -318,7 +321,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 m_pAsmNameMeta->SetToken(GetToken());
                 m_pAsmNameMeta->SetResolvedAssembly(*this);
             }
-            return m_pAsmNameMeta;
+            return *m_pAsmNameMeta;
         }
 
         mutable mdAssembly m_mda;

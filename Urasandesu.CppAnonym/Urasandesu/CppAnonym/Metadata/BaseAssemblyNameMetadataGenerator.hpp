@@ -42,12 +42,12 @@
 //#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
 //#endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_PORTABLEEXECUTABLEKINDS_HPP
-#include <Urasandesu/CppAnonym/Metadata/PortableExecutableKinds.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_PORTABLEEXECUTABLEKINDS_HPP
+#include <Urasandesu/CppAnonym/Hosting/PortableExecutableKinds.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_IMAGEFILEMACHINE_HPP
-#include <Urasandesu/CppAnonym/Metadata/ImageFileMachine.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_IMAGEFILEMACHINE_HPP
+#include <Urasandesu/CppAnonym/Hosting/ImageFileMachine.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
@@ -70,6 +70,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class AssemblyNameMetadataGeneratorApiHolder
     >    
     class BaseAssemblyNameMetadataGenerator : 
+        public AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::IAssemblyNameMetadataLabel>::type,
         public SimpleHeapProvider<
             boost::mpl::vector<
                 ObjectTag<typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::ModuleNameMetadataGeneratorLabel>::type, QuickHeap>
@@ -78,11 +79,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseAssemblyNameMetadataGenerator<AssemblyNameMetadataGeneratorApiHolder> this_type;
+        typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::IAssemblyNameMetadataLabel>::type base_type;
 
-        typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        //typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
         typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type assembly_metadata_generator_type;
         typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::ModuleNameMetadataGeneratorLabel>::type module_name_metadata_generator_type;
-        typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
+        //typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
 
         typedef ObjectTag<module_name_metadata_generator_type, QuickHeap> module_name_metadata_generator_obj_tag_type;
         typedef typename type_decided_by<module_name_metadata_generator_obj_tag_type>::type module_name_metadata_generator_heap_type;
@@ -94,7 +96,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_pSnKey(NULL)
         { }
 
-        void Init(metadata_dispenser_type &dispAsScope) const
+        void Init(typename base_type::metadata_dispenser_type &dispAsScope) const
         {
             _ASSERTE(m_pDispAsScope == NULL);
             m_pDispAsScope = &dispAsScope;
@@ -121,12 +123,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
 
-        strong_name_key_type const *GetStrongNameKey() const
+        typename base_type::strong_name_key_type const *GetStrongNameKey() const
         {
             return m_pSnKey;
         }
 
-        void SetStrongNameKey(strong_name_key_type const &snKey)
+        typename base_type::metadata_dispenser_type const &GetResolutionScope() const
+        {
+            return Map<typename base_type::metadata_dispenser_type>();
+        }
+
+        typename base_type::i_assembly_metadata_type const &Resolve() const
+        {
+            return ResolveCore();
+        }
+
+        void SetStrongNameKey(typename base_type::strong_name_key_type const &snKey)
         {
             m_pSnKey = &snKey;
         }
@@ -142,13 +154,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return pModNameMetaGen;
         }
 
-        assembly_metadata_generator_type *Resolve()
+        void Save(std::wstring const &name, 
+                  Hosting::PortableExecutableKinds const &portableExecutableKind, 
+                  Hosting::ImageFileMachine const &imageFileMachine) const
         {
-            return ResolveCore();
+            ResolveCore().Save(name, portableExecutableKind, imageFileMachine);
         }
 
     private:
-        friend typename metadata_dispenser_type;
+        friend typename base_type::metadata_dispenser_type;
+        friend typename assembly_metadata_generator_type;
+        friend typename module_name_metadata_generator_type;
 
         module_name_metadata_generator_heap_type &ModuleNameMetadataGeneratorHeap()
         {
@@ -166,23 +182,78 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
             m_nameInitialized = true;
         }
+
+        assembly_metadata_generator_type const &ResolveCore() const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->ResolveCore();
+        }
         
-        assembly_metadata_generator_type *ResolveCore()
+        assembly_metadata_generator_type &ResolveCore()
         {
             if (m_pResolvedAsmGen == NULL)
             {
                 metadata_dispenser_type &metaDisp = Map<metadata_dispenser_type>();
-                m_pResolvedAsmGen = metaDisp.DefineAssembly(GetName(), *GetStrongNameKey());
+                m_pResolvedAsmGen = metaDisp.DefineAssembly(*this);
             }
-            return m_pResolvedAsmGen;
+            return *m_pResolvedAsmGen;
         }
 
-        mutable metadata_dispenser_type *m_pDispAsScope;
+        mutable typename base_type::metadata_dispenser_type *m_pDispAsScope;
         mutable bool m_nameInitialized;
         mutable std::wstring m_name;
         mutable assembly_metadata_generator_type *m_pResolvedAsmGen;
-        mutable strong_name_key_type const *m_pSnKey;
+        mutable typename base_type::strong_name_key_type const *m_pSnKey;
     };
+
+    
+    
+    
+    
+    //template<
+    //    class AssemblyNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseAssemblyNameMetadataGeneratorHash : 
+    //    Traits::HashComputable<BaseAssemblyNameMetadataGenerator<AssemblyNameMetadataGeneratorApiHolder> const *>
+    //{
+    //public:
+    //    typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+
+    //    result_type operator()(param_type v) const
+    //    {
+    //        using namespace boost;
+    //        using namespace Urasandesu::CppAnonym::Utilities;
+
+    //        _ASSERTE(v != NULL);
+
+    //        std::size_t seed = 0;
+    //        hash_combine(seed, hash_value(v->GetName()));
+    //        hash_combine(seed, HashValue(&v->Map<metadata_dispenser_type>()));
+    //        return seed;
+    //    }
+    //};
+
+    //
+    //
+    //
+    //
+    //template<
+    //    class AssemblyNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseAssemblyNameMetadataGeneratorEqualTo : 
+    //    Traits::EqualityComparable<BaseAssemblyNameMetadataGenerator<AssemblyNameMetadataGeneratorApiHolder> const *>
+    //{
+    //public:
+    //    typedef typename AssemblyNameMetadataGeneratorApiAt<AssemblyNameMetadataGeneratorApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+    //    
+    //    result_type operator()(param_type x, param_type y) const
+    //    {
+    //        _ASSERTE(x != NULL && y != NULL);
+
+    //        return x->GetName() == y->GetName() &&
+    //               &x->Map<metadata_dispenser_type>() == &y->Map<metadata_dispenser_type>();
+    //    }
+    //};
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

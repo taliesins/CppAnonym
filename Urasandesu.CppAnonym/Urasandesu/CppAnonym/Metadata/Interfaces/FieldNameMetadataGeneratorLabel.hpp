@@ -5,6 +5,8 @@
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
     struct FieldNameMetadataGeneratorLabel { };
+    struct FieldNameMetadataGeneratorHashLabel { };
+    struct FieldNameMetadataGeneratorEqualToLabel { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 

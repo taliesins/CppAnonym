@@ -53,9 +53,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             //    pair<IMetaDataImport2, IMetaDataImport2>
             //> api_cartridges;
             typedef map<
+                pair<TypeMetadataGeneratorLabel, TypeMetadataGenerator>, 
                 pair<TypeNameMetadataGeneratorLabel, TypeNameMetadataGenerator>, 
                 pair<TypeMetadataLabel, TypeMetadata>, 
-                pair<MethodNameMetadataGeneratorLabel, MethodNameMetadataGenerator>
+                pair<MethodNameMetadataGeneratorLabel, MethodNameMetadataGenerator>,
+                pair<IPropertyNameMetadataLabel, IPropertyNameMetadata>,
+                pair<PropertyMetadataGeneratorLabel, PropertyMetadataGenerator>
             > api_cartridges;
         };
 

@@ -15,6 +15,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     typedef BaseModuleNameMetadataGenerator<> ModuleNameMetadataGenerator;
 
+    
+    
+    
+    
+    //template<
+    //    class ModuleNameMetadataGeneratorApiHolder = ApiHolders::DefaultModuleNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseModuleNameMetadataGeneratorHash;
+
+    //typedef BaseModuleNameMetadataGeneratorHash<> ModuleNameMetadataGeneratorHash;
+
+    //
+    //
+    //
+    //
+    //template<
+    //    class ModuleNameMetadataGeneratorApiHolder = ApiHolders::DefaultModuleNameMetadataGeneratorApiHolder
+    //>    
+    //class BaseModuleNameMetadataGeneratorEqualTo;
+
+    //typedef BaseModuleNameMetadataGeneratorEqualTo<> ModuleNameMetadataGeneratorEqualTo;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATAGENERATORFWD_HPP

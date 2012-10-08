@@ -38,6 +38,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class ModuleNameMetadataGeneratorApiHolder
     >    
     class BaseModuleNameMetadataGenerator : 
+        public ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::IModuleNameMetadataLabel>::type,
         public SimpleHeapProvider<
             boost::mpl::vector<
                 ObjectTag<typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::TypeNameMetadataGeneratorLabel>::type, QuickHeap>
@@ -46,22 +47,33 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseModuleNameMetadataGenerator<ModuleNameMetadataGeneratorApiHolder> this_type;
+        typedef typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::IModuleNameMetadataLabel>::type base_type;
 
+        typedef typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type assembly_metadata_generator_type;
         typedef typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type assembly_name_metadata_generator_type;
         typedef typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::TypeNameMetadataGeneratorLabel>::type type_name_metadata_generator_type;
+        typedef typename ModuleNameMetadataGeneratorApiAt<ModuleNameMetadataGeneratorApiHolder, Interfaces::ModuleMetadataGeneratorLabel>::type module_metadata_generator_type;
 
         typedef ObjectTag<type_name_metadata_generator_type, QuickHeap> type_name_metadata_generator_obj_tag_type;
         typedef typename type_decided_by<type_name_metadata_generator_obj_tag_type>::type type_name_metadata_generator_heap_type;
 
         BaseModuleNameMetadataGenerator() : 
             m_pAsmNameGenAsScope(NULL), 
-            m_nameInitialized(false)
+            m_pAsmGenAsScope(NULL),
+            m_nameInitialized(false),
+            m_pResolvedModGen(NULL)
         { }
 
         void Init(assembly_name_metadata_generator_type &asmNameGenAsScope) const
         {
-            _ASSERTE(m_pAsmNameGenAsScope == NULL);
+            _ASSERTE(m_pAsmNameGenAsScope == NULL && m_pAsmGenAsScope == NULL);
             m_pAsmNameGenAsScope = &asmNameGenAsScope;
+        }
+
+        void Init(assembly_metadata_generator_type &asmGenAsScope) const
+        {
+            _ASSERTE(m_pAsmNameGenAsScope == NULL && m_pAsmGenAsScope == NULL);
+            m_pAsmGenAsScope = &asmGenAsScope;
         }
 
         template<class T>
@@ -70,13 +82,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         template<class T>
         T &Map() 
         { 
-            //_ASSERTE(m_pModNameAsScope != NULL || m_pModAsScope != NULL);
-            //if (m_pModNameAsScope != NULL)
-            //    return m_pModNameAsScope->Map<T>();
-            //else
-            //    return m_pModAsScope->GetModuleNameCore()->Map<T>();
-            _ASSERTE(m_pAsmNameGenAsScope != NULL);
-            return m_pAsmNameGenAsScope->Map<T>();
+            _ASSERTE(m_pAsmNameGenAsScope != NULL || m_pAsmGenAsScope != NULL);
+            if (m_pAsmNameGenAsScope != NULL)
+                return m_pAsmNameGenAsScope->Map<T>();
+            else
+                return m_pAsmGenAsScope->GetAssemblyNameCore()->Map<T>();
         }
       
         template<>
@@ -95,6 +105,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
 
+        typename base_type::i_assembly_name_metadata_type const &GetResolutionScope() const
+        {
+            return Map<assembly_name_metadata_generator_type>();
+        }
+
+        typename base_type::i_module_metadata_type const &Resolve() const
+        {
+            return ResolveCore();
+        }
+
         type_name_metadata_generator_type *NewTypeNameGenerator(std::wstring const &name, TypeAttributes const &attr)
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
@@ -109,6 +129,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     private:
         friend typename assembly_name_metadata_generator_type;
+        friend typename module_metadata_generator_type;
+        friend typename type_name_metadata_generator_type;
 
         type_name_metadata_generator_heap_type &TypeNameMetadataGeneratorHeap()
         {
@@ -120,6 +142,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return Of<type_name_metadata_generator_obj_tag_type>();
         }
 
+        module_metadata_generator_type const &ResolveCore() const
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return pMutableThis->ResolveCore();
+        }
+        
+        module_metadata_generator_type &ResolveCore()
+        {
+            if (m_pAsmGenAsScope == NULL)
+                m_pAsmGenAsScope = &Map<assembly_name_metadata_generator_type>().ResolveCore();
+
+            if (m_pResolvedModGen == NULL)
+            {
+                m_pResolvedModGen = m_pAsmGenAsScope->DefineModule(*this);
+            }
+            return *m_pResolvedModGen;
+        }
+
 
         void SetName(std::wstring const &name)
         {
@@ -129,8 +169,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         mutable assembly_name_metadata_generator_type *m_pAsmNameGenAsScope;
+        mutable assembly_metadata_generator_type *m_pAsmGenAsScope;
         mutable bool m_nameInitialized;
         mutable std::wstring m_name;
+        module_metadata_generator_type *m_pResolvedModGen;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

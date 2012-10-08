@@ -149,7 +149,6 @@
     <ClCompile Include="Urasandesu\CppAnonym\Hosting\ApiHolders\DefaultHostInfoApiHolder.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Hosting\ApiHolders\DefaultRuntimeHostApiHolder.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\Instruction.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCode.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCodes.cpp" />
@@ -192,7 +191,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\FusionDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\FusionInfoApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\FusionInfoLabel.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\FusionInfoLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\HeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\HeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting.h" />
@@ -205,10 +203,12 @@
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\BaseRuntimeHost.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\BaseRuntimeHostFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\HostingDependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Hosting\ImageFileMachine.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\HostInfoApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\HostInfoLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\RuntimeHostApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\RuntimeHostLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Hosting\PortableExecutableKinds.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata.h" />
@@ -220,8 +220,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyNameMetadataGeneratorApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultFieldNameMetadataGeneratorApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultFieldNameMetadataGeneratorApiHolderFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolder.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultInstructionApiHolder.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultInstructionApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodBodyWriterApiHolder.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodBodyWriterApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultLocalNameMetadataGeneratorApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultLocalNameMetadataGeneratorApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMetadataDispenserApiHolder.h" />
@@ -256,8 +258,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyNameMetadataGeneratorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseFieldNameMetadataGenerator.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseFieldNameMetadataGeneratorFwd.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGenerator.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGeneratorFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseInstructionFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodBodyWriter.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodBodyWriterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseLocalNameMetadataGenerator.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseLocalNameMetadataGeneratorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMetadataDispenser.hpp" />
@@ -290,9 +293,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlows.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\FieldAttributes.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ImageFileMachine.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\IMetaDataImport2Impl.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Instruction.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseInstruction.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyMetadataApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyMetadataLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyNameMetadataApiHolderLabel.hpp" />
@@ -301,8 +303,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\AssemblyNameMetadataLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\FieldNameMetadataGeneratorApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\FieldNameMetadataGeneratorLabel.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabel.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\InstructionApiHolderLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\InstructionLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MethodBodyWriterApiHolderLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MethodBodyWriterLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\LocalNameMetadataGeneratorApiHolderLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\LocalNameMetadataGeneratorLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MetadataDispenserApiHolderLabel.hpp" />
@@ -343,7 +347,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParams.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OperandParamTypes.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\PortableExecutableKinds.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\PropertyAttributes.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviour.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourFwd.h" />

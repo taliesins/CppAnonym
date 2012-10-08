@@ -95,10 +95,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             //    pair<AssemblyNameMetadataGeneratorLabel, AssemblyNameMetadataGenerator> 
             //> api_cartridges;
             typedef map<
-                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<IAssemblyNameMetadataLabel, IAssemblyNameMetadata>,
+                //pair<MetadataDispenserLabel, MetadataDispenser>,
                 pair<AssemblyMetadataGeneratorLabel, AssemblyMetadataGenerator>,
-                pair<ModuleNameMetadataGeneratorLabel, ModuleNameMetadataGenerator>,
-                pair<StrongNameKeyLabel, StrongNameKey>
+                pair<ModuleNameMetadataGeneratorLabel, ModuleNameMetadataGenerator>
+                //pair<StrongNameKeyLabel, StrongNameKey>
             > api_cartridges;
         };
 

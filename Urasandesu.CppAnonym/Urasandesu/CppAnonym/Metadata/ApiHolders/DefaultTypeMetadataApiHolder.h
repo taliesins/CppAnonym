@@ -55,10 +55,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
                 pair<IMetaDataImport2, IMetaDataImport2>, 
                 pair<AssemblyMetadataLabel, AssemblyMetadata>,
                 pair<ModuleMetadataLabel, ModuleMetadata>, 
+                pair<ITypeMetadataLabel, ITypeMetadata>, 
                 pair<TypeNameMetadataLabel, TypeNameMetadata>, 
                 pair<MethodNameMetadataLabel, MethodNameMetadata>, 
-                pair<MethodNameMetadataHashLabel, MethodNameMetadataHash>, 
-                pair<MethodNameMetadataEqualToLabel, MethodNameMetadataEqualTo>, 
+                pair<IMethodNameMetadataHashLabel, IMethodNameMetadataHash>, 
+                pair<IMethodNameMetadataEqualToLabel, IMethodNameMetadataEqualTo>, 
                 pair<MethodMetadataLabel, MethodMetadata> 
             > api_cartridges;
         };

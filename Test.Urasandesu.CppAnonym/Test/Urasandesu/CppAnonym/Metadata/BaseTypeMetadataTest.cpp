@@ -76,8 +76,8 @@
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INSTRUCTION_H
-#include <Urasandesu/CppAnonym/Metadata/Instruction.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEINSTRUCTION_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseInstruction.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
@@ -100,8 +100,8 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATOR_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseILGenerator.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODBODYWRITER_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodBodyWriter.hpp>
 #endif
 
 namespace {
@@ -524,7 +524,7 @@ namespace {
     //    };
 
     //    struct TestMethodMetadataApiHolder;
-    //    struct TestILGeneratorApiHolder;
+    //    struct TestMethodBodyWriterApiHolder;
 
     //    struct TestMethodNameMetadataApiHolder
     //    {
@@ -536,7 +536,7 @@ namespace {
     //        typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
     //                         mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
     //                         mpl::pair<Interfaces::MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
-    //                         mpl::pair<Interfaces::ILGeneratorApiHolderLabel, TestILGeneratorApiHolder>, 
+    //                         mpl::pair<Interfaces::MethodBodyWriterApiHolderLabel, TestMethodBodyWriterApiHolder>, 
     //                         mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
     //                         mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
     //                         mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
@@ -551,7 +551,7 @@ namespace {
     //                         mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
     //    };
 
-    //    struct TestILGeneratorApiHolder
+    //    struct TestMethodBodyWriterApiHolder
     //    {
     //        typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>,
     //                         mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>, 
@@ -559,8 +559,8 @@ namespace {
     //                         mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
     //    };
 
-    //    typedef BaseILGenerator<TestILGeneratorApiHolder> ILGenerator;
-    //    typedef ILGenerator::method_metadata_type MethodMetadata;
+    //    typedef BaseMethodBodyWriter<TestMethodBodyWriterApiHolder> MethodBodyWriter;
+    //    typedef MethodBodyWriter::method_metadata_type MethodMetadata;
     //    typedef MethodMetadata::type_metadata_type TypeMetadata;
     //    typedef MethodMetadata::metadata_import_api_type MetaDataImportApi;
     //    typedef TypeMetadata::assembly_metadata_type AssemblyMetadata;
@@ -578,7 +578,7 @@ namespace {
     //    MethodMetadata methodMeta;
     //    methodMeta.Init(typeMeta, *pMetaImpApi); 
     //    
-    //    ILGenerator gen;
+    //    MethodBodyWriter gen;
     //    gen.Init(methodMeta);
     //    gen.EmitWriteLine(L"Hello, world!!");
     //    gen.Emit(OpCodes::Ret);

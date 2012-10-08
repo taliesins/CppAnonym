@@ -154,9 +154,6 @@
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Urasandesu\CppAnonym\Metadata\Instruction.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\Metadata\OpCode.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
@@ -447,9 +444,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\IMetaDataImport2Impl.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Instruction.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\CartridgeApiSystem.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
@@ -553,9 +547,6 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\FusionInfoLabel.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\FusionInfoLabelFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\HostInfoApiHolderLabel.hpp">
@@ -692,24 +683,6 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyInfoFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGeneratorFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseILGenerator.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolder.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultILGeneratorApiHolderFwd.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorLabel.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ILGeneratorApiHolderLabel.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
@@ -948,14 +921,50 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\PropertyAttributes.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\PortableExecutableKinds.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ImageFileMachine.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Hosting\ImageFileMachine.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Hosting</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Hosting\PortableExecutableKinds.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Hosting</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodBodyWriter.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodBodyWriterFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MethodBodyWriterApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\MethodBodyWriterLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodBodyWriterApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodBodyWriterApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultInstructionApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultInstructionApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseInstruction.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseInstructionFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\InstructionApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\InstructionLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

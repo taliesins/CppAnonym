@@ -34,6 +34,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class ModuleNameMetadataApiHolder
     >    
     class BaseModuleNameMetadata :
+        public ModuleNameMetadataApiAt<ModuleNameMetadataApiHolder, Interfaces::IModuleNameMetadataLabel>::type,
         public SimpleHeapProvider<
             boost::mpl::vector<
                 ObjectTag<typename ModuleNameMetadataApiAt<ModuleNameMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type, QuickHeap>
@@ -42,6 +43,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
         typedef BaseModuleNameMetadata<ModuleNameMetadataApiHolder> this_type;
+        typedef typename ModuleNameMetadataApiAt<ModuleNameMetadataApiHolder, Interfaces::IModuleNameMetadataLabel>::type base_type;
 
         typedef typename ModuleNameMetadataApiAt<ModuleNameMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename ModuleNameMetadataApiAt<ModuleNameMetadataApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
@@ -85,7 +87,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             if (m_pAsmNameAsScope != NULL)
                 return m_pAsmNameAsScope->Map<T>();
             else
-                return m_pAsmAsScope->GetAssemblyNameCore()->Map<T>();
+                return m_pAsmAsScope->GetAssemblyNameCore().Map<T>();
         }
       
         template<>
@@ -104,7 +106,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_name;
         }
 
-        module_metadata_type const *Resolve() const
+        typename base_type::i_assembly_name_metadata_type const &GetResolutionScope() const
+        {
+            return Map<assembly_name_metadata_type>();
+        }
+
+        typename base_type::i_module_metadata_type const &Resolve() const
         {
             return ResolveCore();
         }
@@ -136,16 +143,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return Of<type_name_metadata_obj_tag_type>();
         }
 
-        module_metadata_type const *ResolveCore() const
+        module_metadata_type const &ResolveCore() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
             return pMutableThis->ResolveCore();
         }
          
-        module_metadata_type *ResolveCore() 
+        module_metadata_type &ResolveCore() 
         {
             if (m_pAsmAsScope == NULL)
-                m_pAsmAsScope = Map<assembly_name_metadata_type>().ResolveCore();
+                m_pAsmAsScope = &Map<assembly_name_metadata_type>().ResolveCore();
             
             if (m_pResolvedMod == NULL)
             {
@@ -162,9 +169,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 m_pResolvedMod->Init(*m_pAsmAsScope);         
             }
             
-            return m_pResolvedMod;
+            return *m_pResolvedMod;
         }
 
+        // TODO: AssemblyMetadata に、GetModule みたいなメソッド名として移動。
         static void GetScopeProps(com_meta_data_import_type &comMetaImp, std::wstring &name)
         {
             GUID mvid;
@@ -222,8 +230,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             this_type *pMutableThis = const_cast<this_type *>(this);
             
-            module_metadata_type *pResolvedMod = pMutableThis->ResolveCore();
-            assembly_metadata_type &asmMeta = pResolvedMod->Map<assembly_metadata_type>();
+            module_metadata_type &resolvedMod = pMutableThis->ResolveCore();
+            assembly_metadata_type &asmMeta = resolvedMod.Map<assembly_metadata_type>();
             com_meta_data_import_type &comMetaImp = asmMeta.GetCOMMetaDataImport();
             
             GetScopeProps(comMetaImp, m_name, m_mvid);

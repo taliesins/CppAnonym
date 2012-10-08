@@ -63,6 +63,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
                 pair<AssemblyMetadataLabel, AssemblyMetadata>, 
                 pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
                 pair<AssemblyNameMetadataGeneratorLabel, AssemblyNameMetadataGenerator>,
+                pair<IAssemblyNameMetadataHashLabel, IAssemblyNameMetadataHash>,
+                pair<IAssemblyNameMetadataEqualToLabel, IAssemblyNameMetadataEqualTo>,
                 pair<StrongNameKeyLabel, StrongNameKey>,
                 pair<AssemblyMetadataGeneratorLabel, AssemblyMetadataGenerator> 
             > api_cartridges;
