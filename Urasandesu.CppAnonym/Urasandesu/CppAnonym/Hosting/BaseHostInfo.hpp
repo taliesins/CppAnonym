@@ -2,28 +2,24 @@
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
 #define URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/HeapProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_HOSTINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/HostInfoApiHolderLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_HOSTINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/HostInfoApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABEL_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
-#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
-#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#ifndef URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
+#include <Urasandesu/CppAnonym/SimpleDisposable.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFOFWD_HPP
@@ -42,43 +38,47 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         class HostInfoApiHolder
     >    
     class BaseHostInfo : 
-        public HeapProvider<
-            std::wstring, 
+        public SmartPtrChain<
+            BaseHostInfo<HostInfoApiHolder>,
             boost::mpl::vector<
+                SmartPtrChainInfo<boost::mpl::void_>
+            >
+        >,
+        public DisposableHeapProvider<
+            boost::mpl::vector<
+                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type,
                 typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type
-            > 
-        >
+            >
+        >,
+        public SimpleDisposable
     {
     public:
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
 
         typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type runtime_host_type;
 
-        runtime_host_type const *GetRuntime(std::wstring const &version) const
+        typedef typename provider_of<this_type>::type host_info_provider_type;
+        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
+        typedef typename chain_from<boost::mpl::void_>::type host_info_chain_type; 
+
+        static boost::shared_ptr<this_type> NewHost()
+        {
+            return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+        }
+
+        boost::shared_ptr<runtime_host_type const> GetRuntime(std::wstring const &version) const
         {
             if (version.empty())
                 BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
 
-            typedef typename type_decided_by<runtime_host_type>::type RuntimeHostHeap;
-            RuntimeHostHeap const &heap = Of<runtime_host_type>();
-            if (heap.Exists(version))
+            boost::shared_ptr<runtime_host_type> pExistingRuntime;
+            if (!TryGetRuntime(version, pExistingRuntime))
             {
-                return heap.Get(version);
-            }
-            else
-            {
-                RuntimeHostHeap *pHeap = const_cast<RuntimeHostHeap *>(&heap);
-                runtime_host_type const *pRuntimeHost = pHeap->NewPseudo();
+                boost::shared_ptr<runtime_host_type> pNewRuntime = NewRuntime();
 
-                std::wstring const &corVersion = pRuntimeHost->GetCORVersion();
+                std::wstring const &corVersion = pNewRuntime->GetCORVersion();
                 if (corVersion != version)
                 {
-                    BOOST_SCOPE_EXIT((pHeap))
-                    {
-                        pHeap->DeleteLast();
-                    }
-                    BOOST_SCOPE_EXIT_END
-
                     std::wstring what;
                     what += L"The version '";
                     what += version;
@@ -88,10 +88,47 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                     BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
                 }
 
-                pHeap->SetToLast(version);
-                return pRuntimeHost;
+                runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
+                m_versionToIndex[version] = provider.Register(pNewRuntime);
+                return pNewRuntime;
+            }
+            else
+            {
+                return pExistingRuntime;
             }
         }
+
+    private:
+        
+        void SetThis(boost::weak_ptr<this_type> const &pThis) const
+        {
+            _ASSERTE(m_pThis.use_count() == 0);
+            m_pThis = pThis;
+        }
+
+        boost::shared_ptr<runtime_host_type> NewRuntime() const
+        {
+            runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
+            host_info_chain_type &chain = ChainFrom<boost::mpl::void_>();
+            return chain.NewObject<runtime_host_type>(provider);
+        }
+
+        bool TryGetRuntime(std::wstring const &version, boost::shared_ptr<runtime_host_type> &pExistingRuntime) const
+        {
+            if (m_versionToIndex.find(version) == m_versionToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_versionToIndex[version];
+                runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
+                pExistingRuntime = provider[index];
+                return true;
+            }
+        }
+
+        mutable boost::unordered_map<std::wstring, size_t> m_versionToIndex;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {

@@ -3,6 +3,38 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTHOSTINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultHostInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseHostInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPI_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOST_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHost.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFO_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEKEYAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEY_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
+#endif
+
 // foward declarations
 namespace Urasandesu { namespace CppAnonym {
 
@@ -14,123 +46,67 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 
-    struct HostInfo5B4288A9ApiHolderLabel { };
-    struct HostInfo5B4288A9Label { };
-
-    struct RuntimeHost5B4288A9ApiHolderLabel { };
-    struct RuntimeHost5B4288A9Label { };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
-
-    struct DefaultHostInfo5B4288A9ApiHolder;
-
-    struct DefaultRuntimeHost5B4288A9ApiHolder;
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    template<
-        class HostInfo5B4288A9ApiHolder = ApiHolders::DefaultHostInfo5B4288A9ApiHolder
-    >    
-    class BaseHostInfo5B4288A9;
-
-    typedef BaseHostInfo5B4288A9<> HostInfo5B4288A9;
-
-
-
-
-
-    template<
-        class RuntimeHost5B4288A9ApiHolder = ApiHolders::DefaultRuntimeHost5B4288A9ApiHolder
-    >    
-    class BaseRuntimeHost5B4288A9;
-
-    typedef BaseRuntimeHost5B4288A9<> RuntimeHost5B4288A9;
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace Interfaces {
-
-    struct StrongNameInfo5B4288A9ApiHolderLabel { };
-    struct StrongNameInfo5B4288A9Label { };
-
-    struct StrongNameKey5B4288A9ApiHolderLabel { };
-    struct StrongNameKey5B4288A9Label { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
-    struct DefaultStrongNameInfo5B4288A9ApiHolder;
-
-    struct DefaultStrongNameKey5B4288A9ApiHolder;
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
-
-    template<
-        class StrongNameInfo5B4288A9ApiHolder = ApiHolders::DefaultStrongNameInfo5B4288A9ApiHolder
-    >    
-    class BaseStrongNameInfo5B4288A9;
-
-    typedef BaseStrongNameInfo5B4288A9<> StrongNameInfo5B4288A9;
-
-
-
-
-
-    template<
-        class StrongNameKey5B4288A9ApiHolder = ApiHolders::DefaultStrongNameKey5B4288A9ApiHolder
-    >    
-    class BaseStrongNameKey5B4288A9;
-
-    typedef BaseStrongNameKey5B4288A9<> StrongNameKey5B4288A9;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
-    struct IAssemblyMetadata5B4288A9ApiHolderLabel { };
-    struct IAssemblyMetadata5B4288A9Label { };
-    struct IAssemblyMetadata5B4288A9HashLabel { };
-    struct IAssemblyMetadata5B4288A9EqualToLabel { };
+    struct IAssemblyMetadataApiHolderLabel { };
+    struct IAssemblyMetadataLabel { };
+    struct IAssemblyMetadataHashLabel { };
+    struct IAssemblyMetadataEqualToLabel { };
 
-    struct IModuleMetadata5B4288A9ApiHolderLabel { };
-    struct IModuleMetadata5B4288A9Label { };
-    struct IModuleMetadata5B4288A9HashLabel { };
-    struct IModuleMetadata5B4288A9EqualToLabel { };
+    struct IModuleMetadataApiHolderLabel { };
+    struct IModuleMetadataLabel { };
+    struct IModuleMetadataHashLabel { };
+    struct IModuleMetadataEqualToLabel { };
 
-    struct ITypeMetadata5B4288A9ApiHolderLabel { };
-    struct ITypeMetadata5B4288A9Label { };
-    struct ITypeMetadata5B4288A9HashLabel { };
-    struct ITypeMetadata5B4288A9EqualToLabel { };
+    struct ITypeMetadataApiHolderLabel { };
+    struct ITypeMetadataLabel { };
+    struct ITypeMetadataHashLabel { };
+    struct ITypeMetadataEqualToLabel { };
 
-    struct IMethodMetadata5B4288A9ApiHolderLabel { };
-    struct IMethodMetadata5B4288A9Label { };
-    struct IMethodMetadata5B4288A9HashLabel { };
-    struct IMethodMetadata5B4288A9EqualToLabel { };
+    struct IMethodMetadataApiHolderLabel { };
+    struct IMethodMetadataLabel { };
+    struct IMethodMetadataHashLabel { };
+    struct IMethodMetadataEqualToLabel { };
 
-    struct MetadataInfo5B4288A9ApiHolderLabel { };
-    struct MetadataInfo5B4288A9Label { };
+    struct MetadataInfoApiHolderLabel { };
+    //struct MetadataInfoLabel { };
 
-    struct MetadataDispenser5B4288A9ApiHolderLabel { };
-    struct MetadataDispenser5B4288A9Label { };
+    struct MetadataDispenserApiHolderLabel { };
+    struct MetadataDispenserLabel { };
 
-    struct AssemblyMetadata5B4288A9ApiHolderLabel { };
-    struct AssemblyMetadata5B4288A9Label { };
+    struct AssemblyMetadataApiHolderLabel { };
+    struct AssemblyMetadataLabel { };
 
-    struct ModuleMetadata5B4288A9ApiHolderLabel { };
-    struct ModuleMetadata5B4288A9Label { };
+    struct ModuleMetadataApiHolderLabel { };
+    struct ModuleMetadataLabel { };
 
-    struct TypeMetadata5B4288A9ApiHolderLabel { };
-    struct TypeMetadata5B4288A9Label { };
+    struct TypeMetadataApiHolderLabel { };
+    struct TypeMetadataLabel { };
 
-    struct MethodMetadata5B4288A9ApiHolderLabel { };
-    struct MethodMetadata5B4288A9Label { };
+    struct MethodMetadataApiHolderLabel { };
+    struct MethodMetadataLabel { };
 
     struct MetadataSpecialValues
     {
@@ -177,263 +153,267 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Inte
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultIAssemblyMetadata5B4288A9ApiHolder;
+    struct DefaultIAssemblyMetadataApiHolder;
 
-    struct DefaultIModuleMetadata5B4288A9ApiHolder;
+    struct DefaultIModuleMetadataApiHolder;
 
-    struct DefaultITypeMetadata5B4288A9ApiHolder;
+    struct DefaultITypeMetadataApiHolder;
 
-    struct DefaultIMethodMetadata5B4288A9ApiHolder;
+    struct DefaultIMethodMetadataApiHolder;
 
-    struct DefaultMetadataInfo5B4288A9ApiHolder;
+    struct DefaultMetadataInfoApiHolder;
 
-    struct DefaultMetadataDispenser5B4288A9ApiHolder;
+    struct DefaultMetadataDispenserApiHolder;
 
-    struct DefaultAssemblyMetadata5B4288A9ApiHolder;
+    struct DefaultAssemblyMetadataApiHolder;
 
-    struct DefaultModuleMetadata5B4288A9ApiHolder;
+    struct DefaultModuleMetadataApiHolder;
 
-    struct DefaultTypeMetadata5B4288A9ApiHolder;
+    struct DefaultTypeMetadataApiHolder;
 
-    struct DefaultMethodMetadata5B4288A9ApiHolder;
+    struct DefaultMethodMetadataApiHolder;
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
+#endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder = ApiHolders::DefaultIAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9;
+    class BaseIAssemblyMetadata;
 
-    typedef BaseIAssemblyMetadata5B4288A9<> IAssemblyMetadata5B4288A9;
+    typedef BaseIAssemblyMetadata<> IAssemblyMetadata;
 
 
 
 
     
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder = ApiHolders::DefaultIAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9Hash;
+    class BaseIAssemblyMetadataHash;
 
-    typedef BaseIAssemblyMetadata5B4288A9Hash<> IAssemblyMetadata5B4288A9Hash;
+    typedef BaseIAssemblyMetadataHash<> IAssemblyMetadataHash;
 
     
     
     
     
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder = ApiHolders::DefaultIAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9EqualTo;
+    class BaseIAssemblyMetadataEqualTo;
 
-    typedef BaseIAssemblyMetadata5B4288A9EqualTo<> IAssemblyMetadata5B4288A9EqualTo;
+    typedef BaseIAssemblyMetadataEqualTo<> IAssemblyMetadataEqualTo;
 
 
 
 
 
     template<
-        class IModuleMetadata5B4288A9ApiHolder = ApiHolders::DefaultIModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9;
+    class BaseIModuleMetadata;
 
-    typedef BaseIModuleMetadata5B4288A9<> IModuleMetadata5B4288A9;
+    typedef BaseIModuleMetadata<> IModuleMetadata;
 
 
 
 
     
     template<
-        class IModuleMetadata5B4288A9ApiHolder = ApiHolders::DefaultIModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9Hash;
+    class BaseIModuleMetadataHash;
 
-    typedef BaseIModuleMetadata5B4288A9Hash<> IModuleMetadata5B4288A9Hash;
+    typedef BaseIModuleMetadataHash<> IModuleMetadataHash;
 
     
     
     
     
     template<
-        class IModuleMetadata5B4288A9ApiHolder = ApiHolders::DefaultIModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9EqualTo;
+    class BaseIModuleMetadataEqualTo;
 
-    typedef BaseIModuleMetadata5B4288A9EqualTo<> IModuleMetadata5B4288A9EqualTo;
+    typedef BaseIModuleMetadataEqualTo<> IModuleMetadataEqualTo;
 
 
 
 
 
     template<
-        class ITypeMetadata5B4288A9ApiHolder = ApiHolders::DefaultITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9;
+    class BaseITypeMetadata;
 
-    typedef BaseITypeMetadata5B4288A9<> ITypeMetadata5B4288A9;
+    typedef BaseITypeMetadata<> ITypeMetadata;
 
 
 
 
     
     template<
-        class ITypeMetadata5B4288A9ApiHolder = ApiHolders::DefaultITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9Hash;
+    class BaseITypeMetadataHash;
 
-    typedef BaseITypeMetadata5B4288A9Hash<> ITypeMetadata5B4288A9Hash;
+    typedef BaseITypeMetadataHash<> ITypeMetadataHash;
 
     
     
     
     
     template<
-        class ITypeMetadata5B4288A9ApiHolder = ApiHolders::DefaultITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9EqualTo;
+    class BaseITypeMetadataEqualTo;
 
-    typedef BaseITypeMetadata5B4288A9EqualTo<> ITypeMetadata5B4288A9EqualTo;
+    typedef BaseITypeMetadataEqualTo<> ITypeMetadataEqualTo;
 
 
 
 
 
     template<
-        class IMethodMetadata5B4288A9ApiHolder = ApiHolders::DefaultIMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9;
+    class BaseIMethodMetadata;
 
-    typedef BaseIMethodMetadata5B4288A9<> IMethodMetadata5B4288A9;
+    typedef BaseIMethodMetadata<> IMethodMetadata;
 
 
 
 
     
     template<
-        class IMethodMetadata5B4288A9ApiHolder = ApiHolders::DefaultIMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9Hash;
+    class BaseIMethodMetadataHash;
 
-    typedef BaseIMethodMetadata5B4288A9Hash<> IMethodMetadata5B4288A9Hash;
+    typedef BaseIMethodMetadataHash<> IMethodMetadataHash;
 
     
     
     
     
     template<
-        class IMethodMetadata5B4288A9ApiHolder = ApiHolders::DefaultIMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9EqualTo;
+    class BaseIMethodMetadataEqualTo;
 
-    typedef BaseIMethodMetadata5B4288A9EqualTo<> IMethodMetadata5B4288A9EqualTo;
+    typedef BaseIMethodMetadataEqualTo<> IMethodMetadataEqualTo;
 
     
     
     
     
     template<
-        class MetadataInfo5B4288A9ApiHolder = ApiHolders::DefaultMetadataInfo5B4288A9ApiHolder
+        class MetadataInfoApiHolder = ApiHolders::DefaultMetadataInfoApiHolder
     >    
-    class BaseMetadataInfo5B4288A9;
+    class BaseMetadataInfo;
 
-    typedef BaseMetadataInfo5B4288A9<> MetadataInfo5B4288A9;
+    typedef BaseMetadataInfo<> MetadataInfo;
 
 
 
 
 
     template<
-        class MetadataDispenser5B4288A9ApiHolder = ApiHolders::DefaultMetadataDispenser5B4288A9ApiHolder
+        class MetadataDispenserApiHolder = ApiHolders::DefaultMetadataDispenserApiHolder
     >    
-    class BaseMetadataDispenser5B4288A9;
+    class BaseMetadataDispenser;
 
-    typedef BaseMetadataDispenser5B4288A9<> MetadataDispenser5B4288A9;
+    typedef BaseMetadataDispenser<> MetadataDispenser;
 
 
 
 
 
     template<
-        class AssemblyMetadata5B4288A9ApiHolder = ApiHolders::DefaultAssemblyMetadata5B4288A9ApiHolder
+        class AssemblyMetadataApiHolder = ApiHolders::DefaultAssemblyMetadataApiHolder
     >    
-    class BaseAssemblyMetadata5B4288A9;
+    class BaseAssemblyMetadata;
 
-    typedef BaseAssemblyMetadata5B4288A9<> AssemblyMetadata5B4288A9;
+    typedef BaseAssemblyMetadata<> AssemblyMetadata;
 
 
 
 
 
     template<
-        class ModuleMetadata5B4288A9ApiHolder = ApiHolders::DefaultModuleMetadata5B4288A9ApiHolder
+        class ModuleMetadataApiHolder = ApiHolders::DefaultModuleMetadataApiHolder
     >    
-    class BaseModuleMetadata5B4288A9;
+    class BaseModuleMetadata;
 
-    typedef BaseModuleMetadata5B4288A9<> ModuleMetadata5B4288A9;
+    typedef BaseModuleMetadata<> ModuleMetadata;
 
 
 
 
 
     template<
-        class TypeMetadata5B4288A9ApiHolder = ApiHolders::DefaultTypeMetadata5B4288A9ApiHolder
+        class TypeMetadataApiHolder = ApiHolders::DefaultTypeMetadataApiHolder
     >    
-    class BaseTypeMetadata5B4288A9;
+    class BaseTypeMetadata;
 
-    typedef BaseTypeMetadata5B4288A9<> TypeMetadata5B4288A9;
+    typedef BaseTypeMetadata<> TypeMetadata;
 
 
 
 
 
     template<
-        class MethodMetadata5B4288A9ApiHolder = ApiHolders::DefaultMethodMetadata5B4288A9ApiHolder
+        class MethodMetadataApiHolder = ApiHolders::DefaultMethodMetadataApiHolder
     >    
-    class BaseMethodMetadata5B4288A9;
+    class BaseMethodMetadata;
 
-    typedef BaseMethodMetadata5B4288A9<> MethodMetadata5B4288A9;
+    typedef BaseMethodMetadata<> MethodMetadata;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 
-    struct FusionInfo5B4288A9ApiHolderLabel { };
-    struct FusionInfo5B4288A9Label { };
+    struct FusionInfoApiHolderLabel { };
+    //struct FusionInfoLabel { };
 
-    struct AssemblyInfo5B4288A9ApiHolderLabel { };
-    struct AssemblyInfo5B4288A9Label { };
+    struct AssemblyInfoApiHolderLabel { };
+    struct AssemblyInfoLabel { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
-    struct DefaultFusionInfo5B4288A9ApiHolder;
+    struct DefaultFusionInfoApiHolder;
 
-    struct DefaultAssemblyInfo5B4288A9ApiHolder;
+    struct DefaultAssemblyInfoApiHolder;
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
     template<
-        class FusionInfo5B4288A9ApiHolder = ApiHolders::DefaultFusionInfo5B4288A9ApiHolder
+        class FusionInfoApiHolder = ApiHolders::DefaultFusionInfoApiHolder
     >    
-    class BaseFusionInfo5B4288A9;
+    class BaseFusionInfo;
 
-    typedef BaseFusionInfo5B4288A9<> FusionInfo5B4288A9;
+    typedef BaseFusionInfo<> FusionInfo;
 
 
 
 
 
     template<
-        class AssemblyInfo5B4288A9ApiHolder = ApiHolders::DefaultAssemblyInfo5B4288A9ApiHolder
+        class AssemblyInfoApiHolder = ApiHolders::DefaultAssemblyInfoApiHolder
     >    
-    class BaseAssemblyInfo5B4288A9;
+    class BaseAssemblyInfo;
 
-    typedef BaseAssemblyInfo5B4288A9<> AssemblyInfo5B4288A9;
+    typedef BaseAssemblyInfo<> AssemblyInfo;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
@@ -451,455 +431,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
-
-        struct DefaultHostInfo5B4288A9ApiHolderImpl
-        {
-            typedef map<
-                pair<HostInfo5B4288A9Label, HostInfo5B4288A9>,
-                pair<RuntimeHost5B4288A9Label, RuntimeHost5B4288A9>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultHostInfo5B4288A9ApiHolder : 
-        Detail::DefaultHostInfo5B4288A9ApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
-        using namespace Urasandesu::CppAnonym::Fusion;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-        using namespace Urasandesu::CppAnonym::Metadata;
-        using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
-        using namespace Urasandesu::CppAnonym::StrongNaming;
-
-        struct DefaultRuntimeHost5B4288A9ApiHolderImpl
-        {
-            typedef map<
-                pair<HostInfo5B4288A9Label, HostInfo5B4288A9>,
-                pair<FusionInfo5B4288A9Label, FusionInfo5B4288A9>,
-                pair<MetadataInfo5B4288A9Label, MetadataInfo5B4288A9>,
-                pair<StrongNameInfo5B4288A9Label, StrongNameInfo5B4288A9>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultRuntimeHost5B4288A9ApiHolder : 
-        Detail::DefaultRuntimeHost5B4288A9ApiHolderImpl
-    {
-    };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct HostInfo5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::HostInfo5B4288A9ApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class HostInfo5B4288A9ApiHolder
-    >    
-    class BaseHostInfo5B4288A9 : 
-        public SmartPtrChain<
-            BaseHostInfo5B4288A9<HostInfo5B4288A9ApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<boost::mpl::void_>
-            >
-        >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-                typename HostInfo5B4288A9ApiAt<HostInfo5B4288A9ApiHolder, Interfaces::HostInfo5B4288A9Label>::type,
-                typename HostInfo5B4288A9ApiAt<HostInfo5B4288A9ApiHolder, Interfaces::RuntimeHost5B4288A9Label>::type
-            >
-        >,
-        public SimpleDisposable
-    {
-    public:
-        typedef BaseHostInfo5B4288A9<HostInfo5B4288A9ApiHolder> this_type;
-
-        typedef typename HostInfo5B4288A9ApiAt<HostInfo5B4288A9ApiHolder, Interfaces::RuntimeHost5B4288A9Label>::type runtime_host_type;
-
-        typedef typename provider_of<this_type>::type host_info_provider_type;
-        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
-        typedef typename chain_from<boost::mpl::void_>::type host_info_chain_type; 
-
-        static boost::shared_ptr<this_type> NewHost()
-        {
-            return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
-        }
-
-        boost::shared_ptr<runtime_host_type const> GetRuntime(std::wstring const &version) const
-        {
-            if (version.empty())
-                BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
-
-            boost::shared_ptr<runtime_host_type> pExistingRuntime;
-            if (!TryGetRuntime(version, pExistingRuntime))
-            {
-                boost::shared_ptr<runtime_host_type> pNewRuntime = NewRuntime();
-
-                std::wstring const &corVersion = pNewRuntime->GetCORVersion();
-                if (corVersion != version)
-                {
-                    std::wstring what;
-                    what += L"The version '";
-                    what += version;
-                    what += L"' is not supported. For your information, this process runs at version '";
-                    what += corVersion;
-                    what += L"'.";
-                    BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
-                }
-
-                runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                m_versionToIndex[version] = provider.Register(pNewRuntime);
-                return pNewRuntime;
-            }
-            else
-            {
-                return pExistingRuntime;
-            }
-        }
-
-    private:
-        
-        void SetThis(boost::weak_ptr<this_type> const &pThis) const
-        {
-            _ASSERTE(m_pThis.use_count() == 0);
-            m_pThis = pThis;
-        }
-
-        boost::shared_ptr<runtime_host_type> NewRuntime() const
-        {
-            runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-            host_info_chain_type &chain = ChainFrom<boost::mpl::void_>();
-            return chain.NewObject<runtime_host_type>(provider);
-        }
-
-        bool TryGetRuntime(std::wstring const &version, boost::shared_ptr<runtime_host_type> &pExistingRuntime) const
-        {
-            if (m_versionToIndex.find(version) == m_versionToIndex.end())
-            {
-                return false;
-            }
-            else
-            {
-                size_t index = m_versionToIndex[version];
-                runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                pExistingRuntime = provider[index];
-                return true;
-            }
-        }
-
-        mutable boost::unordered_map<std::wstring, size_t> m_versionToIndex;
-    };
-
-
-
-
-
-    struct RuntimeHostChainMapper : 
-        SmartPtrChainMapper
-    {
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static bool CanMapFirstAncestor(Current const &current)
-        {
-            return current.GetInfo<T>();
-        }
-
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapFirstAncestor(Current const &current) 
-        { 
-            return current.GetInfo<T>();
-        }
-
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static bool CanMapAncestor(Current const &current)
-        {
-            return current.GetInfo<T>();
-        }
-
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapAncestor(Current const &current) 
-        { 
-            return current.GetInfo<T>();
-        }
-    };
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct RuntimeHost5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::RuntimeHost5B4288A9ApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class RuntimeHost5B4288A9ApiHolder
-    >    
-    class BaseRuntimeHost5B4288A9 : 
-        public SmartPtrChain<
-            BaseRuntimeHost5B4288A9<RuntimeHost5B4288A9ApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<typename RuntimeHost5B4288A9ApiAt<RuntimeHost5B4288A9ApiHolder, Interfaces::HostInfo5B4288A9Label>::type, RuntimeHostChainMapper>
-            >
-        >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-                typename RuntimeHost5B4288A9ApiAt<RuntimeHost5B4288A9ApiHolder, StrongNaming::Interfaces::StrongNameInfo5B4288A9Label>::type,
-                typename RuntimeHost5B4288A9ApiAt<RuntimeHost5B4288A9ApiHolder, Metadata::Interfaces::MetadataInfo5B4288A9Label>::type,
-                typename RuntimeHost5B4288A9ApiAt<RuntimeHost5B4288A9ApiHolder, Fusion::Interfaces::FusionInfo5B4288A9Label>::type
-            >
-        >,
-        public SimpleDisposable
-    {
-    public:
-        typedef BaseRuntimeHost5B4288A9<RuntimeHost5B4288A9ApiHolder> this_type;
-
-        typedef typename RuntimeHost5B4288A9ApiAt<RuntimeHost5B4288A9ApiHolder, Interfaces::HostInfo5B4288A9Label>::type host_info_type;
-
-        typedef typename chain_from<host_info_type>::type runtime_host_chain_type; 
-
-        BaseRuntimeHost5B4288A9() : 
-            m_corVersionInitialized(false),
-            m_corSysDirPathInitialized(false)
-        { }
-
-        std::wstring const &GetCORVersion() const
-        {
-            CheckDisposed();
-
-            if (!m_corVersionInitialized)
-            {
-                WCHAR buffer[MAX_PATH] = { 0 };
-                DWORD bufferSize = MAX_PATH - 1;
-                DWORD length = 0;
-
-#pragma warning(push)
-#pragma warning(disable: 4996)
-                HRESULT hr = ::GetCORVersion(buffer, bufferSize, &length);
-#pragma warning(pop)
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-                
-                m_corVersion = buffer;
-
-                m_corVersionInitialized = true;
-            }
-            return m_corVersion;
-        }
-
-        boost::filesystem::path const &GetCORSystemDirectoryPath() const
-        {
-            CheckDisposed();
-
-            using namespace boost::filesystem;
-
-            if (!m_corSysDirPathInitialized)
-            {
-                WCHAR buffer[MAX_PATH] = { 0 };
-                DWORD bufferSize = MAX_PATH - 1;
-                DWORD length = 0;
-
-#pragma warning(push)
-#pragma warning(disable: 4996)
-                HRESULT hr = ::GetCORSystemDirectory(buffer, bufferSize, &length);
-#pragma warning(pop)
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-                m_corSysDirPath = buffer;
-                
-                m_corSysDirPathInitialized = true;
-            }
-            return m_corSysDirPath;
-        }
-
-        template<class Info>
-        boost::shared_ptr<Info> GetInfo() const
-        {
-            namespace mpl = boost::mpl;
-            using namespace boost;
-            
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
-
-            boost::shared_ptr<Info> pExistingInfo;
-            if (!TryGetInfo<Info>(pExistingInfo))
-            {
-                boost::shared_ptr<Info> pNewInfo;
-                pNewInfo = NewInfo<Info>();
-                
-                typedef typename provider_of<Info>::type InfoProvider;
-                InfoProvider &provider = ProviderOf<Info>();
-                Utilities::TypeInfo key = mpl::identity<Info>();
-                m_infoToIndex[key] = provider.Register(pNewInfo);
-                return pNewInfo;
-            }
-            else
-            {
-                return pExistingInfo;
-            }
-        }
-
-    private:
-        friend typename host_info_type;
-
-        template<class Info>
-        boost::shared_ptr<Info> NewInfo() const
-        {
-            namespace mpl = boost::mpl;
-            using namespace boost;
-            
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
-
-            typedef typename provider_of<Info>::type InfoProvider;
-            InfoProvider &provider = ProviderOf<Info>();
-            runtime_host_chain_type &chain = ChainFrom<host_info_type>();
-            return chain.NewObject<Info>(provider);
-        }
-
-        template<class Info>
-        bool TryGetInfo(boost::shared_ptr<Info> &pExistingInfo) const
-        {
-            namespace mpl = boost::mpl;
-            using namespace boost;
-            
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
-
-            Utilities::TypeInfo key = mpl::identity<Info>();
-            if (m_infoToIndex.find(key) == m_infoToIndex.end())
-            {
-                return false;
-            }
-            else
-            {
-                size_t index = m_infoToIndex[key];
-                typedef typename provider_of<Info>::type InfoProvider;
-                InfoProvider &provider = ProviderOf<Info>();
-                pExistingInfo = provider[index];
-                return true;
-            }
-        }
-
-        mutable bool m_corVersionInitialized;
-        mutable std::wstring m_corVersion;
-        mutable bool m_corSysDirPathInitialized;
-        mutable boost::filesystem::path m_corSysDirPath;
-        mutable boost::unordered_map<Utilities::TypeInfo, size_t, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infoToIndex;
-    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
-    //namespace Detail {
-    //    
-    //    namespace mpl = boost::mpl;
-
-    //    struct DefaultHostInfoApiHolderImpl
-    //    {
-    //        typedef mpl::map<
-    //            mpl::pair<Interfaces::StrongNameInfoLabel, StrongNameInfo> 
-    //        > api_cartridges;
-    //    };
-
-    //}   // namespace Detail {
-
-    struct DefaultStrongNameInfo5B4288A9ApiHolder
-    {
-    };
-
-
-
-
-
-    //namespace Detail {
-    //    
-    //    namespace mpl = boost::mpl;
-
-    //    struct DefaultHostInfoApiHolderImpl
-    //    {
-    //        typedef mpl::map<
-    //            mpl::pair<Interfaces::StrongNameInfoLabel, StrongNameInfo> 
-    //        > api_cartridges;
-    //    };
-
-    //}   // namespace Detail {
-
-    struct DefaultStrongNameKey5B4288A9ApiHolder
-    {
-    };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct StrongNameInfo5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::StrongNameInfo5B4288A9ApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class StrongNameInfo5B4288A9ApiHolder
-    >    
-    class BaseStrongNameInfo5B4288A9 : 
-        public SimpleDisposable
-    {
-    };
-
-
-
-
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct StrongNameKey5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::StrongNameKey5B4288A9ApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class StrongNameKey5B4288A9ApiHolder
-    >    
-    class BaseStrongNameKey5B4288A9 : 
-        public SimpleDisposable
-    {
-    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
@@ -912,18 +454,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace Urasandesu::CppAnonym::StrongNaming;
         using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
 
-        struct DefaultIAssemblyMetadata5B4288A9ApiHolderImpl
+        struct DefaultIAssemblyMetadataApiHolderImpl
         {
             typedef map<
-                pair<IAssemblyMetadata5B4288A9Label, IAssemblyMetadata5B4288A9>,
-                pair<MetadataDispenser5B4288A9Label, MetadataDispenser5B4288A9>
+                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
+                pair<MetadataDispenserLabel, MetadataDispenser>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultIAssemblyMetadata5B4288A9ApiHolder : 
-        Detail::DefaultIAssemblyMetadata5B4288A9ApiHolderImpl
+    struct DefaultIAssemblyMetadataApiHolder : 
+        Detail::DefaultIAssemblyMetadataApiHolderImpl
     {
     };
 
@@ -936,20 +478,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultIModuleMetadata5B4288A9ApiHolderImpl
+        struct DefaultIModuleMetadataApiHolderImpl
         {
             typedef map<
-                pair<IModuleMetadata5B4288A9Label, IModuleMetadata5B4288A9>,
-                pair<IAssemblyMetadata5B4288A9Label, IAssemblyMetadata5B4288A9>,
-                pair<IAssemblyMetadata5B4288A9HashLabel, IAssemblyMetadata5B4288A9Hash>,
-                pair<IAssemblyMetadata5B4288A9EqualToLabel, IAssemblyMetadata5B4288A9EqualTo>
+                pair<IModuleMetadataLabel, IModuleMetadata>,
+                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
+                pair<IAssemblyMetadataHashLabel, IAssemblyMetadataHash>,
+                pair<IAssemblyMetadataEqualToLabel, IAssemblyMetadataEqualTo>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultIModuleMetadata5B4288A9ApiHolder : 
-        Detail::DefaultIModuleMetadata5B4288A9ApiHolderImpl
+    struct DefaultIModuleMetadataApiHolder : 
+        Detail::DefaultIModuleMetadataApiHolderImpl
     {
     };
 
@@ -962,19 +504,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultITypeMetadata5B4288A9ApiHolderImpl
+        struct DefaultITypeMetadataApiHolderImpl
         {
             typedef map<
-                pair<ITypeMetadata5B4288A9Label, ITypeMetadata5B4288A9>,
-                pair<IModuleMetadata5B4288A9Label, IModuleMetadata5B4288A9>,
-                pair<IModuleMetadata5B4288A9HashLabel, IModuleMetadata5B4288A9Hash>
+                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<IModuleMetadataLabel, IModuleMetadata>,
+                pair<IModuleMetadataHashLabel, IModuleMetadataHash>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultITypeMetadata5B4288A9ApiHolder : 
-        Detail::DefaultITypeMetadata5B4288A9ApiHolderImpl
+    struct DefaultITypeMetadataApiHolder : 
+        Detail::DefaultITypeMetadataApiHolderImpl
     {
     };
 
@@ -987,19 +529,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultIMethodMetadata5B4288A9ApiHolderImpl
+        struct DefaultIMethodMetadataApiHolderImpl
         {
             typedef map<
-                pair<IMethodMetadata5B4288A9Label, IMethodMetadata5B4288A9>,
-                pair<ITypeMetadata5B4288A9HashLabel, ITypeMetadata5B4288A9Hash>,
-                pair<ITypeMetadata5B4288A9Label, ITypeMetadata5B4288A9>
+                pair<IMethodMetadataLabel, IMethodMetadata>,
+                pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
+                pair<ITypeMetadataLabel, ITypeMetadata>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultIMethodMetadata5B4288A9ApiHolder : 
-        Detail::DefaultIMethodMetadata5B4288A9ApiHolderImpl
+    struct DefaultIMethodMetadataApiHolder : 
+        Detail::DefaultIMethodMetadataApiHolderImpl
     {
     };
 
@@ -1014,18 +556,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace Urasandesu::CppAnonym::Hosting;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMetadataInfo5B4288A9ApiHolderImpl
+        struct DefaultMetadataInfoApiHolderImpl
         {
             typedef map<
-                pair<RuntimeHost5B4288A9Label, RuntimeHost5B4288A9>,
-                pair<MetadataDispenser5B4288A9Label, MetadataDispenser5B4288A9>
+                pair<RuntimeHostLabel, RuntimeHost>,
+                pair<MetadataDispenserLabel, MetadataDispenser>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultMetadataInfo5B4288A9ApiHolder : 
-        Detail::DefaultMetadataInfo5B4288A9ApiHolderImpl
+    struct DefaultMetadataInfoApiHolder : 
+        Detail::DefaultMetadataInfoApiHolderImpl
     {
     };
 
@@ -1038,24 +580,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMetadataDispenser5B4288A9ApiHolderImpl
+        struct DefaultMetadataDispenserApiHolderImpl
         {
             typedef map<
-                pair<MetadataInfo5B4288A9Label, MetadataInfo5B4288A9>,
-                pair<AssemblyMetadata5B4288A9Label, AssemblyMetadata5B4288A9>,
-                pair<IAssemblyMetadata5B4288A9HashLabel, IAssemblyMetadata5B4288A9Hash>,
-                pair<IAssemblyMetadata5B4288A9EqualToLabel, IAssemblyMetadata5B4288A9EqualTo>,
-                pair<ModuleMetadata5B4288A9Label, ModuleMetadata5B4288A9>,
+                pair<MetadataInfoLabel, MetadataInfo>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<IAssemblyMetadataHashLabel, IAssemblyMetadataHash>,
+                pair<IAssemblyMetadataEqualToLabel, IAssemblyMetadataEqualTo>,
+                pair<ModuleMetadataLabel, ModuleMetadata>,
                 pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
-                pair<TypeMetadata5B4288A9Label, TypeMetadata5B4288A9>,
-                pair<MethodMetadata5B4288A9Label, MethodMetadata5B4288A9>
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<MethodMetadataLabel, MethodMetadata>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultMetadataDispenser5B4288A9ApiHolder : 
-        Detail::DefaultMetadataDispenser5B4288A9ApiHolderImpl
+    struct DefaultMetadataDispenserApiHolder : 
+        Detail::DefaultMetadataDispenserApiHolderImpl
     {
     };
 
@@ -1070,28 +612,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
         using namespace Urasandesu::CppAnonym::Fusion;
 
-        struct DefaultAssemblyMetadata5B4288A9ApiHolderImpl
+        struct DefaultAssemblyMetadataApiHolderImpl
         {
             typedef map<
-                pair<IAssemblyMetadata5B4288A9Label, IAssemblyMetadata5B4288A9>,
-                pair<MetadataDispenser5B4288A9Label, MetadataDispenser5B4288A9>,
-                pair<FusionInfo5B4288A9Label, FusionInfo5B4288A9>,
-                pair<AssemblyInfo5B4288A9Label, AssemblyInfo5B4288A9>,
+                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
+                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<FusionInfoLabel, FusionInfo>,
+                pair<AssemblyInfoLabel, AssemblyInfo>,
                 pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>,
                 pair<IMetaDataImport2, IMetaDataImport2>,
                 pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
-                pair<ModuleMetadata5B4288A9Label, ModuleMetadata5B4288A9>,
-                pair<IModuleMetadata5B4288A9HashLabel, IModuleMetadata5B4288A9Hash>,
-                pair<IModuleMetadata5B4288A9EqualToLabel, IModuleMetadata5B4288A9EqualTo>,
-                pair<TypeMetadata5B4288A9Label, TypeMetadata5B4288A9>,
-                pair<MethodMetadata5B4288A9Label, MethodMetadata5B4288A9>
+                pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<IModuleMetadataHashLabel, IModuleMetadataHash>,
+                pair<IModuleMetadataEqualToLabel, IModuleMetadataEqualTo>,
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<MethodMetadataLabel, MethodMetadata>
             > api_cartridges;
         };
 
     }   // namespace Detail {
     
-    struct DefaultAssemblyMetadata5B4288A9ApiHolder : 
-        Detail::DefaultAssemblyMetadata5B4288A9ApiHolderImpl
+    struct DefaultAssemblyMetadataApiHolder : 
+        Detail::DefaultAssemblyMetadataApiHolderImpl
     {
     };
 
@@ -1104,24 +646,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultModuleMetadata5B4288A9ApiHolderImpl
+        struct DefaultModuleMetadataApiHolderImpl
         {
             typedef map<
-                pair<IModuleMetadata5B4288A9Label, IModuleMetadata5B4288A9>,
-                pair<AssemblyMetadata5B4288A9Label, AssemblyMetadata5B4288A9>,
+                pair<IModuleMetadataLabel, IModuleMetadata>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
                 pair<IMetaDataImport2, IMetaDataImport2>,
-                pair<ITypeMetadata5B4288A9Label, ITypeMetadata5B4288A9>,
-                pair<TypeMetadata5B4288A9Label, TypeMetadata5B4288A9>,
-                pair<ITypeMetadata5B4288A9HashLabel, ITypeMetadata5B4288A9Hash>,
-                pair<ITypeMetadata5B4288A9EqualToLabel, ITypeMetadata5B4288A9EqualTo>,
-                pair<MetadataDispenser5B4288A9Label, MetadataDispenser5B4288A9>
+                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
+                pair<ITypeMetadataEqualToLabel, ITypeMetadataEqualTo>,
+                pair<MetadataDispenserLabel, MetadataDispenser>
             > api_cartridges;
         };
 
     }   // namespace Detail {
     
-    struct DefaultModuleMetadata5B4288A9ApiHolder : 
-        Detail::DefaultModuleMetadata5B4288A9ApiHolderImpl
+    struct DefaultModuleMetadataApiHolder : 
+        Detail::DefaultModuleMetadataApiHolderImpl
     {
     };
 
@@ -1134,24 +676,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultTypeMetadata5B4288A9ApiHolderImpl
+        struct DefaultTypeMetadataApiHolderImpl
         {
             typedef map<
-                pair<ITypeMetadata5B4288A9Label, ITypeMetadata5B4288A9>,
-                pair<MetadataDispenser5B4288A9Label, MetadataDispenser5B4288A9>,
-                pair<AssemblyMetadata5B4288A9Label, AssemblyMetadata5B4288A9>,
-                pair<ModuleMetadata5B4288A9Label, ModuleMetadata5B4288A9>,
-                pair<MethodMetadata5B4288A9Label, MethodMetadata5B4288A9>,
-                pair<IMethodMetadata5B4288A9HashLabel, IMethodMetadata5B4288A9Hash>,
-                pair<IMethodMetadata5B4288A9EqualToLabel, IMethodMetadata5B4288A9EqualTo>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<MethodMetadataLabel, MethodMetadata>,
+                pair<IMethodMetadataHashLabel, IMethodMetadataHash>,
+                pair<IMethodMetadataEqualToLabel, IMethodMetadataEqualTo>,
                 pair<IMetaDataImport2, IMetaDataImport2>
             > api_cartridges;
         };
 
     }   // namespace Detail {
     
-    struct DefaultTypeMetadata5B4288A9ApiHolder : 
-        Detail::DefaultTypeMetadata5B4288A9ApiHolderImpl
+    struct DefaultTypeMetadataApiHolder : 
+        Detail::DefaultTypeMetadataApiHolderImpl
     {
     };
 
@@ -1164,21 +706,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMethodMetadata5B4288A9ApiHolderImpl
+        struct DefaultMethodMetadataApiHolderImpl
         {
             typedef map<
-                pair<IMethodMetadata5B4288A9Label, IMethodMetadata5B4288A9>,
-                pair<AssemblyMetadata5B4288A9Label, AssemblyMetadata5B4288A9>,
-                pair<TypeMetadata5B4288A9Label, TypeMetadata5B4288A9>,
-                pair<ITypeMetadata5B4288A9Label, ITypeMetadata5B4288A9>,
+                pair<IMethodMetadataLabel, IMethodMetadata>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<IMetaDataImport2, IMetaDataImport2>
             > api_cartridges;
         };
 
     }   // namespace Detail {
     
-    struct DefaultMethodMetadata5B4288A9ApiHolder : 
-        Detail::DefaultMethodMetadata5B4288A9ApiHolderImpl
+    struct DefaultMethodMetadataApiHolder : 
+        Detail::DefaultMethodMetadataApiHolderImpl
     {
     };
 
@@ -1203,22 +745,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct IAssemblyMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct IAssemblyMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9
+    class BaseIAssemblyMetadata
     {
     public:
-        typedef BaseIAssemblyMetadata5B4288A9<IAssemblyMetadata5B4288A9ApiHolder> this_type;
+        typedef BaseIAssemblyMetadata<IAssemblyMetadataApiHolder> this_type;
 
-        typedef typename IAssemblyMetadata5B4288A9ApiAt<IAssemblyMetadata5B4288A9ApiHolder, StrongNaming::Interfaces::StrongNameKey5B4288A9Label>::type strong_name_key_type;
-        typedef typename IAssemblyMetadata5B4288A9ApiAt<IAssemblyMetadata5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type metadata_dispenser_type;
-        typedef typename IAssemblyMetadata5B4288A9ApiAt<IAssemblyMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type i_assembly_metadata_type;
+        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
+        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
 
         virtual mdAssembly GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
@@ -1231,10 +773,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9Hash : 
-        Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadata5B4288A9ApiAt<IAssemblyMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type const> >
+    class BaseIAssemblyMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
     {
     public:
         result_type operator()(param_type v) const
@@ -1256,10 +798,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<
-        class IAssemblyMetadata5B4288A9ApiHolder
+        class IAssemblyMetadataApiHolder
     >    
-    class BaseIAssemblyMetadata5B4288A9EqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadata5B4288A9ApiAt<IAssemblyMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type const> >
+    class BaseIAssemblyMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
     {
     public:
         result_type operator()(param_type x, param_type y) const
@@ -1276,20 +818,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct IModuleMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IModuleMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct IModuleMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IModuleMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class IModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9
+    class BaseIModuleMetadata
     {
     public:
-        typedef BaseIModuleMetadata5B4288A9<IModuleMetadata5B4288A9ApiHolder> this_type;
+        typedef BaseIModuleMetadata<IModuleMetadataApiHolder> this_type;
 
-        typedef typename IModuleMetadata5B4288A9ApiAt<IModuleMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type i_assembly_metadata_type;
+        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
 
         virtual mdModule GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
@@ -1301,13 +843,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     
     template<
-        class IModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9Hash : 
-        Traits::HashComputable<boost::shared_ptr<typename IModuleMetadata5B4288A9ApiAt<IModuleMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9Label>::type const> >
+    class BaseIModuleMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
     {
     public:
-        typedef typename IModuleMetadata5B4288A9ApiAt<IModuleMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9HashLabel>::type i_assembly_metadata_hash_type;
+        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
 
         result_type operator()(param_type v) const
         {
@@ -1327,13 +869,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<
-        class IModuleMetadata5B4288A9ApiHolder
+        class IModuleMetadataApiHolder
     >    
-    class BaseIModuleMetadata5B4288A9EqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IModuleMetadata5B4288A9ApiAt<IModuleMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9Label>::type const> >
+    class BaseIModuleMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
     {
     public:
-        typedef typename IModuleMetadata5B4288A9ApiAt<IModuleMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9EqualToLabel>::type i_assembly_metadata_equal_to_type;
+        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
@@ -1349,20 +891,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct ITypeMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ITypeMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct ITypeMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ITypeMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class ITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9
+    class BaseITypeMetadata
     {
     public:
-        typedef BaseITypeMetadata5B4288A9<ITypeMetadata5B4288A9ApiHolder> this_type;
+        typedef BaseITypeMetadata<ITypeMetadataApiHolder> this_type;
 
-        typedef typename ITypeMetadata5B4288A9ApiAt<ITypeMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9Label>::type i_module_metadata_type;
+        typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type i_module_metadata_type;
 
         virtual mdToken GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
@@ -1377,13 +919,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     
     template<
-        class ITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9Hash : 
-        Traits::HashComputable<boost::shared_ptr<typename ITypeMetadata5B4288A9ApiAt<ITypeMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type const> >
+    class BaseITypeMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
     {
     public:
-        typedef typename ITypeMetadata5B4288A9ApiAt<ITypeMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9HashLabel>::type i_module_metadata_hash_type;
+        typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
 
         result_type operator()(param_type v) const
         {
@@ -1403,13 +945,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<
-        class ITypeMetadata5B4288A9ApiHolder
+        class ITypeMetadataApiHolder
     >    
-    class BaseITypeMetadata5B4288A9EqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename ITypeMetadata5B4288A9ApiAt<ITypeMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type const> >
+    class BaseITypeMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
     {
     public:
-        //typedef typename ITypeMetadata5B4288A9ApiAt<ITypeMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9EqualToLabel>::type i_assembly_metadata_equal_to_type;
+        //typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
@@ -1426,21 +968,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct IMethodMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IMethodMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct IMethodMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IMethodMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class IMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9
+    class BaseIMethodMetadata
     {
     public:
-        typedef BaseIMethodMetadata5B4288A9<IMethodMetadata5B4288A9ApiHolder> this_type;
+        typedef BaseIMethodMetadata<IMethodMetadataApiHolder> this_type;
 
-        typedef typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type i_type_metadata_type;
-        typedef typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9Label>::type i_method_metadata_type;
+        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type i_method_metadata_type;
 
         virtual mdToken GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
@@ -1455,13 +997,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     
     template<
-        class IMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9Hash : 
-        Traits::HashComputable<boost::shared_ptr<typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9Label>::type const> >
+    class BaseIMethodMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type const> >
     {
     public:
-        typedef typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9HashLabel>::type i_type_metadata_hash_type;
+        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
 
         result_type operator()(param_type v) const
         {
@@ -1487,13 +1029,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<
-        class IMethodMetadata5B4288A9ApiHolder
+        class IMethodMetadataApiHolder
     >    
-    class BaseIMethodMetadata5B4288A9EqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9Label>::type const> >
+    class BaseIMethodMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type const> >
     {
     public:
-        //typedef typename IMethodMetadata5B4288A9ApiAt<IMethodMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9EqualToLabel>::type i_assembly_metadata_equal_to_type;
+        //typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
@@ -1510,39 +1052,39 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct MetadataInfo5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataInfo5B4288A9ApiHolderLabel, ApiLabel>
+    struct MetadataInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataInfoApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class MetadataInfo5B4288A9ApiHolder
+        class MetadataInfoApiHolder
     >    
-    class BaseMetadataInfo5B4288A9 : 
+    class BaseMetadataInfo : 
         public SmartPtrChain<
-            BaseMetadataInfo5B4288A9<MetadataInfo5B4288A9ApiHolder>,
+            BaseMetadataInfo<MetadataInfoApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename MetadataInfo5B4288A9ApiAt<MetadataInfo5B4288A9ApiHolder, Hosting::Interfaces::RuntimeHost5B4288A9Label>::type>
+                SmartPtrChainInfo<typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type>
             >
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename MetadataInfo5B4288A9ApiAt<MetadataInfo5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type
+                typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type
             >
         >,
         public SimpleDisposable
     {
     public:
-        typedef BaseMetadataInfo5B4288A9<MetadataInfo5B4288A9ApiHolder> this_type;
+        typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
 
-        typedef typename MetadataInfo5B4288A9ApiAt<MetadataInfo5B4288A9ApiHolder, Hosting::Interfaces::RuntimeHost5B4288A9Label>::type runtime_host_type;
-        typedef typename MetadataInfo5B4288A9ApiAt<MetadataInfo5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type metadata_dispenser_type;
+        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
+        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
 
         typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
 
         typedef typename chain_from<runtime_host_type>::type metadata_info_chain_type; 
 
-        BaseMetadataInfo5B4288A9()
+        BaseMetadataInfo()
         { }
 
         boost::shared_ptr<metadata_dispenser_type> CreateDispenser() const
@@ -1569,42 +1111,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct MetadataDispenser5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataDispenser5B4288A9ApiHolderLabel, ApiLabel>
+    struct MetadataDispenserApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataDispenserApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class MetadataDispenser5B4288A9ApiHolder
+        class MetadataDispenserApiHolder
     >    
-    class BaseMetadataDispenser5B4288A9 : 
+    class BaseMetadataDispenser : 
         public SmartPtrChain<
-            BaseMetadataDispenser5B4288A9<MetadataDispenser5B4288A9ApiHolder>,
+            BaseMetadataDispenser<MetadataDispenserApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::MetadataInfo5B4288A9Label>::type>
+                SmartPtrChainInfo<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type>
             >
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type,
-                typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::ModuleMetadata5B4288A9Label>::type,
-                typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type,
-                typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::MethodMetadata5B4288A9Label>::type
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type
             >
         >,
         public SimpleDisposable
     {
     public:
-        typedef BaseMetadataDispenser5B4288A9<MetadataDispenser5B4288A9ApiHolder> this_type;
+        typedef BaseMetadataDispenser<MetadataDispenserApiHolder> this_type;
 
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::MetadataInfo5B4288A9Label>::type metadata_info_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type assembly_metadata_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9HashLabel>::type i_assembly_metadata_hash_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9EqualToLabel>::type i_assembly_metadata_equal_to_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::ModuleMetadata5B4288A9Label>::type module_metadata_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type type_metadata_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, Interfaces::MethodMetadata5B4288A9Label>::type method_metadata_type;
-        typedef typename MetadataDispenser5B4288A9ApiAt<MetadataDispenser5B4288A9ApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type metadata_info_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
 
         typedef typename provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
         typedef typename provider_of<module_metadata_type>::type module_metadata_provider_type;
@@ -1613,7 +1155,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         typedef typename chain_from<metadata_info_type>::type metadata_dispenser_chain_type; 
 
-        BaseMetadataDispenser5B4288A9()
+        BaseMetadataDispenser()
         { }
 
         boost::shared_ptr<assembly_metadata_type const> GetAssembly(std::wstring const &fullName) const
@@ -1688,38 +1230,38 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct AssemblyMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct AssemblyMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class AssemblyMetadata5B4288A9ApiHolder
+        class AssemblyMetadataApiHolder
     >    
-    class BaseAssemblyMetadata5B4288A9 : 
+    class BaseAssemblyMetadata : 
         public SmartPtrChain<
-            BaseAssemblyMetadata5B4288A9<AssemblyMetadata5B4288A9ApiHolder>,
+            BaseAssemblyMetadata<AssemblyMetadataApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type>
+                SmartPtrChainInfo<typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type>
             >
         >,
-        public AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type,
+        public AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseAssemblyMetadata5B4288A9<AssemblyMetadata5B4288A9ApiHolder> this_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::IAssemblyMetadata5B4288A9Label>::type base_type;
+        typedef BaseAssemblyMetadata<AssemblyMetadataApiHolder> this_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type base_type;
 
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;        
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Fusion::Interfaces::FusionInfo5B4288A9Label>::type fusion_info_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Fusion::Interfaces::AssemblyInfo5B4288A9Label>::type assembly_info_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::ModuleMetadata5B4288A9Label>::type module_metadata_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9HashLabel>::type i_module_metadata_hash_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9EqualToLabel>::type i_module_metadata_equal_to_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type type_metadata_type;
-        typedef typename AssemblyMetadata5B4288A9ApiAt<AssemblyMetadata5B4288A9ApiHolder, Interfaces::MethodMetadata5B4288A9Label>::type method_metadata_type;        
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;        
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Fusion::Interfaces::FusionInfoLabel>::type fusion_info_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Fusion::Interfaces::AssemblyInfoLabel>::type assembly_info_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IModuleMetadataEqualToLabel>::type i_module_metadata_equal_to_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
         
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Asm, module_metadata_provider_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Asm, module_metadata_provider_type);
@@ -1731,7 +1273,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         
         typedef typename chain_from<typename base_type::metadata_dispenser_type>::type assembly_metadata_chain_type; 
 
-        BaseAssemblyMetadata5B4288A9() : 
+        BaseAssemblyMetadata() : 
             m_mda(mdAssemblyNil),
             m_openFlags(ofRead)
         { }
@@ -1927,35 +1469,35 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct ModuleMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ModuleMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct ModuleMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ModuleMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class ModuleMetadata5B4288A9ApiHolder
+        class ModuleMetadataApiHolder
     >    
-    class BaseModuleMetadata5B4288A9 : 
+    class BaseModuleMetadata : 
         public SmartPtrChain<
-            BaseModuleMetadata5B4288A9<ModuleMetadata5B4288A9ApiHolder>,
+            BaseModuleMetadata<ModuleMetadataApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type>
+                SmartPtrChainInfo<typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type>
             >
         >,
-        public ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9Label>::type,
+        public ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseModuleMetadata5B4288A9<ModuleMetadata5B4288A9ApiHolder> this_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::IModuleMetadata5B4288A9Label>::type base_type;
+        typedef BaseModuleMetadata<ModuleMetadataApiHolder> this_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type base_type;
 
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type assembly_metadata_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type i_type_metadata_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type type_metadata_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9HashLabel>::type i_type_metadata_hash_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9EqualToLabel>::type i_type_metadata_equal_to_type;
-        typedef typename ModuleMetadata5B4288A9ApiAt<ModuleMetadata5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type metadata_dispenser_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataEqualToLabel>::type i_type_metadata_equal_to_type;
+        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
 
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Mod, type_metadata_provider_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Mod, type_metadata_provider_type);
@@ -1967,7 +1509,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         typedef typename chain_from<assembly_metadata_type>::type module_metadata_chain_type; 
 
-        BaseModuleMetadata5B4288A9() : 
+        BaseModuleMetadata() : 
             m_mdm(mdModuleNil)
         { }
 
@@ -2083,36 +1625,36 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct TypeMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::TypeMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct TypeMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::TypeMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class TypeMetadata5B4288A9ApiHolder
+        class TypeMetadataApiHolder
     >    
-    class BaseTypeMetadata5B4288A9 : 
+    class BaseTypeMetadata : 
         public SmartPtrChain<
-            BaseTypeMetadata5B4288A9<TypeMetadata5B4288A9ApiHolder>,
+            BaseTypeMetadata<TypeMetadataApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<BaseTypeMetadata5B4288A9<TypeMetadata5B4288A9ApiHolder> >,
-                SmartPtrChainInfo<typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::ModuleMetadata5B4288A9Label>::type>
+                SmartPtrChainInfo<BaseTypeMetadata<TypeMetadataApiHolder> >,
+                SmartPtrChainInfo<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type>
             >
         >,
-        public TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type,
+        public TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseTypeMetadata5B4288A9<TypeMetadata5B4288A9ApiHolder> this_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type base_type;
+        typedef BaseTypeMetadata<TypeMetadataApiHolder> this_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
 
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::MetadataDispenser5B4288A9Label>::type metadata_dispenser_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type assembly_metadata_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::ModuleMetadata5B4288A9Label>::type module_metadata_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::MethodMetadata5B4288A9Label>::type method_metadata_type;        
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9HashLabel>::type i_method_metadata_hash_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9EqualToLabel>::type i_method_metadata_equal_to_type;
-        typedef typename TypeMetadata5B4288A9ApiAt<TypeMetadata5B4288A9ApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
 
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, type_metadata_provider_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, type_metadata_provider_type);
@@ -2133,7 +1675,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename chain_from<this_type>::type nested_type_metadata_chain_type; 
         typedef typename chain_from<module_metadata_type>::type type_metadata_chain_type; 
 
-        BaseTypeMetadata5B4288A9() : 
+        BaseTypeMetadata() : 
             m_mdt(mdTokenNil),
             m_genericArgsInit(false),
             m_kindInitialized(false),
@@ -2501,34 +2043,34 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct MethodMetadata5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodMetadata5B4288A9ApiHolderLabel, ApiLabel>
+    struct MethodMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class MethodMetadata5B4288A9ApiHolder
+        class MethodMetadataApiHolder
     >    
-    class BaseMethodMetadata5B4288A9 : 
+    class BaseMethodMetadata : 
         public SmartPtrChain<
-            BaseMethodMetadata5B4288A9<MethodMetadata5B4288A9ApiHolder>,
+            BaseMethodMetadata<MethodMetadataApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type>
+                SmartPtrChainInfo<typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::TypeMetadataLabel>::type>
             >
         >,
-        public MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9Label>::type,
+        public MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseMethodMetadata5B4288A9<MethodMetadata5B4288A9ApiHolder> this_type;
-        typedef typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::IMethodMetadata5B4288A9Label>::type base_type;
+        typedef BaseMethodMetadata<MethodMetadataApiHolder> this_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type base_type;
 
-        typedef typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::AssemblyMetadata5B4288A9Label>::type assembly_metadata_type;
-        typedef typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::TypeMetadata5B4288A9Label>::type type_metadata_type;
-        typedef typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, Interfaces::ITypeMetadata5B4288A9Label>::type i_type_metadata_type;
-        typedef typename MethodMetadata5B4288A9ApiAt<MethodMetadata5B4288A9ApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
         
-        BaseMethodMetadata5B4288A9() : 
+        BaseMethodMetadata() : 
             m_mdt(mdTokenNil),
             m_callingConvention(CallingConventions::CC_NO_VALUE),
             m_retTypeInitialized(false), 
@@ -2663,19 +2205,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
         using namespace Urasandesu::CppAnonym::Hosting;
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
 
-        struct DefaultFusionInfo5B4288A9ApiHolderImpl
+        struct DefaultFusionInfoApiHolderImpl
         {
             typedef map<
-                pair<RuntimeHost5B4288A9Label, RuntimeHost5B4288A9>,
-                pair<AssemblyInfo5B4288A9Label, AssemblyInfo5B4288A9>,
+                pair<RuntimeHostLabel, RuntimeHost>,
+                pair<AssemblyInfoLabel, AssemblyInfo>,
                 pair<IAssemblyCache, IAssemblyCache>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultFusionInfo5B4288A9ApiHolder : 
-        Detail::DefaultFusionInfo5B4288A9ApiHolderImpl
+    struct DefaultFusionInfoApiHolder : 
+        Detail::DefaultFusionInfoApiHolderImpl
     {
     };
 
@@ -2688,17 +2230,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
 
-        struct DefaultAssemblyInfo5B4288A9ApiHolderImpl
+        struct DefaultAssemblyInfoApiHolderImpl
         {
             typedef map<
-                pair<FusionInfo5B4288A9Label, FusionInfo5B4288A9>
+                pair<FusionInfoLabel, FusionInfo>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultAssemblyInfo5B4288A9ApiHolder : 
-        Detail::DefaultAssemblyInfo5B4288A9ApiHolderImpl
+    struct DefaultAssemblyInfoApiHolder : 
+        Detail::DefaultAssemblyInfoApiHolderImpl
     {
     };
 
@@ -2707,38 +2249,38 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct FusionInfo5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::FusionInfo5B4288A9ApiHolderLabel, ApiLabel>
+    struct FusionInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::FusionInfoApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class FusionInfo5B4288A9ApiHolder
+        class FusionInfoApiHolder
     >    
-    class BaseFusionInfo5B4288A9 : 
+    class BaseFusionInfo : 
         public SmartPtrChain<
-            BaseFusionInfo5B4288A9<FusionInfo5B4288A9ApiHolder>,
+            BaseFusionInfo<FusionInfoApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename FusionInfo5B4288A9ApiAt<FusionInfo5B4288A9ApiHolder, Hosting::Interfaces::RuntimeHost5B4288A9Label>::type>
+                SmartPtrChainInfo<typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type>
             >
         >,
         SmartHeapProvider<
             boost::mpl::vector<
-                typename FusionInfo5B4288A9ApiAt<FusionInfo5B4288A9ApiHolder, Interfaces::AssemblyInfo5B4288A9Label>::type
+                typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type
             >
         >,
         public SimpleDisposable
     {
     public:
-        typedef BaseFusionInfo5B4288A9<FusionInfo5B4288A9ApiHolder> this_type;
+        typedef BaseFusionInfo<FusionInfoApiHolder> this_type;
         
-        typedef typename FusionInfo5B4288A9ApiAt<FusionInfo5B4288A9ApiHolder, Hosting::Interfaces::RuntimeHost5B4288A9Label>::type runtime_host_type;
-        typedef typename FusionInfo5B4288A9ApiAt<FusionInfo5B4288A9ApiHolder, Interfaces::AssemblyInfo5B4288A9Label>::type assembly_info_type;
-        typedef typename FusionInfo5B4288A9ApiAt<FusionInfo5B4288A9ApiHolder, IAssemblyCache>::type com_assembly_cache_type;
+        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
+        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type assembly_info_type;
+        typedef typename FusionInfoApiAt<FusionInfoApiHolder, IAssemblyCache>::type com_assembly_cache_type;
 
         typedef typename provider_of<assembly_info_type>::type assembly_info_provider_type;
 
-        BaseFusionInfo5B4288A9()
+        BaseFusionInfo()
         { }
 
         boost::shared_ptr<assembly_info_type> QueryAssemblyInfo(
@@ -2838,22 +2380,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
     
     
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct AssemblyInfo5B4288A9ApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyInfo5B4288A9ApiHolderLabel, ApiLabel>
+    struct AssemblyInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyInfoApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class AssemblyInfo5B4288A9ApiHolder
+        class AssemblyInfoApiHolder
     >    
-    class BaseAssemblyInfo5B4288A9
+    class BaseAssemblyInfo
     {
     public:
-        typedef BaseAssemblyInfo5B4288A9<AssemblyInfo5B4288A9ApiHolder> this_type;
+        typedef BaseAssemblyInfo<AssemblyInfoApiHolder> this_type;
 
-        typedef typename AssemblyInfo5B4288A9ApiAt<AssemblyInfo5B4288A9ApiHolder, Interfaces::FusionInfo5B4288A9Label>::type fusion_info_type;
+        typedef typename AssemblyInfoApiAt<AssemblyInfoApiHolder, Interfaces::FusionInfoLabel>::type fusion_info_type;
 
-        BaseAssemblyInfo5B4288A9() :
+        BaseAssemblyInfo() :
             m_assemblySizeInKB(0)
         { }
         
@@ -2898,15 +2440,15 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
         using namespace Urasandesu::CppAnonym::StrongNaming;
 
-        typedef HostInfo5B4288A9 HostInfo;
-        typedef RuntimeHost5B4288A9 RuntimeHost;
-        typedef MetadataInfo5B4288A9 MetadataInfo;
-        typedef MetadataDispenser5B4288A9 MetadataDispenser;
-        typedef AssemblyMetadata5B4288A9 AssemblyMetadata;
-        typedef ModuleMetadata5B4288A9 ModuleMetadata;
-        typedef ITypeMetadata5B4288A9 ITypeMetadata;
-        typedef TypeMetadata5B4288A9 TypeMetadata;
-        typedef MethodMetadata5B4288A9 MethodMetadata;
+        //typedef HostInfo HostInfo;
+        //typedef RuntimeHost RuntimeHost;
+        //typedef MetadataInfo MetadataInfo;
+        //typedef MetadataDispenser MetadataDispenser;
+        //typedef AssemblyMetadata AssemblyMetadata;
+        //typedef ModuleMetadata ModuleMetadata;
+        //typedef ITypeMetadata ITypeMetadata;
+        //typedef TypeMetadata TypeMetadata;
+        //typedef MethodMetadata MethodMetadata;
 
         shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
 
