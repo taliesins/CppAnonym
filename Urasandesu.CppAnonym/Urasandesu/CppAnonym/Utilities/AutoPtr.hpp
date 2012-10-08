@@ -6,6 +6,14 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTRFWD_HPP
 #include <Urasandesu/CppAnonym/Utilities/AutoPtrFwd.hpp>
 #endif
@@ -39,25 +47,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
-        template<class T, class D>
+        template<class T, class TD, class ImplD>
         struct AutoPtrHolderImpl : 
             AutoPtrHolder
         {
-            typedef AutoPtrHolderImpl<T, D> this_type;
-            typedef AutoPtrHolderImplFactory<T, D> holder_factory_type;
+            typedef AutoPtrHolderImpl<T, TD, ImplD> this_type;
+            typedef AutoPtrHolder base_type;
+            typedef T object_type;
+            typedef TD object_deleter_type;
+            typedef ImplD impl_deleter_type; 
 
-            explicit AutoPtrHolderImpl(T *p) : 
-                AutoPtrHolder(), 
+            AutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+                base_type(), 
                 m_p(p),
-                m_d(D())
-            { 
-                _ASSERTE(p != NULL); 
-            }
-
-            AutoPtrHolderImpl(T *p, D d) : 
-                AutoPtrHolder(), 
-                m_p(p),
-                m_d(d)
+                m_d(d),
+                m_impld(impld)
             { 
                 _ASSERTE(p != NULL); 
             }
@@ -74,21 +78,28 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             virtual void Delete()
             {
                 m_d(m_p);
-                delete this;
-                //AutoPtrHolderImplFactory<T, D>::Heap().Delete(this);
+                m_impld(this);
             }
 
-            T *m_p;
-            mutable D m_d;
+            object_type *m_p;
+            mutable object_deleter_type m_d;
+            impl_deleter_type m_impld;
         };
 
-        //template<class T, class D>
-        //struct AutoPtrHolderImplFactory
-        //{
-        //    typedef AutoPtrHolderImpl<T, D> holder_type;
-        //    typedef SimpleHeap<holder_type, QuickHeapWithoutSubscriptOperator> holder_heap_type;
-        //    static holder_heap_type &Heap() { static holder_heap_type heap; return heap; }
-        //};
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl : 
+            Traits::MakePointerHolderImpl<T, TD, ImplD, AutoPtrHolderImpl>
+        {
+        };
+
+        template<
+            class T, 
+            class Tag
+        >
+        struct MakeHeapHolderImpl : 
+            Traits::MakeHeapPointerHolderImpl<T, AutoPtrHolderImpl, Tag>
+        {
+        };
 
         template<class T>
         class AutoPtrImpl
@@ -97,23 +108,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef AutoPtrImpl<T> this_type;
             typedef AutoPtrHolder holder_type;
 
-            typedef T element_type;
-            typedef T value_type;
-            typedef T *pointer;
-            typedef T &reference;
+            template<class TD, class ImplD>
+            struct make_holder_impl : 
+                MakeHolderImpl<T, TD, ImplD>
+            {
+            };
+
+            template<class Tag = QuickHeapWithoutSubscriptOperator>
+            struct make_heap_holder_impl : 
+                MakeHeapHolderImpl<T, Tag>
+            {
+            };
 
             AutoPtrImpl() : 
                 m_pHolder()
             { }
 
             explicit AutoPtrImpl(T *p) : 
-                m_pHolder(new AutoPtrHolderImpl<T, DefaultDeleter>(p) /*AutoPtrHolderImplFactory<T, DefaultDeleter>::Heap().New(p)*/)
+                m_pHolder(new MakeHolderImpl<T, DefaultDeleter, DefaultDeleter>::type(p, DefaultDeleter(), DefaultDeleter()))
             { }
 
-            template<class D>
-            AutoPtrImpl(T *p, D d) : 
-                m_pHolder(new AutoPtrHolderImpl<T, D>(p, d) /*AutoPtrHolderImplFactory<T, D>::Heap().New(p, d)*/)
+            template<class TD>
+            AutoPtrImpl(T *p, TD d) : 
+                m_pHolder(new MakeHolderImpl<T, TD, DefaultDeleter>::type(p, d, DefaultDeleter()))
             { }
+
+            template<class TD, class ImplD>
+            AutoPtrImpl(typename MakeHolderImpl<T, TD, ImplD>::type *pHolder) : 
+                m_pHolder(pHolder)
+            {
+                _ASSERTE(pHolder != NULL); 
+            }
 
             template<class U>
             AutoPtrImpl(AutoPtrImpl<U> const &other) : 
@@ -143,19 +168,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 return !m_pHolder;
             }
 
-            inline pointer operator->()
+            inline T *operator->()
             {
                 return Get();
             }
 
-            inline pointer Get() const
+            inline T *Get() const
             {
-                return static_cast<pointer>(m_pHolder->Pointer());
+                return static_cast<T *>(m_pHolder->Pointer());
             }
 
-            inline reference operator *()
+            inline T &operator *()
             {
-                pointer p = Get();
+                T *p = Get();
                 _ASSERTE(p != NULL);
                 return *p;
             }
@@ -199,9 +224,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type(p)
         { }
 
-        template<class D>
-        AutoPtr(T *p, D d) : 
+        template<class TD>
+        AutoPtr(T *p, TD d) : 
             base_type(p, d)
+        { }
+
+        template<class TD, class ImplD>
+        explicit AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+            base_type(pHolder)
         { }
 
         template<class U>
@@ -221,11 +251,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type::operator =(other);
             return *this;
         }
-
-    protected:
-        AutoPtr(boost::intrusive_ptr<holder_type> const &pHolder) : 
-            base_type(pHolder)
-        { }
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {

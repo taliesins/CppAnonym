@@ -2,16 +2,16 @@
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_PERSISTENTINFO_HPP
+#include <Urasandesu/CppAnonym/PersistentInfo.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDERFWD_HPP
@@ -20,62 +20,71 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _BB53EDCD {
+    namespace PersistableHeapProviderDetail {
 
         namespace mpl = boost::mpl;
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Utilities;
 
-        template<class ProvidingTypes, class I, class IEnd>
-        class ATL_NO_VTABLE PersistableHeapProviderImpl : 
-            SimpleHeapProvider<
-                mpl::vector<
-                    ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
-                >
-            >,
-            public PersistableHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
+        template<class I>
+        struct PersistentInfoFacade
+        {
+            typedef typename mpl::deref<I>::type persistent_info_type;
+            typedef typename persistent_info_type::object_type object_type;
+            typedef typename persistent_info_type::handler_type handler_type;
+            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::object_deleter_type object_deleter_type;
+            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::type holder_impl_type;
+            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
+            typedef typename TempPtr<object_type>::default_heap_persisted_handler_impl<handler_type>::type persisted_handler_impl_type;
+            typedef typename TempPtr<object_type>::default_heap_persisted_handler_impl<handler_type>::deleter_type persisted_handler_impl_deleter_type;
+            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> object_object_tag_type;
+            typedef ObjectTag<holder_impl_type, QuickHeapWithoutSubscriptOperator> holder_impl_object_tag_type;
+            typedef ObjectTag<persisted_handler_impl_type, QuickHeapWithoutSubscriptOperator> persisted_handler_impl_object_tag_type;
+            typedef SimpleHeapProvider<mpl::vector<object_object_tag_type, holder_impl_object_tag_type, persisted_handler_impl_object_tag_type> > base_type;
+            typedef typename base_type::provider_of<object_type>::type object_provider_type;
+            typedef typename base_type::provider_of<holder_impl_type>::type holder_impl_provider_type;
+            typedef typename base_type::provider_of<persisted_handler_impl_type>::type persisted_handler_impl_provider_type;
+            typedef typename object_provider_type::object_heap_type object_heap_type;
+            typedef typename holder_impl_provider_type::object_heap_type holder_impl_heap_type;
+            typedef typename persisted_handler_impl_provider_type::object_heap_type persisted_handler_impl_heap_type;
+        };
+
+        template<class ReversedPersistentInfoTypes, class I, class IEnd>
+        class ATL_NO_VTABLE PersistableHeapProviderImplImpl : 
+            PersistentInfoFacade<I>::base_type,
+            public PersistableHeapProviderImplImpl<ReversedPersistentInfoTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef PersistableHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_type;
-            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef SimpleHeapProvider<mpl::vector<obj_tag_type> > base_type;
-            
-            typedef base_type::object_heap_type object_heap_type;
-            typedef HeapDeleter<object_heap_type> object_heap_deleter_type;
+            typedef typename PersistentInfoFacade<I>::base_type base_type;
+            typedef typename PersistentInfoFacade<I>::object_type object_type;
+            typedef typename PersistentInfoFacade<I>::handler_type handler_type;
+            typedef typename PersistentInfoFacade<I>::object_deleter_type object_deleter_type;
+            typedef typename PersistentInfoFacade<I>::holder_impl_type holder_impl_type;
+            typedef typename PersistentInfoFacade<I>::holder_impl_deleter_type holder_impl_deleter_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_type persisted_handler_impl_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_deleter_type persisted_handler_impl_deleter_type;            
+            typedef typename PersistentInfoFacade<I>::object_provider_type object_provider_type;
+            typedef typename PersistentInfoFacade<I>::holder_impl_provider_type holder_impl_provider_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_provider_type persisted_handler_impl_provider_type;
+            typedef typename PersistentInfoFacade<I>::object_heap_type object_heap_type;
+            typedef typename PersistentInfoFacade<I>::holder_impl_heap_type holder_impl_heap_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_heap_type persisted_handler_impl_heap_type;
 
-            static void Destruct(object_heap_type &heap, std::vector<object_type *> &objects)
+            ~PersistableHeapProviderImplImpl()
             {
-                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
-                    heap.Delete(*ri);
-            }
-
-            ~PersistableHeapProviderImpl()
-            {
-                Destruct(base_type::Heap(), Objects());
-            }
-
-            static TempPtr<object_type> NewStaticObject()
-            {
-                return TempPtr<object_type>(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
-            }
-
-            static size_t RegisterStaticObject(TempPtr<object_type> &p)
-            {
-                p.Persist();
-                StaticObjects().push_back(p.Get());
-                return StaticObjects().size() - 1;
-            }
-
-            static object_type *GetStaticObject(size_t n)
-            {
-                return StaticObjects()[n];
+                if (AnyObjects())
+                    Destruct(ObjectHeap(), Objects());
             }
 
             TempPtr<object_type> NewObject()
             {
-                return TempPtr<object_type>(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
+                object_deleter_type objDeleter(ObjectHeap());
+                object_type *pObj = ObjectHeap().New();
+
+                holder_impl_deleter_type implDeleter(HolderImplHeap());
+                holder_impl_type *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
+
+                return TempPtr<object_type>(pHolderImpl);
             }
 
             size_t RegisterObject(TempPtr<object_type> &p)
@@ -90,94 +99,129 @@ namespace Urasandesu { namespace CppAnonym {
                 return Objects()[n];
             }
 
-        protected:
-            struct heap_and_objects
+            template<class A1>
+            size_t AddPersistedHandler(TempPtr<object_type> &p, A1 arg1)
             {
-                virtual ~heap_and_objects()
-                {
-                    this_type::Destruct(m_heap, m_objects);
-                }
+                persisted_handler_impl_deleter_type implDeleter(PersistedHandlerImplHeap());
+                persisted_handler_impl_type *pHandlerImpl = PersistedHandlerImplHeap().New(handler_type(arg1), implDeleter);
 
-                object_heap_type m_heap;
-                std::vector<object_type *> m_objects;
-            };
+                return p.AddPersistedHandler(pHandlerImpl);
+            }
 
+        protected:
             std::vector<object_type *> &Objects()
             {
-                if (!m_pObjects.get())
-                    m_pObjects = make_shared<std::vector<object_type *>>();
+                if (!m_pObjects)
+                    m_pObjects = make_shared<std::vector<object_type *> >();
                 return *m_pObjects.get();
             }
 
-        private:
-            static heap_and_objects &StaticHeapAndObjects()
+            bool AnyObjects() const
             {
-                static heap_and_objects heapAndObjects;
-                return heapAndObjects;
+                return m_pObjects && !m_pObjects->empty();
             }
 
-            static object_heap_type &StaticHeap()
+        private:            
+            static void Destruct(object_heap_type &heap, std::vector<object_type *> &objects)
             {
-                return StaticHeapAndObjects().m_heap;
+                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
+                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
+                    heap.Delete(*ri);
             }
 
-            static std::vector<object_type *> &StaticObjects()
+            object_heap_type &ObjectHeap()
             {
-                return StaticHeapAndObjects().m_objects;
+                object_provider_type &provider = base_type::ProviderOf<object_type>();
+                return provider.Heap();
             }
 
-            shared_ptr<std::vector<object_type *>> m_pObjects;
+            holder_impl_heap_type &HolderImplHeap()
+            {
+                holder_impl_provider_type &provider = base_type::ProviderOf<holder_impl_type>();
+                return provider.Heap();
+            }
+
+            persisted_handler_impl_heap_type &PersistedHandlerImplHeap()
+            {
+                persisted_handler_impl_provider_type &provider = base_type::ProviderOf<persisted_handler_impl_type>();
+                return provider.Heap();
+            }
+
+            shared_ptr<std::vector<object_type *> > m_pObjects;
         };
 
-        template<class ProvidingTypes>
-        class PersistableHeapProviderImpl<ProvidingTypes, 
-                                          typename Traits::DistinctEnd<ProvidingTypes>::type, 
-                                          typename Traits::DistinctEnd<ProvidingTypes>::type> : 
+        template<class ReversedPersistentInfoTypes>
+        class PersistableHeapProviderImplImpl<ReversedPersistentInfoTypes, 
+                                              typename mpl::end<ReversedPersistentInfoTypes>::type, 
+                                              typename mpl::end<ReversedPersistentInfoTypes>::type> : 
             noncopyable
         {
         };
 
-        template<class ProvidingTypes, class ProvidingType>
+        template<class PersistentInfo, class T>
+        struct HasObjectT : 
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(PersistentInfoObject, PersistentInfo)::type, T>
+        {
+        };
+
+        template<class PersistentInfoTypes, LONG N>
+        class ProvidingTypeAtImpl
+        {
+            typedef typename mpl::at_c<PersistentInfoTypes, N>::type persistent_info_type;
+        public:
+            typedef typename persistent_info_type::object_type type;
+        };
+
+        template<class ReversedPersistentInfoTypes, class ProvidingType>
         class ProviderOfImpl
         {
-            typedef typename Traits::Distinct<ProvidingTypes>::type distinct_providing_types;
-            typedef typename mpl::find<distinct_providing_types, ProvidingType>::type i;
-            typedef typename Traits::DistinctEnd<ProvidingTypes>::type i_end;
+            typedef typename mpl::find_if<ReversedPersistentInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::end<ReversedPersistentInfoTypes>::type i_end;
         public:
-            typedef PersistableHeapProviderImpl<ProvidingTypes, i, i_end> type;
+            typedef PersistableHeapProviderImplImpl<ReversedPersistentInfoTypes, i, i_end> type;
         };
 
-    }   // namespace _BB53EDCD
+        template<class PersistentInfoTypes>
+        struct ATL_NO_VTABLE PersistableHeapProviderImpl : 
+            PersistableHeapProviderImplImpl<typename mpl::reverse<PersistentInfoTypes>::type, 
+                                            typename mpl::begin<typename mpl::reverse<PersistentInfoTypes>::type>::type, 
+                                            typename mpl::end<typename mpl::reverse<PersistentInfoTypes>::type>::type>
+        {
+            typedef PersistableHeapProviderImpl<PersistentInfoTypes> this_type;
+            typedef PersistentInfoTypes persistent_info_types;
 
+            template<LONG N>
+            struct persistent_info_at : 
+                mpl::at_c<persistent_info_types, N>
+            {
+            };
 
-    template<class ProvidingTypes>
-    class ATL_NO_VTABLE PersistableHeapProvider : 
-        public _BB53EDCD::PersistableHeapProviderImpl<ProvidingTypes, 
-                                                      typename Traits::DistinctBegin<ProvidingTypes>::type, 
-                                                      typename Traits::DistinctEnd<ProvidingTypes>::type>
+            template<LONG N>
+            struct providing_type_at : 
+                ProvidingTypeAtImpl<persistent_info_types, N>
+            {
+            };
+
+            template<class ProvidingType>
+            struct provider_of : 
+                ProviderOfImpl<typename mpl::reverse<persistent_info_types>::type, ProvidingType>
+            {
+            };
+
+            template<class ProvidingType>
+            inline typename provider_of<ProvidingType>::type &ProviderOf() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
+            }
+        };
+
+    }   // namespace PersistableHeapProviderDetail {
+
+    template<class PersistentInfoTypes>
+    struct ATL_NO_VTABLE PersistableHeapProvider : 
+        PersistableHeapProviderDetail::PersistableHeapProviderImpl<PersistentInfoTypes>
     {
-    public:
-        typedef PersistableHeapProvider<ProvidingTypes> this_type;
-        typedef ProvidingTypes providing_types;
-
-        template<LONG N>
-        struct providing_type_at : 
-            boost::mpl::at_c<providing_types, N>
-        {
-        };
-
-        template<class ProvidingType>
-        class provider_of : 
-            public _BB53EDCD::ProviderOfImpl<providing_types, ProvidingType>
-        {
-        };
-
-        template<class ProvidingType>
-        inline typename provider_of<ProvidingType>::type &ProviderOf() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
-        }
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

@@ -15,6 +15,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     typedef BaseHostInfo<> HostInfo;
 
+    template<
+        class HostInfoApiHolder = ApiHolders::DefaultHostInfoApiHolder
+    >    
+    class BaseHostInfoPersistedHandler;
+
+    typedef BaseHostInfoPersistedHandler<> HostInfoPersistedHandler;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 #endif  // URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFOFWD_HPP

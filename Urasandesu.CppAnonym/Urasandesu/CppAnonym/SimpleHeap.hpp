@@ -27,16 +27,8 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef Collections::RapidVector<T> TArray;
             
-            SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastMaxSize(m_array.max_size()) { }
-            
-            ~SimpleHeapImpl()
-            {
-                if (m_array.empty())
-                    return;
-
-                for (T *i = &m_array[0] - 1, *i_end = i + m_array.size(); i != i_end; --i_end)
-                    Utilities::DestructionDistributor<T>::Destruct(*i_end);
-            }
+            SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastMaxSize(m_array.max_size()) { }            
+            ~SimpleHeapImpl() { }
 
             T *New()
             {
@@ -90,14 +82,10 @@ namespace Urasandesu { namespace CppAnonym {
                 private:
                     T *m_pObj_;
                 };
-                typedef TArray::iterator TIterator;
-                TIterator obj = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
-                if (obj != m_array.end())
-                {
-                    for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
-                        Utilities::DestructionDistributor<T>::Destruct(*i);
-                    m_array.erase(obj, m_array.end());
-                }
+                typedef TArray::iterator Iterator;
+                Iterator result = std::remove_if(m_array.begin(), m_array.end(), EqualTo(pObj));
+                if (result != m_array.end())
+                    m_array.erase(result, m_array.end());
             }
 
             inline SIZE_T Size() const
@@ -298,6 +286,20 @@ namespace Urasandesu { namespace CppAnonym {
                 return pObj;
             }
 
+            template<class A1, class A2, class A3>
+            inline T *New(A1 arg1, A2 arg2, A3 arg3)
+            {
+                T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructing..." << std::endl;
+#endif
+                new(pObj)T(arg1, arg2, arg3);
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructed !!" << std::endl;
+#endif
+                return pObj;
+            }
+
             void Delete(T *pObj)
             {
 #ifdef DEBUG_SIMPLEHEAP
@@ -431,6 +433,8 @@ namespace Urasandesu { namespace CppAnonym {
         Detail::SimpleHeapImpl<T, Tag> m_impl;
         
     public:
+        typedef T object_type;
+
         inline T *New()
         {
             return m_impl.New();
@@ -446,6 +450,12 @@ namespace Urasandesu { namespace CppAnonym {
         inline T *New(A1 arg1, A2 arg2)
         {
             return m_impl.New<A1, A2>(arg1, arg2);
+        }
+
+        template<class A1, class A2, class A3>
+        inline T *New(A1 arg1, A2 arg2, A3 arg3)
+        {
+            return m_impl.New<A1, A2>(arg1, arg2, arg3);
         }
 
         inline void DeleteLast()

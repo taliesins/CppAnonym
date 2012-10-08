@@ -8,17 +8,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         struct AutoPtrHolder;
 
-        template<class U> 
-        struct AutoPtrHolderAccessor;
-
-        template<class T, class D>
+        template<class T, class TD, class ImplD>
         struct AutoPtrHolderImpl;
 
-        template<class T, class D>
-        struct AutoPtrHolderImplFactory;
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl;
+
+        template<
+            class T, 
+            class Tag = QuickHeapWithoutSubscriptOperator
+        >
+        struct MakeHeapHolderImpl;
 
         template<class T>
         class AutoPtrImpl;
+
+        template<class U> 
+        struct AutoPtrHolderAccessor;
 
     }   // namespace AutoPtrDetail {
 

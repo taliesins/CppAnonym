@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 
+#ifndef URASANDESU_CPPANONYM_IDISPOSABLE_HPP
+#include <Urasandesu/CppAnonym/IDisposable.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
 #endif
@@ -12,150 +16,146 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _BEFF6DE6 {
+    namespace DisposableHeapProviderDetail {
 
         namespace mpl = boost::mpl;
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Utilities;
 
-        template<class ProvidingTypes, class I, class IEnd>
-        class ATL_NO_VTABLE DisposableHeapProviderImpl : 
-            PersistableHeapProvider<
-                mpl::vector<
-                    typename mpl::deref<I>::type
-                >
-            >,
-            public DisposableHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
+        template<class I>
+        struct DisposingInfoFacade
+        {
+            typedef typename mpl::deref<I>::type disposing_info_type;
+            typedef PersistableHeapProvider<mpl::vector<disposing_info_type> > base_type;
+            typedef typename base_type::object_type object_type;
+        };
+
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        class ATL_NO_VTABLE DisposableHeapProviderImplImpl : 
+            public DisposingInfoFacade<I>::base_type,
+            public DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef DisposableHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_type;
-            typedef PersistableHeapProvider<mpl::vector<object_type> > base_type;
+            typedef typename DisposingInfoFacade<I>::base_type base_type;
+            typedef typename DisposingInfoFacade<I>::object_type object_type;
 
-            typedef base_type::object_heap_type object_heap_type;
-            typedef base_type::object_heap_deleter_type object_heap_deleter_type;
+            ~DisposableHeapProviderImplImpl()
+            {
+                if (AnyObjects())
+                    Destruct(Objects());
+            }
 
+        private:
             static void Destruct(std::vector<object_type *> &objects)
             {
                 typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
-                    (*ri)->Dispose();
+                    DisposeCore(*ri);
             }
 
-            ~DisposableHeapProviderImpl()
+            static void DisposeCore(object_type *p)
             {
-                Destruct(base_type::Objects());
+                typedef typename mpl::or_<
+                    CPP_ANONYM_HAS_MEMBER_FUNCTION(DisposingInfoDispose, object_type), 
+                    boost::is_base_of<IDisposable, object_type> 
+                >::type HasDispose;
+
+                typedef dispose_core_impl_type<HasDispose> Impl;
+
+                Impl::DisposeCore(p);
             }
 
-            static TempPtr<object_type> NewStaticObject()
+            template<class HasDispose>
+            struct dispose_core_impl_type
             {
-                return TempPtr<object_type>(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
-            }
-
-            static size_t RegisterStaticObject(TempPtr<object_type> &p)
-            {
-                p.Persist();
-                StaticObjects().push_back(p.Get());
-                return StaticObjects().size() - 1;
-            }
-
-            static TempPtr<object_type> GetStaticObject(size_t n)
-            {
-                return StaticObjects()[n];
-            }
-
-            TempPtr<object_type> NewObject()
-            {
-                return base_type::NewObject();
-            }
-
-            size_t RegisterObject(TempPtr<object_type> &p)
-            {
-                return base_type::RegisterObject(p);
-            }
-
-            object_type *GetObject(size_t n)
-            {
-                return base_type::GetObject(n);
-            }
-        
-        protected:
-            struct heap_and_objects : 
-                base_type::heap_and_objects
-            {
-                virtual ~heap_and_objects()
+                static inline void DisposeCore(object_type *p)
                 {
-                    this_type::Destruct(base_type::heap_and_objects::m_objects);
+                    // Do nothing.
                 }
             };
 
-        private:
-            static heap_and_objects &StaticHeapAndObjects()
-            {
-                static heap_and_objects heapAndObjects;
-                return heapAndObjects;
-            }
-
-            static object_heap_type &StaticHeap()
-            {
-                return StaticHeapAndObjects().m_heap;
-            }
-
-            static std::vector<object_type *> &StaticObjects()
-            {
-                return StaticHeapAndObjects().m_objects;
-            }
+            template<>
+            struct dispose_core_impl_type<mpl::true_> 
+            { 
+                static inline void DisposeCore(object_type *p)
+                {
+                    p->Dispose();
+                }
+            };
         };
 
-        template<class ProvidingTypes>
-        class DisposableHeapProviderImpl<ProvidingTypes, 
-                                             typename Traits::DistinctEnd<ProvidingTypes>::type, 
-                                             typename Traits::DistinctEnd<ProvidingTypes>::type> : 
+        template<class ReversedDisposingInfoTypes>
+        class DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, 
+                                              typename mpl::end<ReversedDisposingInfoTypes>::type, 
+                                              typename mpl::end<ReversedDisposingInfoTypes>::type> : 
             noncopyable
         {
         };
 
-    }   // namespace _BEFF6DE6
-
-
-    template<class ProvidingTypes>
-    class ATL_NO_VTABLE DisposableHeapProvider : 
-        public _BEFF6DE6::DisposableHeapProviderImpl<ProvidingTypes, 
-                                                  typename Traits::DistinctBegin<ProvidingTypes>::type, 
-                                                  typename Traits::DistinctEnd<ProvidingTypes>::type>
-    {
-    public:
-        typedef DisposableHeapProvider<ProvidingTypes> this_type;
-        typedef ProvidingTypes providing_types;
-
-        template<LONG N>
-        struct providing_type_at : 
-            boost::mpl::at_c<providing_types, N>
+        template<class DisposingInfo, class T>
+        struct HasObjectT : 
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(DisposingInfoObject, DisposingInfo)::type, T>
         {
         };
 
-        template<class T>
-        class provider_of
+        template<class DisposingInfoTypes, LONG N>
+        class ProvidingTypeAtImpl
         {
-            typedef typename Traits::Distinct<providing_types>::type distinct_providing_types;
-            typedef typename boost::mpl::find<distinct_providing_types, T>::type i;
-            typedef typename Traits::DistinctEnd<providing_types>::type i_end;
+            typedef typename mpl::at_c<DisposingInfoTypes, N>::type disposing_info_type;
         public:
-            typedef _BEFF6DE6::DisposableHeapProviderImpl<providing_types, i, i_end> type;
+            typedef typename disposing_info_type::object_type type;
         };
 
-        template<class T>
-        inline typename provider_of<T>::type &ProviderOf() const
+        template<class ReversedDisposingInfoTypes, class ProvidingType>
+        class ProviderOfImpl
         {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<T>::type &>(*pMutableThis);
-        }
+            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
+        public:
+            typedef DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, i, i_end> type;
+        };
+        
+        template<class DisposingInfoTypes>
+        struct ATL_NO_VTABLE DisposableHeapProviderImpl : 
+            DisposableHeapProviderImplImpl<typename mpl::reverse<DisposingInfoTypes>::type, 
+                                            typename mpl::begin<typename mpl::reverse<DisposingInfoTypes>::type>::type, 
+                                            typename mpl::end<typename mpl::reverse<DisposingInfoTypes>::type>::type>
+        {
+            typedef DisposableHeapProviderImpl<DisposingInfoTypes> this_type;
+            typedef DisposingInfoTypes disposing_info_types;
 
-        template<class T>
-        inline T &HogeOf() const
-        {
-            throw 1;
-        }
+            template<LONG N>
+            struct disposing_info_at : 
+                mpl::at_c<disposing_info_types, N>
+            {
+            };
+
+            template<LONG N>
+            struct providing_type_at : 
+                ProvidingTypeAtImpl<disposing_info_types, N>
+            {
+            };
+
+            template<class ProvidingType>
+            struct provider_of : 
+                ProviderOfImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
+            {
+            };
+
+            template<class ProvidingType>
+            inline typename provider_of<ProvidingType>::type &ProviderOf() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
+            }
+        };
+
+    }   // namespace DisposableHeapProviderDetail {
+
+    template<class DisposingInfoTypes>
+    struct ATL_NO_VTABLE DisposableHeapProvider : 
+        DisposableHeapProviderDetail::DisposableHeapProviderImpl<DisposingInfoTypes>
+    {
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

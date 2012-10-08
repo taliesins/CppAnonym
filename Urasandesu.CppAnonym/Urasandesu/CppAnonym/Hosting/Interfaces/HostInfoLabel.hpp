@@ -5,6 +5,7 @@
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 
     struct HostInfoLabel { };
+    struct HostInfoPersistedHandlerLabel { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 

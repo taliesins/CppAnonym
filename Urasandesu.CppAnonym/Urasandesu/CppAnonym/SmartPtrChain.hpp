@@ -64,9 +64,9 @@ namespace Urasandesu { namespace CppAnonym {
                 class T,
                 class PersistableHeapProvider
             >
-            static TempPtr<T> NewRootObject()
+            static TempPtr<T> NewRootObject(PersistableHeapProvider &provider)
             {
-                return constructor_type::NewRootObject<T, PersistableHeapProvider>();
+                return constructor_type::NewRootObject<T>(provider);
             }
 
             template<
@@ -112,8 +112,8 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current>
         struct ExtractPreviousOrDefault : 
             mpl::eval_if<
-                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
-                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfoPrevious, Current),
+                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, Current),
                 mpl::identity<Current> >
         {
         };
@@ -122,10 +122,10 @@ namespace Urasandesu { namespace CppAnonym {
         struct ExtractChainInfoTypesOrDefault : 
             mpl::eval_if<
                 mpl::and_<
-                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_types, T),
+                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChainChainInfos, T),
                     mpl::not_<boost::is_same<Last, T> >
                 >,
-                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_types, T),
+                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChainChainInfos, T),
                 mpl::identity<mpl::vector<T> > >
         {
         };
@@ -169,7 +169,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class ChainInfo, class T>
         struct HasPreviousT : 
-            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, ChainInfo)::type, T>
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, ChainInfo)::type, T>
         {
         };
 
@@ -228,7 +228,7 @@ namespace Urasandesu { namespace CppAnonym {
             
                 container<T> container;
                 map_first_ancestor_selector<T> selector(*this, container);
-                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
                 return container.m_p;
             }
 
@@ -239,7 +239,7 @@ namespace Urasandesu { namespace CppAnonym {
             
                 container<T> container;
                 map_first_selector<T> selector(*this, container);
-                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
                 return container.m_p;
             }
 
@@ -257,7 +257,7 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 container<T> container;
                 new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-                mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+                mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
                 _ASSERTE(container.m_p);
                 return container.m_p;
             }

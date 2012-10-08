@@ -56,31 +56,6 @@ namespace {
         MyPOD3 *next;
     };
 
-    template<class Tag, INT Index>
-    class AtomicCounter : 
-        boost::noncopyable
-    {
-    public:
-        static AtomicCounter &Instance() { static AtomicCounter obj; return obj; }
-        INT operator++() { return ++m_refCount; }
-        INT operator--() { return --m_refCount; }
-        INT Value() { return m_refCount; }
-    private:
-        AtomicCounter() : m_refCount(0) { }
-        ~AtomicCounter() { }
-        boost::detail::atomic_count m_refCount;
-    };
-
-    template<class Tag, INT Index>
-    struct ConstructionTester
-    {
-        typedef AtomicCounter<Tag, Index> counter;
-        static counter &Counter() { return counter::Instance(); }
-        ConstructionTester() { ++counter::Instance(); }
-        ~ConstructionTester() { --counter::Instance(); }
-    };
-
-    
     TEST(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapTest_01)
     {
         using namespace Urasandesu::CppAnonym;
@@ -537,5 +512,28 @@ namespace {
         ASSERT_EQ(2, pod2Heap.Size());
         ASSERT_EQ(pPod2, pod2Heap[1]);  // This assertion is really TRUE!!, but its content has been changed.
         ASSERT_EQ(3, pod2Heap[1]->int1);
+    }
+
+
+    TEST(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorDeleteTest_03)
+    {
+        using namespace Urasandesu::CppAnonym;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorDeleteTest_03) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        
+        SimpleHeap<MyPOD2, VeryQuickHeapButMustUseSubscriptOperator> pod2Heap;
+        
+        ASSERT_EQ(0, Tester::Counter().Value());
+        {
+            SimpleHeap<Tester, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
+            Tester *pTester1 = testerHeap.New();
+            ASSERT_EQ(1, Tester::Counter().Value());
+            Tester *pTester2 = testerHeap.New();
+            ASSERT_EQ(2, Tester::Counter().Value());
+            testerHeap.Delete(pTester1);
+            ASSERT_EQ(1, Tester::Counter().Value());
+        }
+        ASSERT_EQ(0, Tester::Counter().Value());
     }
 }

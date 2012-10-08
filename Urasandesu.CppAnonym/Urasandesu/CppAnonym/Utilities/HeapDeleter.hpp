@@ -8,47 +8,73 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    namespace HeapDeleterDetail {
-
-        class HeapDeleterImpl
-        {
-        public:
-            template<class Heap>
-            HeapDeleterImpl(Heap &heap) : 
-                m_pHeap(&heap)
-            { }
-
-            template<class Heap, class T>
-            void operator()(T *p)
-            {
-                static_cast<Heap *>(m_pHeap)->Delete(p);
-            }
-
-        private:
-            void *m_pHeap;
-        };
-
-    }   // namespace HeapDeleterDetail {
-
     template<class Heap>
-    class HeapDeleter : 
-        HeapDeleterDetail::HeapDeleterImpl
+    class HeapDeleter
     {
     public:
         typedef HeapDeleter<Heap> this_type;
-        typedef HeapDeleterDetail::HeapDeleterImpl base_type;
         
         HeapDeleter(Heap &heap) : 
-            base_type(&heap) 
+            m_pHeap(&heap) 
         { }
-        
+
         template<class T>
         void operator()(T *p) 
         { 
-            base_type::operator()<Heap>(p);
+            m_pHeap->Delete(p);
         }
+    private:
+        Heap *m_pHeap;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
+    template<
+        class T, 
+        class TD, 
+        class ImplD, 
+        template<class, class, class> class PointerHolderImpl
+    >
+    struct MakePointerHolderImpl
+    {
+        typedef PointerHolderImpl<T, TD, ImplD> type;
+    };
+
+    template<
+        class T, 
+        template<class, class, class> class PointerHolderImpl,
+        class Tag = QuickHeapWithoutSubscriptOperator
+    >
+    struct MakeHeapPointerHolderImpl
+    {
+        typedef SimpleHeap<T, Tag> object_heap_type;
+        typedef Utilities::HeapDeleter<object_heap_type> object_deleter_type;
+        struct deleter_type;
+        typedef PointerHolderImpl<T, object_deleter_type, deleter_type> type;
+        typedef SimpleHeap<type, Tag> heap_type;
+        struct deleter_type : 
+            Utilities::HeapDeleter<heap_type>
+        {
+            typedef Utilities::HeapDeleter<heap_type> base_type;
+                
+            deleter_type(heap_type &heap) : 
+                base_type(heap)
+            { }
+
+            template<class T>
+            void operator()(T *p) 
+            { 
+                base_type::operator()(p);
+            }
+        };
+    };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP

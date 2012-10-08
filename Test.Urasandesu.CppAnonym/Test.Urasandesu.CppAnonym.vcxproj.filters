@@ -230,5 +230,14 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\StaticDependentObjectsStorageTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\DisposableHeapProviderTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\PersistableHeapProviderTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SmartHeapProviderTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

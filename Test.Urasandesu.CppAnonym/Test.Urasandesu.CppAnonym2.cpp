@@ -3,6 +3,10 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
@@ -154,18 +158,27 @@
 #endif
 
 // foward declarations
+namespace Urasandesu { namespace CppAnonym { namespace Interfaces {
+
+    struct CppAnonymStorageApiHolderLabel { };
+    struct CppAnonymStorageLabel { };
+
+}}} // namespace Urasandesu { namespace CppAnonym { namespace Interfaces {
+
+namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
+
+    struct DefaultCppAnonymStorageApiHolder;
+
+}}} // namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
+
 namespace Urasandesu { namespace CppAnonym {
 
-    //namespace Detail {
-    //    
-    //    template<class Sequence, class I, class IEnd>
-    //    class PersistableHeapProviderImpl;
+    template<
+        class CppAnonymStorageApiHolder = ApiHolders::DefaultCppAnonymStorageApiHolder
+    >    
+    class BaseCppAnonymStorage;
 
-    //}   // namespace Detail
-
-
-    //template<class Sequence>
-    //class PersistableHeapProvider;
+    typedef BaseCppAnonymStorage<> CppAnonymStorage;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
@@ -407,6 +420,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenser.hpp>
 #endif
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolder.h>
 #endif
@@ -431,7 +445,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
 
-#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodMetadataApiHolder.h>
 #endif
@@ -441,7 +454,63 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #endif
 #endif
 
+namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
+
+    namespace DefaultCppAnonymStorageApiHolderDetail {
+
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+
+        struct DefaultCppAnonymStorageApiHolderImpl
+        {
+            typedef map<
+                pair<HostInfoLabel, HostInfo>
+            > api_cartridges;
+        };
+
+    }   // namespace DefaultCppAnonymStorageApiHolderDetail {
+
+    struct DefaultCppAnonymStorageApiHolder : 
+        DefaultCppAnonymStorageApiHolderDetail::DefaultCppAnonymStorageApiHolderImpl
+    {
+    };
+
+}}} // namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
+
 namespace Urasandesu { namespace CppAnonym {
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct CppAnonymStorageApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Urasandesu::CppAnonym::Interfaces::CppAnonymStorageApiHolderLabel, ApiLabel>
+    {
+    };
+
+    namespace CppAnonymStorageDetail {
+
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+
+        template<
+            class CppAnonymStorageApiHolder
+        >    
+        struct CppAnonymStorageFacade
+        {
+            typedef typename CppAnonymStorageApiAt<CppAnonymStorageApiHolder, HostInfoLabel>::type host_info_type;
+            typedef mpl::vector<host_info_type> types;
+            typedef StaticDependentObjectsStorage<types> base_type;
+        };
+
+    }   // namespace CppAnonymStorageDetail {
+
+    template<
+        class CppAnonymStorageApiHolder
+    >    
+    class BaseCppAnonymStorage : 
+        public CppAnonymStorageDetail::CppAnonymStorageFacade<CppAnonymStorageApiHolder>::base_type
+    {
+    };
 
     //namespace Detail {
 
@@ -2114,7 +2183,8 @@ namespace {
     
     
     
-    
+
+#if 0    
     namespace _3A0FFF2F {
 
     using namespace Urasandesu::CppAnonym;
@@ -2194,6 +2264,7 @@ namespace {
             { }
         }
     }
+#endif
 
 #if 0
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, StrongNaming_Test_01)
@@ -2299,6 +2370,7 @@ namespace {
 
         HostInfo const *pHostInfo = HostInfo::CreateHost();
 
+#if 0
         RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost != NULL);
 
@@ -2358,7 +2430,6 @@ namespace {
         }
         ASSERT_EQ(0x02000058, pFunc1->GetToken());
 
-#if 0
         shared_ptr<TypeMetadata const> pFunc1DateTime;
         {
             std::vector<shared_ptr<ITypeMetadata const> > genericArgs;

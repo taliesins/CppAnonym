@@ -16,7 +16,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         typedef D deleter;
 
-        explicit DeletionSwitchablePolicy(deleter d) : 
+        DeletionSwitchablePolicy(deleter d) : 
             m_d(d) 
         { 
             m_disabled[0] = false; 

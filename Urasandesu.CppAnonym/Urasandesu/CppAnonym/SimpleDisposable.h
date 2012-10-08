@@ -2,12 +2,17 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
 #define URASANDESU_CPPANONYM_SIMPLEDISPOSABLE_H
 
+#ifndef URASANDESU_CPPANONYM_IDISPOSABLE_HPP
+#include <Urasandesu/CppAnonym/IDisposable.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
-    class ATL_NO_VTABLE SimpleDisposable
+    class ATL_NO_VTABLE SimpleDisposable : 
+        IDisposable
     {
     public:
-        void Dispose();
+        virtual void Dispose();
         bool Disposed() const;
         void CheckDisposed() const;
     

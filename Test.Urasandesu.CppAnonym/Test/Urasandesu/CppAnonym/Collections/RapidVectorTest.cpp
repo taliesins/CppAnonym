@@ -7,29 +7,6 @@
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Collections_RapidVectorTest.*
 namespace {
 
-    struct MyPOD1
-    {
-        BYTE byte1;
-        BYTE byte2;
-        BYTE byte3;
-        BYTE byte4;
-        BYTE byte5;
-        BYTE byte6;
-        BYTE byte7;
-        BYTE byte8;
-    };
-    
-    struct MyPOD2
-    {
-        INT int1;
-        MyPOD1 pod1;
-        PVOID pv;
-        
-        MyPOD2 *prev;
-        MyPOD2 *next;
-    };
-
-    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_LessThan512_01)
     {
         using namespace std;
@@ -50,6 +27,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
@@ -71,6 +51,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_LessThan512_01)
     {
         using namespace std;
@@ -88,6 +71,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
@@ -106,6 +92,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_LessThan512_01)
     {
         using namespace std;
@@ -127,6 +116,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
@@ -148,6 +140,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_ToEnd_01)
     {
         using namespace std;
@@ -167,6 +162,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_InBetween_01)
     {
         using namespace std;
@@ -189,6 +187,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_ToEnd_01)
     {
         using namespace std;
@@ -208,6 +209,9 @@ namespace {
     }
 
 
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_InBetween_01)
     {
         using namespace std;
@@ -228,4 +232,176 @@ namespace {
         ASSERT_EQ(0x00, vec[0]);
         ASSERT_EQ(0x07, vec[vec.size() - 1]);
     }
+
+
+
+
+
+    namespace _0B268749 {
+
+        struct ReferenceTester
+        {
+            typedef ReferenceTester this_type;
+
+            ReferenceTester() : m_useCount(0) { }
+            ~ReferenceTester() { };
+
+            inline friend void intrusive_ptr_add_ref(this_type *p)
+            {
+                ++p->m_useCount;
+            }
+
+            inline friend void intrusive_ptr_release(this_type *p)
+            {
+                --p->m_useCount;
+            }
+
+            LONG m_useCount;
+        };
+
+    }   // namespace _0B268749 {
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_01)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 1 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            ASSERT_EQ(1, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+    
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_02)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 1 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            v.push_back(pTester);
+            ASSERT_EQ(2, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+    
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_01)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 1 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            v.pop_back();
+            ASSERT_EQ(0, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+    
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_02)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 1 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            v.push_back(pTester);
+            v.pop_back();
+            v.pop_back();
+            ASSERT_EQ(0, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+    
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_01)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 2 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            v.push_back(pTester);
+            v.erase(v.begin() + 1, v.end());
+            ASSERT_EQ(1, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+    
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_02)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _0B268749;
+
+        typedef RapidVector<intrusive_ptr<ReferenceTester>, 2 > Vector;
+
+        ReferenceTester *pTester = new ReferenceTester();
+        {
+            Vector v;
+            v.push_back(pTester);
+            v.push_back(pTester);
+            v.erase(v.begin(), v.begin() + 1);
+            ASSERT_EQ(1, pTester->m_useCount);
+        }
+        ASSERT_EQ(0, pTester->m_useCount);
+
+        delete pTester;
+    }
+
 }

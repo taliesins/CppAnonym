@@ -63,7 +63,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class ObjectTag, class T>
         struct HasObjectT : 
-            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ObjectTag, object_type, ObjectTag)::type, T>
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ObjectTagObject, ObjectTag)::type, T>
         {
         };
 

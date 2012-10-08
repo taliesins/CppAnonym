@@ -10,6 +10,14 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_ASSEMBLYINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/AssemblyInfoLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEASSEMBLYINFOFWD_HPP
+#include <Urasandesu/CppAnonym/Fusion/BaseAssemblyInfoFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolderFwd.h>
 #endif

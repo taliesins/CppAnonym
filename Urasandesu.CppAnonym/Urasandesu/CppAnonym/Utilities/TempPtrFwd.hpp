@@ -8,11 +8,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         struct PersistedHandler;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandler, sender_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandler, sender_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandlerSender, sender_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandlerSender, sender_type);
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandler, arg_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandler, arg_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandlerArg, arg_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandlerArg, arg_type);
 
         template<class Handler, class ImplD>
         struct PersistedHandlerImpl;

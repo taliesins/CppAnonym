@@ -9,11 +9,11 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current, class ChainInfoSequence, class I, class IEnd>
         class ATL_NO_VTABLE SmartPtrChainImplImpl;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfoPrevious, previous_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfoPrevious, previous_type);
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_types);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_types);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChainChainInfos, chain_info_types);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChainChainInfos, chain_info_types);
 
         template<class Current>
         struct ExtractPreviousOrDefault;

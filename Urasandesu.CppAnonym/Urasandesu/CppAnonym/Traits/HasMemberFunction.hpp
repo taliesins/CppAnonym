@@ -17,7 +17,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     }; \
      \
     template<class T> \
-    struct Has_##name<T, typename boost::mpl::apply<boost::mpl::always<boost::mpl::void_>, Urasandesu::CppAnonym::Traits::Identify<member_ret(T::*)member_params, &T::member> >::type> \
+    struct Has_##name< \
+        T, \
+        typename boost::mpl::apply< \
+            boost::mpl::always<boost::mpl::void_>, \
+            Urasandesu::CppAnonym::Traits::Identify< \
+                member_ret(T::*)member_params, \
+                static_cast<member_ret(T::*)member_params>(&T::member) \
+            > \
+        >::type \
+    > \
     { \
         typedef boost::mpl::true_ type; \
         static const bool value = true; \

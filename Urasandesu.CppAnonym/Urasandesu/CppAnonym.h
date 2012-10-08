@@ -50,8 +50,16 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_IDISPOSABLE_HPP
+#include <Urasandesu/CppAnonym/IDisposable.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
 #include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_PERSISTENTINFO_HPP
+#include <Urasandesu/CppAnonym/PersistentInfo.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
@@ -92,6 +100,10 @@
 
 #ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
 #include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_HPP
+#include <Urasandesu/CppAnonym/DisposingInfo.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP

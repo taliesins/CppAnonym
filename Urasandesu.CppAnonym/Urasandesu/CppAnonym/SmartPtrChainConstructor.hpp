@@ -18,9 +18,9 @@ namespace Urasandesu { namespace CppAnonym {
             class T,
             class PersistableHeapProvider
         >
-        static Utilities::TempPtr<T> NewRootObject()
+        static Utilities::TempPtr<T> NewRootObject(PersistableHeapProvider &provider)
         {
-            return PersistableHeapProvider::NewStaticObject();
+            return provider.NewObject();
         }
 
         template<

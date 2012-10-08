@@ -35,12 +35,21 @@ namespace Urasandesu { namespace CppAnonym {
             }
 
         private:
+            template<class Types>
+            friend DependentObjectsProvidersHost<Types> &Host();
+
             static host_type &Host()
             {
                 static host_type host;
                 return host;
             }
         };
+
+        template<class Types>
+        DependentObjectsProvidersHost<Types> &Host()
+        {
+            return StaticDependentObjectsStorageImpl<Types>::Host();
+        }
 
     }   // namespace StaticDependentObjectsStorageDetail {
 

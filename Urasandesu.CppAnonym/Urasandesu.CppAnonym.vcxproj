@@ -188,6 +188,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfoFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultAssemblyInfoApiHolder.h" />
@@ -223,6 +225,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\Interfaces\RuntimeHostLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\PortableExecutableKinds.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IApiOperable.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\IDisposable.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\IDisposableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultAssemblyMetadataApiHolder.h" />
@@ -373,6 +377,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\ObjectTagFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProviderFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\PersistentInfo.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\PersistentInfoFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAppDomainProfile.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\BaseAssemblyProfile.h" />

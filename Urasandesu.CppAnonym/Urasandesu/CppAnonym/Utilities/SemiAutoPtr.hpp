@@ -6,6 +6,14 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
@@ -52,30 +60,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
             typedef SemiAutoPtrHolderImpl<T, TD, ImplD> this_type;
             typedef SemiAutoPtrHolder base_type;
-            typedef DeletionSwitchablePolicy<TD> deletion_switchable_deleter;
+            typedef T object_type;
+            typedef DeletionSwitchablePolicy<TD> object_deleter_type;
+            typedef ImplD impl_deleter_type; 
 
-            explicit SemiAutoPtrHolderImpl(T *p) : 
+            SemiAutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
                 base_type(), 
                 m_p(p),
-                m_td(deletion_switchable_deleter(TD())), 
-                m_impld(ImplD())
-            { 
-                _ASSERTE(p != NULL); 
-            }
-
-            SemiAutoPtrHolderImpl(T *p, TD td) : 
-                base_type(), 
-                m_p(p),
-                m_td(deletion_switchable_deleter(td)), 
-                m_impld(ImplD())
-            { 
-                _ASSERTE(p != NULL); 
-            }
-
-            SemiAutoPtrHolderImpl(T *p, TD td, ImplD impld) : 
-                base_type(), 
-                m_p(p),
-                m_td(deletion_switchable_deleter(td)), 
+                m_d(d),
                 m_impld(impld)
             { 
                 _ASSERTE(p != NULL); 
@@ -92,23 +84,39 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
             virtual void Delete()
             {
-                m_td(m_p);
+                m_d(m_p);
                 m_impld(this);
             }
 
             virtual void EnableDeletion()
             {
-                m_td.EnableDeletion();
+                m_d.EnableDeletion();
             }
 
             virtual void DisableDeletion()
             {
-                m_td.DisableDeletion();
+                m_d.DisableDeletion();
             }
 
-            T *m_p;
-            mutable deletion_switchable_deleter m_td;
-            ImplD m_impld;
+            object_type *m_p;
+            mutable object_deleter_type m_d;
+            impl_deleter_type m_impld;
+        };
+
+        // 例えば、, , MakeValueHolderImpl, MakeValueHeapHolderImpl, とか。
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl : 
+            Traits::MakePointerHolderImpl<T, TD, ImplD, SemiAutoPtrHolderImpl>
+        {
+        };
+
+        template<
+            class T, 
+            class Tag
+        >
+        struct MakeHeapHolderImpl : 
+            Traits::MakeHeapPointerHolderImpl<T, SemiAutoPtrHolderImpl, Tag>
+        {
         };
 
         template<class T>
@@ -119,31 +127,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef SemiAutoPtrHolder holder_type;
 
             template<class TD, class ImplD>
-            struct holder_impl_type
+            struct make_holder_impl : 
+                MakeHolderImpl<T, TD, ImplD>
             {
-                typedef SemiAutoPtrHolderImpl<T, TD, ImplD> type;
             };
 
-            typedef T element_type;
-            typedef T value_type;
-            typedef T *pointer;
-            typedef T &reference;
+            template<class Tag = QuickHeapWithoutSubscriptOperator>
+            struct make_heap_holder_impl : 
+                MakeHeapHolderImpl<T, Tag>
+            {
+            };
 
             SemiAutoPtrImpl() : 
                 m_pHolder()
             { }
 
             explicit SemiAutoPtrImpl(T *p) : 
-                m_pHolder(new holder_impl_type<DefaultDeleter, DefaultDeleter>::type(p))
+                m_pHolder(new MakeHolderImpl<T, DefaultDeleter, DefaultDeleter>::type(p, DefaultDeleter(), DefaultDeleter()))
             { }
 
             template<class TD>
-            SemiAutoPtrImpl(T *p, TD td) : 
-                m_pHolder(new holder_impl_type<TD, DefaultDeleter>::type(p, td))
+            SemiAutoPtrImpl(T *p, TD d) : 
+                m_pHolder(new MakeHolderImpl<T, TD, DefaultDeleter>::type(p, d, DefaultDeleter()))
             { }
 
             template<class TD, class ImplD>
-            SemiAutoPtrImpl(typename holder_impl_type<TD, ImplD>::type *pHolder) : 
+            SemiAutoPtrImpl(typename MakeHolderImpl<T, TD, ImplD>::type *pHolder) : 
                 m_pHolder(pHolder)
             {
                 _ASSERTE(pHolder != NULL); 
@@ -177,19 +186,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 return !m_pHolder;
             }
 
-            inline pointer operator->()
+            inline T *operator->()
             {
                 return Get();
             }
 
-            inline pointer Get() const
+            inline T *Get() const
             {
-                return static_cast<pointer>(m_pHolder->Pointer());
+                return static_cast<T *>(m_pHolder->Pointer());
             }
 
-            inline reference operator *()
+            inline T &operator *()
             {
-                pointer p = Get();
+                T *p = Get();
                 _ASSERTE(p != NULL);
                 return *p;
             }
@@ -229,10 +238,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     }   // namespace SemiAutoPtrDetail {
 
     template<class T>
-    class SemiAutoPtr : 
-        public SemiAutoPtrDetail::SemiAutoPtrImpl<T>
+    struct SemiAutoPtr : 
+        SemiAutoPtrDetail::SemiAutoPtrImpl<T>
     {
-    public:
         typedef SemiAutoPtr<T> this_type;
         typedef SemiAutoPtrDetail::SemiAutoPtrImpl<T> base_type;
 
@@ -245,8 +253,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         { }
 
         template<class TD>
-        SemiAutoPtr(T *p, TD td) : 
-            base_type(p, td)
+        SemiAutoPtr(T *p, TD d) : 
+            base_type(p, d)
         { }
 
         template<class TD, class ImplD>

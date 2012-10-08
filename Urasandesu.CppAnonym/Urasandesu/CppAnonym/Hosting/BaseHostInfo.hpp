@@ -18,6 +18,10 @@
 #include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_HPP
+#include <Urasandesu/CppAnonym/DisposingInfo.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
 #endif
@@ -38,21 +42,51 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     {
     };
 
+    namespace HostInfoDetail {
+
+        namespace mpl = boost::mpl;
+
+        template<
+            class HostInfoApiHolder
+        >    
+        struct HostInfoFacade
+        {
+            typedef BaseHostInfo<HostInfoApiHolder> host_info_type;
+            typedef BaseHostInfoPersistedHandler<HostInfoApiHolder> host_info_persisted_handler_type;
+            typedef mpl::vector<
+                DisposingInfo<host_info_type, host_info_persisted_handler_type>
+            > disposing_info_types;
+            typedef DisposableHeapProvider<disposing_info_types> base_heap_provider_type;
+            typedef typename base_heap_provider_type::provider_of<host_info_type>::type host_info_provider_type;
+
+            typedef mpl::void_ host_info_previous_type;
+            typedef mpl::vector<
+                SmartPtrChainInfo<host_info_previous_type>
+            > chain_info_types;
+            typedef SmartPtrChain<host_info_type, chain_info_types> base_ptr_chain_type;
+            typedef typename base_ptr_chain_type::chain_from<host_info_previous_type>::type host_info_chain_type;
+        }; 
+    
+    }   // namespace HostInfoDetail {
+
+
     template<
         class HostInfoApiHolder
     >    
     class BaseHostInfo : 
-        public SmartPtrChain<
-            BaseHostInfo<HostInfoApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<boost::mpl::void_>
-            >
-        >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type
-            >
-        >,
+        public HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::base_ptr_chain_type, 
+        public HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::base_heap_provider_type,
+        //public SmartPtrChain<
+        //    BaseHostInfo<HostInfoApiHolder>,
+        //    boost::mpl::vector<
+        //        SmartPtrChainInfo<boost::mpl::void_>
+        //    >
+        //>,
+        //public DisposableHeapProvider<
+        //    boost::mpl::vector<
+        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type
+        //    >
+        //>,
         //public DisposableHeapProvider<
         //    boost::mpl::vector<
         //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type,
@@ -64,20 +98,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     public:
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
         
-        typedef typename providing_type_at<0>::type host_info_type;
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_type host_info_type;
+        //typedef typename providing_type_at<0>::type host_info_type;
         //typedef typename providing_type_at<1>::type runtime_host_type;
         typedef int runtime_host_type;
 
-        typedef typename provider_of<host_info_type>::type host_info_provider_type;
-        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;        
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_provider_type host_info_provider_type;
+        //typedef typename provider_of<host_info_type>::type host_info_provider_type;
+        //typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;        
+        typedef int runtime_host_provider_type;        
 
-        typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
-        typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_previous_type host_info_previous_type;
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_chain_type host_info_chain_type;
+        //typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
+        //typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
 
         //typedef typename HostInfoApiAt<HostInfoApiHolder, Utilities::Interfaces::InfrastructureFactoryLabel>::type factory_type;
 
         static host_info_type *CreateHost()
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+            
             TempPtr<host_info_type> pHost = NewHost();
             pHost.Persist();
             return pHost.Get();
@@ -119,19 +160,31 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         {
             using namespace Urasandesu::CppAnonym::Utilities;
 
-            TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
-            struct pHost_Persisted
-            {
-                typedef TempPtr<host_info_type> sender_type;
+            host_info_type &hostInfo = CppAnonymStorage::Object<host_info_type>();
+            host_info_provider_type &provider = hostInfo.ProviderOf<host_info_type>();
+            TempPtr<host_info_type> pHostInfo = host_info_chain_type::NewRootObject<host_info_type>(provider);
+            provider.AddPersistedHandler(pHostInfo, &hostInfo);
+            return pHostInfo;
 
-                void operator()(sender_type *pSender, void *pArg)
-                {
-                    sender_type &pHost = *pSender;
-                    host_info_provider_type::RegisterStaticObject(pHost);
-                }
-            };
-            pHost.AddPersistedHandler(pHost_Persisted());
-            return pHost;
+            //    //piyo_type &sPiyo = MyStorage::Object<piyo_type>();
+            //    //piyo_provider_type &provider = sPiyo.ProviderOf<piyo_type>();
+            //    //Utilities::TempPtr<piyo_type> pPiyo = provider.NewObject();
+            //    provider.AddPersistedHandler(pPiyo, &sPiyo);
+            //    return pPiyo;
+
+            //TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+            ////struct pHost_Persisted
+            ////{
+            ////    typedef TempPtr<host_info_type> sender_type;
+
+            ////    void operator()(sender_type *pSender, void *pArg)
+            ////    {
+            ////        sender_type &pHost = *pSender;
+            ////        host_info_provider_type::RegisterStaticObject(pHost);
+            ////    }
+            ////};
+            //pHost.AddPersistedHandler(pHost_Persisted());
+            //return pHost;
         }
 
         Utilities::TempPtr<runtime_host_type> NewRuntime(std::wstring const &version) const
@@ -181,6 +234,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
         mutable boost::unordered_map<std::wstring, size_t> m_versionToIndex;
     };
+
+
+
+
+
+    template<
+        class HostInfoApiHolder
+    >    
+    class BaseHostInfoPersistedHandler
+    {
+    public:
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_type host_info_type;
+        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_provider_type host_info_provider_type;
+        
+        typedef Utilities::TempPtr<host_info_type> sender_type;
+
+        BaseHostInfoPersistedHandler(host_info_type *pHostInfo) : 
+            m_pHostInfo(pHostInfo)
+        { }
+
+        void operator()(sender_type *pSender, void *pArg)
+        {
+            sender_type &pHostInfo = *pSender;
+
+            host_info_provider_type &provider = m_pHostInfo->ProviderOf<host_info_type>();
+            provider.RegisterObject(pHostInfo);
+            //host_info_provider_type::RegisterStaticObject(pHostInfo);
+            //piyo_provider_type &provider = m_pPiyo->ProviderOf<Piyo>();
+            //provider.RegisterObject(pPiyo);
+        }
+
+    private:
+        host_info_type *m_pHostInfo;
+    };
+
+
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

@@ -61,8 +61,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         class ApiAtImplCore
         {
             typedef typename mpl::eval_if<
-                                CPP_ANONYM_HAS_MEMBER_TYPE(ApiCartridges, api_cartridges, ApiCartridgesHolder), 
-                                CPP_ANONYM_GET_MEMBER_TYPE(ApiCartridges, api_cartridges, ApiCartridgesHolder), 
+                                CPP_ANONYM_HAS_MEMBER_TYPE(ApiCartridges, ApiCartridgesHolder), 
+                                CPP_ANONYM_GET_MEMBER_TYPE(ApiCartridges, ApiCartridgesHolder), 
                                 mpl::identity<mpl::map<>>>::type api_cartridges;
             typedef typename mpl::at<api_cartridges, ApiLabel>::type result;
         public:

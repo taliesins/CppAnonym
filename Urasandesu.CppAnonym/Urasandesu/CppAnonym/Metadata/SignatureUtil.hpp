@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_SIGNATUREUTIL_HPP
 #define URASANDESU_CPPANONYM_METADATA_SIGNATUREUTIL_HPP
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     struct SignatureUtil

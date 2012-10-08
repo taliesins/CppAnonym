@@ -57,6 +57,30 @@
     } \
     void CppAnonymTest(GTEST_TEST_CLASS_NAME_(test_case_name, test_name))
 
+template<class Tag, INT Index>
+class AtomicCounter : 
+    boost::noncopyable
+{
+public:
+    static AtomicCounter &Instance() { static AtomicCounter obj; return obj; }
+    INT operator++() { return ++m_refCount; }
+    INT operator--() { return --m_refCount; }
+    INT Value() { return m_refCount; }
+private:
+    AtomicCounter() : m_refCount(0) { }
+    ~AtomicCounter() { }
+    boost::detail::atomic_count m_refCount;
+};
+
+template<class Tag, INT Index>
+struct ConstructionTester
+{
+    typedef AtomicCounter<Tag, Index> counter;
+    static counter &Counter() { return counter::Instance(); }
+    ConstructionTester() { ++counter::Instance(); }
+    ~ConstructionTester() { --counter::Instance(); }
+};
+
 #ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymException.h>
 #endif
@@ -83,14 +107,6 @@
 
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
-#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP

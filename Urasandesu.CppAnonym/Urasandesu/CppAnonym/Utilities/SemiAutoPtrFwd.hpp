@@ -11,6 +11,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         template<class T, class TD, class ImplD>
         struct SemiAutoPtrHolderImpl;
 
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl;
+
+        template<
+            class T, 
+            class Tag = QuickHeapWithoutSubscriptOperator
+        >
+        struct MakeHeapHolderImpl;
+
         template<class T>
         class SemiAutoPtrImpl;
 
@@ -20,7 +29,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     }   // namespace SemiAutoPtrDetail {
 
     template<class T>
-    class SemiAutoPtr;
+    struct SemiAutoPtr;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 

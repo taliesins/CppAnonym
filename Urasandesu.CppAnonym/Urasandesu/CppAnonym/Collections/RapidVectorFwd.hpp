@@ -4,19 +4,19 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-    namespace Detail {
+    namespace RapidVectorDetail {
 
         template<
             class Value, 
             class T, 
-            class Alloc = std::allocator<T>, 
-            DWORD RAPID_SIZE = 512
+            DWORD RAPID_SIZE = 512,
+            class Alloc = std::allocator<T>
         >
         class RapidVectorIterator;
 
-    }   // namespace Detail
+    }   // namespace RapidVectorDetail
 
-    template<class T, class Alloc = std::allocator<T>, DWORD RAPID_SIZE = 512>
+    template<class T, DWORD RAPID_SIZE = 512, class Alloc = std::allocator<T>>
     class RapidVector;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {

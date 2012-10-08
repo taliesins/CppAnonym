@@ -15,15 +15,36 @@ namespace {
         ASSERT_TRUE(p.IsEmpty());
     }
 
+    
+    
+    
+    
     TEST(Urasandesu_CppAnonym_Utilities_AnyPtrTest, Test_02)
     {
         using namespace Urasandesu::CppAnonym::Utilities;
 
-        AnyPtr p(new int(10));
-        ASSERT_FALSE(p.IsEmpty());
-        ASSERT_TRUE(p.Is<int *>());
+        AnyPtr p1(new int(42));
+        ASSERT_FALSE(p1.IsEmpty());
+        ASSERT_TRUE(p1.Is<int *>());
 
-        int *pInt = p;
-        ASSERT_EQ(10, *pInt);
+        int *p2 = p1;
+        ASSERT_EQ(42, *p2);
+    }
+
+    
+    
+    
+    
+    TEST(Urasandesu_CppAnonym_Utilities_AnyPtrTest, Test_03)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
+
+        int const *p = new int(42);
+        AnyPtr p1(p);
+        ASSERT_FALSE(p1.IsEmpty());
+        ASSERT_TRUE(p1.Is<int const *>());
+
+        int const *p2 = p1;
+        ASSERT_EQ(42, *p2);
     }
 }

@@ -2,16 +2,12 @@
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDERFWD_HPP
@@ -20,97 +16,121 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _32AA62CA {
+    namespace SmartHeapProviderDetail {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
 
-        template<class ProvidingTypes, class I, class IEnd>
-        class ATL_NO_VTABLE SmartHeapProviderImpl : 
-            SimpleHeapProvider<
-                mpl::vector<
-                    ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
-                >
-            >,
-            public SmartHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
+        template<class I>
+        struct ProvidingTypeFacade
+        {
+            typedef typename mpl::deref<I>::type object_type;
+            typedef typename AutoPtr<object_type>::make_heap_holder_impl<>::object_deleter_type object_deleter_type;
+            typedef typename AutoPtr<object_type>::make_heap_holder_impl<>::type holder_impl_type;
+            typedef typename AutoPtr<object_type>::make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
+            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> object_object_tag_type;
+            typedef ObjectTag<holder_impl_type, QuickHeapWithoutSubscriptOperator> holder_impl_object_tag_type;
+            typedef SimpleHeapProvider<mpl::vector<object_object_tag_type, holder_impl_object_tag_type> > base_type;
+            typedef typename base_type::provider_of<object_type>::type object_provider_type;
+            typedef typename base_type::provider_of<holder_impl_type>::type holder_impl_provider_type;
+            typedef typename object_provider_type::object_heap_type object_heap_type;
+            typedef typename holder_impl_provider_type::object_heap_type holder_impl_heap_type;
+        };
+
+        template<class ReversedProvidingTypes, class I, class IEnd>
+        class ATL_NO_VTABLE SmartHeapProviderImplImpl : 
+            ProvidingTypeFacade<I>::base_type,
+            public SmartHeapProviderImplImpl<ReversedProvidingTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef SmartHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
-            typedef typename mpl::deref<I>::type object_type;
-            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef SimpleHeapProvider<mpl::vector<obj_tag_type> > base_type;
+            typedef typename ProvidingTypeFacade<I>::base_type base_type;
+            typedef typename ProvidingTypeFacade<I>::object_type object_type;
+            typedef typename ProvidingTypeFacade<I>::object_deleter_type object_deleter_type;
+            typedef typename ProvidingTypeFacade<I>::holder_impl_type holder_impl_type;
+            typedef typename ProvidingTypeFacade<I>::holder_impl_deleter_type holder_impl_deleter_type;
+            typedef typename ProvidingTypeFacade<I>::object_provider_type object_provider_type;
+            typedef typename ProvidingTypeFacade<I>::holder_impl_provider_type holder_impl_provider_type;
+            typedef typename ProvidingTypeFacade<I>::object_heap_type object_heap_type;
+            typedef typename ProvidingTypeFacade<I>::holder_impl_heap_type holder_impl_heap_type;
 
-            typedef base_type::object_heap_type object_heap_type;
-            typedef Utilities::HeapDeleter<object_heap_type> object_heap_deleter_type;
-            typedef Utilities::AutoPtr<object_type> object_ptr_type;
-
-            static object_ptr_type NewStaticObject()
+            AutoPtr<object_type> NewObject()
             {
-                return object_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
-            }
+                object_deleter_type objDeleter(ObjectHeap());
+                object_type *pObj = ObjectHeap().New();
 
-            object_ptr_type NewObject()
-            {
-                return object_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
+                holder_impl_deleter_type implDeleter(HolderImplHeap());
+                holder_impl_type *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
+
+                return AutoPtr<object_type>(pHolderImpl);
             }
 
         private:
-            static object_heap_type &StaticHeap()
+            object_heap_type &ObjectHeap()
             {
-                static object_heap_type heap;
-                return heap;
+                object_provider_type &provider = base_type::ProviderOf<object_type>();
+                return provider.Heap();
+            }
+
+            holder_impl_heap_type &HolderImplHeap()
+            {
+                holder_impl_provider_type &provider = base_type::ProviderOf<holder_impl_type>();
+                return provider.Heap();
             }
         };
 
-        template<class ProvidingTypes>
-        class SmartHeapProviderImpl<ProvidingTypes, 
-                                    typename Traits::DistinctEnd<ProvidingTypes>::type, 
-                                    typename Traits::DistinctEnd<ProvidingTypes>::type> : 
+        template<class ReversedProvidingTypes>
+        class SmartHeapProviderImplImpl<ReversedProvidingTypes, 
+                                        typename mpl::end<ReversedProvidingTypes>::type, 
+                                        typename mpl::end<ReversedProvidingTypes>::type> : 
             noncopyable
         {
         };
 
-        template<class ProvidingTypes, class ProvidingType>
+        template<class ReversedProvidingTypes, class ProvidingType>
         class ProviderOfImpl
         {
-            typedef typename Traits::Distinct<ProvidingTypes>::type distinct_providing_types;
-            typedef typename mpl::find<distinct_providing_types, ProvidingType>::type i;
-            typedef typename Traits::DistinctEnd<ProvidingTypes>::type i_end;
+            typedef typename mpl::find<ReversedProvidingTypes, ProvidingType>::type i;
+            typedef typename mpl::end<ReversedProvidingTypes>::type i_end;
         public:
-            typedef SmartHeapProviderImpl<ProvidingTypes, i, i_end> type;
+            typedef SmartHeapProviderImplImpl<ReversedProvidingTypes, i, i_end> type;
         };
 
-    }   // namespace _32AA62CA
+        template<class ProvidingTypes>
+        struct ATL_NO_VTABLE SmartHeapProviderImpl : 
+            SmartHeapProviderImplImpl<typename mpl::reverse<ProvidingTypes>::type, 
+                                      typename mpl::begin<typename mpl::reverse<ProvidingTypes>::type>::type, 
+                                      typename mpl::end<typename mpl::reverse<ProvidingTypes>::type>::type>
+        {
+            typedef SmartHeapProviderImpl<ProvidingTypes> this_type;
+            typedef ProvidingTypes providing_types;
 
+            template<LONG N>
+            struct providing_type_at : 
+                mpl::at_c<providing_types, N>
+            {
+            };
+
+            template<class ProvidingType>
+            struct provider_of : 
+                ProviderOfImpl<typename mpl::reverse<providing_types>::type, ProvidingType>
+            {
+            };
+
+            template<class ProvidingType>
+            inline typename provider_of<ProvidingType>::type &ProviderOf() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
+            }
+        };
+
+    }   // namespace SmartHeapProviderDetail {
 
     template<class ProvidingTypes>
-    class ATL_NO_VTABLE SmartHeapProvider : 
-        public _32AA62CA::SmartHeapProviderImpl<ProvidingTypes, 
-                                                typename Traits::DistinctBegin<ProvidingTypes>::type, 
-                                                typename Traits::DistinctEnd<ProvidingTypes>::type>
+    struct ATL_NO_VTABLE SmartHeapProvider : 
+        SmartHeapProviderDetail::SmartHeapProviderImpl<ProvidingTypes>
     {
-    public:
-        typedef SmartHeapProvider<ProvidingTypes> this_type;
-        typedef ProvidingTypes providing_types;
-
-        template<LONG N>
-        struct providing_type_at : 
-            boost::mpl::at_c<providing_types, N>
-        {
-        };
-
-        template<class ProvidingType>
-        class provider_of : 
-            public _32AA62CA::ProviderOfImpl<providing_types, ProvidingType>
-        {
-        };
-
-        template<class T>
-        inline typename provider_of<T>::type &ProviderOf() const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<T>::type &>(*pMutableThis);
-        }
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {
