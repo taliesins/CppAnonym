@@ -15,11 +15,11 @@ namespace Urasandesu { namespace CppAnonym {
             class Previous,
             class Current
         >
-        static boost::shared_ptr<T> MapFirstAncestor(Current const &current) 
+        static T *MapFirstAncestor(Current &current) 
         { 
-            boost::shared_ptr<Previous> pPrevious;
-            pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-            return pPrevious ? pPrevious->MapFirst<T>() : boost::shared_ptr<T>();
+            Previous *pPrevious = NULL;
+            pPrevious = current.ChainFrom<Previous>().GetPrevious();
+            return pPrevious == NULL ? NULL : pPrevious->MapFirst<T>();
         }
 
         template<
@@ -27,31 +27,27 @@ namespace Urasandesu { namespace CppAnonym {
             class Previous,
             class Current
         >
-        static boost::shared_ptr<T> MapAncestor(Current const &current) 
+        static T *MapAncestor(Current &current) 
         { 
-            boost::shared_ptr<Previous> pPrevious;
-            pPrevious = current.ChainFrom<Previous>().GetPrevious().lock();
-            return pPrevious ? pPrevious->Map<T>() : boost::shared_ptr<T>();
+            Previous *pPrevious = NULL;
+            pPrevious = current.ChainFrom<Previous>().GetPrevious();
+            return pPrevious == NULL ? NULL : pPrevious->Map<T>();
         }
 
         template<
             class Current
         >
-        static boost::shared_ptr<Current> MapFirst(Current const &current) 
-        { 
-            boost::shared_ptr<Current> pCurrent;
-            pCurrent = current.GetCurrent().lock();
-            return pCurrent;
+        static Current *MapFirst(Current &current) 
+        {
+            return &current; 
         }
 
         template<
             class Current
         >
-        static boost::shared_ptr<Current> Map(Current const &current) 
+        static Current *Map(Current &current) 
         { 
-            boost::shared_ptr<Current> pCurrent;
-            pCurrent = current.GetCurrent().lock();
-            return pCurrent;
+            return &current;
         }
     };
     

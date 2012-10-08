@@ -9,6 +9,12 @@ namespace Urasandesu { namespace CppAnonym {
         template<class ObjectTagSequence, class I, class IEnd>
         class ATL_NO_VTABLE SimpleHeapProviderImpl;
 
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ObjectTag, object_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ObjectTag, object_type);
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ObjectTag, tag_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ObjectTag, tag_type);
+
     }   // namespace Detail
 
 

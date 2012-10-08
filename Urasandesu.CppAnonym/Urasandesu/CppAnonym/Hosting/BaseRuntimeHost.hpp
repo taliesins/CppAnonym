@@ -40,17 +40,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             class Previous,
             class Current
         >
-        static bool CanMapFirstAncestor(Current const &current)
-        {
-            return current.GetInfo<T>();
-        }
-
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapFirstAncestor(Current const &current) 
+        static T *MapFirstAncestor(Current &current) 
         { 
             return current.GetInfo<T>();
         }
@@ -60,17 +50,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             class Previous,
             class Current
         >
-        static bool CanMapAncestor(Current const &current)
-        {
-            return current.GetInfo<T>();
-        }
-
-        template<
-            class T,
-            class Previous,
-            class Current
-        >
-        static boost::shared_ptr<T> MapAncestor(Current const &current) 
+        static T *MapAncestor(Current &current) 
         { 
             return current.GetInfo<T>();
         }
@@ -92,10 +72,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 SmartPtrChainInfo<typename RuntimeHostApiAt<RuntimeHostApiHolder, Interfaces::HostInfoLabel>::type, RuntimeHostChainMapper>
             >
         >,
-        //public DisposableHeapProvider<
-        //    boost::mpl::vector<
-        //    >
-        //>,
+        public DisposableHeapProvider<
+            boost::mpl::vector<
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type
+            >
+        >,
         //public DisposableHeapProvider<
         //    boost::mpl::vector<
         //        typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type,
@@ -108,9 +89,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     public:
         typedef BaseRuntimeHost<RuntimeHostApiHolder> this_type;
 
-        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Interfaces::HostInfoLabel>::type host_info_type;
-
-        typedef typename chain_from<host_info_type>::type runtime_host_chain_type; 
+        typedef typename chaining_previous_type_at<0>::type runtime_host_previous_type;
+        typedef typename chain_from<runtime_host_previous_type>::type runtime_host_chain_type; 
+        typedef runtime_host_previous_type host_info_type;
 
         BaseRuntimeHost() : 
             m_corVersionInitialized(false),
@@ -168,26 +149,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
         template<class Info>
-        boost::shared_ptr<Info> GetInfo() const
+        typename provider_of<Info>::type::object_ptr_type GetInfo() const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
             
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
+            typedef mpl::find<providing_types, Info>::type I;
+            typedef mpl::end<providing_types>::type IEnd;
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
-            boost::shared_ptr<Info> pExistingInfo;
+            typedef typename provider_of<Info>::type InfoProvider;
+            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
+
+            Info *pExistingInfo = NULL;
             if (!TryGetInfo<Info>(pExistingInfo))
             {
-                boost::shared_ptr<Info> pNewInfo;
-                pNewInfo = NewInfo<Info>();
+                ObjectTempPtr pNewInfo = NewInfo<Info>();
                 
-                typedef typename provider_of<Info>::type InfoProvider;
                 InfoProvider &provider = ProviderOf<Info>();
                 Utilities::TypeInfo key = mpl::identity<Info>();
-                m_infoToIndex[key] = provider.Register(pNewInfo);
-                return pNewInfo;
+                m_infoToIndex[key] = provider.RegisterObject(pNewInfo);
+                return pNewInfo.Get();
             }
             else
             {
@@ -196,33 +178,38 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
     private:
-        friend typename host_info_type;
+        friend typename runtime_host_previous_type;
 
         template<class Info>
-        boost::shared_ptr<Info> NewInfo() const
+        typename provider_of<Info>::type::object_temp_ptr_type NewInfo() const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
             
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
+            typedef mpl::find<providing_types, Info>::type I;
+            typedef mpl::end<providing_types>::type IEnd;
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
 
             typedef typename provider_of<Info>::type InfoProvider;
+            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
+
             InfoProvider &provider = ProviderOf<Info>();
-            runtime_host_chain_type &chain = ChainFrom<host_info_type>();
+            runtime_host_chain_type &chain = ChainFrom<runtime_host_previous_type>();
             return chain.NewObject<Info>(provider);
         }
 
         template<class Info>
-        bool TryGetInfo(boost::shared_ptr<Info> &pExistingInfo) const
+        bool TryGetInfo(typename provider_of<Info>::type::object_ptr_type &pExistingInfo) const
         {
             namespace mpl = boost::mpl;
             using namespace boost;
             
-            typedef mpl::find<sequence_type, Info>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
+            typedef mpl::find<providing_types, Info>::type I;
+            typedef mpl::end<providing_types>::type IEnd;
             BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
+
+            typedef typename provider_of<Info>::type InfoProvider;
+            typedef typename InfoProvider::object_temp_ptr_type ObjectTempPtr;            
 
             Utilities::TypeInfo key = mpl::identity<Info>();
             if (m_infoToIndex.find(key) == m_infoToIndex.end())
@@ -232,9 +219,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             else
             {
                 size_t index = m_infoToIndex[key];
-                typedef typename provider_of<Info>::type InfoProvider;
                 InfoProvider &provider = ProviderOf<Info>();
-                pExistingInfo = provider[index];
+                pExistingInfo = provider.GetObject(index);
                 return true;
             }
         }

@@ -13,12 +13,12 @@ namespace Urasandesu { namespace CppAnonym {
         namespace mpl = boost::mpl;
         using namespace boost;
 
-        template<class Current, class ChainInfoSequence, class I, class IEnd>
+        template<class Current, class ChainInfoTypes, class I, class IEnd>
         class ATL_NO_VTABLE SmartPtrChainImpl : 
-            public SmartPtrChainImpl<Current, ChainInfoSequence, typename mpl::next<I>::type, IEnd>
+            public SmartPtrChainImpl<Current, ChainInfoTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef SmartPtrChainImpl<Current, ChainInfoSequence, I, IEnd> this_type;
+            typedef SmartPtrChainImpl<Current, ChainInfoTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type chain_info_type;
             typedef typename Current current_type;
             typedef typename chain_info_type::previous_type previous_type;
@@ -30,49 +30,49 @@ namespace Urasandesu { namespace CppAnonym {
             { }
 
             template<class T>
-            boost::shared_ptr<T> MapFirstAncestor() const
+            T *MapFirstAncestor() const
             {
-                return mapper_type::MapFirstAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
+                return mapper_type::MapFirstAncestor<T, previous_type>(GetCurrent()); 
             }
 
             template<class T>
-            boost::shared_ptr<T> MapFirst() const
+            T *MapFirst() const
             {
-                return mapper_type::MapFirstAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
+                return mapper_type::MapFirstAncestor<T, previous_type>(GetCurrent()); 
             }
 
             template<>
-            boost::shared_ptr<current_type> MapFirst<current_type>() const
+            current_type *MapFirst<current_type>() const
             { 
-                return mapper_type::MapFirst<current_type>(static_cast<current_type const &>(*this));
+                return mapper_type::MapFirst<current_type>(GetCurrent());
             }
 
             template<class T>
-            boost::shared_ptr<T> Map() const
+            T *Map() const
             {
-                return mapper_type::MapAncestor<T, previous_type>(static_cast<current_type const &>(*this)); 
+                return mapper_type::MapAncestor<T, previous_type>(GetCurrent()); 
             }
 
             template<>
-            boost::shared_ptr<current_type> Map<current_type>() const
+            current_type *Map<current_type>() const
             { 
-                return mapper_type::Map<current_type>(static_cast<current_type const &>(*this));
+                return mapper_type::Map<current_type>(GetCurrent());
             }
 
             template<
                 class T,
                 class PersistableHeapProvider
             >
-            static typename PersistableHeapProvider::sp_object_type NewRootObject()
+            static typename PersistableHeapProvider::static_object_temp_ptr_type NewRootObject()
             {
                 return constructor_type::NewRootObject<T, PersistableHeapProvider>();
             }
 
             template<
                 class T,
-                class HeapProvider
+                class PersistableHeapProvider
             >
-            T *NewObject(HeapProvider &provider) const
+            typename PersistableHeapProvider::object_temp_ptr_type NewObject(PersistableHeapProvider &provider) const
             {
                 return constructor_type::NewObject<T>(static_cast<current_type &>(*const_cast<this_type *>(this)), provider);
             }
@@ -89,32 +89,23 @@ namespace Urasandesu { namespace CppAnonym {
             }
 
         private:
+            current_type &GetCurrent() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                current_type *pCurrent = static_cast<current_type *>(pMutableThis);
+                return *pCurrent;
+            }
+
             previous_type *m_pPrevious;
         };
 
-        template<class Current, class ChainInfoSequence>
+        template<class Current, class ChainInfoTypes>
         class ATL_NO_VTABLE SmartPtrChainImpl<Current, 
-                                              ChainInfoSequence, 
-                                              typename Traits::DistinctEnd<ChainInfoSequence>::type, 
-                                              typename Traits::DistinctEnd<ChainInfoSequence>::type> : 
+                                              ChainInfoTypes, 
+                                              typename Traits::DistinctEnd<ChainInfoTypes>::type, 
+                                              typename Traits::DistinctEnd<ChainInfoTypes>::type> : 
             noncopyable
         {
-        //public:
-        //    typedef typename Current current_type;
-        //    
-        //    boost::weak_ptr<current_type> GetCurrent() const
-        //    {
-        //        return m_pCurrent;
-        //    }
-
-        //    void SetCurrent(boost::weak_ptr<current_type> const &pCurrent)
-        //    {
-        //        _ASSERTE(m_pCurrent.expired());
-        //        m_pCurrent = pCurrent;
-        //    }
-
-        //private:
-        //    boost::weak_ptr<current_type> m_pCurrent;
         };
 
         template<class Current>
@@ -127,13 +118,13 @@ namespace Urasandesu { namespace CppAnonym {
         };
 
         template<class Last, class T>
-        struct ExtractChainInfoSequenceOrDefault : 
+        struct ExtractChainInfoTypesOrDefault : 
             mpl::eval_if<
                 mpl::and_<
-                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_types, T),
                     mpl::not_<boost::is_same<Last, T> >
                 >,
-                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_types, T),
                 mpl::identity<mpl::vector<T> > >
         {
         };
@@ -142,14 +133,14 @@ namespace Urasandesu { namespace CppAnonym {
         class FlattenChainInfoImpl
         {
             typedef typename ExtractPreviousOrDefault<Current>::type previous_type;
-            typedef typename ExtractChainInfoSequenceOrDefault<Last, previous_type>::type chain_info_sequence_type;
+            typedef typename ExtractChainInfoTypesOrDefault<Last, previous_type>::type chain_info_types;
 
         public:
             typedef typename mpl::eval_if<
-                                boost::is_same<chain_info_sequence_type, mpl::vector<previous_type> >, 
-                                chain_info_sequence_type,
+                                boost::is_same<chain_info_types, mpl::vector<previous_type> >, 
+                                chain_info_types,
                                 mpl::fold<
-                                    chain_info_sequence_type, 
+                                    chain_info_types, 
                                     mpl::vector<previous_type>,
                                     mpl::copy<
                                         FlattenChainInfoImpl<previous_type, mpl::_2>, 
@@ -175,39 +166,49 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename mpl::not_<boost::is_same<i, i_end> > type;
         };
 
+        template<class ChainInfo, class T>
+        struct HasPreviousT : 
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, ChainInfo)::type, T>
+        {
+        };
+
     }   // namespace Detail
 
 
-    template<class Current, class ChainInfoSequence>
+    template<class Current, class ChainInfoTypes>
     class ATL_NO_VTABLE SmartPtrChain : 
         public Detail::SmartPtrChainImpl<Current, 
-                                         ChainInfoSequence, 
-                                         typename Traits::DistinctBegin<ChainInfoSequence>::type, 
-                                         typename Traits::DistinctEnd<ChainInfoSequence>::type>
+                                         ChainInfoTypes, 
+                                         typename Traits::DistinctBegin<ChainInfoTypes>::type, 
+                                         typename Traits::DistinctEnd<ChainInfoTypes>::type>
     {
     public:
-        typedef SmartPtrChain<Current, ChainInfoSequence> this_type;
-        typedef ChainInfoSequence chain_info_sequence_type;
+        typedef SmartPtrChain<Current, ChainInfoTypes> this_type;
+        typedef ChainInfoTypes chain_info_types;
 
-        template<class Previous>
-        struct chain_from
+        template<LONG N>
+        class chaining_previous_type_at
         {
-            typedef Detail::SmartPtrChainImpl<
-                Current,
-                chain_info_sequence_type,
-                typename boost::mpl::find_if<
-                    typename Traits::Distinct<chain_info_sequence_type>::type,
-                    boost::is_same<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, boost::mpl::_1), Previous>
-                >::type,
-                typename Traits::DistinctEnd<chain_info_sequence_type>::type
-            > type;
+            typedef typename boost::mpl::at_c<chain_info_types, N>::type chain_info_type;
+        public:
+            typedef typename chain_info_type::previous_type type;
         };
 
-        template<class Previous>
-        inline typename chain_from<Previous>::type &ChainFrom() const
+        template<class ChainingPreviousType>
+        class chain_from
+        {
+            typedef typename Traits::Distinct<chain_info_types>::type distinct_chain_info_types;
+            typedef typename boost::mpl::find_if<distinct_chain_info_types, Detail::HasPreviousT<boost::mpl::_1, ChainingPreviousType> >::type i;
+            typedef typename Traits::DistinctEnd<chain_info_types>::type i_end;
+        public:
+            typedef Detail::SmartPtrChainImpl<Current, chain_info_types, i, i_end> type;
+        };
+
+        template<class ChainingPreviousType>
+        inline typename chain_from<ChainingPreviousType>::type &ChainFrom() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename chain_from<Previous>::type &>(*pMutableThis);
+            return static_cast<typename chain_from<ChainingPreviousType>::type &>(*pMutableThis);
         }
 
         template<class T>
@@ -215,7 +216,7 @@ namespace Urasandesu { namespace CppAnonym {
         {
             namespace mpl = boost::mpl;
 
-            typedef mpl::filter_view<chain_info_sequence_type, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
+            typedef mpl::filter_view<chain_info_types, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_ancestor_selector<T> selector(*this, container);
@@ -228,7 +229,7 @@ namespace Urasandesu { namespace CppAnonym {
         {
             namespace mpl = boost::mpl;
 
-            typedef mpl::filter_view<chain_info_sequence_type, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
+            typedef mpl::filter_view<chain_info_types, Detail::IsMappable<mpl::_, T> >::type MappableTypes;
             
             container<T> container;
             map_first_selector<T> selector(*this, container);
@@ -252,7 +253,7 @@ namespace Urasandesu { namespace CppAnonym {
 
             container<T> container;
             new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-            mpl::for_each<chain_info_sequence_type, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
+            mpl::for_each<chain_info_types, wrap<Detail::CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, mpl::_) > >(selector);
             _ASSERTE(container.m_p);
             return container.m_p;
         }

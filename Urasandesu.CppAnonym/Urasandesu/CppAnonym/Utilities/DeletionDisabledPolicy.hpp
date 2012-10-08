@@ -29,7 +29,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_d(p); 
         }
         
-        void DisablesDeletion() 
+        void DisableDeletion() 
         { 
             m_disabled[0] = true; 
         }

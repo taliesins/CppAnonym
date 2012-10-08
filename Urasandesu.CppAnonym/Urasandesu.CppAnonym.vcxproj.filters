@@ -1068,10 +1068,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleterFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPtr.hpp">
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPointerFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPtrFwd.hpp">
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TemporaryPointer.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

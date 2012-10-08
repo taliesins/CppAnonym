@@ -23,54 +23,56 @@
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_SimpleHeapProviderTest.*
 namespace {
 
-    struct MyPOD1
-    {
-        BYTE byte1;
-        BYTE byte2;
-        BYTE byte3;
-        BYTE byte4;
-        BYTE byte5;
-        BYTE byte6;
-        BYTE byte7;
-        BYTE byte8;
-    };
+    namespace _FEE1E6AA {
+
+        namespace mpl = boost::mpl;        
+        using namespace Urasandesu::CppAnonym;
+
+        struct MyPOD1
+        {
+            BYTE byte1;
+            BYTE byte2;
+            BYTE byte3;
+            BYTE byte4;
+            BYTE byte5;
+            BYTE byte6;
+            BYTE byte7;
+            BYTE byte8;
+        };
     
-    struct MyPOD2
-    {
-        INT int1;
-        MyPOD1 pod1;
-        PVOID pv;
+        struct MyPOD2
+        {
+            INT int1;
+            MyPOD1 pod1;
+            PVOID pv;
         
-        MyPOD2 *prev;
-        MyPOD2 *next;
-    };
+            MyPOD2 *prev;
+            MyPOD2 *next;
+        };
 
-    typedef Urasandesu::CppAnonym::ObjectTag<MyPOD2, Urasandesu::CppAnonym::DefaultHeap> MyPOD2WithDefaultHeap;
-    struct MyPOD2GeneratorDefault : 
-        Urasandesu::CppAnonym::SimpleHeapProvider<boost::mpl::vector<MyPOD2WithDefaultHeap>>
-    {
-        typedef MyPOD2WithDefaultHeap object_tag_type;                 
-    };
+        struct MyPOD2GeneratorDefault : 
+            SimpleHeapProvider<mpl::vector<ObjectTag<MyPOD2, DefaultHeap> > >
+        {
+        };
 
-    typedef Urasandesu::CppAnonym::ObjectTag<MyPOD2, Urasandesu::CppAnonym::QuickHeap> MyPOD2WithQuickHeap;
-    struct MyPOD2GeneratorQuick : 
-        Urasandesu::CppAnonym::SimpleHeapProvider<boost::mpl::vector<MyPOD2WithQuickHeap>>
-    {
-        typedef MyPOD2WithQuickHeap object_tag_type;                 
-    };
+        struct MyPOD2GeneratorQuick : 
+            SimpleHeapProvider<mpl::vector<ObjectTag<MyPOD2, QuickHeap> > >
+        {
+        };
 
-    typedef Urasandesu::CppAnonym::ObjectTag<MyPOD2, Urasandesu::CppAnonym::VeryQuickHeapButMustUseSubscriptOperator> MyPOD2WithVeryQuickHeap;
-    struct MyPOD2GeneratorVeryQuick : 
-        Urasandesu::CppAnonym::SimpleHeapProvider<boost::mpl::vector<MyPOD2WithVeryQuickHeap>>
-    {
-        typedef MyPOD2WithVeryQuickHeap object_tag_type;                 
-    };
-
+        struct MyPOD2GeneratorVeryQuick : 
+            SimpleHeapProvider<mpl::vector<ObjectTag<MyPOD2, VeryQuickHeapButMustUseSubscriptOperator> > >
+        {
+        };
+    
+    }   // namespace _FEE1E6AA {
 
     TEST(Urasandesu_CppAnonym_SimpleHeapProviderTest, PerformanceTest_01)
     {
+        namespace mpl = boost::mpl;
         using namespace std;
         using namespace Urasandesu::CppAnonym;
+        using namespace _FEE1E6AA;
 
         INT const ASSIGN_COUNT = 512;
 #ifdef _DEBUG
@@ -83,13 +85,14 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD2GeneratorDefault gen;
-            typedef MyPOD2GeneratorDefault::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorDefault::provider_of<KeyObjectTag>::type MyPOD2Provider;
-            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
+            typedef MyPOD2GeneratorDefault Generator;
+            Generator gen;
+            typedef Generator::providing_type_at<0>::type Target;
+            typedef Generator::provider_of<Target>::type TargetProvider;
+            TargetProvider &provider = gen.ProviderOf<Target>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = provider.Heap().New();
+                Target *pTarget = provider.Heap().New();
             }
         }
         
@@ -99,13 +102,14 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD2GeneratorQuick gen;
-            typedef MyPOD2GeneratorQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorQuick::provider_of<KeyObjectTag>::type MyPOD2Provider;
-            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
+            typedef MyPOD2GeneratorQuick Generator;
+            Generator gen;
+            typedef Generator::providing_type_at<0>::type Target;
+            typedef Generator::provider_of<Target>::type TargetProvider;
+            TargetProvider &provider = gen.ProviderOf<Target>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = provider.Heap().New();
+                Target *pTarget = provider.Heap().New();
             }
         }
         
@@ -115,13 +119,14 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            MyPOD2GeneratorVeryQuick gen;
-            typedef MyPOD2GeneratorVeryQuick::object_tag_type KeyObjectTag;
-            typedef MyPOD2GeneratorVeryQuick::provider_of<KeyObjectTag>::type MyPOD2Provider;
-            MyPOD2Provider &provider = gen.ProviderOf<KeyObjectTag>();
+            typedef MyPOD2GeneratorVeryQuick Generator;
+            Generator gen;
+            typedef Generator::providing_type_at<0>::type Target;
+            typedef Generator::provider_of<Target>::type TargetProvider;
+            TargetProvider &provider = gen.ProviderOf<Target>();
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
             {
-                MyPOD2 *pPod2 = provider.Heap().New();
+                Target *pTarget = provider.Heap().New();
             }
         }
         

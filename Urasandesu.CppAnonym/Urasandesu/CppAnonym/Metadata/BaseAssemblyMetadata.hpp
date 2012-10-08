@@ -200,9 +200,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             {
                 _ASSERTE(!m_name.empty());
 
-                boost::shared_ptr<fusion_info_type const> pFuInfo;
-                pFuInfo = Map<fusion_info_type>();
-                boost::shared_ptr<assembly_info_type> pAsmInfo;
+                fusion_info_type const *pFuInfo = Map<fusion_info_type>();
+                assembly_info_type *pAsmInfo;
                 pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name);
                 m_asmPath = pAsmInfo->GetAssemblyPath();
             }

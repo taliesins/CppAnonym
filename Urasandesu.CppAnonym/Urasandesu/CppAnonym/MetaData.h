@@ -186,7 +186,7 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/IModuleMetadataLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIMODULEMETADATAFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseIModuleMetadata.hpp>
 #endif
 

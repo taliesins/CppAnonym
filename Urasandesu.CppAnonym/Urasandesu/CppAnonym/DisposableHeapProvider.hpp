@@ -17,60 +17,107 @@ namespace Urasandesu { namespace CppAnonym {
         namespace mpl = boost::mpl;
         using namespace boost;
 
-        template<class Sequence, class I, class IEnd>
+        template<class ProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE DisposableHeapProviderImpl : 
             PersistableHeapProvider<
                 mpl::vector<
                     typename mpl::deref<I>::type
                 >
             >,
-            public DisposableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
+            public DisposableHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef DisposableHeapProviderImpl<Sequence, I, IEnd> this_type;
+            typedef DisposableHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_type;
-            typedef typename provider_of<object_type>::type provider_type;
-            typedef typename provider_type::sp_object_type sp_object_type;
-            typedef typename provider_type::object_ptr_type object_ptr_type;
-            typedef typename provider_type::object_ptr_vector_type object_ptr_vector_type;
+            typedef PersistableHeapProvider<mpl::vector<object_type> > base_type;
 
-            virtual ~DisposableHeapProviderImpl()
+            typedef base_type::object_heap_type object_heap_type;
+            typedef base_type::object_heap_deleter_type object_heap_deleter_type;
+            typedef base_type::object_ptr_type object_ptr_type;
+            typedef base_type::object_const_ptr_type object_const_ptr_type;
+            typedef base_type::object_ptr_vector_type object_ptr_vector_type;
+            typedef typename base_type::size_type size_type;
+            
+            typedef base_type::static_object_temp_ptr_type static_object_temp_ptr_type;
+
+            typedef base_type::object_temp_ptr_type object_temp_ptr_type;
+
+            static void Destruct(object_ptr_vector_type &objects)
             {
-                provider_type &provider = ProviderOf<object_type>();
-                object_ptr_vector_type &objects = provider.Objects();
                 typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
                 for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
                     (*ri)->Dispose();
             }
 
-            static sp_object_type NewStaticObject()
+            ~DisposableHeapProviderImpl()
             {
-                return provider_type::NewStaticObject();
+                Destruct(base_type::Objects());
             }
 
-            sp_object_type NewObject()
+            static static_object_temp_ptr_type NewStaticObject()
             {
-                return ProviderOf<object_type>().NewObject();
+                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            typename object_ptr_vector_type::size_type Register(sp_object_type const &p)
+            static size_type RegisterStaticObject(static_object_temp_ptr_type const &p)
             {
-                provider_type &provider = ProviderOf<obj_tag_type>();
-                return provider.Register(p);
+                p.Persist();
+                StaticObjects().push_back(p.Get());
+                return StaticObjects().size() - 1;
             }
 
-            object_ptr_type operator[](typename object_ptr_vector_type::size_type n)
+            static object_ptr_type GetStaticObject(size_type n)
             {
-                provider_type &provider = ProviderOf<object_type>();
-                object_ptr_vector_type &objects = provider.Objects();
-                return objects[n];
+                return StaticObjects()[n];
+            }
+
+            object_temp_ptr_type NewObject()
+            {
+                return base_type::NewObject();
+            }
+
+            size_type RegisterObject(object_temp_ptr_type const &p)
+            {
+                return base_type::RegisterObject(p);
+            }
+
+            object_ptr_type GetObject(size_type n)
+            {
+                return base_type::GetObject(n);
+            }
+        
+        protected:
+            struct heap_and_objects : 
+                base_type::heap_and_objects
+            {
+                virtual ~heap_and_objects()
+                {
+                    this_type::Destruct(base_type::heap_and_objects::m_objects);
+                }
+            };
+
+        private:
+            static heap_and_objects &StaticHeapAndObjects()
+            {
+                static heap_and_objects heapAndObjects;
+                return heapAndObjects;
+            }
+
+            static object_heap_type &StaticHeap()
+            {
+                return StaticHeapAndObjects().m_heap;
+            }
+
+            static object_ptr_vector_type &StaticObjects()
+            {
+                return StaticHeapAndObjects().m_objects;
             }
         };
 
-        template<class Sequence>
-        class DisposableHeapProviderImpl<Sequence, 
-                                             typename Traits::DistinctEnd<Sequence>::type, 
-                                             typename Traits::DistinctEnd<Sequence>::type> : 
+        template<class ProvidingTypes>
+        class DisposableHeapProviderImpl<ProvidingTypes, 
+                                             typename Traits::DistinctEnd<ProvidingTypes>::type, 
+                                             typename Traits::DistinctEnd<ProvidingTypes>::type> : 
             noncopyable
         {
         };
@@ -78,27 +125,30 @@ namespace Urasandesu { namespace CppAnonym {
     }   // namespace Detail
 
 
-    template<class Sequence>
+    template<class ProvidingTypes>
     class ATL_NO_VTABLE DisposableHeapProvider : 
-        public Detail::DisposableHeapProviderImpl<Sequence, 
-                                                  typename Traits::DistinctBegin<Sequence>::type, 
-                                                  typename Traits::DistinctEnd<Sequence>::type>
+        public Detail::DisposableHeapProviderImpl<ProvidingTypes, 
+                                                  typename Traits::DistinctBegin<ProvidingTypes>::type, 
+                                                  typename Traits::DistinctEnd<ProvidingTypes>::type>
     {
     public:
-        typedef DisposableHeapProvider<Sequence> this_type;
-        typedef Sequence sequence_type;
+        typedef DisposableHeapProvider<ProvidingTypes> this_type;
+        typedef ProvidingTypes providing_types;
+
+        template<LONG N>
+        struct providing_type_at : 
+            boost::mpl::at_c<providing_types, N>
+        {
+        };
 
         template<class T>
-        struct provider_of
+        class provider_of
         {
-            typedef Detail::DisposableHeapProviderImpl<
-                Sequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<Sequence>::type,
-                    T
-                >::type,
-                typename Traits::DistinctEnd<Sequence>::type
-            > type;
+            typedef typename Traits::Distinct<providing_types>::type distinct_providing_types;
+            typedef typename boost::mpl::find<distinct_providing_types, T>::type i;
+            typedef typename Traits::DistinctEnd<providing_types>::type i_end;
+        public:
+            typedef Detail::DisposableHeapProviderImpl<providing_types, i, i_end> type;
         };
 
         template<class T>

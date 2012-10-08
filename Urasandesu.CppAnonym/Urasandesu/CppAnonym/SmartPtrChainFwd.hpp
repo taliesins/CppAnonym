@@ -12,8 +12,8 @@ namespace Urasandesu { namespace CppAnonym {
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_types);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_types);
 
         template<class Current>
         struct ExtractPreviousOrDefault;

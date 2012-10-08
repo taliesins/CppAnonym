@@ -261,6 +261,22 @@ namespace Urasandesu { namespace CppAnonym {
                 return pObj;
             }
 
+            template<class A1>
+            inline T *New(A1 arg1)
+            {
+                T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+                new(pObj)T(arg1);
+                return pObj;
+            }
+
+            template<class A1, class A2>
+            inline T *New(A1 arg1, A2 arg2)
+            {
+                T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+                new(pObj)T(arg1, arg2);
+                return pObj;
+            }
+
             void Delete(T *pObj)
             {
                 Utilities::DestructionDistributor<T *>::Destruct(pObj);
@@ -347,7 +363,8 @@ namespace Urasandesu { namespace CppAnonym {
         class T, 
         class Tag
     >
-    class SimpleHeap
+    class SimpleHeap : 
+        boost::noncopyable
     {
         Detail::SimpleHeapImpl<T, Tag> m_impl;
         
@@ -355,6 +372,18 @@ namespace Urasandesu { namespace CppAnonym {
         inline T *New()
         {
             return m_impl.New();
+        }
+
+        template<class A1>
+        inline T *New(A1 arg1)
+        {
+            return m_impl.New<A1>(arg1);
+        }
+
+        template<class A1, class A2>
+        inline T *New(A1 arg1, A2 arg2)
+        {
+            return m_impl.New<A1, A2>(arg1, arg2);
         }
 
         inline void DeleteLast()

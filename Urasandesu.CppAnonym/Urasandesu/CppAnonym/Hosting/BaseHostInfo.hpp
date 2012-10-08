@@ -54,17 +54,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     {
     public:
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
-
-        typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type runtime_host_type;
-
-        typedef typename provider_of<this_type>::type host_info_provider_type;
-        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
         
-        typedef typename chain_from<boost::mpl::void_>::type host_info_chain_type; 
+        typedef typename providing_type_at<0>::type host_info_type;
+        typedef typename provider_of<host_info_type>::type host_info_provider_type;
+        typedef typename host_info_provider_type::static_object_temp_ptr_type host_info_temp_ptr_type;
 
-        static typename host_info_provider_type::sp_object_type NewHost()
+        typedef typename providing_type_at<1>::type runtime_host_type;
+        typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;
+        typedef typename runtime_host_provider_type::object_temp_ptr_type runtime_host_temp_ptr_type;
+
+        typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
+        typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
+
+        static host_info_type *NewHost()
         {
-            return host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+            host_info_temp_ptr_type pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+            host_info_provider_type::RegisterStaticObject(pHost);
+            return pHost.Get();
         }
 
         runtime_host_type const *GetRuntime(std::wstring const &version) const
@@ -75,7 +81,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             runtime_host_type *pExistingRuntime = NULL;
             if (!TryGetRuntime(version, pExistingRuntime))
             {
-                runtime_host_type *pNewRuntime = NewRuntime();
+                runtime_host_temp_ptr_type pNewRuntime = NewRuntime();
 
                 std::wstring const &corVersion = pNewRuntime->GetCORVersion();
                 if (corVersion != version)
@@ -90,8 +96,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 }
 
                 runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                m_versionToIndex[version] = provider.Register(pNewRuntime);
-                return pNewRuntime;
+                m_versionToIndex[version] = provider.RegisterObject(pNewRuntime);
+                return pNewRuntime.Get();
             }
             else
             {
@@ -100,17 +106,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
     private:
-        
-        //void SetThis(boost::weak_ptr<this_type> const &pThis) const
-        //{
-        //    _ASSERTE(m_pThis.use_count() == 0);
-        //    m_pThis = pThis;
-        //}
 
-        runtime_host_type *NewRuntime() const
+        runtime_host_temp_ptr_type NewRuntime() const
         {
             runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-            host_info_chain_type &chain = ChainFrom<boost::mpl::void_>();
+            host_info_chain_type &chain = ChainFrom<host_info_previous_type>();
             return chain.NewObject<runtime_host_type>(provider);
         }
 
@@ -124,7 +124,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             {
                 size_t index = m_versionToIndex[version];
                 runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                pExistingRuntime = provider[index];
+                pExistingRuntime = provider.GetObject(index);
                 return true;
             }
         }

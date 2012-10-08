@@ -10,6 +10,14 @@
 #include <Urasandesu/CppAnonym/Fusion/BaseAssemblyInfoFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IMODULEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IModuleMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIMODULEMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIModuleMetadataFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolderFwd.h>
 #endif

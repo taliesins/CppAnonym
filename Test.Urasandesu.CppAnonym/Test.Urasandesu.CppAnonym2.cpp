@@ -11,13 +11,13 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+//#endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPtr.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+//#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
 #include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
@@ -87,6 +87,7 @@
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEY_HPP
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
 #endif
+#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_METADATASPECIALVALUES_H
 #include <Urasandesu/CppAnonym/Metadata/MetadataSpecialValues.h>
@@ -128,6 +129,7 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseIModuleMetadata.hpp>
 #endif
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTITYPEMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultITypeMetadataApiHolder.h>
 #endif
@@ -143,6 +145,7 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEIMETHODMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseIMethodMetadata.hpp>
 #endif
+#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolder.h>
@@ -150,7 +153,6 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
-#endif
 #endif
 
 // foward declarations
@@ -399,7 +401,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 
 
-#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
 #endif
@@ -416,6 +417,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadata.hpp>
 #endif
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULEMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultModuleMetadataApiHolder.h>
 #endif
@@ -488,7 +490,7 @@ namespace Urasandesu { namespace CppAnonym {
     //        {
     //            if (deleter *pDel = get_deleter<deleter>(p))
     //            {
-    //                pDel->DisablesDeletion();
+    //                pDel->DisableDeletion();
     //                Objects().push_back(p.get());
     //                return Objects().size() - 1;
     //            }
@@ -518,7 +520,7 @@ namespace Urasandesu { namespace CppAnonym {
     //        public:
     //            deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) { m_disabled[0] = false; }
     //            void operator()(object_type *p) { if (!m_disabled[0]) m_pHeap->Delete(p); }
-    //            void DisablesDeletion() { m_disabled[0] = true; }
+    //            void DisableDeletion() { m_disabled[0] = true; }
     //        private:
     //            typename provider_type::object_heap_type *m_pHeap;
     //            bool m_disabled[1];
@@ -2011,14 +2013,14 @@ namespace {
 
     }   // namespace _B3C3B24D {
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, RootTemporaryPtr_Test_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, PersistableTemporaryPointer_Test_01)
     {
         namespace mpl = boost::mpl;
         using boost::shared_ptr;
         using namespace _B3C3B24D;
 
         struct RootPtrTag;
-        typedef TemporaryPtr<Hoge, RootPtrTag> RootTemporaryPtr;
+        typedef PersistableTemporaryPointer<Hoge, RootPtrTag> RootTemporaryPtr;
 
         {
             RootTemporaryPtr pHoge(new Hoge());
@@ -2030,16 +2032,26 @@ namespace {
             {
                 RootTemporaryPtr pHoge_(new Hoge());
                 pHoge_->m_value = 10;
-                pHoge = pHoge_.Move();
+                pHoge = pHoge_.Persist();
             }
             delete pHoge;
         }
         {
             static RootTemporaryPtr pHoge(new Hoge());
         }
+
+        struct Factory
+        {
+            static RootTemporaryPtr Create()
+            {
+                return RootTemporaryPtr(new Hoge());
+            }
+        };
+
+        RootTemporaryPtr pHoge(Factory::Create());
     }
 
-    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, RootTemporaryPtr_Test_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, PersistableTemporaryPointer_Test_02)
     {
         namespace mpl = boost::mpl;
         using boost::shared_ptr;
@@ -2052,7 +2064,7 @@ namespace {
         };
         typedef HeapDeleter<HogeHeap> HogeHeapDeleter;
         struct HogePtrTag;
-        typedef TemporaryPtr<Hoge, HogePtrTag, HogeHeapDeleter> HogeTemporaryPtr;
+        typedef PersistableTemporaryPointer<Hoge, HogePtrTag> HogeTemporaryPtr;
 
         HogeHeap heap;
 
@@ -2066,7 +2078,7 @@ namespace {
             {
                 HogeTemporaryPtr pHoge_(heap.New(), HogeHeapDeleter(heap));
                 pHoge_->m_value = 10;
-                pHoge = pHoge_.Move();
+                pHoge = pHoge_.Persist();
             }
             heap.Delete(pHoge);
         }
@@ -2093,27 +2105,33 @@ namespace {
         typedef Piyo piyo_type;
 
         typedef provider_of<this_type>::type hoge_provider_type;
+        typedef hoge_provider_type::static_object_temp_ptr_type hoge_temp_ptr_type;
+        typedef hoge_provider_type::object_ptr_type hoge_ptr_type;
+        
         typedef provider_of<piyo_type>::type piyo_provider_type;
+        typedef piyo_provider_type::object_temp_ptr_type piyo_temp_ptr_type;
+        typedef piyo_provider_type::object_ptr_type piyo_ptr_type;
 
         Hoge() { std::cout << "Hoge " << *reinterpret_cast<int *>(this) << " is constructed !!" << std::endl; }
         virtual ~Hoge() { std::cout << "Hoge " << *reinterpret_cast<int *>(this) << " is destructed !!" << std::endl; }
 
-        static hoge_provider_type::sp_object_type NewHoge()
+        static hoge_ptr_type NewHoge()
         {
-            return hoge_provider_type::NewStaticObject();
+            hoge_temp_ptr_type pHoge(hoge_provider_type::NewStaticObject());
+            size_t index = hoge_provider_type::RegisterStaticObject(pHoge);
+            return pHoge.Get();
         }
 
-        piyo_provider_type::object_type *NewPiyo(bool occurredException = false)
+        piyo_ptr_type NewPiyo(bool occurredException = false)
         {
             piyo_provider_type &provider = ProviderOf<piyo_type>();
-            piyo_provider_type::sp_object_type pPiyo = provider.NewObject();
+            piyo_temp_ptr_type pPiyo(provider.NewObject());
 
             if (occurredException)
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
 
-            size_t index = provider.Register(pPiyo);
-            _ASSERTE(index != MAXSIZE_T);
-            return pPiyo.get();
+            size_t index = provider.RegisterObject(pPiyo);
+            return pPiyo.Get();
         }
     };
 
@@ -2133,7 +2151,7 @@ namespace {
         using boost::shared_ptr;
         using namespace _3A0FFF2F;
 
-        shared_ptr<Hoge> pHoge = Hoge::NewHoge();
+        Hoge *pHoge = Hoge::NewHoge();
 
         // normally case
         {
@@ -2258,19 +2276,19 @@ namespace {
         typedef MethodMetadataGenerator7FAEDE99 MethodMetadataGenerator;
         typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
-        shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
-
 #if 0
+        HostInfo const *pHostInfo = HostInfo::NewHost();
+
         RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost != NULL);
 
-        shared_ptr<MetadataInfo const> pMetaInfo = pRuntimeHost->Map<MetadataInfo>();
-        ASSERT_TRUE(pMetaInfo);
+        MetadataInfo const *pMetaInfo = pRuntimeHost->Map<MetadataInfo>();
+        ASSERT_TRUE(pMetaInfo != NULL);
 
-        shared_ptr<MetadataDispenser> pMetaDisp = pMetaInfo->CreateDispenser();
-        ASSERT_TRUE(pMetaDisp);
+        MetadataDispenser *pMetaDisp = pMetaInfo->CreateDispenser();
+        ASSERT_TRUE(pMetaDisp != NULL);
 
-        shared_ptr<AssemblyMetadata const> pSystemCore;
+        AssemblyMetadata const *pSystemCore = NULL;
         pSystemCore = pMetaDisp->GetAssembly(L"System.Core, Version=3.5.0.0, Culture=neutral, " 
                                              L"PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL");
         ASSERT_EQ(0x20000001, pSystemCore->GetToken());

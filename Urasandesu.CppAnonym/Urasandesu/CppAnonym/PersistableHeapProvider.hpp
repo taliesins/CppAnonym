@@ -6,6 +6,14 @@
 #include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDERFWD_HPP
 #include <Urasandesu/CppAnonym/PersistableHeapProviderFwd.hpp>
 #endif
@@ -17,61 +25,91 @@ namespace Urasandesu { namespace CppAnonym {
         namespace mpl = boost::mpl;
         using namespace boost;
 
-        template<class Sequence, class I, class IEnd>
+        template<class ProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE PersistableHeapProviderImpl : 
             SimpleHeapProvider<
                 mpl::vector<
                     ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
                 >
             >,
-            public PersistableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
+            public PersistableHeapProviderImpl<ProvidingTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef PersistableHeapProviderImpl<Sequence, I, IEnd> this_type;
+            typedef PersistableHeapProviderImpl<ProvidingTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_type;
-            typedef shared_ptr<object_type> sp_object_type;
             typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-            typedef typename provider_of<obj_tag_type>::type provider_type;
+            typedef SimpleHeapProvider<mpl::vector<obj_tag_type> > base_type;
+            
+            typedef base_type::object_heap_type object_heap_type;
+            typedef Utilities::HeapDeleter<object_heap_type> object_heap_deleter_type;
             typedef object_type *object_ptr_type;
+            typedef object_type const *object_const_ptr_type;
             typedef std::vector<object_ptr_type> object_ptr_vector_type;
+            typedef typename object_ptr_vector_type::size_type size_type;
+            
+            struct static_temp_object_ptr_tag;
+            typedef Utilities::PersistableTemporaryPointer<object_type, static_temp_object_ptr_tag> static_object_temp_ptr_type;
 
-            virtual ~PersistableHeapProviderImpl()
+            struct temp_object_ptr_tag;
+            typedef Utilities::PersistableTemporaryPointer<object_type, temp_object_ptr_tag> object_temp_ptr_type;
+
+            static void Destruct(object_heap_type &heap, object_ptr_vector_type &objects)
             {
-                provider_type &provider = ProviderOf<obj_tag_type>();
                 typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
-                    provider.Heap().Delete(*ri);
+                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
+                    heap.Delete(*ri);
             }
 
-            static sp_object_type NewStaticObject()
+            ~PersistableHeapProviderImpl()
             {
-                return sp_object_type(provider_type::StaticHeap().New(), deleter(provider_type::StaticHeap()));
+                Destruct(base_type::Heap(), Objects());
             }
 
-            sp_object_type NewObject()
+            static static_object_temp_ptr_type NewStaticObject()
             {
-                provider_type &provider = ProviderOf<obj_tag_type>();
-                return sp_object_type(provider.Heap().New(), deleter(provider.Heap()));
+                return static_object_temp_ptr_type(StaticHeap().New(), object_heap_deleter_type(StaticHeap()));
             }
 
-            typename object_ptr_vector_type::size_type Register(sp_object_type const &p)
+            static size_type RegisterStaticObject(static_object_temp_ptr_type const &p)
             {
-                if (deleter *pDel = get_deleter<deleter>(p))
-                {
-                    pDel->DisablesDeletion();
-                    Objects().push_back(p.get());
-                    return Objects().size() - 1;
-                }
-                else
-                {
-                    return MAXSIZE_T;
-                }
+                p.Persist();
+                StaticObjects().push_back(p.Get());
+                return StaticObjects().size() - 1;
             }
 
-            object_ptr_type operator[](typename object_ptr_vector_type::size_type n)
+            static object_ptr_type GetStaticObject(size_type n)
+            {
+                return StaticObjects()[n];
+            }
+
+            object_temp_ptr_type NewObject()
+            {
+                return object_temp_ptr_type(base_type::Heap().New(), object_heap_deleter_type(base_type::Heap()));
+            }
+
+            size_type RegisterObject(object_temp_ptr_type const &p)
+            {
+                p.Persist();
+                Objects().push_back(p.Get());
+                return Objects().size() - 1;
+            }
+
+            object_ptr_type GetObject(size_type n)
             {
                 return Objects()[n];
             }
+
+        protected:
+            struct heap_and_objects
+            {
+                virtual ~heap_and_objects()
+                {
+                    this_type::Destruct(m_heap, m_objects);
+                }
+
+                object_heap_type m_heap;
+                object_ptr_vector_type m_objects;
+            };
 
             object_ptr_vector_type &Objects()
             {
@@ -79,26 +117,31 @@ namespace Urasandesu { namespace CppAnonym {
                     m_pObjects = make_shared<object_ptr_vector_type>();
                 return *m_pObjects.get();
             }
-        
+
         private:
-            shared_ptr<object_ptr_vector_type> m_pObjects;
-            
-            class deleter
+            static heap_and_objects &StaticHeapAndObjects()
             {
-            public:
-                deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) { m_disabled[0] = false; }
-                void operator()(object_ptr_type p) { if (!m_disabled[0]) m_pHeap->Delete(p); }
-                void DisablesDeletion() { m_disabled[0] = true; }
-            private:
-                typename provider_type::object_heap_type *m_pHeap;
-                bool m_disabled[1];
-            };
+                static heap_and_objects heapAndObjects;
+                return heapAndObjects;
+            }
+
+            static object_heap_type &StaticHeap()
+            {
+                return StaticHeapAndObjects().m_heap;
+            }
+
+            static object_ptr_vector_type &StaticObjects()
+            {
+                return StaticHeapAndObjects().m_objects;
+            }
+
+            shared_ptr<object_ptr_vector_type> m_pObjects;
         };
 
-        template<class Sequence>
-        class PersistableHeapProviderImpl<Sequence, 
-                                          typename Traits::DistinctEnd<Sequence>::type, 
-                                          typename Traits::DistinctEnd<Sequence>::type> : 
+        template<class ProvidingTypes>
+        class PersistableHeapProviderImpl<ProvidingTypes, 
+                                          typename Traits::DistinctEnd<ProvidingTypes>::type, 
+                                          typename Traits::DistinctEnd<ProvidingTypes>::type> : 
             noncopyable
         {
         };
@@ -106,34 +149,37 @@ namespace Urasandesu { namespace CppAnonym {
     }   // namespace Detail
 
 
-    template<class Sequence>
+    template<class ProvidingTypes>
     class ATL_NO_VTABLE PersistableHeapProvider : 
-        public Detail::PersistableHeapProviderImpl<Sequence, 
-                                                   typename Traits::DistinctBegin<Sequence>::type, 
-                                                   typename Traits::DistinctEnd<Sequence>::type>
+        public Detail::PersistableHeapProviderImpl<ProvidingTypes, 
+                                                   typename Traits::DistinctBegin<ProvidingTypes>::type, 
+                                                   typename Traits::DistinctEnd<ProvidingTypes>::type>
     {
     public:
-        typedef PersistableHeapProvider<Sequence> this_type;
-        typedef Sequence sequence_type;
+        typedef PersistableHeapProvider<ProvidingTypes> this_type;
+        typedef ProvidingTypes providing_types;
 
-        template<class T>
-        struct provider_of
+        template<LONG N>
+        struct providing_type_at : 
+            boost::mpl::at_c<providing_types, N>
         {
-            typedef Detail::PersistableHeapProviderImpl<
-                Sequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<Sequence>::type,
-                    T
-                >::type,
-                typename Traits::DistinctEnd<Sequence>::type
-            > type;
         };
 
-        template<class T>
-        inline typename provider_of<T>::type &ProviderOf() const
+        template<class ProvidingType>
+        class provider_of
+        {
+            typedef typename Traits::Distinct<providing_types>::type distinct_providing_types;
+            typedef typename boost::mpl::find<distinct_providing_types, ProvidingType>::type i;
+            typedef typename Traits::DistinctEnd<providing_types>::type i_end;
+        public:
+            typedef Detail::PersistableHeapProviderImpl<providing_types, i, i_end> type;
+        };
+
+        template<class ProvidingType>
+        inline typename provider_of<ProvidingType>::type &ProviderOf() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<T>::type &>(*pMutableThis);
+            return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
         }
     };
 

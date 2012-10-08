@@ -10,6 +10,14 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IASSEMBLYMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IAssemblyMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIASSEMBLYMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIAssemblyMetadataFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULEMETADATALABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleMetadataLabel.hpp>
 #endif

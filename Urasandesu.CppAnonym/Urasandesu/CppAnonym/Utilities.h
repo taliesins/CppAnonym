@@ -50,8 +50,8 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/TemporaryPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPORARYPOINTER_HPP
+#include <Urasandesu/CppAnonym/Utilities/TemporaryPointer.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP

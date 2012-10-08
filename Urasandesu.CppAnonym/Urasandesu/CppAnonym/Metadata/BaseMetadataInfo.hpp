@@ -6,6 +6,10 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabel.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
 #endif
@@ -38,31 +42,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
 
-        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        //typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
+        //typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
 
+        //typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
+        typedef typename providing_type_at<0>::type metadata_dispenser_type;
         typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
+        typedef typename metadata_dispenser_provider_type::object_temp_ptr_type metadata_dispenser_temp_ptr_type;
+        typedef typename metadata_dispenser_provider_type::object_ptr_type metadata_dispenser_ptr_type;
 
-        typedef typename chain_from<runtime_host_type>::type metadata_info_chain_type; 
+        typedef typename chaining_previous_type_at<0>::type metadata_info_previous_type;
+        typedef typename chain_from<metadata_info_previous_type>::type metadata_info_chain_type; 
+        typedef metadata_info_previous_type runtime_host_type;
 
         BaseMetadataInfo()
         { }
 
-        boost::shared_ptr<metadata_dispenser_type> CreateDispenser() const
+        metadata_dispenser_ptr_type CreateDispenser() const
         {
             metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            boost::shared_ptr<metadata_dispenser_type> pDisp = NewDispenser();
-            provider.Register(pDisp);
-            return pDisp;
+            metadata_dispenser_temp_ptr_type pDisp = NewDispenser();
+            provider.RegisterObject(pDisp);
+            return pDisp.Get();
         }
 
     private:
-        friend typename runtime_host_type;
+        friend typename metadata_info_previous_type;
 
-        boost::shared_ptr<metadata_dispenser_type> NewDispenser() const
+        metadata_dispenser_temp_ptr_type NewDispenser() const
         {
             metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            metadata_info_chain_type &chain = ChainFrom<runtime_host_type>();
+            metadata_info_chain_type &chain = ChainFrom<metadata_info_previous_type>();
             return chain.NewObject<metadata_dispenser_type>(provider);
         }
     };

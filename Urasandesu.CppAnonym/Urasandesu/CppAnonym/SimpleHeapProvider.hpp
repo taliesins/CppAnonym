@@ -25,12 +25,12 @@ namespace Urasandesu { namespace CppAnonym {
         namespace mpl = boost::mpl;
         using namespace boost;
 
-        template<class ObjectTagSequence, class I, class IEnd>
+        template<class ProvidingObjectTagTypes, class I, class IEnd>
         class ATL_NO_VTABLE SimpleHeapProviderImpl : 
-            public SimpleHeapProviderImpl<ObjectTagSequence, typename mpl::next<I>::type, IEnd>
+            public SimpleHeapProviderImpl<ProvidingObjectTagTypes, typename mpl::next<I>::type, IEnd>
         {
         public:
-            typedef SimpleHeapProviderImpl<ObjectTagSequence, I, IEnd> this_type;
+            typedef SimpleHeapProviderImpl<ProvidingObjectTagTypes, I, IEnd> this_type;
             typedef typename mpl::deref<I>::type object_tag_type;
             typedef typename object_tag_type::object_type object_type;
             typedef typename object_tag_type::tag_type tag_type;
@@ -53,44 +53,56 @@ namespace Urasandesu { namespace CppAnonym {
             shared_ptr<object_heap_type> m_pHeap;
         };
 
-        template<class ObjectTagSequence>
-        class ATL_NO_VTABLE SimpleHeapProviderImpl<ObjectTagSequence, 
-                                             typename Traits::DistinctEnd<ObjectTagSequence>::type, 
-                                             typename Traits::DistinctEnd<ObjectTagSequence>::type> : 
+        template<class ProvidingObjectTagTypes>
+        class ATL_NO_VTABLE SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
+                                                   typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type, 
+                                                   typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type> : 
             noncopyable
+        {
+        };
+
+        template<class ObjectTag, class T>
+        struct HasObjectT : 
+            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(ObjectTag, object_type, ObjectTag)::type, T>
         {
         };
 
     }   // namespace Detail
 
 
-    template<class ObjectTagSequence>
+    template<class ProvidingObjectTagTypes>
     class ATL_NO_VTABLE SimpleHeapProvider : 
-        public Detail::SimpleHeapProviderImpl<ObjectTagSequence, 
-                                 typename Traits::DistinctBegin<ObjectTagSequence>::type, 
-                                 typename Traits::DistinctEnd<ObjectTagSequence>::type>
+        public Detail::SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
+                                              typename Traits::DistinctBegin<ProvidingObjectTagTypes>::type, 
+                                              typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type>
     {
     public:
-        typedef SimpleHeapProvider<ObjectTagSequence> this_type;
+        typedef SimpleHeapProvider<ProvidingObjectTagTypes> this_type;
+        typedef ProvidingObjectTagTypes providing_object_tag_types;
 
-        template<class ObjectTag>
-        struct provider_of
+        template<LONG N>
+        class providing_type_at
         {
-            typedef Detail::SimpleHeapProviderImpl<
-                ObjectTagSequence,
-                typename boost::mpl::find<
-                    typename Traits::Distinct<ObjectTagSequence>::type,
-                    ObjectTag
-                >::type,
-                typename Traits::DistinctEnd<ObjectTagSequence>::type
-            > type;
+            typedef typename boost::mpl::at_c<providing_object_tag_types, N>::type providing_object_tag_type;
+        public:
+            typedef typename providing_object_tag_type::object_type type;
         };
 
-        template<class ObjectTag>
-        inline typename provider_of<ObjectTag>::type &ProviderOf() const
+        template<class ProvidingType>
+        class provider_of
+        {
+            typedef typename Traits::Distinct<providing_object_tag_types>::type distinct_providing_object_tag_types;
+            typedef typename boost::mpl::find_if<distinct_providing_object_tag_types, Detail::HasObjectT<boost::mpl::_1, ProvidingType> >::type i;
+            typedef typename Traits::DistinctEnd<providing_object_tag_types>::type i_end;
+        public:
+            typedef Detail::SimpleHeapProviderImpl<providing_object_tag_types, i, i_end> type;
+        };
+
+        template<class ProvidingType>
+        inline typename provider_of<ProvidingType>::type &ProviderOf() const
         {
             this_type *pMutableThis = const_cast<this_type *>(this);
-            return static_cast<typename provider_of<ObjectTag>::type &>(*pMutableThis);
+            return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
         }
     };
 
