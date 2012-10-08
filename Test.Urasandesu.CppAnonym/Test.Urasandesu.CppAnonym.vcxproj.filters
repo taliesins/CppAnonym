@@ -55,6 +55,9 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Metadata">
       <UniqueIdentifier>{0dc08d80-cfdd-4128-993a-4f85a933be98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders">
+      <UniqueIdentifier>{3c5fe958-00c3-4ea0-9d45-b9eaf1290c86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -161,9 +164,6 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Fusion</Filter>
     </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiHolder.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
     </ClCompile>
@@ -196,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\Instruction.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

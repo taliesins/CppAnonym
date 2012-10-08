@@ -10,12 +10,12 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
@@ -26,51 +26,51 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEKEYAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameKeyApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEKEYAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameKeyApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEKEYAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEKEYLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameKeyLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/TypeMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyNameMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct AssemblyMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, AssemblyMetadataApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyMetadataApiHolderLabel, ApiLabel>
     {
     };
 
@@ -82,18 +82,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public HeapProvider<
             mdToken, 
             boost::mpl::vector<
-                typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, TypeMetadataLabel>::type, 
-                typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, AssemblyNameMetadataLabel>::type 
+                typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type, 
+                typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::AssemblyNameMetadataLabel>::type 
             >
         >
     {
     public:
         typedef BaseAssemblyMetadata<AssemblyMetadataApiHolder> this_type;
         
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
         typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataImport2>::type metadata_import_api_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, TypeMetadataLabel>::type type_metadata_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
 
         BaseAssemblyMetadata() : 
             m_pMetaDisp(NULL), 

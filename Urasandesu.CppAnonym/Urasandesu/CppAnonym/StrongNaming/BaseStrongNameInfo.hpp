@@ -14,35 +14,41 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEKEYLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameKeyLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct StrongNameInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::StrongNameInfoApiHolderLabel, ApiLabel>
+    {
+    };
 
     template<
         class StrongNameInfoApiHolder
@@ -53,8 +59,8 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     public:
         typedef BaseStrongNameInfo<StrongNameInfoApiHolder> this_type;
 
-        typedef typename Traits::ApiAt<StrongNameInfoApiHolder, StrongNameInfoApiHolderLabel, Hosting::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename Traits::ApiAt<StrongNameInfoApiHolder, StrongNameInfoApiHolderLabel, StrongNameKeyLabel>::type strong_name_key_type;
+        typedef typename StrongNameInfoApiAt<StrongNameInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
+        typedef typename StrongNameInfoApiAt<StrongNameInfoApiHolder, Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
 
         BaseStrongNameInfo() : 
             m_pRuntimeHost(NULL)

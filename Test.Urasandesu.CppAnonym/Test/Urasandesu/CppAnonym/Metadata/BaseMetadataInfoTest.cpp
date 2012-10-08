@@ -16,12 +16,12 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
@@ -33,7 +33,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     template<
         class HostInfoApiHolder
     >
-    class BaseTestRuntimeHostProto07F03042
+    class BaseTestRuntimeHost
     {
     };
 
@@ -54,13 +54,13 @@ namespace {
 
         struct TestMetadataDispenserApi
         {
-            typedef mpl::map<mpl::pair<MetadataInfoLabel, BaseMetadataInfo<TestMetadataInfoApi>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::MetadataInfoLabel, BaseMetadataInfo<TestMetadataInfoApi>>> api_cartridges;
         };
 
         struct TestMetadataInfoApi
         {
-            typedef mpl::map<mpl::pair<Hosting::RuntimeHostLabel, Hosting::BaseTestRuntimeHostProto07F03042<mpl::void_>>, 
-                             mpl::pair<MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::BaseTestRuntimeHost<mpl::void_>>, 
+                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi>>> api_cartridges;
         };
 
         typedef BaseMetadataInfo<TestMetadataInfoApi> MetadataInfo;

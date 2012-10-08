@@ -16,12 +16,12 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEKEYAPIHOLDER_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameKeyApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEKEYAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolder.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
@@ -29,13 +29,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     template<
         class HostInfoApiHolder
     >
-    class BaseRuntimeHost
+    class BaseTestRuntimeHost
     {
     };
-
-    struct RuntimeHostApiHolderLabel { };
-
-    struct DefaultRuntimeHostApiHolder : RuntimeHostApiHolderLabel { };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

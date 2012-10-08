@@ -8,8 +8,8 @@
 #include <Urasandesu/CppAnonym/IHeapContent.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_DEFAULTHOSTINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultHostInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTHOSTINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultHostInfoApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_H
@@ -17,7 +17,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolder.h>
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOST_HPP
@@ -51,12 +51,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct DefaultMetadataInfoApiHolder { };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-namespace Urasandesu { namespace CppAnonym { namespace Fusion {
-
-    struct DefaultFusionInfoApiHolder { };
-        
-}}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseHostInfoTest.*
 namespace {

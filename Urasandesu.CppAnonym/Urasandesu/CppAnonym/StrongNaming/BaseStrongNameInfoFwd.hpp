@@ -2,14 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
 #define URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolderFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
     template<
-        class StrongNameInfoApiHolder = DefaultStrongNameInfoApiHolder
+        class StrongNameInfoApiHolder = ApiHolders::DefaultStrongNameInfoApiHolder
     >    
     class BaseStrongNameInfo;
 

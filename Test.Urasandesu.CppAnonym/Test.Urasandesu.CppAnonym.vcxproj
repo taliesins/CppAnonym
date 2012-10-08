@@ -97,8 +97,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\AssemblyInfo.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\DefaultFusionInfoApiHolder.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\Instruction.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp" />

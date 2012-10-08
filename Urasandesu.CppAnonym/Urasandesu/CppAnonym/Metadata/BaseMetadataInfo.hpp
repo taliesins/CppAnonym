@@ -14,39 +14,45 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolderFwd.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct MetadataInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataInfoApiHolderLabel, ApiLabel>
+    {
+    };
 
     template<
         class MetadataInfoApiHolder
@@ -57,8 +63,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
 
-        typedef typename Traits::ApiAt<MetadataInfoApiHolder, MetadataInfoApiHolderLabel, Hosting::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename Traits::ApiAt<MetadataInfoApiHolder, MetadataInfoApiHolderLabel, MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
+        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
         
         BaseMetadataInfo() : 
             m_pRuntimeHost(NULL)

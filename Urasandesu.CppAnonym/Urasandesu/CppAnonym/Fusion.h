@@ -6,12 +6,12 @@
 #include <Urasandesu/CppAnonym/Fusion/FusionDependsOn.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_FUSIONINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Fusion/FusionInfoApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
@@ -22,8 +22,8 @@
 #include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_FUSIONINFOLABEL_HPP
-#include <Urasandesu/CppAnonym/Fusion/FusionInfoLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP

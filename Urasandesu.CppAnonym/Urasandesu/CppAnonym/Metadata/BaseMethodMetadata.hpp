@@ -26,16 +26,16 @@
 #include <Urasandesu/CppAnonym/SimpleBlobFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METHODNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MethodNameMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/TypeMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METHODMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MethodMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodMetadataApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATAFWD_HPP
@@ -46,7 +46,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct MethodMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, MethodMetadataApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodMetadataApiHolderLabel, ApiLabel>
     {
     };
 
@@ -54,14 +54,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         class MethodMetadataApiHolder
     >    
     class BaseMethodMetadata : 
-        public IHeapContent<typename MethodMetadataApiAt<MethodMetadataApiHolder, MethodNameMetadataLabel>::type>
+        public IHeapContent<typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type>
     {
     public:
         typedef BaseMethodMetadata<MethodMetadataApiHolder> this_type;
 
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, TypeMetadataLabel>::type type_metadata_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
         typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, IMetaDataImport2>::type metadata_import_api_type;
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, MethodNameMetadataLabel>::type method_name_metadata_type;
+        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type method_name_metadata_type;
 
         BaseMethodMetadata() : 
             m_pTypeMeta(NULL)

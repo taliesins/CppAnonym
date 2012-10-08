@@ -18,20 +18,20 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolderFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP
 #include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_FUSIONINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/FusionInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFOFWD_HPP
@@ -42,15 +42,15 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct RuntimeHostApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, RuntimeHostApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::RuntimeHostApiHolderLabel, ApiLabel>
     {
     };
 
@@ -62,18 +62,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::StrongNameInfoLabel>::type, 
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::MetadataInfoLabel>::type, 
-                typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::FusionInfoLabel>::type
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type, 
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type, 
+                typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type
             >
         >
     {
     public:
         typedef BaseRuntimeHost<RuntimeHostApiHolder> this_type;
         
-        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::StrongNameInfoLabel>::type strong_name_info_type;
-        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::MetadataInfoLabel>::type metadata_info_type;
-        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::FusionInfoLabel>::type fusion_info_type;
+        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
+        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Metadata::Interfaces::MetadataInfoLabel>::type metadata_info_type;
+        typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, Fusion::Interfaces::FusionInfoLabel>::type fusion_info_type;
 
         BaseRuntimeHost() : 
             m_corVersionInitialized(false), 

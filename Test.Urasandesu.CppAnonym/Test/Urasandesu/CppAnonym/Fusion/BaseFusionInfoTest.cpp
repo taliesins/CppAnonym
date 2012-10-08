@@ -52,7 +52,7 @@ namespace {
         struct TestFusionInfoApi
         {
             //typedef INT runtime_host_api_type;
-            typedef mpl::map<mpl::pair<Hosting::RuntimeHostLabel, Hosting::BaseTestRuntimeHost<mpl::void_>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::BaseTestRuntimeHost<mpl::void_>>> api_cartridges;
         };
         typedef BaseFusionInfo<TestFusionInfoApi> FusionInfo;
         typedef FusionInfo::runtime_host_type RuntimeHost;
@@ -86,7 +86,7 @@ namespace {
         struct TestFusionInfoApi
         {
             //typedef INT runtime_host_api_type;
-            typedef mpl::map<mpl::pair<Hosting::RuntimeHostLabel, Hosting::BaseTestRuntimeHost<mpl::void_>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Hosting::Interfaces::RuntimeHostLabel, Hosting::BaseTestRuntimeHost<mpl::void_>>> api_cartridges;
         };
         typedef BaseFusionInfo<TestFusionInfoApi> FusionInfo;
         typedef FusionInfo::runtime_host_type RuntimeHost;

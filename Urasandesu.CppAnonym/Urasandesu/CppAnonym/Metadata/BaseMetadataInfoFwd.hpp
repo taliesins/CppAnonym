@@ -2,14 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
 #define URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolderFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
-        class MetadataInfoApiHolder = DefaultMetadataInfoApiHolder
+        class MetadataInfoApiHolder = ApiHolders::DefaultMetadataInfoApiHolder
     >    
     class BaseMetadataInfo;
 

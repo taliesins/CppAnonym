@@ -18,29 +18,37 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolderFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP
 #include <Urasandesu/CppAnonym/Fusion/BaseFusionInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_FUSIONINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Fusion/FusionInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_FUSION_INTERFACES_FUSIONINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoApiHolderLabelFwd.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFOFWD_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyInfoFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-    class AssemblyInfo;
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct FusionInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::FusionInfoApiHolderLabel, ApiLabel>
+    {
+    };
 
     template<
         class FusionInfoApiHolder
@@ -49,7 +57,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
         public IHeapContent<std::wstring>
     {
     public:
-        typedef typename Traits::ApiAt<FusionInfoApiHolder, FusionInfoApiHolderLabel, Hosting::RuntimeHostLabel>::type runtime_host_type;
+        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
 
         BaseFusionInfo() : 
             m_pRuntimeHost(NULL)

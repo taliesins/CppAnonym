@@ -10,23 +10,29 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYFWD_HPP
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEKEYAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameKeyApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyApiHolderLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct StrongNameKeyApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::StrongNameKeyApiHolderLabel, ApiLabel>
+    {
+    };
 
     template<
         class StrongNameKeyApiHolder
@@ -36,7 +42,7 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
     public:
         typedef BaseStrongNameKey<StrongNameKeyApiHolder> this_type;
         
-        typedef typename Traits::ApiAt<StrongNameKeyApiHolder, StrongNameKeyApiHolderLabel, StrongNameInfoLabel>::type strong_name_info_type;
+        typedef typename StrongNameKeyApiAt<StrongNameKeyApiHolder, Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
         
         BaseStrongNameKey() : 
             m_pSnInfo(NULL), 

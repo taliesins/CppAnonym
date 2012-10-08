@@ -54,14 +54,14 @@ namespace {
             AssemblyMetadataApiHolderLabel
         {
             typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
-            typedef mpl::map<mpl::pair<MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi>>, 
+            typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi>>, 
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
         };
 
         struct TestMetadataDispenserApi
         {
-            typedef mpl::map<mpl::pair<MetadataInfoLabel, BaseTestMetadataInfoProtoB8DF5A21<mpl::void_>>, 
-                             mpl::pair<AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::MetadataInfoLabel, BaseTestMetadataInfoProtoB8DF5A21<mpl::void_>>, 
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>> api_cartridges;
         };
         typedef BaseMetadataDispenser<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;

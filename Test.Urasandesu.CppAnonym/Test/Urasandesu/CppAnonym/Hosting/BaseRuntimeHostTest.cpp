@@ -5,7 +5,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolder.h>
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOST_HPP
@@ -16,8 +16,8 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTFUSIONINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Fusion/DefaultFusionInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
@@ -28,16 +28,16 @@
 #include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATAINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFO_HPP

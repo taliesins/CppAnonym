@@ -14,8 +14,8 @@
 #include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/TypeMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATAFWD_HPP
@@ -30,8 +30,8 @@
 #include <Urasandesu/CppAnonym/Utilities/EqualToFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METHODNAMEMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MethodNameMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODNAMEMETADATAFWD_HPP
@@ -90,6 +90,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct MethodNameMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodNameMetadataApiHolderLabel, ApiLabel>
+    {
+    };
+
     template<
         class MethodNameMetadataApiHolder
     >    
@@ -98,7 +104,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseMethodNameMetadata<MethodNameMetadataApiHolder> this_type;
 
-        typedef typename Traits::ApiAt<MethodNameMetadataApiHolder, MethodNameMetadataApiHolderLabel, TypeMetadataLabel>::type type_metadata_type;
+        typedef typename MethodNameMetadataApiAt<MethodNameMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
 
         typedef typename std::vector<type_metadata_type const *>::iterator param_types_iterator;
         typedef typename std::vector<type_metadata_type const *>::const_iterator param_types_const_iterator;

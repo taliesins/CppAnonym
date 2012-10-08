@@ -22,12 +22,12 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_TYPEMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/TypeMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HASHFWD_HPP
@@ -38,12 +38,12 @@
 #include <Urasandesu/CppAnonym/Utilities/EqualToFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METHODNAMEMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MethodNameMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METHODMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MethodMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodMetadataLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATAFWD_HPP
@@ -54,7 +54,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct TypeMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, TypeMetadataApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::TypeMetadataApiHolderLabel, ApiLabel>
     {
     };
     
@@ -64,24 +64,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class BaseTypeMetadata : 
         public IHeapContent<mdToken>, 
         public HeapProvider<
-            typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodNameMetadataLabel>::type,
+            typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type,
             boost::mpl::vector<
-                typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodMetadataLabel>::type
+                typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type
             >,
-            Utilities::Hash<typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodNameMetadataLabel>::type>,
+            Utilities::Hash<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type>,
             Utilities::EqualTo<
-                typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodNameMetadataLabel>::type, 
-                typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodNameMetadataLabel>::type
+                typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type, 
+                typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type
             >
         >
     {
     public:
         typedef BaseTypeMetadata<TypeMetadataApiHolder> this_type;
         
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type metadata_import_api_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodMetadataLabel>::type method_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodNameMetadataLabel>::type method_key_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type method_key_type;
 
         BaseTypeMetadata() : 
             IHeapContent(), 

@@ -14,30 +14,33 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_HOSTING_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Hosting/RuntimeHostApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_RUNTIMEHOSTAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Hosting/Interfaces/RuntimeHostApiHolderLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    struct DefaultHostInfoApiHolder;
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct HostInfoApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::HostInfoApiHolderLabel, ApiLabel>
+    {
+    };
 
-    
     template<
-        class HostInfoApiHolder = DefaultHostInfoApiHolder
+        class HostInfoApiHolder = ApiHolders::DefaultHostInfoApiHolder
     >    
     class BaseHostInfo : 
         public HeapProvider<
             std::wstring, 
             boost::mpl::vector<
-                typename Traits::ApiAt<HostInfoApiHolder, HostInfoApiHolderLabel, RuntimeHostLabel>::type
+                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type
             > 
         >
     {
     public:
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
 
-        typedef typename Traits::ApiAt<HostInfoApiHolder, HostInfoApiHolderLabel, RuntimeHostLabel>::type runtime_host_type;
+        typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type runtime_host_type;
 
         runtime_host_type const *GetRuntime(std::wstring const &version) const
         {

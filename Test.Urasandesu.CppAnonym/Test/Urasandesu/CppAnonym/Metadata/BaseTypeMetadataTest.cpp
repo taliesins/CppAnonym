@@ -12,16 +12,16 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTTYPEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultTypeMetadataApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeMetadataApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETHODMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMethodMetadataApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodMetadataApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
@@ -84,16 +84,20 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODNAMEMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
 #endif
 
 namespace {
@@ -122,7 +126,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     //    mutable std::wstring m_name;
     //};
 
-    struct AssemblyMetadataApiHolderLabel { };
+    //struct AssemblyMetadataApiHolderLabel { };
 
     template<
         class TestAssemblyMetadataApiType
@@ -132,12 +136,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseTestAssemblyMetadata<TestAssemblyMetadataApiType> this_type;
 
-        typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, AssemblyMetadataApiHolderLabel, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, Interfaces::AssemblyMetadataApiHolderLabel, IMetaDataImport2>::type metadata_import_api_type;
 
         //typedef typename Traits::ExternalApiOrDefault<TestAssemblyMetadataApiType, AssemblyMetadataApiHolderLabel, AssemblyNameMetadataApiHolderLabel>::type assembly_name_metadata_api_type;
         //typedef BaseAssemblyNameMetadata<assembly_name_metadata_api_type> assembly_name_metadata_type;
 
-        typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, AssemblyMetadataApiHolderLabel, TypeMetadataLabel>::type type_metadata_type;
+        typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, Interfaces::AssemblyMetadataApiHolderLabel, Interfaces::TypeMetadataLabel>::type type_metadata_type;
 
         template<class T>
         T const *FindType() const 
@@ -192,13 +196,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     template<
         class TestMetadataDispenserApiType
     >    
-    class BaseTestMetadataDispenser : 
-        MetadataDispenserLabel
+    class BaseTestMetadataDispenser
     {
     public:
         typedef BaseTestMetadataDispenser<TestMetadataDispenserApiType> this_type;
 
-        typedef typename Traits::ApiAt<TestMetadataDispenserApiType, MetadataDispenserApiHolderLabel, AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename Traits::ApiAt<TestMetadataDispenserApiType, Interfaces::MetadataDispenserApiHolderLabel, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         
         assembly_metadata_type const *LoadAssembly(std::wstring const &name) const
         {
@@ -254,7 +257,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct DefaultILGeneratorApiProtoB8DF5A21 : 
         IILGeneratorApi
     { 
-        typedef boost::mpl::vector<DefaultMethodMetadataApiHolder> external_api_types;
+        typedef boost::mpl::vector<ApiHolders::DefaultMethodMetadataApiHolder> external_api_types;
     };
 
     template<
@@ -270,10 +273,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseILGeneratorProtoB8DF5A21<ILGeneratorApiType> this_type;
 
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, MethodMetadataLabel>::type method_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, TypeMetadataLabel>::type type_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::MethodMetadataLabel>::type method_metadata_type;
+        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename Traits::ApiAt<ILGeneratorApiType, IILGeneratorApi, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
 
         typedef ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator> instruction_obj_tag_type;
         typedef typename type_decided_by<instruction_obj_tag_type>::type instruction_heap_type;
@@ -703,18 +706,18 @@ namespace {
 
         struct TestMetadataDispenserApiHolder
         {
-            typedef mpl::map<mpl::pair<AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>, 
-                             mpl::pair<AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>, 
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>> api_cartridges;
         };
 
         struct TestTypeMetadataApiHolder;
     
         struct TestAssemblyMetadataApiHolder
         {
-            typedef mpl::map<mpl::pair<TypeMetadataApiHolderLabel, TestTypeMetadataApiHolder>,
-                             mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
+            typedef mpl::map<mpl::pair<Interfaces::TypeMetadataApiHolderLabel, TestTypeMetadataApiHolder>,
+                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>> api_cartridges;
+                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>> api_cartridges;
         };
 
         struct TestMethodMetadataApiHolder;
@@ -722,35 +725,35 @@ namespace {
 
         struct TestMethodNameMetadataApiHolder
         {
-            typedef mpl::map<mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> > > api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> > > api_cartridges;
         };
 
         struct TestTypeMetadataApiHolder
         {
             typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
-                             mpl::pair<MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
+                             mpl::pair<Interfaces::AssemblyMetadataApiHolderLabel, TestAssemblyMetadataApiHolder>,
+                             mpl::pair<Interfaces::MethodMetadataApiHolderLabel, TestMethodMetadataApiHolder>, 
                              mpl::pair<IILGeneratorApi, TestILGeneratorApiHolder>, 
-                             mpl::pair<AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
-                             mpl::pair<MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
-                             mpl::pair<MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
-                             mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >,
-                             mpl::pair<MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder> >, 
+                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodMetadataApiHolder> >, 
+                             mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder> >, 
+                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >,
+                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
         };
 
         struct TestMethodMetadataApiHolder
         {
             typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >, 
-                             mpl::pair<MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
+                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder> >, 
+                             mpl::pair<Interfaces::MethodNameMetadataLabel, BaseMethodNameMetadata<TestMethodNameMetadataApiHolder> > > api_cartridges;
         };
 
         struct TestILGeneratorApiHolder
         {
-            typedef mpl::map<mpl::pair<MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>,
-                             mpl::pair<AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>, 
-                             mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
-                             mpl::pair<MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenser<TestMetadataDispenserApiHolder>>,
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseTestAssemblyMetadata<TestAssemblyMetadataApiHolder>>, 
+                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApiHolder>>, 
+                             mpl::pair<Interfaces::MethodMetadataLabel, BaseMethodMetadata<TestMethodMetadataApiHolder>>> api_cartridges;
         };
 
         typedef BaseILGeneratorProtoB8DF5A21<TestILGeneratorApiHolder> ILGenerator;

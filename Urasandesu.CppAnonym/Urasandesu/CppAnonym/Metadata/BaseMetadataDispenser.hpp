@@ -22,43 +22,43 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataInfoApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATAINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTMETADATADISPENSERAPIHOLDERFWD_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultMetadataDispenserApiHolderFwd.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDERFWD_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolderFwd.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADISPENSERAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/MetadataDispenserApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabelFwd.hpp>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct MetadataDispenserApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, MetadataDispenserApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataDispenserApiHolderLabel, ApiLabel>
     {
     };
 
@@ -69,15 +69,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public HeapProvider<
             mdAssembly, 
             boost::mpl::vector<
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, AssemblyMetadataLabel>::type
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type
             >
         >
     {
     public:
         typedef BaseMetadataDispenser<MetadataDispenserApiHolder> this_type;
 
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, MetadataInfoLabel>::type metadata_info_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type metadata_info_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
 
         BaseMetadataDispenser() : 
             m_pMetaInfo(NULL)

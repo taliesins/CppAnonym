@@ -10,20 +10,20 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystemFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEINFOLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameInfoLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMEKEYLABELFWD_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNameKeyLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABELFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYMETADATALABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyMetadataLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabelFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_ASSEMBLYNAMEMETADATAAPIHOLDERLABELFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/AssemblyNameMetadataApiHolderLabelFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAAPIHOLDERLABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataApiHolderLabelFwd.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATAFWD_HPP
@@ -34,7 +34,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
     struct AssemblyNameMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, AssemblyNameMetadataApiHolderLabel, ApiLabel>
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyNameMetadataApiHolderLabel, ApiLabel>
     {
     };
 
@@ -47,10 +47,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     public:
         typedef BaseAssemblyNameMetadata<AssemblyNameMetadataApiHolder> this_type;
 
-        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, IMetaDataAssemblyImport>::type metadata_assembly_import_api_type;
-        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::StrongNameInfoLabel>::type strong_name_info_type;
-        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::StrongNameKeyLabel>::type strong_name_key_type;
+        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
+        typedef typename AssemblyNameMetadataApiAt<AssemblyNameMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
 
         BaseAssemblyNameMetadata() : 
             m_pAsmMeta(NULL), 

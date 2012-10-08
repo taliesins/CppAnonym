@@ -12,16 +12,16 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameInfoApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_DEFAULTSTRONGNAMEKEYAPIHOLDER_H
-#include <Urasandesu/CppAnonym/StrongNaming/DefaultStrongNameKeyApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEKEYAPIHOLDER_H
+#include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameKeyApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPIPROTO07F03042_H
-#include <Urasandesu/CppAnonym/Hosting/DefaultRuntimeHostApiHolder.h>
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
@@ -40,12 +40,12 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultAssemblyMetadataApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_DEFAULTTYPEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/DefaultTypeMetadataApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeMetadataApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
@@ -256,19 +256,15 @@ namespace {
         struct TestTypeMetadataApi
         {
             typedef INT method_metadata_api_type;
-            typedef boost::mpl::vector<TestAssemblyMetadataApi, 
-                                       IMetaDataImport2, 
-                                       BaseAssemblyMetadata<TestAssemblyMetadataApi>> external_api_types;
             typedef mpl::map<mpl::pair<IMetaDataImport2, IMetaDataImport2>, 
-                             mpl::pair<AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>> api_cartridges;
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>> api_cartridges;
         };
 
         struct TestAssemblyMetadataApi
         {
             typedef INT metadata_dispenser_api_type;
-            typedef boost::mpl::vector<IMetaDataImport2, TestTypeMetadataApi> external_api_types;
-            typedef mpl::map<mpl::pair<AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<>>, 
-                             mpl::pair<TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApi>>, 
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<>>, 
+                             mpl::pair<Interfaces::TypeMetadataLabel, BaseTypeMetadata<TestTypeMetadataApi>>, 
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
         };
 
@@ -311,14 +307,14 @@ namespace {
 
         struct TestAssemblyNameMetadataApi
         {
-            typedef mpl::map<mpl::pair<AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
                              mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>> api_cartridges;
         };
 
         struct TestAssemblyMetadataApi
         {
-            typedef mpl::map<mpl::pair<AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
-                             mpl::pair<MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>, 
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
+                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>, 
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
         };
 
@@ -360,18 +356,16 @@ namespace {
 
         struct TestAssemblyNameMetadataApi
         {
-            typedef boost::mpl::vector<TestAssemblyMetadataApi, IMetaDataAssemblyImport> external_api_types;
-            typedef mpl::map<mpl::pair<AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
-                             mpl::pair<StrongNaming::StrongNameInfoLabel, StrongNaming::BaseStrongNameInfo<>>, 
-                             mpl::pair<StrongNaming::StrongNameKeyLabel, StrongNaming::BaseStrongNameKey<>>, 
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
+                             mpl::pair<StrongNaming::Interfaces::StrongNameInfoLabel, StrongNaming::BaseStrongNameInfo<>>, 
+                             mpl::pair<StrongNaming::Interfaces::StrongNameKeyLabel, StrongNaming::BaseStrongNameKey<>>, 
                              mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>> api_cartridges;
         };
 
         struct TestAssemblyMetadataApi
         {
-            typedef boost::mpl::vector<TestAssemblyNameMetadataApi, IMetaDataImport2> external_api_types;
-            typedef mpl::map<mpl::pair<AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
-                             mpl::pair<MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>,
+            typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
+                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>,
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
         };
 
