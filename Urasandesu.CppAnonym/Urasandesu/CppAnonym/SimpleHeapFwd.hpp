@@ -5,6 +5,7 @@
 namespace Urasandesu { namespace CppAnonym {
     
     struct DefaultHeap;
+    struct DefaultHeapWithoutSubscriptOperator;
     struct QuickHeap;
     struct QuickHeapWithoutSubscriptOperator;
     struct VeryQuickHeapButMustUseSubscriptOperator;    // Very quick version for small objects allocation.

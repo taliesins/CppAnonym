@@ -323,6 +323,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
                 }
             }
+            else if (TypeFromToken(mdtTarget) == mdtGenericParam)
+            {
+                ULONG paramIndex = 0;
+                DWORD paramFlags = 0;
+                mdToken mdtOwner = mdTokenNil;
+                DWORD reserved = 0;
+                WCHAR name[MAX_SYM_NAME] = { 0 };
+                ULONG nameSize = sizeof(name);
+                HRESULT hr = comMetaImp.GetGenericParamProps(mdtTarget, &paramIndex, 
+                                                             &paramFlags, &mdtOwner, 
+                                                             &reserved, name, nameSize, 
+                                                             &nameSize);
+                if (FAILED(hr))
+                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+                
+                m_name = name;
+            }
             else
             {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());

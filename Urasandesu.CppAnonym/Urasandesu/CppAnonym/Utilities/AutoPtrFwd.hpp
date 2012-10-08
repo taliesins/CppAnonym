@@ -6,16 +6,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace AutoPtrDetail {
 
-        struct Holder;
+        struct AutoPtrHolder;
 
         template<class U> 
-        struct HolderAccessor;
+        struct AutoPtrHolderAccessor;
 
         template<class T, class D>
-        struct HolderImpl;
+        struct AutoPtrHolderImpl;
 
         template<class T, class D>
-        struct HolderImplFactory;
+        struct AutoPtrHolderImplFactory;
 
         template<class T>
         class AutoPtrImpl;
@@ -24,12 +24,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     template<class T>
     struct AutoPtr;
-
-    template<class T>
-    class SemiAutoPtr;
-
-    template<class T>
-    class TempPtr;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 

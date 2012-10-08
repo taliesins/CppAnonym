@@ -6,19 +6,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace SemiAutoPtrDetail {
 
-        struct Holder;
+        struct SemiAutoPtrHolder;
 
-        template<class U> 
-        struct HolderAccessor;
-
-        template<class T, class D>
-        struct HolderImpl;
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SemiAutoPtrImpl, factory_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SemiAutoPtrImpl, factory_type);
 
         template<class T, class D>
-        struct HolderImplFactory;
+        struct SemiAutoPtrHolderImpl;
+
+        template<class T, class D>
+        struct SemiAutoPtrHolderImplFactory;
 
         template<class T>
-        class AutoPtrImpl;
+        class SemiAutoPtrImpl;
 
     }   // namespace SemiAutoPtrDetail {
 

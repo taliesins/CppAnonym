@@ -20,7 +20,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _F67D7870 {
+    namespace SimpleHeapProviderDetail {
         
         namespace mpl = boost::mpl;
         using namespace boost;
@@ -85,12 +85,12 @@ namespace Urasandesu { namespace CppAnonym {
             typedef SimpleHeapProviderImpl<ProvidingObjectTagTypes, i, i_end> type;
         };
 
-    }   // namespace _F67D7870
+    }   // namespace SimpleHeapProviderDetail
 
 
     template<class ProvidingObjectTagTypes>
     class ATL_NO_VTABLE SimpleHeapProvider : 
-        public _F67D7870::SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
+        public SimpleHeapProviderDetail::SimpleHeapProviderImpl<ProvidingObjectTagTypes, 
                                                  typename Traits::DistinctBegin<ProvidingObjectTagTypes>::type, 
                                                  typename Traits::DistinctEnd<ProvidingObjectTagTypes>::type>
     {
@@ -100,13 +100,13 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<LONG N>
         class providing_type_at : 
-            public _F67D7870::ProvidingTypeAtImpl<ProvidingObjectTagTypes, N>
+            public SimpleHeapProviderDetail::ProvidingTypeAtImpl<ProvidingObjectTagTypes, N>
         {
         };
 
         template<class ProvidingType>
         class provider_of : 
-            public _F67D7870::ProviderOfImpl<ProvidingObjectTagTypes, ProvidingType>
+            public SimpleHeapProviderDetail::ProviderOfImpl<ProvidingObjectTagTypes, ProvidingType>
         {
         };
 

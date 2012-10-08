@@ -101,9 +101,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             module_metadata_type *pExistingMod = NULL;
             if (!TryGetModule(*pMod, pExistingMod))
             {
-                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
-                module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-                m_modToIndex[pMod.Get()] = provider.RegisterObject(pMod);
+                pMod.Persist();
                 return pMod.Get();
             }
             else
@@ -127,11 +125,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         Utilities::TempPtr<module_metadata_type> NewModule(std::wstring const &name) const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
             module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
             assembly_metadata_chain_type &chain = ChainFrom<typename base_type::metadata_dispenser_type>();
-            Utilities::TempPtr<module_metadata_type> pMod = chain.NewObject<module_metadata_type>(provider);
+            TempPtr<module_metadata_type> pMod = chain.NewObject<module_metadata_type>(provider);
             pMod->SetName(name);
+            struct pMod_Persisted
+            {
+                typedef TempPtr<module_metadata_type> sender_type;
+
+                pMod_Persisted(this_type &this_) : 
+                    m_pThis(&this_)
+                { }
+                
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pMod = *pSender;
+                    metadata_dispenser_type const *pDisp = m_pThis->MapFirst<metadata_dispenser_type>();
+                    module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
+                    m_pThis->m_modToIndex[pMod.Get()] = provider.RegisterObject(pMod);
+                }
+                
+                this_type *m_pThis;
+            };
+            pMod.AddPersistedHandler(pMod_Persisted(const_cast<this_type &>(*this)));
             return pMod;
         }
 

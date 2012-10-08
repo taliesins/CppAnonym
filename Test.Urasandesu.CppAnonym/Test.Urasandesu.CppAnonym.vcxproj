@@ -177,6 +177,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributor.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\SemiAutoPtrTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\TempPtrTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

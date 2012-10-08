@@ -94,8 +94,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             assembly_metadata_type *pExistingAsm;
             if (!TryGetAssembly(*pNewAsm, pExistingAsm))
             {
-                assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
-                m_asmToIndex[pNewAsm.Get()] = provider.RegisterObject(pNewAsm);
+                pNewAsm.Persist();
                 return pNewAsm.Get();
             }
             else
@@ -128,10 +127,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         Utilities::TempPtr<assembly_metadata_type> NewAssembly(std::wstring const &fullName) const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
             metadata_dispenser_chain_type &chain = ChainFrom<metadata_dispenser_previous_type>();
             TempPtr<assembly_metadata_type> pAsm = chain.NewObject<assembly_metadata_type>(provider);
             pAsm->SetName(fullName);
+            struct pAsm_Persisted
+            {
+                typedef TempPtr<assembly_metadata_type> sender_type;
+
+                pAsm_Persisted(this_type &this_) : 
+                    m_pThis(&this_)
+                { }
+                
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pAsm = *pSender;
+                    assembly_metadata_provider_type &provider = m_pThis->ProviderOf<assembly_metadata_type>();
+                    m_pThis->m_asmToIndex[pAsm.Get()] = provider.RegisterObject(pAsm);
+                }
+                
+                this_type *m_pThis;
+            };
+            pAsm.AddPersistedHandler(pAsm_Persisted(const_cast<this_type &>(*this)));
             return pAsm;
         }
 

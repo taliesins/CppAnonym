@@ -62,4 +62,8 @@
 #include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_H

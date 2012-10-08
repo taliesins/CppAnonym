@@ -26,6 +26,7 @@
 #include <boost/mpl/filter_view.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/reverse.hpp>
 #include <boost/mpl/transform_view.hpp>
 
 #include <boost/intrusive_ptr.hpp>

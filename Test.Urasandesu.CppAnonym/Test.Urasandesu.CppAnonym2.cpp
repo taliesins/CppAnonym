@@ -1982,6 +1982,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test2.*
 namespace {
 
+    namespace _6C8E937E {
+
+        struct A
+        {
+            template<class T>
+            boost::shared_ptr<T> F(T *p)
+            {
+                return boost::shared_ptr<T>(p);
+            }
+
+            template<class T>
+            void G(T *p)
+            {
+                shared_ptr<T> p_ = F<T>(p);      // ???
+                std::cout << *p_ << std::endl;
+            }
+        }; 
+
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, ADL_Test_01)
+    {
+        using namespace _6C8E937E;
+
+        A().G<int>(new int(10));
+    }
+
+    
+    
+    
+    
     namespace _B3C3B24D {
 
     using namespace Urasandesu::CppAnonym;
@@ -2266,12 +2297,11 @@ namespace {
         typedef MethodMetadataGenerator7FAEDE99 MethodMetadataGenerator;
         typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
-        HostInfo const *pHostInfo = HostInfo::NewHost();
+        HostInfo const *pHostInfo = HostInfo::CreateHost();
 
         RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost != NULL);
 
-#if 0
         MetadataInfo const *pMetaInfo = pRuntimeHost->Map<MetadataInfo>();
         ASSERT_TRUE(pMetaInfo != NULL);
 
@@ -2310,7 +2340,8 @@ namespace {
         ASSERT_TRUE(pFunc1->IsGenericType());
         ASSERT_TRUE(pFunc1->IsGenericTypeDefinition());
         {
-            TempPtrVector<ITypeMetadata const> const &genericArgs = pFunc1->GetGenericArguments();
+            TempPtrVector<ITypeMetadata const> const &genericArgs = pFunc1->GetGenericArguments();  // うーん・・・静的オブジェクトの初期化順序実装依存だって忘れてた・・・もう一回！
+#if 0
             ASSERT_EQ(1, genericArgs.size());
             for (UINT i = 0; i < genericArgs.size(); ++i)
             {
@@ -2323,9 +2354,11 @@ namespace {
                         FAIL() << "We shouldn't get here!!";
                 }
             }
+#endif
         }
         ASSERT_EQ(0x02000058, pFunc1->GetToken());
 
+#if 0
         shared_ptr<TypeMetadata const> pFunc1DateTime;
         {
             std::vector<shared_ptr<ITypeMetadata const> > genericArgs;

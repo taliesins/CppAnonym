@@ -249,15 +249,24 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 // This implementation isn't supported enumerating the objects that was constructed  by it.
                 // Therefore, the such objects must be destructed with the method Delete(T *).
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
+#endif
             }
 
             inline T *New()
             {
                 T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructing..." << std::endl;
+#endif
 #pragma warning(push)
 #pragma warning(disable: 4345)
                 new(pObj)T();
 #pragma warning(pop)
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructed !!" << std::endl;
+#endif
                 return pObj;
             }
 
@@ -265,7 +274,13 @@ namespace Urasandesu { namespace CppAnonym {
             inline T *New(A1 arg1)
             {
                 T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructing..." << std::endl;
+#endif
                 new(pObj)T(arg1);
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructed !!" << std::endl;
+#endif
                 return pObj;
             }
 
@@ -273,14 +288,26 @@ namespace Urasandesu { namespace CppAnonym {
             inline T *New(A1 arg1, A2 arg2)
             {
                 T *pObj = reinterpret_cast<T *>(m_pool.malloc());
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructing..." << std::endl;
+#endif
                 new(pObj)T(arg1, arg2);
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructed !!" << std::endl;
+#endif
                 return pObj;
             }
 
             void Delete(T *pObj)
             {
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is destructing..." << std::endl;
+#endif
                 Utilities::DestructionDistributor<T *>::Destruct(pObj);
                 m_pool.free(pObj);
+#ifdef DEBUG_SIMPLEHEAP
+                std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is destructed !!" << std::endl;
+#endif
             }
             
             void DeleteLast();                      // not supported
@@ -356,6 +383,41 @@ namespace Urasandesu { namespace CppAnonym {
         
         private:
             boost::ptr_vector<T> m_array;
+        };
+    
+        template<class T>
+        class SimpleHeapImpl<T, DefaultHeapWithoutSubscriptOperator>
+        {
+        public:
+            inline T *New()
+            {
+                T *pObj = new T();
+                return pObj;
+            }
+
+            template<class A1>
+            inline T *New(A1 arg1)
+            {
+                T *pObj = new T(arg1);
+                return pObj;
+            }
+
+            template<class A1, class A2>
+            inline T *New(A1 arg1, A2 arg2)
+            {
+                T *pObj = new T(arg1, arg2);
+                return pObj;
+            }
+
+            void Delete(T *pObj)
+            {
+                delete pObj;
+            }
+            
+            void DeleteLast();                      // not supported
+            SIZE_T Size() const;                    // not supported
+            T *operator[] (SIZE_T ix);              // not supported
+            T const *operator[] (SIZE_T ix) const;  // not supported
         };
     }   // namespace Detail
     

@@ -154,6 +154,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         {
             namespace mpl = boost::mpl;
             using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
             
             typedef mpl::find<providing_types, Info>::type I;
             typedef mpl::end<providing_types>::type IEnd;
@@ -165,10 +166,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             if (!TryGetInfo<Info>(pExistingInfo))
             {
                 TempPtr<Info> pNewInfo = NewInfo<Info>();
-                
-                InfoProvider &provider = ProviderOf<Info>();
-                Utilities::TypeInfo key = mpl::identity<Info>();
-                m_infoToIndex[key] = provider.RegisterObject(pNewInfo);
+                pNewInfo.Persist();
                 return pNewInfo.Get();
             }
             else
@@ -185,6 +183,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         {
             namespace mpl = boost::mpl;
             using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
             
             typedef mpl::find<providing_types, Info>::type I;
             typedef mpl::end<providing_types>::type IEnd;
@@ -194,7 +193,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
             InfoProvider &provider = ProviderOf<Info>();
             runtime_host_chain_type &chain = ChainFrom<runtime_host_previous_type>();
-            return chain.NewObject<Info>(provider);
+            TempPtr<Info> pInfo = chain.NewObject<Info>(provider);
+            struct pInfo_Persisted
+            {
+                typedef TempPtr<Info> sender_type;
+
+                pInfo_Persisted(this_type &this_) : 
+                    m_pThis(&this_)
+                { }
+                
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pInfo = *pSender;
+                    InfoProvider &provider = m_pThis->ProviderOf<Info>();
+                    TypeInfo key = mpl::identity<Info>();
+                    m_pThis->m_infoToIndex[key] = provider.RegisterObject(pInfo);
+                }
+                
+                this_type *m_pThis;
+            };
+            pInfo.AddPersistedHandler(pInfo_Persisted(const_cast<this_type &>(*this)));
+            return pInfo;
         }
 
         template<class Info>
@@ -202,6 +221,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         {
             namespace mpl = boost::mpl;
             using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
             
             typedef mpl::find<providing_types, Info>::type I;
             typedef mpl::end<providing_types>::type IEnd;
@@ -209,7 +229,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
             typedef typename provider_of<Info>::type InfoProvider;
 
-            Utilities::TypeInfo key = mpl::identity<Info>();
+            TypeInfo key = mpl::identity<Info>();
             if (m_infoToIndex.find(key) == m_infoToIndex.end())
             {
                 return false;

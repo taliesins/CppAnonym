@@ -94,9 +94,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             type_metadata_type *pExistingType = NULL;
             if (!TryGetType(*pType, pExistingType))
             {
-                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
-                type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-                m_typeToIndex[pType.Get()] = provider.RegisterObject(pType);
+                pType.Persist();
                 return pType.Get();
             }
             else
@@ -132,10 +130,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         Utilities::TempPtr<type_metadata_type> NewTypeCore() const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
             type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
             module_metadata_chain_type &chain = ChainFrom<assembly_metadata_type>();
-            return chain.NewObject<type_metadata_type>(provider);
+            TempPtr<type_metadata_type> pType = chain.NewObject<type_metadata_type>(provider);
+            struct pType_Persisted
+            {
+                typedef TempPtr<type_metadata_type> sender_type;
+
+                pType_Persisted(this_type &this_) : 
+                    m_pThis(&this_)
+                { }
+                
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pType = *pSender;
+                    metadata_dispenser_type const *pDisp = m_pThis->MapFirst<metadata_dispenser_type>();
+                    type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+                    m_pThis->m_typeToIndex[pType.Get()] = provider.RegisterObject(pType);
+                }
+                
+                this_type *m_pThis;
+            };
+            pType.AddPersistedHandler(pType_Persisted(const_cast<this_type &>(*this)));
+            return pType;
         }
 
         bool TryGetType(type_metadata_type const &keyType, type_metadata_type *&pExistingType) const

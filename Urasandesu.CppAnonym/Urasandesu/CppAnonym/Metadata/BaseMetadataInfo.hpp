@@ -59,10 +59,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         metadata_dispenser_type *CreateDispenser() const
         {
-            metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            TempPtr<metadata_dispenser_type> pDisp = NewDispenser();
-            provider.RegisterObject(pDisp);
-            return pDisp.Get();
+            TempPtr<metadata_dispenser_type> pNewDisp = NewDispenser();
+            pNewDisp.Persist();
+            return pNewDisp.Get();
         }
 
     private:
@@ -70,9 +69,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         Utilities::TempPtr<metadata_dispenser_type> NewDispenser() const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
             metadata_info_chain_type &chain = ChainFrom<metadata_info_previous_type>();
-            return chain.NewObject<metadata_dispenser_type>(provider);
+            TempPtr<metadata_dispenser_type> pDisp = chain.NewObject<metadata_dispenser_type>(provider);
+            struct pDisp_Persisted
+            {
+                typedef TempPtr<metadata_dispenser_type> sender_type;
+
+                pDisp_Persisted(this_type &this_) : 
+                    m_pThis(&this_)
+                { }
+                
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pDisp = *pSender;
+                    metadata_dispenser_provider_type &provider = m_pThis->ProviderOf<metadata_dispenser_type>();
+                    provider.RegisterObject(pDisp);
+                }
+                
+                this_type *m_pThis;
+            };
+            pDisp.AddPersistedHandler(pDisp_Persisted(const_cast<this_type &>(*this)));
+            return pDisp;
         }
     };
 

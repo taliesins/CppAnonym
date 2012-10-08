@@ -4,7 +4,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace _F67D7870 {
+    namespace SimpleHeapProviderDetail {
         
         template<class ObjectTagSequence, class I, class IEnd>
         class ATL_NO_VTABLE SimpleHeapProviderImpl;
@@ -15,7 +15,7 @@ namespace Urasandesu { namespace CppAnonym {
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ObjectTag, tag_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ObjectTag, tag_type);
 
-    }   // namespace _F67D7870
+    }   // namespace SimpleHeapProviderDetail
 
 
     template<class ObjectTagSequence>

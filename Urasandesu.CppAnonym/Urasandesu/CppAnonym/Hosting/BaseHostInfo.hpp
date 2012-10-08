@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAININFO_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainInfo.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
 #include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
 #endif
@@ -46,10 +50,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         >,
         public DisposableHeapProvider<
             boost::mpl::vector<
-                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type,
-                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type
+                typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type
             >
         >,
+        //public DisposableHeapProvider<
+        //    boost::mpl::vector<
+        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type,
+        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type
+        //    >
+        //>,
         public SimpleDisposable
     {
     public:
@@ -64,10 +73,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
         typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
 
-        static host_info_type *NewHost()
+        typedef typename HostInfoApiAt<HostInfoApiHolder, Utilities::Interfaces::InfrastructureFactoryLabel>::type factory_type;
+
+        static host_info_type *CreateHost()
         {
-            TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
-            host_info_provider_type::RegisterStaticObject(pHost);
+            TempPtr<host_info_type> pHost = NewHost();
+            pHost.Persist();
             return pHost.Get();
         }
 
@@ -93,8 +104,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                     BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
                 }
 
-                //runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
-                //m_versionToIndex[version] = provider.RegisterObject(pNewRuntime);
                 pNewRuntime.Persist();
                 return pNewRuntime.Get();
             }
@@ -105,22 +114,44 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
     private:
+        static Utilities::TempPtr<host_info_type> NewHost()
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
+            struct pHost_Persisted
+            {
+                typedef TempPtr<host_info_type> sender_type;
+
+                void operator()(sender_type *pSender, void *pArg)
+                {
+                    sender_type &pHost = *pSender;
+                    host_info_provider_type::RegisterStaticObject(pHost);
+                }
+            };
+            pHost.AddPersistedHandler(pHost_Persisted());
+            return pHost;
+        }
 
         Utilities::TempPtr<runtime_host_type> NewRuntime(std::wstring const &version) const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
             runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
             host_info_chain_type &chain = ChainFrom<host_info_previous_type>();
-            Utilities::TempPtr<runtime_host_type> pRuntime = chain.NewObject<runtime_host_type>(provider);
-            struct RuntimePersister
+            TempPtr<runtime_host_type> pRuntime = chain.NewObject<runtime_host_type>(provider);
+            struct pRuntime_Persisted
             {
-                RuntimePersister(this_type &this_, std::wstring const &version) : 
+                typedef TempPtr<runtime_host_type> sender_type;
+
+                pRuntime_Persisted(this_type &this_, std::wstring const &version) : 
                     m_pThis(&this_),
                     m_version(version)
                 { }
                 
-                void operator()(void *p)
+                void operator()(sender_type *pSender, void *pArg)
                 {
-                    Utilities::TempPtr<runtime_host_type> &pRuntime = *static_cast<Utilities::TempPtr<runtime_host_type> *>(p);
+                    sender_type &pRuntime = *pSender;
                     runtime_host_provider_type &provider = m_pThis->ProviderOf<runtime_host_type>();
                     m_pThis->m_versionToIndex[m_version] = provider.RegisterObject(pRuntime);
                 }
@@ -128,7 +159,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
                 this_type *m_pThis;
                 std::wstring m_version;
             };
-            pRuntime.SetPersister(RuntimePersister(const_cast<this_type &>(*this), version));
+            pRuntime.AddPersistedHandler(pRuntime_Persisted(const_cast<this_type &>(*this), version));
             return pRuntime;
         }
 
