@@ -72,7 +72,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class BaseILGenerator :
         public SimpleHeapProvider<
             boost::mpl::vector<
-                ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator>
+                ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator>, 
+                ObjectTag<typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::LocalNameMetadataGeneratorLabel>::type, QuickHeap>
             >
         >
     {
@@ -80,55 +81,80 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef BaseILGenerator<ILGeneratorApiHolder> this_type;
 
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
+        typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::MethodNameMetadataGeneratorLabel>::type method_name_metadata_generator_type;
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::MethodNameMetadataLabel>::type method_name_metadata_type;
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        //typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
         typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::FieldNameMetadataGeneratorLabel>::type field_name_metadata_generator_type;
+        typedef typename ILGeneratorApiAt<ILGeneratorApiHolder, Interfaces::LocalNameMetadataGeneratorLabel>::type local_name_metadata_generator_type;
 
         typedef ObjectTag<Instruction, VeryQuickHeapButMustUseSubscriptOperator> instruction_obj_tag_type;
         typedef typename type_decided_by<instruction_obj_tag_type>::type instruction_heap_type;
 
+        typedef ObjectTag<local_name_metadata_generator_type, QuickHeap> local_name_metadata_generator_obj_tag_type;
+        typedef typename type_decided_by<local_name_metadata_generator_obj_tag_type>::type local_name_metadata_generator_heap_type;
+
         BaseILGenerator() : 
-            m_pMethodMeta(NULL),
+            m_pMethodNameGenAsScope(NULL),
             m_instructionsInitialized(false)
         { }
         
-        void Init(method_metadata_type &methodMeta) const
+        void Init(method_name_metadata_generator_type &methodNameGenAsScope) const
         {
-            _ASSERTE(m_pMethodMeta == NULL);
-            
-            m_pMethodMeta = &methodMeta;
+            _ASSERTE(m_pMethodNameGenAsScope == NULL);
+            m_pMethodNameGenAsScope = &methodNameGenAsScope;
         }
 
         template<class T>
-        T const *FindType() const { return static_cast<method_metadata_type const *>(m_pMethodMeta)->FindType<T>(); }
+        T const &Map() const 
+        { 
+            //_ASSERTE(m_pModNameAsScope != NULL || m_pModAsScope != NULL);
+            //if (m_pModNameAsScope != NULL)
+            //    return m_pModNameAsScope->Map<T>();
+            //else
+            //    return m_pModAsScope->GetModuleNameCore()->Map<T>();
+            _ASSERTE(m_pMethodNameGenAsScope != NULL);
+            return m_pMethodNameGenAsScope->Map<T>();
+        }
 
         template<class T>
-        T *FindType() { return m_pMethodMeta->FindType<T>(); }
+        T &Map() { return m_pMethodMeta->Map<T>(); }
       
         template<>
-        this_type const *FindType<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { return this; }
       
         template<>
-        this_type *FindType<this_type>() { return this; }
+        this_type &Map<this_type>() { return this; }
+
+        local_name_metadata_generator_type *NewLocalNameMetadataGenerator(type_metadata_type const &localType)
+        {
+            this_type *pMutableThis = const_cast<this_type *>(this);
+
+            local_name_metadata_generator_type *pLocalNameMetaGen = NULL;
+            pLocalNameMetaGen = pMutableThis->LocalNameMetadataGeneratorHeap().New();
+            pLocalNameMetaGen->Init(*pMutableThis);
+            pLocalNameMetaGen->SetLocalType(localType);
+            return pLocalNameMetaGen;
+        }
 
         void EmitWriteLine(std::wstring const &s)
         {
             typedef OpCodes OpCodes;
             {
-                Instruction *pInst = InstructionHeap().New();
+                Instruction *pInst = NewInstruction();
                 pInst->SetOpCode(OpCodes::Ldstr);
                 pInst->SetOprand(s);
             }
             {
-                Instruction *pInst = InstructionHeap().New();
+                Instruction *pInst = NewInstruction();
                 pInst->SetOpCode(OpCodes::Call);
 
                 this_type const *immutableThis = this;
 
-                metadata_dispenser_type const *pMetaDisp = immutableThis->FindType<metadata_dispenser_type>();
+                metadata_dispenser_type const *pMetaDisp = immutableThis->Map<metadata_dispenser_type>();
 
                 assembly_name_metadata_type const *pMSCorLibName = NULL;
                 {
@@ -157,14 +183,58 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
                 pInst->SetOprand(pWriteLineName);
             }
-            m_instructionsInitialized = false;
         }
 
         void Emit(OpCode const &op)
         {
-            Instruction *pInst = InstructionHeap().New();
+            Instruction *pInst = NewInstruction();
             pInst->SetOpCode(op);
-            m_instructionsInitialized = false;
+        }
+
+        void Emit(OpCode const &op, int val)
+        {
+            if (&op != &OpCodes::Ldloca)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            Instruction *pInst = NewInstruction();
+            pInst->SetOpCode(op);
+            pInst->SetOprand(val);
+        }
+
+        void Emit(OpCode const &op, field_name_metadata_generator_type const &fieldNameGen)
+        {
+            if (&op != &OpCodes::Ldsfld && 
+                &op != &OpCodes::Stsfld)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            Instruction *pInst = NewInstruction();
+            pInst->SetOpCode(op);
+            pInst->SetOprand(&fieldNameGen);
+        }
+
+        void Emit(OpCode const &op, method_name_metadata_generator_type const &methodNameGen)
+        {
+            if (&op != &OpCodes::Ldftn)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            Instruction *pInst = NewInstruction();
+            pInst->SetOpCode(op);
+            pInst->SetOprand(&methodNameGen);
+        }
+
+        void Emit(OpCode const &op, method_metadata_type const &method)
+        {
+            if (&op != &OpCodes::Newobj && 
+                &op != &OpCodes::Call)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            Instruction *pInst = NewInstruction();
+            pInst->SetOpCode(op);
+            pInst->SetOprand(&method);
         }
 
         std::vector<Instruction const *> const &GetInstructions() const
@@ -182,6 +252,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
     private:
+        Instruction *NewInstruction()
+        {
+            m_instructionsInitialized = false;
+            return InstructionHeap().New();
+        }
+
         instruction_heap_type &InstructionHeap()
         {
             return Of<instruction_obj_tag_type>();
@@ -192,12 +268,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return Of<instruction_obj_tag_type>();
         }
 
-        mutable method_metadata_type *m_pMethodMeta;
+        local_name_metadata_generator_heap_type &LocalNameMetadataGeneratorHeap()
+        {
+            return Of<local_name_metadata_generator_obj_tag_type>();
+        }
+        
+        local_name_metadata_generator_heap_type const &LocalNameMetadataGeneratorHeap() const
+        {
+            return Of<local_name_metadata_generator_obj_tag_type>();
+        }
+
+        mutable method_name_metadata_generator_type *m_pMethodNameGenAsScope;
         mutable bool m_instructionsInitialized;
         mutable std::vector<Instruction const *> m_instructions;
     };
-
-    typedef BaseILGenerator<> ILGenerator;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

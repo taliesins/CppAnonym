@@ -45,23 +45,29 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
         typedef typename StrongNameKeyApiAt<StrongNameKeyApiHolder, Interfaces::StrongNameInfoLabel>::type strong_name_info_type;
         
         BaseStrongNameKey() : 
-            m_pSnInfo(NULL), 
+            m_pSnInfoAsScope(NULL),
             m_pubKeyBlobSize(0), 
             m_publicKeyInitialized(false), 
             m_publicKeyTokenInitialized(false)
         { }
 
-        void Init(strong_name_info_type &snInfo, PublicKeyBlob const *pPubKeyBlob, DWORD pubKeyBlobSize) const
+        void Init(strong_name_info_type &snInfoAsScope) const
         {
-            //using namespace boost::filesystem;
-            _ASSERTE(m_pSnInfo == NULL);
-
-            m_pSnInfo = &snInfo;
-
-            m_pPubKeyBlob = std::auto_ptr<PublicKeyBlob>(reinterpret_cast<PublicKeyBlob *>(new BYTE[pubKeyBlobSize]));
-            ::memcpy_s(m_pPubKeyBlob.get(), pubKeyBlobSize, pPubKeyBlob, pubKeyBlobSize);
-            m_pubKeyBlobSize = pubKeyBlobSize;
+            _ASSERTE(m_pSnInfoAsScope == NULL);
+            m_pSnInfoAsScope = &snInfoAsScope;
         }
+
+        //void Init(strong_name_info_type &snInfo, PublicKeyBlob const *pPubKeyBlob, DWORD pubKeyBlobSize) const
+        //{
+        //    //using namespace boost::filesystem;
+        //    _ASSERTE(m_pSnInfo == NULL);
+
+        //    m_pSnInfo = &snInfo;
+
+        //    m_pPubKeyBlob = std::auto_ptr<PublicKeyBlob>(reinterpret_cast<PublicKeyBlob *>(new BYTE[pubKeyBlobSize]));
+        //    ::memcpy_s(m_pPubKeyBlob.get(), pubKeyBlobSize, pPubKeyBlob, pubKeyBlobSize);
+        //    m_pubKeyBlobSize = pubKeyBlobSize;
+        //}
 
         std::vector<BYTE> const &GetPublicKey() const
         {
@@ -106,7 +112,17 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
         }
 
     private:
-        mutable strong_name_info_type *m_pSnInfo;
+        friend typename strong_name_info_type;
+
+        void SetPublicKeyBlob(PublicKeyBlob const &pubKeyBlob, DWORD pubKeyBlobSize)
+        {
+            m_pPubKeyBlob = std::auto_ptr<PublicKeyBlob>(reinterpret_cast<PublicKeyBlob *>(new BYTE[pubKeyBlobSize]));
+            ::memcpy_s(m_pPubKeyBlob.get(), pubKeyBlobSize, &pubKeyBlob, pubKeyBlobSize);
+            m_pubKeyBlobSize = pubKeyBlobSize;
+        }
+
+        mutable strong_name_info_type *m_pSnInfoAsScope;
+        //mutable strong_name_info_type *m_pSnInfo;
         mutable std::auto_ptr<PublicKeyBlob> m_pPubKeyBlob;
         mutable DWORD m_pubKeyBlobSize;
         mutable bool m_publicKeyInitialized;

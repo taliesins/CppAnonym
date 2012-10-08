@@ -18,6 +18,14 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleNameMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadataFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEINFOLABEL_HPP
 #include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameInfoLabel.hpp>
 #endif
@@ -70,7 +78,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         {
             typedef map<
                 pair<MetadataDispenserLabel, MetadataDispenser>, 
-                pair<AssemblyMetadataLabel, AssemblyMetadata>, 
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<ModuleNameMetadataLabel, ModuleNameMetadata>, 
                 pair<TypeNameMetadataLabel, TypeNameMetadata>, 
                 pair<FusionInfoLabel, FusionInfo>, 
                 pair<StrongNameKeyLabel, StrongNameKey>, 

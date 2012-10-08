@@ -63,9 +63,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename MethodNameMetadataApiAt<MethodNameMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
         typedef typename MethodNameMetadataApiAt<MethodNameMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
 
-        //typedef typename std::vector<type_metadata_type const *>::iterator param_types_iterator;
-        //typedef typename std::vector<type_metadata_type const *>::const_iterator param_types_const_iterator;
-
         BaseMethodNameMetadata() : 
             m_pRetTypeName(NULL), 
             m_pTypeNameAsScope(NULL), 
@@ -149,7 +146,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 pRetType = GetReturnTypeName().Resolve();
                 std::vector<type_name_metadata_type const *> const &paramTypeNames = GetParameterTypeNames();
                 typedef std::vector<type_name_metadata_type const *>::const_iterator ConstTypeNameMetadataIterator;
-                std::vector<type_metadata_type const *> paramTypes(paramTypeNames.size());
+                std::vector<type_metadata_type const *> paramTypes;
+                paramTypes.reserve(paramTypeNames.size());
                 for (ConstTypeNameMetadataIterator i = paramTypeNames.cbegin(), i_end = paramTypeNames.cend(); i != i_end; ++i)
                     paramTypes.push_back((*i)->Resolve());
                 m_pResolvedMethod = m_pTypeAsScope->GetMethod(GetName(), GetCallingConvention(), *pRetType, paramTypes);

@@ -85,7 +85,7 @@
 //    {
 //    public:
 //        template<class T>
-//        T const *FindType() const 
+//        T const &Map() const 
 //        {
 //            if (m_pType.IsEmpty())
 //            {
@@ -126,7 +126,7 @@ namespace MockB805337D {
     {
     public:
         template<class T>
-        T const *FindType() const 
+        T const &Map() const 
         {
             if (m_pType.IsEmpty())
             {

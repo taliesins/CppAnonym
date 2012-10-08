@@ -125,7 +125,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename Traits::ApiAt<TestAssemblyMetadataApiType, Interfaces::AssemblyMetadataApiHolderLabel, Interfaces::TypeMetadataLabel>::type type_metadata_type;
 
         template<class T>
-        T const *FindType() const 
+        T const &Map() const 
         {
             if (m_pType.IsEmpty())
             {
@@ -140,7 +140,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             {
                 if (m_pConsole.IsEmpty())
                 {
-                    this_type *mutableThis = const_cast<this_type *>(this);
+                    this_type *pMutableThis = const_cast<this_type *>(this);
 
                     MyMetaDataImportObject *pMetaImpApi_ = NULL;
                     MyMetaDataImportObject::CreateInstance(&pMetaImpApi_); 
@@ -148,7 +148,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
                     m_pConsole = new type_metadata_type();
                     type_metadata_type *pConsole = m_pConsole;
-                    pConsole->Init(*mutableThis, *pMetaImpApi);
+                    pConsole->Init(*pMutableThis, *pMetaImpApi);
                     pConsole->SetName(name);
                     pConsole->SetKind(TypeKinds::TK_CLASS);
                 }

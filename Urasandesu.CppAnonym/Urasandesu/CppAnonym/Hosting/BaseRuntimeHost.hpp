@@ -73,46 +73,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         { }
 
         template<class T>
-        T const *FindType() const { return GetInfo<T>(); }
+        T const &Map() const { return GetInfo<T>(); }
 
         template<class T>
-        T *FindType() { return GetInfo<T>(); }
+        T &Map() { return const_cast<T &>(GetInfo<T>()); }
       
         template<>
-        this_type const *FindType<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { return this; }
       
         template<>
-        this_type *FindType<this_type>() { return this; }
-
-        template<class InfoType>
-        InfoType const *GetInfo() const
-        {
-            namespace mpl = boost::mpl;
-            using namespace boost;
-            
-            typedef mpl::find<sequence_type, InfoType>::type I;
-            typedef mpl::end<sequence_type>::type IEnd;
-            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
-
-            LPCSTR infoTypeName = typeid(InfoType).name();
-            if (m_infos.find(infoTypeName) == m_infos.end())
-            {
-                m_infos[infoTypeName] = NULL;
-            }
-
-            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[infoTypeName]);
-            if (pInfo == NULL)
-            {
-                this_type *mutableThis = const_cast<this_type *>(this);
-                typedef typename type_decided_by<InfoType>::type InfoHeap;
-                InfoHeap &heap = mutableThis->Of<InfoType>();
-                pInfo = heap.New(GetCORVersion());
-                pInfo->Init(*mutableThis);
-                m_infos[infoTypeName] = pInfo;
-            }
-
-            return pInfo;
-        }
+        this_type &Map<this_type>() { return this; }
         
         std::wstring const &GetCORVersion() const
         {
@@ -161,7 +131,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
     
     private:
-        mutable boost::unordered_map<std::string, void const *> m_infos;
+        template<class InfoType>
+        InfoType const &GetInfo() const
+        {
+            namespace mpl = boost::mpl;
+            using namespace boost;
+            
+            typedef mpl::find<sequence_type, InfoType>::type I;
+            typedef mpl::end<sequence_type>::type IEnd;
+            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<I, IEnd> >));
+
+            Utilities::TypeInfo infoType = mpl::identity<InfoType>();
+            if (m_infos.find(infoType) == m_infos.end())
+            {
+                m_infos[infoType] = NULL;
+            }
+
+            InfoType const *pInfo = static_cast<InfoType const *>(m_infos[infoType]);
+            if (pInfo == NULL)
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                typedef typename type_decided_by<InfoType>::type InfoHeap;
+                InfoHeap &heap = pMutableThis->Of<InfoType>();
+                pInfo = heap.New(GetCORVersion());
+                pInfo->Init(*pMutableThis);
+                m_infos[infoType] = pInfo;
+            }
+
+            return *pInfo;
+        }
+
+        mutable boost::unordered_map<Utilities::TypeInfo, void const *, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infos;
         mutable bool m_corVersionInitialized;
         mutable std::wstring m_corVersion;
         mutable bool m_corSystemDirectoryPathInitialized;

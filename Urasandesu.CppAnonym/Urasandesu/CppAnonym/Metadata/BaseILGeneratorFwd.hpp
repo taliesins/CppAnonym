@@ -13,6 +13,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseILGenerator;
 
+    typedef BaseILGenerator<> ILGenerator;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 #endif  // #ifndef URASANDESU_CPPANONYM_METADATA_BASEILGENERATORFWD_HPP

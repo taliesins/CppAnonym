@@ -68,24 +68,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_mdt(mdTokenNil)
         { }
 
-        //__declspec(deprecated("This method is temporarily deprecated."))
-        //void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi) const
-        //{
-        //    _ASSERTE(m_pTypeMeta == NULL);
-
-        //    m_pTypeMeta = &typeMeta;
-        //}
-
-        //__declspec(deprecated("This method is temporarily deprecated."))
-        //void Init(type_metadata_type &typeMeta, metadata_import_api_type &metaImpApi, method_name_metadata_type const &methodName) const
-        //{
-        //    _ASSERTE(m_pTypeMeta == NULL);
-
-        //    m_pTypeMeta = &typeMeta;
-        //    m_pMetaImpApi = &metaImpApi;
-        //    m_methodName = methodName;
-        //}
-        
         void Init(type_metadata_type &typeMeta) const
         {
             // This method implementation is temporary.
@@ -95,16 +77,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         template<class T>
-        T const *FindType() const { _ASSERTE(m_pTypeMeta != NULL); return static_cast<type_metadata_type const *>(m_pTypeMeta)->FindType<T>(); }
+        T const &Map() const { _ASSERTE(m_pTypeMeta != NULL); return static_cast<type_metadata_type const *>(m_pTypeMeta)->Map<T>(); }
 
         template<class T>
-        T *FindType() { return m_pTypeMeta->FindType<T>(); }
+        T &Map() { return m_pTypeMeta->Map<T>(); }
       
         template<>
-        this_type const *FindType<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { return this; }
       
         template<>
-        this_type *FindType<this_type>() { return this; }
+        this_type &Map<this_type>() { return this; }
 
         method_name_metadata_type const *GetMethodName() const
         {
@@ -112,13 +94,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             if (m_pMethodNameMeta == NULL)
             {
-                this_type *mutableThis = const_cast<this_type *>(this);
-                type_metadata_type *pTypeMeta = mutableThis->FindType<type_metadata_type>();
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                type_metadata_type &typeMeta = pMutableThis->Map<type_metadata_type>();
 
-                m_pMethodNameMeta = pTypeMeta->MethodNameMetadataHeap().New();
-                m_pMethodNameMeta->SetResolutionScope(*pTypeMeta);
+                m_pMethodNameMeta = typeMeta.MethodNameMetadataHeap().New();
+                m_pMethodNameMeta->SetResolutionScope(typeMeta);
                 m_pMethodNameMeta->SetToken(GetToken());
-                m_pMethodNameMeta->SetResolvedMethod(*mutableThis);
+                m_pMethodNameMeta->SetResolvedMethod(*pMutableThis);
             }
             return m_pMethodNameMeta;
         }
@@ -128,16 +110,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_mdt;
         }
 
-        //std::wstring const &GetName() const
-        //{
-        //    return m_name;
-        //}
-
     private:
-        template<
-            class TypeMetadataApiHolder
-        >    
-        friend class BaseTypeMetadata;
+        friend typename type_metadata_type;
 
         void SetToken(mdToken mdt)
         {
@@ -150,9 +124,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         mutable type_metadata_type *m_pTypeMeta;
         mutable method_name_metadata_type *m_pMethodNameMeta;
-        //mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
-        //mutable method_name_metadata_type m_methodName;
-        //mutable std::wstring m_name;
         mdToken m_mdt;
     };
 

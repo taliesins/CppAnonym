@@ -42,6 +42,10 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabel.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleMetadataLabel.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
 #include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
 #endif
@@ -100,6 +104,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef BaseTypeMetadata<TypeMetadataApiHolder> this_type;
         
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
@@ -125,128 +130,29 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_mdt(mdTokenNil),
             m_genericArgsInit(false),
             m_pGenericTypeDef(NULL),
-            m_pAsmMeta(NULL), 
+            m_pModAsScope(NULL),
             m_kind(TypeKinds::TK_END),
+            m_kindInitialized(false),
             m_pTypeNameMeta(NULL)
         { }
 
-        BaseTypeMetadata(TypeKinds const &kind) : 
-            m_mdt(mdTokenNil),
-            m_genericArgsInit(false),
-            m_pGenericTypeDef(NULL),
-            m_pAsmMeta(NULL), 
-            m_kind(kind),
-            m_pTypeNameMeta(NULL)
-        { }
-
-        __declspec(deprecated("This method is temporarily deprecated."))
-        void Init(assembly_metadata_type &asmMeta, com_meta_data_import_type &metaImpApi) const
+        void Init(module_metadata_type &modAsScope) const
         {
-            _ASSERTE(m_pAsmMeta == NULL);
-            _ASSERTE(m_pMetaImpApi.p == NULL);
-            
-            m_pAsmMeta = &asmMeta;
-            m_pMetaImpApi = &metaImpApi;
-        }
-
-        void Init(assembly_metadata_type &asmMeta) const
-        {
-            // This method implementation is temporary.
-            _ASSERTE(m_pAsmMeta == NULL);
-
-            m_pAsmMeta = &asmMeta;
+            _ASSERTE(m_pModAsScope == NULL);
+            m_pModAsScope = &modAsScope;
         }
 
         template<class T>
-        T const *FindType() const { _ASSERTE(m_pAsmMeta != NULL); return static_cast<assembly_metadata_type const *>(m_pAsmMeta)->FindType<T>(); }
+        T const &Map() const { return const_cast<this_type *>(this)->Map<T>(); }
 
         template<class T>
-        T *FindType() { _ASSERTE(m_pAsmMeta != NULL); return m_pAsmMeta->FindType<T>(); }
+        T &Map() { _ASSERTE(m_pModAsScope != NULL); return m_pModAsScope->Map<T>(); }
       
         template<>
-        this_type const *FindType<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { const_cast<this_type *>(this)->Map<this_type>(); }
       
         template<>
-        this_type *FindType<this_type>() { return this; }
-
-#if 0
-        inline TypeKinds const &GetKind() const
-        {
-            if (!m_kindInitialized)
-            {
-                std::wstring const &name = GetName();
-                if (name == std::wstring(L"System.Void"))
-                {
-                    m_kind = TypeKinds::TK_VOID;
-                }
-                else if (name == std::wstring(L"System.Boolean"))
-                {
-                    m_kind = TypeKinds::TK_BOOLEAN;
-                }
-                else if (name == std::wstring(L"System.Char"))
-                {
-                    m_kind = TypeKinds::TK_CHAR;
-                }
-                else if (name == std::wstring(L"System.SByte"))
-                {
-                    m_kind = TypeKinds::TK_I1;
-                }
-                else if (name == std::wstring(L"System.Byte"))
-                {
-                    m_kind = TypeKinds::TK_U1;
-                }
-                else if (name == std::wstring(L"System.Int16"))
-                {
-                    m_kind = TypeKinds::TK_I2;
-                }
-                else if (name == std::wstring(L"System.UInt16"))
-                {
-                    m_kind = TypeKinds::TK_U2;
-                }
-                //TK_I4 = ELEMENT_TYPE_I4, 
-                //TK_U4 = ELEMENT_TYPE_U4, 
-                //TK_I8 = ELEMENT_TYPE_I8, 
-                //TK_U8 = ELEMENT_TYPE_U8, 
-                //TK_R4 = ELEMENT_TYPE_R4, 
-                //TK_R8 = ELEMENT_TYPE_R8, 
-                //TK_STRING = ELEMENT_TYPE_STRING, 
-                //TK_PTR = ELEMENT_TYPE_PTR, 
-                //TK_BYREF = ELEMENT_TYPE_BYREF, 
-                //TK_VALUETYPE = ELEMENT_TYPE_VALUETYPE, 
-                //TK_CLASS = ELEMENT_TYPE_CLASS, 
-                //TK_VAR = ELEMENT_TYPE_VAR, 
-                //TK_ARRAY = ELEMENT_TYPE_ARRAY, 
-                //TK_GENERICINST = ELEMENT_TYPE_GENERICINST, 
-                //TK_TYPEDBYREF = ELEMENT_TYPE_TYPEDBYREF, 
-                //TK_I = ELEMENT_TYPE_I, 
-                //TK_U = ELEMENT_TYPE_U, 
-                //TK_FNPTR = ELEMENT_TYPE_FNPTR, 
-                //TK_OBJECT = ELEMENT_TYPE_OBJECT, 
-                //TK_SZARRAY = ELEMENT_TYPE_SZARRAY, 
-                //TK_MVAR = ELEMENT_TYPE_MVAR, 
-                //TK_CMOD_REQD = ELEMENT_TYPE_CMOD_REQD, 
-                //TK_CMOD_OPT = ELEMENT_TYPE_CMOD_OPT, 
-                //TK_INTERNAL = ELEMENT_TYPE_INTERNAL, 
-                //TK_MAX = ELEMENT_TYPE_MAX, 
-                //TK_MODIFIER = ELEMENT_TYPE_MODIFIER, 
-                //TK_SENTINEL = ELEMENT_TYPE_SENTINEL, 
-                //TK_PINNED = ELEMENT_TYPE_PINNED, 
-                //TK_R4_HFA = ELEMENT_TYPE_R4_HFA, 
-                //TK_R8_HFA = ELEMENT_TYPE_R8_HFA, 
-                //TK_UNREACHED
-                }
-                m_kindInitialized = true;
-            }
-            return m_kind;
-        }
-
-        inline void SetKind(TypeKinds const &kind)
-        {
-            _ASSERTE(!m_kindInitialized);
-            m_kind = kind;
-            m_kindInitialized = true;
-        }
-#endif
+        this_type &Map<this_type>() { return *this; }
 
         inline mdToken GetToken() const
         {
@@ -260,18 +166,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 return m_mdt;
             }
         }
-
-#if 0
-        inline std::wstring const &GetName() const
-        {
-            return m_name;
-        }
-
-        inline void SetName(std::wstring const &name)
-        {
-            m_name = name;
-        }
-#endif
 
         method_metadata_type const *GetMethod(std::wstring const &name, 
                                               CallingConventions const &callingConvention, 
@@ -304,38 +198,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 for (TypeIterator i = paramTypes.cbegin(), i_end = paramTypes.cend(); i != i_end; ++i)
                     SignatureUtil::PutSignatures(sb, **i);
 
-                //// Call Convention
-                //switch (callingConvention.Value())
-                //{
-                //    case CallingConventions::CC_STANDARD:
-                //        sb.Put<COR_SIGNATURE>(IMAGE_CEE_CS_CALLCONV_DEFAULT);
-                //        break;
+                this_type *pMutableThis = const_cast<this_type *>(this);
 
-                //    case CallingConventions::CC_HAS_THIS:
-                //        sb.Put<COR_SIGNATURE>(IMAGE_CEE_CS_CALLCONV_HASTHIS);
-                //        break;
-
-                //    default:
-                //        BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-                //        break;
-                //}
-
-                //// ParamCount
-                //sb.Put<COR_SIGNATURE>(paramTypeNames.size());
+                assembly_metadata_type &asmMeta = pMutableThis->Map<assembly_metadata_type>();
                 
-                //// RetType
-                //PutSignatures(sb, retType);
-
-                //// ParamType
-                //for (TypeIterator i = paramTypes.cbegin(), i_end = paramTypes.cend(); i != i_end; ++i)
-                //    PutSignatures(sb, **i);
-
-                this_type *mutableThis = const_cast<this_type *>(this);
-
-                assembly_metadata_type *pAsmMeta = NULL;
-                pAsmMeta = mutableThis->FindType<assembly_metadata_type>();
-                
-                com_meta_data_import_type &comMetaImp = pAsmMeta->GetCOMMetaDataImport();
+                com_meta_data_import_type &comMetaImp = asmMeta.GetCOMMetaDataImport();
 
                 mdMethodDef mdmd = mdMethodDefNil;
                 HRESULT hr = comMetaImp.FindMethod(GetToken(), name.c_str(), 
@@ -344,22 +211,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
                 method_metadata_type *pMethodMeta = NULL;
-                pMethodMeta = mutableThis->MethodMetadataHeap().New();
-                pMethodMeta->Init(*mutableThis);
+                pMethodMeta = pMutableThis->MethodMetadataHeap().New();
+                pMethodMeta->Init(*pMutableThis);
                 pMethodMeta->SetToken(mdmd);
 
-                m_methodNameToIndex[pMethodName] = mutableThis->MethodMetadataHeap().Size() - 1;
+                m_methodNameToIndex[pMethodName] = pMutableThis->MethodMetadataHeap().Size() - 1;
 
                 return pMethodMeta;
             }
             else
             {
-                this_type *mutableThis = const_cast<this_type *>(this);
+                this_type *pMutableThis = const_cast<this_type *>(this);
                 
-                BOOST_SCOPE_EXIT((&pMethodName)(&mutableThis))
+                BOOST_SCOPE_EXIT((&pMethodName)(&pMutableThis))
                 {
                     type_name_metadata_type *pTypeName = NULL;
-                    pTypeName = const_cast<type_name_metadata_type *>(mutableThis->GetTypeName());
+                    pTypeName = const_cast<type_name_metadata_type *>(pMutableThis->GetTypeName());
                     pTypeName->MethodNameMetadataHeap().DeleteLast();
                 }
                 BOOST_SCOPE_EXIT_END
@@ -380,14 +247,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             if (m_pTypeNameMeta == NULL)
             {
-                this_type *mutableThis = const_cast<this_type *>(this);
+                this_type *pMutableThis = const_cast<this_type *>(this);
 
-                assembly_metadata_type *pAsmMeta = NULL;
-                pAsmMeta = mutableThis->FindType<assembly_metadata_type>();
+                module_metadata_type &modMeta = pMutableThis->Map<module_metadata_type>();
 
-                m_pTypeNameMeta = pAsmMeta->TypeNameMetadataHeap().New();
-                m_pTypeNameMeta->Init(*pAsmMeta, GetToken());
-                m_pTypeNameMeta->SetResolvedType(*mutableThis);
+                m_pTypeNameMeta = modMeta.TypeNameMetadataHeap().New();
+                m_pTypeNameMeta->Init(modMeta);
+                m_pTypeNameMeta->SetToken(GetToken());
+                m_pTypeNameMeta->SetResolvedType(*pMutableThis);
             }
             return m_pTypeNameMeta;
         }
@@ -396,12 +263,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             if (!m_genericArgsInit)
             {
-                this_type *mutableThis = const_cast<this_type *>(this);
+                this_type *pMutableThis = const_cast<this_type *>(this);
 
-                assembly_metadata_type *pAsmMeta = NULL;
-                pAsmMeta = mutableThis->FindType<assembly_metadata_type>();
+                assembly_metadata_type &asmMeta = pMutableThis->Map<assembly_metadata_type>();
+                module_metadata_type &modMeta = pMutableThis->Map<module_metadata_type>();
                 
-                com_meta_data_import_type &comMetaImp = pAsmMeta->GetCOMMetaDataImport();
+                com_meta_data_import_type &comMetaImp = asmMeta.GetCOMMetaDataImport();
 
                 HCORENUM hEnum = NULL;
                     BOOST_SCOPE_EXIT((&hEnum)(&comMetaImp))
@@ -422,9 +289,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     m_genericArgs.reserve(m_genericArgs.size() + count);
                     for (UINT i = 0; i < count; ++i)
                     {
-                        this_type *pTypeMeta = pAsmMeta->TypeMetadataHeap().New();
-                        pTypeMeta->Init(*pAsmMeta);
-                        pTypeMeta->SetGenericTypeDefinition(*mutableThis);
+                        this_type *pTypeMeta = modMeta.TypeMetadataHeap().New();
+                        pTypeMeta->Init(modMeta);
+                        pTypeMeta->SetGenericTypeDefinition(*pMutableThis);
                         pTypeMeta->SetToken(m_mdgps[i]);
                         m_genericArgs.push_back(pTypeMeta);
                     }
@@ -462,22 +329,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             {
                 _ASSERTE(GetGenericArguments().size() == genericArgs.size());
 
-                this_type *mutableThis = const_cast<this_type *>(this);
+                this_type *pMutableThis = const_cast<this_type *>(this);
 
-                assembly_metadata_type *pAsmMeta = NULL;
-                pAsmMeta = mutableThis->FindType<assembly_metadata_type>();
-                this_type *pTypeMeta = pAsmMeta->TypeMetadataHeap().New();
-                pTypeMeta->Init(*pAsmMeta);
-                pTypeMeta->SetGenericTypeDefinition(*mutableThis);
+                module_metadata_type &modMeta = pMutableThis->Map<module_metadata_type>();
+                this_type *pTypeMeta = modMeta.TypeMetadataHeap().New();
+                pTypeMeta->Init(modMeta);
+                pTypeMeta->SetGenericTypeDefinition(*pMutableThis);
                 pTypeMeta->SetGenericArguments(genericArgs);
 
                 return pTypeMeta;
             }
             else
             {
-                assembly_metadata_type const *pAsmMeta = NULL;
-                pAsmMeta = FindType<assembly_metadata_type>();
-                return pAsmMeta->TypeMetadataHeap()[index];
+                module_metadata_type const &modMeta = Map<module_metadata_type>();
+                return modMeta.TypeMetadataHeap()[index];
             }
         }
 
@@ -488,52 +353,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         std::vector<COR_SIGNATURE> const &GetSignatures() const
         {
-            return GetTypeName()->GetSignatures();
-    //        if (m_sigs.empty())
-    //        {
-    //            if (IsGenericType() && !IsGenericTypeDefinition())
-    //            {
-    //                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-    //            }
-    //            else
-    //            {
-    //                this_type *mutableThis = const_cast<this_type *>(this);
+            if (m_sigs.empty())
+                PushBackSignatures(m_sigs, *this);
 
-    //                assembly_metadata_type *pAsmMeta = NULL;
-    //                pAsmMeta = mutableThis->FindType<assembly_metadata_type>();
-
-    //                com_meta_data_import_type &comMetaImp = pAsmMeta->GetCOMMetaDataImport();
-
-    //                PCCOR_SIGNATURE sig = NULL;
-    //                ULONG sigSize = 0;
-    //                HRESULT hr = comMetaImp.GetSigFromToken(m_mdt, &sig, &sigSize);
-    //                if (FAILED(hr))
-    //                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-    //                
-    //                m_sigs.reserve(sigSize);
-    //                for (PCCOR_SIGNATURE i = sig, i_end = sig + sigSize; i != i_end; ++i)
-    //                    m_sigs.push_back(*i);        
-    //            }
-
-    ////STDMETHOD(GetSigFromToken)(             // S_OK or error.
-    ////    mdSignature mdSig,                  // [IN] Signature token.
-    ////    PCCOR_SIGNATURE *ppvSig,            // [OUT] return pointer to token.
-    ////    ULONG       *pcbSig) PURE;          // [OUT] return size of signature.
-    //        }
-
-    //        return m_sigs;
+            return m_sigs;
         }
 
     private: 
-        template<
-            class AssemblyMetadataApiHolder
-        >    
-        friend class BaseAssemblyMetadata;
-
-        template<
-            class MethodMetadataApiHolder
-        >
-        friend class BaseMethodMetadata;
+        friend typename assembly_metadata_type;
+        friend typename module_metadata_type;
+        friend typename method_metadata_type;
 
         method_metadata_heap_type &MethodMetadataHeap()
         {
@@ -589,8 +418,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 MethodMetadataHeap &mutableHeap = const_cast<MethodMetadataHeap &>(heap);
                 method_metadata_type *pMethodMeta = mutableHeap.New(methodKey);
 
-                this_type *mutableThis = const_cast<this_type *>(this);
-                pMethodMeta->Init(*mutableThis, *m_pMetaImpApi, methodKey);
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                pMethodMeta->Init(*pMutableThis, *m_pMetaImpApi, methodKey);
 
                 return pMethodMeta;
             }
@@ -646,12 +475,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 //if (FAILED(hr))
                 //    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
 
-                this_type *mutableThis = const_cast<this_type *>(this);
+                this_type *pMutableThis = const_cast<this_type *>(this);
                 typedef typename type_decided_by<method_metadata_type>::type MethodMetadataHeap;
-                MethodMetadataHeap &heap = mutableThis->Of<method_metadata_type>();
+                MethodMetadataHeap &heap = pMutableThis->Of<method_metadata_type>();
                 // HeapProvider に BaseMethodNameMetadata 指定できないと成り立たない・・・。
                 method_metadata_type *pMethodMeta = heap.New(mdmd);
-                pMethodMeta->Init(*mutableThis, *m_pMetaImpApi);
+                pMethodMeta->Init(*pMutableThis, *m_pMetaImpApi);
 
                 m_methodMetas[methodKey] = mdmd;
 
@@ -664,49 +493,104 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 #endif
         }
 
-        //method_metadata_type const *GetMethodFromTokenCore(mdMethodDef mdmd) const
-        //{
-        //    typedef typename type_decided_by<method_metadata_type>::type MethodMetadataHeap;
-        //    MethodMetadataHeap const &heap = Of<method_metadata_type>();
-        //    return heap.Get(mdmd);
-        //}
+        TypeKinds const &GetKind() const
+        {
+            if (!m_kindInitialized)
+            {
+                std::wstring const &name = GetTypeName()->GetName();
+                if (name == L"System.Void") m_kind = TypeKinds::TK_VOID;
+                else if (name == L"System.Boolean") m_kind = TypeKinds::TK_BOOLEAN;
+                else if (name == L"System.Char") m_kind = TypeKinds::TK_CHAR;
+                else if (name == L"System.SByte") m_kind = TypeKinds::TK_I1;
+                else if (name == L"System.Byte") m_kind = TypeKinds::TK_U1;
+                else if (name == L"System.Int16") m_kind = TypeKinds::TK_I2;
+                else if (name == L"System.UInt16") m_kind = TypeKinds::TK_U2;
+                else if (name == L"System.Int32") m_kind = TypeKinds::TK_I4;
+                else if (name == L"System.UInt32") m_kind = TypeKinds::TK_U4;
+                else if (name == L"System.Int64") m_kind = TypeKinds::TK_I8;
+                else if (name == L"System.UInt64") m_kind = TypeKinds::TK_U8;
+                else if (name == L"System.Single") m_kind = TypeKinds::TK_R4;
+                else if (name == L"System.Double") m_kind = TypeKinds::TK_R8;
+                else if (name == L"System.String") m_kind = TypeKinds::TK_STRING;
+                else if (name == L"System.IntPtr") m_kind = TypeKinds::TK_I;
+                else if (name == L"System.Object") m_kind = TypeKinds::TK_OBJECT;
+                else
+                {
+                    if (name.find(L"`") != std::wstring::npos)
+                    {
+                        m_kind = TypeKinds::TK_GENERICINST;
+                    }
+                    else
+                    {
+                        this_type const *pBaseType = NULL;
+                        pBaseType = GetBaseType();
+                        if (pBaseType != NULL && pBaseType->GetTypeName()->GetName() == L"System.ValueType")
+                        {
+                            m_kind = TypeKinds::TK_VALUETYPE;
+                        }
+                        else
+                        {
+                            // NOTE: 処理がここまで進む場合、修飾子を持つかもしれないため、
+                            //       とりあえず
+                            // そもそも Type Kind って公開されてる必要あるの？？
+                            // →Generic Type Instance と同じ考え方。あくまで、修飾情報ですよね？
+                            //TK_PTR = ELEMENT_TYPE_PTR, 
+                            //TK_BYREF = ELEMENT_TYPE_BYREF, 
+                            //TK_CLASS = ELEMENT_TYPE_CLASS, 
+                            //TK_VAR = ELEMENT_TYPE_VAR, 
+                            //TK_ARRAY = ELEMENT_TYPE_ARRAY, 
+                            //TK_TYPEDBYREF = ELEMENT_TYPE_TYPEDBYREF, 
+                            //TK_U = ELEMENT_TYPE_U, 
+                            //TK_FNPTR = ELEMENT_TYPE_FNPTR, 
+                            //TK_SZARRAY = ELEMENT_TYPE_SZARRAY, 
+                            //TK_MVAR = ELEMENT_TYPE_MVAR, 
+                            //TK_CMOD_REQD = ELEMENT_TYPE_CMOD_REQD, 
+                            //TK_CMOD_OPT = ELEMENT_TYPE_CMOD_OPT, 
+                            //TK_INTERNAL = ELEMENT_TYPE_INTERNAL, 
+                            //TK_MAX = ELEMENT_TYPE_MAX, 
+                            //TK_MODIFIER = ELEMENT_TYPE_MODIFIER, 
+                            //TK_SENTINEL = ELEMENT_TYPE_SENTINEL, 
+                            //TK_PINNED = ELEMENT_TYPE_PINNED, 
+                            //TK_R4_HFA = ELEMENT_TYPE_R4_HFA, 
+                            //TK_R8_HFA = ELEMENT_TYPE_R8_HFA, 
+                            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+                        }
+                    }
+                }
 
-        //static void PutSignatures(SimpleBlob &sb, this_type const &typeMeta)
-        //{
-        //    typedef std::vector<COR_SIGNATURE>::const_iterator SigIterator;
-        //    std::vector<COR_SIGNATURE> const &sigs = typeMeta.GetSignatures();
-        //    for (SigIterator i = sigs.cbegin(), i_end = sigs.cend(); i != i_end; ++i)
-        //    {
-        //        sb.Put<COR_SIGNATURE>(*i);
-        //    }
-        //}
+                m_kindInitialized = true;
+            }
+            return m_kind;
+        }
 
-        //static void PushBackSignatures(std::vector<COR_SIGNATURE> &sigs, this_type const &this_)
-        //{
-        //    TypeKinds const &typeKind = this_.GetKind();
-        //    switch (typeKind.Value())
-        //    {
-        //        case TypeKinds::TK_VOID:
-        //        case TypeKinds::TK_I:
-        //        case TypeKinds::TK_OBJECT:
-        //            sigs.push_back(typeKind.Value());
-        //            break;
+        static void PushBackSignatures(std::vector<COR_SIGNATURE> &sigs, this_type const &this_)
+        {
+            // これ Type Meta に移動したほうがいいな、やっぱり・・・。
+            TypeKinds const &typeKind = this_.GetKind();
+            switch (typeKind.Value())
+            {
+                case TypeKinds::TK_VOID:
+                case TypeKinds::TK_I:
+                case TypeKinds::TK_OBJECT:
+                case TypeKinds::TK_STRING:
+                    sigs.push_back(typeKind.Value());
+                    break;
 
-        //        case TypeKinds::TK_VALUETYPE:
-        //            sigs.push_back(typeKind.Value());
-        //            {
-        //                BYTE pData[4] = { 0 };
-        //                ULONG length = ::CorSigCompressToken(this_.GetToken(), pData);
-        //                for (BYTE const *i = pData, *i_end = i + length; i != i_end; ++i)
-        //                    sigs.push_back(*i);
-        //            }
-        //            break;
-        //        
-        //        default:
-        //            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-        //            break;
-        //    }
-        //}
+                case TypeKinds::TK_VALUETYPE:
+                    sigs.push_back(typeKind.Value());
+                    {
+                        BYTE pData[4] = { 0 };
+                        ULONG length = ::CorSigCompressToken(this_.GetToken(), pData);
+                        for (BYTE const *i = pData, *i_end = i + length; i != i_end; ++i)
+                            sigs.push_back(*i);
+                    }
+                    break;
+                
+                default:
+                    BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+                    break;
+            }
+        }
 
         mdToken m_mdt;
         mutable bool m_genericArgsInit;
@@ -714,15 +598,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         this_type *m_pGenericTypeDef;
         mutable boost::unordered_map<std::vector<this_type const *>, SIZE_T, type_vector_hash_type, type_vector_equal_to_type> m_genericArgsToIndex;
         mutable boost::unordered_map<method_name_metadata_type const *, SIZE_T, method_name_metadata_hash_type, method_name_metadata_equal_to_type> m_methodNameToIndex;
-        
-        mutable assembly_metadata_type *m_pAsmMeta;
+        mutable bool m_kindInitialized;
+
+        //mutable assembly_metadata_type *m_pAsmMeta;
+        mutable module_metadata_type *m_pModAsScope;
         mutable type_name_metadata_type *m_pTypeNameMeta;
         mutable ATL::CComPtr<com_meta_data_import_type> m_pMetaImpApi;
-        TypeKinds m_kind;
-        mutable std::wstring m_name;
-        //typedef Utilities::Hash<method_name_metadata_type> method_key_hash;
-        //typedef Utilities::EqualTo<method_name_metadata_type, method_name_metadata_type> method_key_equal_to;
-        //mutable boost::unordered_map<method_name_metadata_type, mdMethodDef, method_key_hash, method_key_equal_to> m_methodMetas;
+        mutable TypeKinds m_kind;
+        //mutable std::wstring m_name;
         mutable std::vector<COR_SIGNATURE> m_sigs;
     };
 

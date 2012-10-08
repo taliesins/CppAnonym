@@ -79,36 +79,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         template<class T>
-        T const *FindType() const { return static_cast<runtime_host_type const *>(m_pRuntimeHost)->FindType<T>(); }
+        T const &Map() const { return static_cast<runtime_host_type const *>(m_pRuntimeHost)->Map<T>(); }
 
         template<class T>
-        T *FindType() { return m_pRuntimeHost->FindType<T>(); }
+        T &Map() { return m_pRuntimeHost->Map<T>(); }
       
         template<>
-        this_type const *FindType<this_type>() const { return this; }
+        this_type const &Map<this_type>() const { return this; }
       
         template<>
-        this_type *FindType<this_type>() { return this; }
+        this_type &Map<this_type>() { return this; }
 
-        //boost::shared_ptr<metadata_dispenser_type const> CreateDispenser() const
-        //{
-        //    using namespace boost;
-        //    _ASSERTE(m_pRuntimeHost != NULL);
-
-        //    this_type *mutableThis = const_cast<this_type *>(this);
-        //    shared_ptr<metadata_dispenser_type const> pMetaDisp;
-        //    pMetaDisp = make_shared<metadata_dispenser_type const>();
-        //    pMetaDisp->Init(*mutableThis);
-
-        //    return pMetaDisp;
-        //}
-
+        // このレベルに ICeeFileGen をハンドリングするオブジェクトを生成する層を作ったほうが良さそうね。
         metadata_dispenser_type *CreateDispenser() const
         {
-            this_type *mutableThis = const_cast<this_type *>(this);
+            this_type *pMutableThis = const_cast<this_type *>(this);
             metadata_dispenser_type *pMetaDisp = NULL;
-            pMetaDisp = mutableThis->MetadataDispenserHeap().New();
-            pMetaDisp->Init(*mutableThis);
+            pMetaDisp = pMutableThis->MetadataDispenserHeap().New();
+            pMetaDisp->Init(*pMutableThis);
 
             return pMetaDisp;
         }

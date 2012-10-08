@@ -50,7 +50,7 @@ namespace MockC17C4C45 {
     {
     public:
         template<class T>
-        T const *FindType() const 
+        T const &Map() const 
         {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;

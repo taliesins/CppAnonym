@@ -18,6 +18,22 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyNameMetadataFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleMetadataFwd.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleNameMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATAFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadataFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabel.hpp>
 #endif
@@ -52,6 +68,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
                 pair<AssemblyNameMetadataLabel, AssemblyNameMetadata>,
                 pair<AssemblyNameMetadataHashLabel, AssemblyNameMetadataHash>,
                 pair<AssemblyNameMetadataEqualToLabel, AssemblyNameMetadataEqualTo>,
+                pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<ModuleNameMetadataLabel, ModuleNameMetadata>,
+                pair<ModuleNameMetadataHashLabel, ModuleNameMetadataHash>,
+                pair<ModuleNameMetadataEqualToLabel, ModuleNameMetadataEqualTo>,
                 pair<TypeMetadataLabel, TypeMetadata>,
                 pair<MethodNameMetadataLabel, MethodNameMetadata>,
                 pair<IMetaDataImport2, IMetaDataImport2>

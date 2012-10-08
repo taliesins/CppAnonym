@@ -152,6 +152,14 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyNameMetadata.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleMetadata.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
@@ -185,6 +193,10 @@
 #endif
 
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#endif
+
 // Forward Declarations
 namespace Mock9254318F {
 
@@ -201,7 +213,14 @@ namespace Mock9254318F {
     {
     public:
         template<class T>
-        T const *FindType() const 
+        T const &Map() const
+        {
+            MockMetadataInfo *pMutableThis = const_cast<MockMetadataInfo *>(this);
+            return pMutableThis->Map<T>();    
+        }
+
+        template<class T>
+        T &Map()
         {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;
@@ -210,7 +229,7 @@ namespace Mock9254318F {
             result = std::find_if(m_typePtrs.begin(), m_typePtrs.end(), IsAnyT<shared_ptr<T> >()); 
             _ASSERTE(result != m_typePtrs.end());
 
-            return any_cast<shared_ptr<T> >(*result).get();
+            return *any_cast<shared_ptr<T> >(*result);
         }
 
         mutable AnyVector m_typePtrs;
@@ -266,6 +285,10 @@ namespace Mock9254318F {
                 pair<AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestApiHolder> >, 
                 pair<AssemblyNameMetadataHashLabel, BaseAssemblyNameMetadataHash<TestApiHolder> >, 
                 pair<AssemblyNameMetadataEqualToLabel, BaseAssemblyNameMetadataEqualTo<TestApiHolder> >, 
+                pair<ModuleMetadataLabel, BaseModuleMetadata<TestApiHolder> >, 
+                pair<ModuleNameMetadataLabel, BaseModuleNameMetadata<TestApiHolder> >, 
+                pair<ModuleNameMetadataHashLabel, BaseModuleNameMetadataHash<TestApiHolder> >,
+                pair<ModuleNameMetadataEqualToLabel, BaseModuleNameMetadataEqualTo<TestApiHolder> >,
                 pair<TypeMetadataLabel, BaseTypeMetadata<TestApiHolder> >, 
                 pair<TypeNameMetadataLabel, BaseTypeNameMetadata<TestApiHolder> >, 
                 pair<TypeNameMetadataHashLabel, BaseTypeNameMetadataHash<TestApiHolder> >, 
@@ -292,33 +315,77 @@ namespace Mock9254318F {
     {
     };
 
+    namespace Detail {
+
+        typedef MockRuntimeHost RuntimeHost; 
+        typedef MockMetadataInfo MetadataInfo;
+        typedef BaseFusionInfo<TestApiHolder> FusionInfo;
+        typedef BaseStrongNameInfo<TestApiHolder> StrongNameInfo;
+
+        typedef BaseMetadataDispenser<TestApiHolder> MetadataDispenser;
+        typedef BaseAssemblyMetadata<TestApiHolder> AssemblyMetadata;
+        typedef BaseAssemblyNameMetadata<TestApiHolder> AssemblyNameMetadata;
+        typedef BaseModuleMetadata<TestApiHolder> ModuleMetadata;
+        typedef BaseModuleNameMetadata<TestApiHolder> ModuleNameMetadata;
+        typedef BaseTypeMetadata<TestApiHolder> TypeMetadata;
+        typedef BaseTypeNameMetadata<TestApiHolder> TypeNameMetadata;
+        typedef BaseMethodMetadata<TestApiHolder> MethodMetadata;
+        typedef BaseMethodNameMetadata<TestApiHolder> MethodNameMetadata;
+
+    }   // namespace Detail {
+
+    using Detail::RuntimeHost;
+    using Detail::MetadataInfo;
+    using Detail::FusionInfo;
+    using Detail::StrongNameInfo;
+    using Detail::MetadataDispenser;
+    using Detail::AssemblyMetadata;
+    using Detail::AssemblyNameMetadata;
+    using Detail::ModuleMetadata;
+    using Detail::ModuleNameMetadata;
+    using Detail::TypeMetadata;
+    using Detail::TypeNameMetadata;
+    using Detail::MethodMetadata;
+    using Detail::MethodNameMetadata;
+
 }   // namespace Mock9254318F {
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_Test.*
 namespace {
 
+    //template<class Accessor>
+    //class A
+    //{
+    //public:
+    //    A() : m_val(0) { }
+    //    int GetValue() const { return m_val; }
+    //private:
+    //    friend typename boost::mpl::identity<Accessor>::type;
+    //    int m_val;
+    //};
+ 
+    //struct B
+    //{
+    //    template<class A>
+    //    static void SetValue(A &a, int val)
+    //    {
+    //        a.m_val = val;
+    //    }
+    //};
+
+    //CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, Test_01)
+    //{
+    //    A<B> a;
+    //    B::SetValue(a, 100);
+    //    ASSERT_EQ(99, a.GetValue());
+    //}
+
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_All_01)
     {
-        namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace Urasandesu::CppAnonym;
-        using namespace Urasandesu::CppAnonym::Fusion;
-        using namespace Urasandesu::CppAnonym::Metadata;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::StrongNaming;
-
-        typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
-        typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
-
-        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
+        using namespace Mock9254318F;
+        using Urasandesu::CppAnonym::Metadata::CallingConventions;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -326,8 +393,12 @@ namespace {
         shared_ptr<FusionInfo> pFusionInfo(make_shared<FusionInfo>());
         pFusionInfo->Init(*pRuntimeHost);
 
+        shared_ptr<StrongNameInfo> pSnInfo(make_shared<StrongNameInfo>());
+        pSnInfo->Init(*pRuntimeHost);
+
         shared_ptr<MetadataInfo> pMetaInfo(make_shared<MetadataInfo>());
         pMetaInfo->m_typePtrs.push_back(pFusionInfo);
+        pMetaInfo->m_typePtrs.push_back(pSnInfo);
         
         shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
         pMetaDisp->Init(*pMetaInfo);
@@ -345,16 +416,27 @@ namespace {
         AssemblyMetadata const *pMSCorLib = NULL;
         pMSCorLib = pMSCorLibName->Resolve();
         ASSERT_EQ(0x20000001, pMSCorLib->GetToken());
-        
+
+        ModuleNameMetadata *pMSCorLibModuleName = NULL;
+        {
+            std::wstring name(L"CommonLanguageRuntimeLibrary");
+            pMSCorLibModuleName = pMSCorLibName->NewModuleName(name);
+        }
+
+        ASSERT_STREQ(L"CommonLanguageRuntimeLibrary", pMSCorLibModuleName->GetName().c_str());
+
+        ModuleMetadata const *pMSCorLibModule = NULL;
+        pMSCorLibModule = pMSCorLibModuleName->Resolve();
+        ASSERT_EQ(0x00000001, pMSCorLibModule->GetToken());
+
         TypeNameMetadata *pConsoleName = NULL;
         {
             std::wstring name(L"System.Console");
-            TypeKinds kind(TypeKinds::TK_CLASS);
-            pConsoleName = pMSCorLibName->NewTypeName(name, kind);
+            pConsoleName = pMSCorLibModuleName->NewTypeName(name);
         }
 
         ASSERT_STREQ(L"System.Console", pConsoleName->GetName().c_str());
-
+        
         TypeMetadata const *pConsole = NULL;
         pConsole = pConsoleName->Resolve();
         ASSERT_EQ(0x02000089, pConsole->GetToken());
@@ -363,35 +445,27 @@ namespace {
         {
             std::wstring name(L"WriteLine");
             CallingConventions callingConvention(CallingConventions::CC_STANDARD);
-            TypeNameMetadata const *pRetTypeName = pMSCorLibName->NewTypeName(L"System.Void", TypeKinds::TK_VOID);
+            TypeNameMetadata const *pRetTypeName = pMSCorLibModuleName->NewTypeName(L"System.Void");
             std::vector<TypeNameMetadata const *> paramTypeNames;
-            paramTypeNames.push_back(pMSCorLibName->NewTypeName(L"System.String", TypeKinds::TK_STRING));
+            paramTypeNames.push_back(pMSCorLibModuleName->NewTypeName(L"System.String"));
             pWriteLineName = pConsoleName->NewMethodName(name, callingConvention, *pRetTypeName, paramTypeNames);
         }
+
+        ASSERT_STREQ(L"WriteLine", pWriteLineName->GetName().c_str());
+
+        MethodMetadata const *pWriteLine = NULL;
+        pWriteLine = pWriteLineName->Resolve();
+        ASSERT_EQ(0x060007C9, pWriteLine->GetToken());
     }
 
 
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_FromAssembly_01)
     {
-        namespace mpl = boost::mpl;
         namespace fs = boost::filesystem;
         using namespace boost;
-        using namespace Urasandesu::CppAnonym;
-        using namespace Urasandesu::CppAnonym::Fusion;
-        using namespace Urasandesu::CppAnonym::Metadata;
-
-        typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
-        typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
-
-        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
+        using namespace Mock9254318F;
+        using Urasandesu::CppAnonym::Metadata::CallingConventions;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -399,8 +473,64 @@ namespace {
         shared_ptr<FusionInfo> pFusionInfo(make_shared<FusionInfo>());
         pFusionInfo->Init(*pRuntimeHost);
 
+        shared_ptr<StrongNameInfo> pSnInfo(make_shared<StrongNameInfo>());
+        pSnInfo->Init(*pRuntimeHost);
+
         shared_ptr<MetadataInfo> pMetaInfo(make_shared<MetadataInfo>());
         pMetaInfo->m_typePtrs.push_back(pFusionInfo);
+        pMetaInfo->m_typePtrs.push_back(pSnInfo);
+        
+        shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
+        pMetaDisp->Init(*pMetaInfo);
+
+        AssemblyMetadata const *pMSCorLib = NULL;
+        {
+            fs::path asmPath(L"C:\\windows\\assembly\\GAC_32\\mscorlib\\2.0.0.0__b77a5c561934e089\\mscorlib.dll");
+            pMSCorLib = pMetaDisp->LoadAssemblyFromFile(asmPath);
+        }
+                  
+        ASSERT_EQ(0x20000001, pMSCorLib->GetToken());
+
+        AssemblyNameMetadata const *pMSCorLibName = NULL;
+        pMSCorLibName = pMSCorLib->GetAssemblyName();
+
+        EXPECT_STREQ(L"mscorlib, Version=2.0.0.0, Culture=neutral, " 
+                     L"PublicKeyToken=b77a5c561934e089, processorArchitecture=x86", pMSCorLibName->GetName().c_str());
+
+        ModuleNameMetadata *pMSCorLibModuleName = NULL;
+        {
+            std::wstring name(L"CommonLanguageRuntimeLibrary");
+            pMSCorLibModuleName = pMSCorLib->NewModuleName(name);
+        }
+
+        ASSERT_STREQ(L"CommonLanguageRuntimeLibrary", pMSCorLibModuleName->GetName().c_str());
+
+        ModuleMetadata const *pMSCorLibModule = NULL;
+        pMSCorLibModule = pMSCorLibModuleName->Resolve();
+        ASSERT_EQ(0x00000001, pMSCorLibModule->GetToken());
+    }
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_FromModule_01)
+    {
+        namespace fs = boost::filesystem;
+        using namespace boost;
+        using namespace Mock9254318F;
+        using Urasandesu::CppAnonym::Metadata::CallingConventions;
+
+        shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
+        pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
+
+        shared_ptr<FusionInfo> pFusionInfo(make_shared<FusionInfo>());
+        pFusionInfo->Init(*pRuntimeHost);
+
+        shared_ptr<StrongNameInfo> pSnInfo(make_shared<StrongNameInfo>());
+        pSnInfo->Init(*pRuntimeHost);
+
+        shared_ptr<MetadataInfo> pMetaInfo(make_shared<MetadataInfo>());
+        pMetaInfo->m_typePtrs.push_back(pFusionInfo);
+        pMetaInfo->m_typePtrs.push_back(pSnInfo);
         
         shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
         pMetaDisp->Init(*pMetaInfo);
@@ -411,16 +541,25 @@ namespace {
             pMSCorLib = pMetaDisp->LoadAssemblyFromFile(asmPath);
         }
 
-        AssemblyNameMetadata const *pMSCorLibName = NULL;
-        pMSCorLibName = pMSCorLib->GetAssemblyName();
+        ModuleMetadata const *pMSCorLibModule = NULL;
+        {
+            std::wstring name(L"CommonLanguageRuntimeLibrary");
+            pMSCorLibModule = pMSCorLib->GetModule(name);
+        }
+
+        ASSERT_EQ(0x00000001, pMSCorLibModule->GetToken());
+
+        ModuleNameMetadata const *pMSCorLibModuleName = NULL;
+        pMSCorLibModuleName = pMSCorLibModule->GetModuleName();
+
+        ASSERT_STREQ(L"CommonLanguageRuntimeLibrary", pMSCorLibModuleName->GetName().c_str());
 
         TypeNameMetadata *pConsoleName = NULL;
         {
             std::wstring name(L"System.Console");
-            TypeKinds kind(TypeKinds::TK_CLASS);
-            pConsoleName = pMSCorLib->NewTypeName(name, kind);
+            pConsoleName = pMSCorLibModule->NewTypeName(name);
         }
-
+        
         ASSERT_STREQ(L"System.Console", pConsoleName->GetName().c_str());
 
         TypeMetadata const *pConsole = NULL;
@@ -429,27 +568,13 @@ namespace {
     }
 
 
-
+    
     CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_FromType_01)
     {
         namespace fs = boost::filesystem;
-        namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace Urasandesu::CppAnonym;
-        using namespace Urasandesu::CppAnonym::Fusion;
-        using namespace Urasandesu::CppAnonym::Metadata;
-
-        typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
-        typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
-
-        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
+        using namespace Mock9254318F;
+        using Urasandesu::CppAnonym::Metadata::CallingConventions;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -457,8 +582,12 @@ namespace {
         shared_ptr<FusionInfo> pFusionInfo(make_shared<FusionInfo>());
         pFusionInfo->Init(*pRuntimeHost);
 
+        shared_ptr<StrongNameInfo> pSnInfo(make_shared<StrongNameInfo>());
+        pSnInfo->Init(*pRuntimeHost);
+
         shared_ptr<MetadataInfo> pMetaInfo(make_shared<MetadataInfo>());
         pMetaInfo->m_typePtrs.push_back(pFusionInfo);
+        pMetaInfo->m_typePtrs.push_back(pSnInfo);
         
         shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
         pMetaDisp->Init(*pMetaInfo);
@@ -469,10 +598,16 @@ namespace {
             pMSCorLib = pMetaDisp->LoadAssemblyFromFile(asmPath);
         }
 
+        ModuleMetadata const *pMSCorLibModule = NULL;
+        {
+            std::wstring name(L"CommonLanguageRuntimeLibrary");
+            pMSCorLibModule = pMSCorLib->GetModule(name);
+        }
+
         TypeMetadata const *pConsole = NULL;
         {
             std::wstring name(L"System.Console");
-            pConsole = pMSCorLib->GetType(name);
+            pConsole = pMSCorLibModule->GetType(name);
         }
 
         TypeNameMetadata const *pConsoleName = NULL;
@@ -484,9 +619,9 @@ namespace {
         {
             std::wstring name(L"WriteLine");
             CallingConventions callingConvention(CallingConventions::CC_STANDARD);
-            TypeNameMetadata const *pRetTypeName = pMSCorLib->NewTypeName(L"System.Void", TypeKinds::TK_VOID);
+            TypeNameMetadata const *pRetTypeName = pMSCorLibModule->NewTypeName(L"System.Void");
             std::vector<TypeNameMetadata const *> paramTypeNames;
-            paramTypeNames.push_back(pMSCorLib->NewTypeName(L"System.String", TypeKinds::TK_STRING));
+            paramTypeNames.push_back(pMSCorLibModule->NewTypeName(L"System.String"));
             pWriteLineName = pConsole->NewMethodName(name, callingConvention, *pRetTypeName, paramTypeNames);
         }
 
@@ -494,7 +629,7 @@ namespace {
 
         MethodMetadata const *pWriteLine = NULL;
         pWriteLine = pWriteLineName->Resolve();
-        ASSERT_EQ(0x06000001, pWriteLine->GetToken());
+        ASSERT_EQ(0x060007C9, pWriteLine->GetToken());
     }
 
 
@@ -502,23 +637,9 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_Metadata_Test, CombinationOfResolutionWayTest_FromMethod_01)
     {
         namespace fs = boost::filesystem;
-        namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace Urasandesu::CppAnonym;
-        using namespace Urasandesu::CppAnonym::Fusion;
-        using namespace Urasandesu::CppAnonym::Metadata;
-
-        typedef Mock9254318F::MockRuntimeHost RuntimeHost; 
-        typedef Mock9254318F::MockMetadataInfo MetadataInfo;
-        typedef BaseFusionInfo<Mock9254318F::TestApiHolder> FusionInfo;
-
-        typedef BaseMetadataDispenser<Mock9254318F::TestApiHolder> MetadataDispenser;
-        typedef BaseAssemblyMetadata<Mock9254318F::TestApiHolder> AssemblyMetadata;
-        typedef BaseAssemblyNameMetadata<Mock9254318F::TestApiHolder> AssemblyNameMetadata;
-        typedef BaseTypeMetadata<Mock9254318F::TestApiHolder> TypeMetadata;
-        typedef BaseTypeNameMetadata<Mock9254318F::TestApiHolder> TypeNameMetadata;
-        typedef BaseMethodMetadata<Mock9254318F::TestApiHolder> MethodMetadata;
-        typedef BaseMethodNameMetadata<Mock9254318F::TestApiHolder> MethodNameMetadata;
+        using namespace Mock9254318F;
+        using Urasandesu::CppAnonym::Metadata::CallingConventions;
 
         shared_ptr<RuntimeHost> pRuntimeHost(make_shared<RuntimeHost>());
         pRuntimeHost->m_corSystemDirectoryPath = L"C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\";
@@ -526,8 +647,12 @@ namespace {
         shared_ptr<FusionInfo> pFusionInfo(make_shared<FusionInfo>());
         pFusionInfo->Init(*pRuntimeHost);
 
+        shared_ptr<StrongNameInfo> pSnInfo(make_shared<StrongNameInfo>());
+        pSnInfo->Init(*pRuntimeHost);
+
         shared_ptr<MetadataInfo> pMetaInfo(make_shared<MetadataInfo>());
         pMetaInfo->m_typePtrs.push_back(pFusionInfo);
+        pMetaInfo->m_typePtrs.push_back(pSnInfo);
         
         shared_ptr<MetadataDispenser> pMetaDisp(make_shared<MetadataDispenser>());
         pMetaDisp->Init(*pMetaInfo);
@@ -538,19 +663,25 @@ namespace {
             pMSCorLib = pMetaDisp->LoadAssemblyFromFile(asmPath);
         }
 
+        ModuleMetadata const *pMSCorLibModule = NULL;
+        {
+            std::wstring name(L"CommonLanguageRuntimeLibrary");
+            pMSCorLibModule = pMSCorLib->GetModule(name);
+        }
+
         TypeMetadata const *pConsole = NULL;
         {
             std::wstring name(L"System.Console");
-            pConsole = pMSCorLib->GetType(name);
+            pConsole = pMSCorLibModule->GetType(name);
         }
 
         MethodMetadata const *pWriteLine = NULL;
         {
             std::wstring name(L"WriteLine");
             CallingConventions callingConvention(CallingConventions::CC_STANDARD);
-            TypeMetadata const *pRetType = pMSCorLib->GetType(L"System.Void");
+            TypeMetadata const *pRetType = pMSCorLibModule->GetType(L"System.Void");
             std::vector<TypeMetadata const *> paramTypes;
-            paramTypes.push_back(pMSCorLib->GetType(L"System.String"));
+            paramTypes.push_back(pMSCorLibModule->GetType(L"System.String"));
             pWriteLine = pConsole->GetMethod(name, callingConvention, *pRetType, paramTypes);
         }
 

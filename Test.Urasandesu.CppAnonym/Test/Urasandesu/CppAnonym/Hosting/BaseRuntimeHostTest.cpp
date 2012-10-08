@@ -76,11 +76,9 @@ namespace {
         RuntimeHost runtimeHost;
         typedef RuntimeHost::fusion_info_type FusionInfo;
 
-        FusionInfo const *pFuInfo = runtimeHost.GetInfo<FusionInfo>();
-        ASSERT_FALSE(pFuInfo == NULL);
-
-        FusionInfo const *pFuInfo2 = runtimeHost.GetInfo<FusionInfo>();
-        ASSERT_EQ(pFuInfo, pFuInfo2);
+        FusionInfo const &fuInfo = runtimeHost.Map<FusionInfo>();
+        FusionInfo const &fuInfo2 = runtimeHost.Map<FusionInfo>();
+        ASSERT_EQ(&fuInfo, &fuInfo2);
     }
 
     TEST(Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest, GetInfoTest_MetadataInfo_01)
@@ -91,11 +89,10 @@ namespace {
         
         RuntimeHost runtimeHost;
         typedef RuntimeHost::metadata_info_type MetaInfo;
-        MetaInfo const *pMetaInfo = runtimeHost.GetInfo<MetaInfo>();
-        ASSERT_FALSE(pMetaInfo == NULL);
 
-        MetaInfo const *pMetaInfo2 = runtimeHost.GetInfo<MetaInfo>();
-        ASSERT_EQ(pMetaInfo, pMetaInfo2);
+        MetaInfo const &metaInfo = runtimeHost.Map<MetaInfo>();
+        MetaInfo const &metaInfo2 = runtimeHost.Map<MetaInfo>();
+        ASSERT_EQ(&metaInfo, &metaInfo2);
     }
 
 

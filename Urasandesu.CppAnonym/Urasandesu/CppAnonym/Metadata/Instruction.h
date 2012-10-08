@@ -9,11 +9,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class Instruction
     {
     public:
-        inline Instruction() { }
+        inline Instruction() :
+            m_pOpCode(NULL)
+        { }
     
         inline OpCode const &GetOpCode() const
         {
-            //_ASSERTE(reinterpret_cast<size_t>(m_pOpCode) != 0xCCCCCCCC);
+            _ASSERTE(m_pOpCode != NULL);
             return *m_pOpCode;
         }
         
