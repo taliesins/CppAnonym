@@ -4024,7 +4024,6 @@ namespace {
         ASSERT_TRUE(pFunc1DateTimector != NULL);
         ASSERT_EQ(0x06000232, pFunc1DateTimector->GetToken());   // !! CAUTION: This is CORRECT !!
 
-#if 0
         MethodMetadata const *pget_UtcNow = NULL;
         {
             std::vector<ITypeMetadata const *> params;
@@ -4033,6 +4032,7 @@ namespace {
         ASSERT_TRUE(pget_UtcNow != NULL);
         ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
 
+#if 0
         MethodMetadata const *pToLocalTime = NULL;
         {
             std::vector<ITypeMetadata const *> params;

@@ -574,57 +574,25 @@ namespace {
         namespace Detail {
 
             namespace mpl = boost::mpl;
+            namespace Traits = Urasandesu::CppAnonym::Traits;
 
-        //struct Flatter
-        //{
-        //    template<class F, class State, class Value>
-        //    struct apply : 
-        //        mpl::copy<typename mpl::apply<F, Value>::type, mpl::back_inserter<State> >
-        //    {
-        //    };
-        //};
+        //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
+        //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
 
-        //template<class Sequence, class F>
-        //struct FlattenImpl : 
-        //    mpl::fold<Sequence, mpl::vector<>, mpl::bind<Flatter, F, mpl::_1, mpl::_2> >
-        //{
-        //};
+        //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+        //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
 
-        //template<class Sequence, class F>
-        //struct Flatten : 
-        //    FlattenImpl<Sequence, F>
+        //template<class Current>
+        //struct ExtractPreviousOrDefault : 
+        //    mpl::eval_if<
+        //        CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
+        //        CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
+        //        mpl::identity<Current> >
         //{
         //};
-
-        //struct GetValueF
-        //{
-        //    template<class Value>
-        //    struct apply
-        //    {
-        //        typedef Value type;
-        //    };
-        //};
-
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, type);
-
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
-
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
-
-        template<class Current>
-        struct EvalCurrent : 
-            mpl::eval_if<
-                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
-                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
-                mpl::identity<Current> >
-        {
-        };
 
         //template<class Last, class Current>
-        //struct EvalChainInfoSequence : 
+        //struct ExtractChainInfoSequenceOrDefault : 
         //    mpl::eval_if<
         //        mpl::and_<
         //            CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, Current),
@@ -636,20 +604,29 @@ namespace {
         //};
 
         //template<class Last, class Current>
-        //struct EvalCurrentChainInfoSequence : 
-        //    EvalChainInfoSequence<Last, typename EvalCurrent<Current>::type>
+        //class FlattenChainInfoImpl;
+
+        //template<class Last>
+        //struct FlattenChainInfoImplF
         //{
+        //    template<class Current>
+        //    struct apply : 
+        //        FlattenChainInfoImpl<Last, Current>
+        //    {
+        //    };
         //};
 
         //template<class Last, class Current>
-        //struct FlattenChainInfoImpl : 
-        //    mpl::eval_if<
-        //        boost::is_same<typename EvalCurrentChainInfoSequence<Last, Current>::type, mpl::vector<Current> >, 
-        //        mpl::vector<Current>,
-        //        Flatten<
-        //            typename EvalCurrentChainInfoSequence<Last, Current>::type,
-        //            FlattenChainInfoImpl<Current, mpl::_1 > > >
+        //class FlattenChainInfoImpl
         //{
+        //    typedef typename ExtractPreviousOrDefault<Current>::type previous_type;
+        //    typedef typename ExtractChainInfoSequenceOrDefault<Last, previous_type>::type chain_info_sequence;
+
+        //public:
+        //    typedef typename mpl::eval_if<
+        //                        boost::is_same<chain_info_sequence, mpl::vector<previous_type> >,
+        //                        mpl::vector<previous_type>,
+        //                        Traits::Flatten<chain_info_sequence, FlattenChainInfoImplF<previous_type> > >::type type;
         //};
 
         //template<class T>
@@ -657,6 +634,57 @@ namespace {
         //    FlattenChainInfoImpl<mpl::void_, T>
         //{
         //};
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+
+        template<class Current>
+        struct ExtractPreviousOrDefault : 
+            mpl::eval_if<
+                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                mpl::identity<Current> >
+        {
+        };
+
+        template<class Last, class T>
+        struct ExtractChainInfoSequenceOrDefault : 
+            mpl::eval_if<
+                mpl::and_<
+                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                    mpl::not_<boost::is_same<Last, T> >
+                >,
+                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                mpl::identity<mpl::vector<T> > >
+        {
+        };
+
+        template<class Last, class Current>
+        class FlattenChainInfoImpl
+        {
+            typedef typename ExtractPreviousOrDefault<Current>::type previous_type;
+            typedef typename ExtractChainInfoSequenceOrDefault<Last, previous_type>::type chain_info_sequence_type;
+
+        public:
+            typedef typename mpl::eval_if<
+                                boost::is_same<chain_info_sequence_type, mpl::vector<previous_type> >, 
+                                chain_info_sequence_type,
+                                mpl::fold<
+                                    chain_info_sequence_type, 
+                                    mpl::vector<previous_type>,
+                                    mpl::copy<
+                                        FlattenChainInfoImpl<previous_type, mpl::_2>, 
+                                        mpl::back_inserter<mpl::_1> > > >::type type; 
+        };
+
+        template<class T>
+        struct FlattenChainInfo : 
+            FlattenChainInfoImpl<mpl::void_, T>
+        {
+        };
 
         template<class T>
         struct GetPreviousType
@@ -684,16 +712,17 @@ namespace {
         namespace mpl = boost::mpl;
         using Urasandesu::CppAnonym::Traits::Flatten;
         using namespace _35C2C9F3;
+        using _35C2C9F3::Detail::FlattenChainInfo;
 
         typedef mpl::vector<int, float, double> Vec0;
         typedef mpl::vector<Vec0, Vec0, Vec0> Vec1;
-        typedef mpl::fold<Vec1, mpl::vector0<>, mpl::insert_range<mpl::_1, mpl::end<mpl::_1>, mpl::deref<mpl::_2> > >::type Vec2;
-        BOOST_MPL_ASSERT_RELATION(mpl::size<Vec2>::value, ==, 9);
 
         typedef mpl::vector<SmartPtrChainInfo<Vec0>, Vec0, SmartPtrChainInfo<Vec0> > Vec3;
         BOOST_MPL_ASSERT((boost::is_same<Flatten<Vec1, mpl::identity<mpl::_1> >::type, mpl::vector9<int, float, double, int, float, double, int, float, double> >));
         BOOST_MPL_ASSERT((boost::is_same<Flatten<Vec3, Detail::GetPreviousTypeF >::type, mpl::vector9<int, float, double, int, float, double, int, float, double> >));
-        BOOST_MPL_ASSERT((boost::is_same<Flatten<Vec3, Detail::EvalCurrent<mpl::_1> >::type, mpl::vector9<int, float, double, int, float, double, int, float, double> >));
+        //BOOST_MPL_ASSERT((boost::is_same<Flatten<Vec3, Detail::ExtractPreviousOrDefault<mpl::_1> >::type, mpl::vector9<int, float, double, int, float, double, int, float, double> >));
+
+        BOOST_MPL_ASSERT((boost::is_same<FlattenChainInfo<E>::type, mpl::vector6<E, D, D, B, A, mpl::void_>>));
 
         //typedef FlattenChainInfo<B>::type Vec3;
         //BOOST_MPL_ASSERT_RELATION(mpl::size<Vec3>::value, ==, 3);

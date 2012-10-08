@@ -824,30 +824,42 @@ namespace Urasandesu { namespace CppAnonym {
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
 
-        template<class Last, class Current>
-        struct FlattenChainInfoImpl
+        template<class Current>
+        struct ExtractPreviousOrDefault : 
+            mpl::eval_if<
+                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                mpl::identity<Current> >
         {
-            typedef typename mpl::eval_if<
-                                CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
-                                CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
-                                mpl::identity<Current> >::type current_type;
+        };
 
-            typedef typename mpl::eval_if<
-                                mpl::and_<
-                                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, current_type),
-                                    mpl::not_<boost::is_same<Last, current_type> >
-                                >,
-                                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, current_type),
-                                mpl::identity<mpl::vector<current_type> > >::type chain_info_sequence_type;
+        template<class Last, class T>
+        struct ExtractChainInfoSequenceOrDefault : 
+            mpl::eval_if<
+                mpl::and_<
+                    CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                    mpl::not_<boost::is_same<Last, T> >
+                >,
+                CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, T),
+                mpl::identity<mpl::vector<T> > >
+        {
+        };
 
+        template<class Last, class Current>
+        class FlattenChainInfoImpl
+        {
+            typedef typename ExtractPreviousOrDefault<Current>::type previous_type;
+            typedef typename ExtractChainInfoSequenceOrDefault<Last, previous_type>::type chain_info_sequence_type;
+
+        public:
             typedef typename mpl::eval_if<
-                                boost::is_same<chain_info_sequence_type, mpl::vector<current_type> >, 
+                                boost::is_same<chain_info_sequence_type, mpl::vector<previous_type> >, 
                                 chain_info_sequence_type,
                                 mpl::fold<
                                     chain_info_sequence_type, 
-                                    mpl::vector<current_type>,
+                                    mpl::vector<previous_type>,
                                     mpl::copy<
-                                        FlattenChainInfoImpl<current_type, mpl::_2>, 
+                                        FlattenChainInfoImpl<previous_type, mpl::_2>, 
                                         mpl::back_inserter<mpl::_1> > > >::type type; 
         };
 
@@ -3052,7 +3064,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         boost::shared_ptr<typename base_type::this_type const> GetBaseType() const
         {
-            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            if (!m_pBaseType)
+                FillPropertiesIfNecessary();
+            return m_pBaseType;
         }
 
         boost::shared_ptr<typename base_type::i_module_metadata_type const> GetResolutionScope() const
@@ -3874,6 +3888,14 @@ namespace {
             pFunc1DateTimector = pFunc1DateTime->GetMethod(L".ctor", CallingConventions::CC_HAS_THIS, pVoid, params);
         }
         ASSERT_EQ(0x06000232, pFunc1DateTimector->GetToken());   // !! CAUTION: This is CORRECT !!
+
+        shared_ptr<MethodMetadata const> pget_UtcNow;
+        {
+            std::vector<shared_ptr<ITypeMetadata const> > params;
+            pget_UtcNow = pDateTime->GetMethod(L"get_UtcNow", CallingConventions::CC_STANDARD, pDateTime, params);
+        }
+        ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
+
 #if 0
 #endif
     }
