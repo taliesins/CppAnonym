@@ -65,7 +65,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
         
         typedef typename providing_type_at<0>::type host_info_type;
-        typedef typename providing_type_at<1>::type runtime_host_type;
+        //typedef typename providing_type_at<1>::type runtime_host_type;
+        typedef int runtime_host_type;
 
         typedef typename provider_of<host_info_type>::type host_info_provider_type;
         typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;        
@@ -73,7 +74,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
         typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
 
-        typedef typename HostInfoApiAt<HostInfoApiHolder, Utilities::Interfaces::InfrastructureFactoryLabel>::type factory_type;
+        //typedef typename HostInfoApiAt<HostInfoApiHolder, Utilities::Interfaces::InfrastructureFactoryLabel>::type factory_type;
 
         static host_info_type *CreateHost()
         {

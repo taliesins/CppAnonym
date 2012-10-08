@@ -150,6 +150,12 @@ namespace Urasandesu { namespace CppAnonym {
             this_type *pMutableThis = const_cast<this_type *>(this);
             return static_cast<typename provider_of<T>::type &>(*pMutableThis);
         }
+
+        template<class T>
+        inline T &HogeOf() const
+        {
+            throw 1;
+        }
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

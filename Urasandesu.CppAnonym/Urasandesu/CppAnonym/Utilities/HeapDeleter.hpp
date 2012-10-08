@@ -8,22 +8,45 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
+    namespace HeapDeleterDetail {
+
+        class HeapDeleterImpl
+        {
+        public:
+            template<class Heap>
+            HeapDeleterImpl(Heap &heap) : 
+                m_pHeap(&heap)
+            { }
+
+            template<class Heap, class T>
+            void operator()(T *p)
+            {
+                static_cast<Heap *>(m_pHeap)->Delete(p);
+            }
+
+        private:
+            void *m_pHeap;
+        };
+
+    }   // namespace HeapDeleterDetail {
+
     template<class Heap>
-    class HeapDeleter
+    class HeapDeleter : 
+        HeapDeleterDetail::HeapDeleterImpl
     {
     public:
+        typedef HeapDeleter<Heap> this_type;
+        typedef HeapDeleterDetail::HeapDeleterImpl base_type;
+        
         HeapDeleter(Heap &heap) : 
-            m_pHeap(&heap) 
+            base_type(&heap) 
         { }
         
         template<class T>
         void operator()(T *p) 
         { 
-            m_pHeap->Delete(p); 
+            base_type::operator()<Heap>(p);
         }
-    
-    private:
-        Heap *m_pHeap;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {

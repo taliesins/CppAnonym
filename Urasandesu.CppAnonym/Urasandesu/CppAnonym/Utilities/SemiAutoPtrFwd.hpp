@@ -8,17 +8,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         struct SemiAutoPtrHolder;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SemiAutoPtrImpl, factory_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SemiAutoPtrImpl, factory_type);
-
-        template<class T, class D>
+        template<class T, class TD, class ImplD>
         struct SemiAutoPtrHolderImpl;
-
-        template<class T, class D>
-        struct SemiAutoPtrHolderImplFactory;
 
         template<class T>
         class SemiAutoPtrImpl;
+
+        template<class U> 
+        struct SemiAutoPtrHolderAccessor;
 
     }   // namespace SemiAutoPtrDetail {
 

@@ -39,11 +39,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
-        template<class Handler>
+        template<class Handler, class ImplD>
         struct PersistedHandlerImpl : 
             PersistedHandler
         {
-            typedef PersistedHandlerImpl<Handler> this_type;
+            typedef PersistedHandlerImpl<Handler, ImplD> this_type;
             typedef PersistedHandler base_type;
 
             typedef typename mpl::eval_if<
@@ -60,7 +60,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
             PersistedHandlerImpl(Handler handler) : 
                 base_type(),
-                m_handler(handler)
+                m_handler(handler),
+                m_impld(ImplD())
+            { }
+
+            PersistedHandlerImpl(Handler handler, ImplD impld) : 
+                base_type(), 
+                m_handler(handler),
+                m_impld(impld)
             { }
             
             virtual ~PersistedHandlerImpl() 
@@ -74,20 +81,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
             virtual void Delete()
             {
-                delete this;
-                //PersistedHandlerImplFactory<Handler>::Heap().Delete(this);
+                m_impld(this);
             }
 
             Handler m_handler;
+            ImplD m_impld;
         };
-
-        //template<class Handler>
-        //struct PersistedHandlerImplFactory
-        //{
-        //    typedef PersistedHandlerImpl<Handler> holder_type;
-        //    typedef SimpleHeap<holder_type, QuickHeapWithoutSubscriptOperator> holder_heap_type;
-        //    static holder_heap_type &Heap() { static holder_heap_type heap; return heap; }
-        //};
 
         template<class T>
         class TempPtrImpl : 
@@ -98,6 +97,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef SemiAutoPtr<T> base_type;
             typedef PersistedHandler persisted_handler_type;
             typedef std::vector<intrusive_ptr<persisted_handler_type> > persisted_handler_vector_type;
+
+            template<class Handler, class ImplD>
+            struct persisted_handler_impl_type
+            {
+                typedef PersistedHandlerImpl<Handler, ImplD> type;
+            };
 
             TempPtrImpl() : 
                 base_type(),
@@ -162,7 +167,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class Handler>
             inline size_t AddPersistedHandler(Handler handler)
             {
-                m_persistedHandlers.push_back(new PersistedHandlerImpl<Handler>(handler) /*PersistedHandlerImplFactory<Handler>::Heap().New(handler)*/);
+                m_persistedHandlers.push_back(new persisted_handler_impl_type<Handler, DefaultDeleter>::type(handler));
+                return m_persistedHandlers.size() - 1;
+            }
+
+            template<class Handler, class ImplD>
+            inline size_t AddPersistedHandler(PersistedHandlerImpl<Handler, ImplD> *pPersistedHandler)
+            {
+                m_persistedHandlers.push_back(pPersistedHandler);
                 return m_persistedHandlers.size() - 1;
             }
 
@@ -208,9 +220,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type(p)
         { }
 
-        template<class D>
-        TempPtr(T *p, D d) : 
-            base_type(p, d)
+        template<class TD>
+        TempPtr(T *p, TD td) : 
+            base_type(p, td)
+        { }
+
+        template<class TD, class ImplD>
+        explicit TempPtr(SemiAutoPtrDetail::SemiAutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+            base_type(pHolder)
         { }
 
         template<class U>

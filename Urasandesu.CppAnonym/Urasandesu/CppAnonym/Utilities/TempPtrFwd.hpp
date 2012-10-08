@@ -14,7 +14,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandler, arg_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandler, arg_type);
 
-        template<class Handler>
+        template<class Handler, class ImplD>
         struct PersistedHandlerImpl;
 
         template<class Handler>
