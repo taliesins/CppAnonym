@@ -94,7 +94,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                 type_metadata_type const *pRetType = pMSCorLib->GetType(L"System.Void", TypeKinds::TK_VOID);
                 std::vector<type_metadata_type const *> paramTypes;
                 paramTypes.push_back(pMSCorLib->GetType(L"System.String", TypeKinds::TK_STRING));
-                method_metadata_type const *pWriteLine = pConsole->GetMethod(writeLineName, cc, pRetType, paramTypes);
+                method_metadata_type const *pWriteLine = pConsole->GetMethod(writeLineName, cc, *pRetType, paramTypes);
 
                 pInst->SetOprand(pWriteLine);
             }

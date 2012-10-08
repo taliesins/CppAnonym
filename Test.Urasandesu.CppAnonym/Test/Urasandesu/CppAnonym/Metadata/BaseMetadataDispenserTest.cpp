@@ -20,6 +20,10 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<
@@ -36,6 +40,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     struct AssemblyMetadataApiHolderLabel { };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
+namespace MockD7E6BF16 {
+
+    struct MockAssemblyNameMetadata
+    {
+        typedef INT type_name_metadata_heap_type;
+    };
+
+}   // namespace MockD7E6BF16 {
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Metadata_BaseMetadataDispenserProtoB8DF5A21Test.*
 namespace {
@@ -54,14 +67,15 @@ namespace {
             AssemblyMetadataApiHolderLabel
         {
             typedef boost::mpl::vector<TestMetadataDispenserApi, IMetaDataImport2> external_api_types;
-            typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi>>, 
+            typedef mpl::map<mpl::pair<Interfaces::MetadataDispenserLabel, BaseMetadataDispenser<TestMetadataDispenserApi> >, 
+                             mpl::pair<Interfaces::AssemblyNameMetadataLabel, MockD7E6BF16::MockAssemblyNameMetadata>, 
                              mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
         };
 
         struct TestMetadataDispenserApi
         {
-            typedef mpl::map<mpl::pair<Interfaces::MetadataInfoLabel, BaseTestMetadataInfoProtoB8DF5A21<mpl::void_>>, 
-                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>> api_cartridges;
+            typedef mpl::map<mpl::pair<Interfaces::MetadataInfoLabel, BaseTestMetadataInfoProtoB8DF5A21<mpl::void_> >, 
+                             mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi> > > api_cartridges;
         };
         typedef BaseMetadataDispenser<TestMetadataDispenserApi> MetadataDispenser;
         typedef MetadataDispenser::metadata_info_type MetadataInfo;

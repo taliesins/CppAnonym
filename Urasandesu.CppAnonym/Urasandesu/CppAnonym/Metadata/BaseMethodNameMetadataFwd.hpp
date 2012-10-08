@@ -7,11 +7,27 @@
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-    
+
     template<
-        class MethodNameMetadataApiHolder = DefaultMethodNameMetadataApiHolder
+        class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
     >    
     class BaseMethodNameMetadata;
+
+    typedef BaseMethodNameMetadata<> MethodNameMetadata;
+
+    template<
+        class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
+    >    
+    struct BaseMethodNameMetadataEqualTo;
+
+    typedef BaseMethodNameMetadataEqualTo<> MethodNameMetadataEqualTo;
+
+    template<
+        class MethodNameMetadataApiHolder = ApiHolders::DefaultMethodNameMetadataApiHolder
+    >    
+    struct BaseMethodNameMetadataHash;
+
+    typedef BaseMethodNameMetadataHash<> MethodNameMetadataHash;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

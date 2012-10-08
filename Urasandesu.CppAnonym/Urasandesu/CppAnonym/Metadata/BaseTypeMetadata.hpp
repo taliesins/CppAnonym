@@ -50,6 +50,18 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATALABELFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabelFwd.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     template<class ApiCartridgesHolder, class ApiLabel>
@@ -64,13 +76,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     class BaseTypeMetadata : 
         public IHeapContent<mdToken>, 
         public HeapProvider<
-            typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type,
+            mdToken, 
             boost::mpl::vector<
                 typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type
-            >,
-            Utilities::Hash<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type>,
-            Utilities::EqualTo<
-                typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type
             >
         >
     {
@@ -79,21 +87,36 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type metadata_import_api_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::TypeNameMetadataLabel>::type type_name_metadata_type;
+        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type method_name_metadata_type;
         typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodNameMetadataLabel>::type method_key_type;
+
+        typedef HeapProvider<mdToken, boost::mpl::vector<method_metadata_type> > heap_provider_type;
+        typedef typename heap_provider_type::type_decided_by<method_metadata_type>::type method_metadata_heap_type;
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(type_name_metadata_type, method_name_metadata_heap_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(type_name_metadata_type, method_name_metadata_heap_type);
+        typedef typename boost::mpl::eval_if<
+            CPP_ANONYM_HAS_MEMBER_TYPE(type_name_metadata_type, method_name_metadata_heap_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(type_name_metadata_type, method_name_metadata_heap_type), 
+            boost::mpl::void_
+        >::type method_name_metadata_heap_type;
 
         BaseTypeMetadata() : 
             IHeapContent(), 
             m_pAsmMeta(NULL), 
-            m_kind(TypeKinds::TK_END)
+            m_kind(TypeKinds::TK_END),
+            m_pTypeNameMeta(NULL)
         { }
 
         BaseTypeMetadata(TypeKinds const &kind) : 
             IHeapContent(), 
             m_pAsmMeta(NULL), 
-            m_kind(kind)
+            m_kind(kind),
+            m_pTypeNameMeta(NULL)
         { }
 
+        __declspec(deprecated("This method is temporarily deprecated."))
         void Init(assembly_metadata_type &asmMeta, metadata_import_api_type &metaImpApi) const
         {
             _ASSERTE(m_pAsmMeta == NULL);
@@ -101,6 +124,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             
             m_pAsmMeta = &asmMeta;
             m_pMetaImpApi = &metaImpApi;
+        }
+
+        void Init(assembly_metadata_type &asmMeta) const
+        {
+            // This method implementation is temporary.
+            _ASSERTE(m_pAsmMeta == NULL);
+
+            m_pAsmMeta = &asmMeta;
         }
 
         template<class T>
@@ -140,19 +171,48 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
+
         method_metadata_type const *GetMethod(std::wstring const &name, 
-                                              CallingConventions const &callConvention, 
-                                              this_type const *pRetType, 
+                                              CallingConventions const &callingConvention, 
+                                              this_type const &retType, 
                                               std::vector<this_type const *> const &paramTypes) const
         {
-            // TODO: これ、なんとかして遅延評価版にしないとね。
-            method_key_type key;
-            key.m_name = name;
-            key.m_callConvention = callConvention;
-            key.m_pRetType = pRetType;
-            key.m_paramTypes = paramTypes;
-            
-            return GetMethodFromMethodKey(key);
+            // This method implementation is temporary.
+            this_type *mutableThis = const_cast<this_type *>(this);
+
+            method_metadata_type *pMethodMeta = NULL;
+            pMethodMeta = mutableThis->MethodMetadataHeap().New(0x06000001);
+            pMethodMeta->Init(*mutableThis);
+            return pMethodMeta;
+            //// TODO: これ、なんとかして遅延評価版にしないとね。
+            //method_name_metadata_type key;
+            //key.m_name = name;
+            //key.m_callConvention = callConvention;
+            //key.m_pRetType = pRetType;
+            //key.m_paramTypes = paramTypes;
+            //
+            //return GetMethodFromMethodKey(key);
+        }
+
+        method_name_metadata_type *NewMethodName(std::wstring const &name, 
+                                                 CallingConventions const &callingConvention, 
+                                                 type_name_metadata_type const &retTypeName, 
+                                                 std::vector<type_name_metadata_type const *> const &paramTypeNames) const
+        {
+            return GetTypeName()->NewMethodName(name, callingConvention, retTypeName, paramTypeNames);
+        }
+
+        type_name_metadata_type const *GetTypeName() const
+        {
+            _ASSERTE(m_pAsmMeta != NULL);
+
+            if (m_pTypeNameMeta == NULL)
+            {
+                m_pTypeNameMeta = m_pAsmMeta->TypeNameMetadataHeap().New();
+                m_pTypeNameMeta->SetResolutionScope(*m_pAsmMeta);
+                m_pTypeNameMeta->SetToken(GetKey());
+            }
+            return m_pTypeNameMeta;
         }
 
         std::vector<COR_SIGNATURE> const &GetSignatures() const
@@ -164,7 +224,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
     private: 
-        method_metadata_type const *GetMethodFromMethodKey(method_key_type const &methodKey) const
+        template<
+            class MethodMetadataApiHolder
+        >
+        friend class BaseMethodMetadata;
+
+        method_metadata_heap_type &MethodMetadataHeap()
+        {
+            return heap_provider_type::Of<method_metadata_type>();
+        }
+        
+        method_metadata_heap_type const &MethodMetadataHeap() const
+        {
+            return heap_provider_type::Of<method_metadata_type>();
+        }
+
+        method_name_metadata_heap_type &MethodNameMetadataHeap()
+        {
+            return const_cast<type_name_metadata_type *>(GetTypeName())->MethodNameMetadataHeap();
+        }
+        
+        method_name_metadata_heap_type const &MethodNameMetadataHeap() const
+        {
+            return GetTypeName()->MethodNameMetadataHeap();
+        }
+
+        method_metadata_type const *GetMethodFromMethodKey(method_name_metadata_type const &methodKey) const
         {
             typedef typename type_decided_by<method_metadata_type>::type MethodMetadataHeap;
             MethodMetadataHeap const &heap = Of<method_metadata_type>();
@@ -297,12 +382,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         mutable assembly_metadata_type *m_pAsmMeta;
+        mutable type_name_metadata_type *m_pTypeNameMeta;
         mutable ATL::CComPtr<metadata_import_api_type> m_pMetaImpApi;
         TypeKinds m_kind;
         mutable std::wstring m_name;
-        //typedef Utilities::Hash<method_key_type> method_key_hash;
-        //typedef Utilities::EqualTo<method_key_type, method_key_type> method_key_equal_to;
-        //mutable boost::unordered_map<method_key_type, mdMethodDef, method_key_hash, method_key_equal_to> m_methodMetas;
+        //typedef Utilities::Hash<method_name_metadata_type> method_key_hash;
+        //typedef Utilities::EqualTo<method_name_metadata_type, method_name_metadata_type> method_key_equal_to;
+        //mutable boost::unordered_map<method_name_metadata_type, mdMethodDef, method_key_hash, method_key_equal_to> m_methodMetas;
         mutable std::vector<COR_SIGNATURE> m_sigs;
     };
 

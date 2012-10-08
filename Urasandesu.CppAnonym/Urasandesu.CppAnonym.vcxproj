@@ -229,6 +229,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultMethodNameMetadataApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeMetadataApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeMetadataApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeNameMetadataApiHolder.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultTypeNameMetadataApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadata.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseAssemblyNameMetadata.hpp" />
@@ -245,6 +247,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseMethodNameMetadataFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeMetadata.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeMetadataFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeNameMetadata.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseTypeNameMetadataFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\CallingConventions.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlow.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\ControlFlowFwd.h" />
@@ -284,6 +288,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeMetadataApiHolderLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeMetadataLabel.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeMetadataLabelFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeNameMetadataApiHolderLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeNameMetadataApiHolderLabelFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeNameMetadataLabel.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\TypeNameMetadataLabelFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\MetaData\MetadataDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\OpCodeKind.h" />
@@ -353,9 +361,13 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Distinct.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparableFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
@@ -367,6 +379,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
   </ItemGroup>
   <ItemGroup>

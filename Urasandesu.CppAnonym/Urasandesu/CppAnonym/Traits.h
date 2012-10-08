@@ -30,4 +30,16 @@
 #include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
+#include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_H

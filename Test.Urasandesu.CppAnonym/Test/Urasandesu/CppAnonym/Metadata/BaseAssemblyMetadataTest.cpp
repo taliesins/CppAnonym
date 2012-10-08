@@ -4,6 +4,14 @@
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
+#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEINFO_HPP
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfo.hpp>
 #endif
@@ -60,12 +68,57 @@
 #include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
 
-    template<
-        class MetadataDispenserApiHolder
-    >    
-    class BaseTestMetadataDispenserProtoB8DF5A21
+//namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+//
+//    template<
+//        class MetadataDispenserApiHolder
+//    >    
+//    class BaseTestMetadataDispenserProtoB8DF5A21
+//    {
+//    public:
+//        template<class T>
+//        T const *FindType() const 
+//        {
+//            if (m_pType.IsEmpty())
+//            {
+//                m_pType = new T();
+//            } 
+//            return m_pType;
+//        }
+//
+//        struct Hoge
+//        {
+//            Hoge() { }
+//        };
+//
+//        Hoge &AssemblyNameMetadataHeap() const
+//        {
+//            return m_obj;
+//        }
+//
+//    private:
+//        mutable Utilities::AnyPointer m_pType;
+//        Hoge m_obj;
+//    };
+//
+//}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+
+namespace MockB805337D {
+
+    namespace mpl = boost::mpl;
+    namespace fs = boost::filesystem;
+    using namespace Urasandesu::CppAnonym;
+    using namespace Urasandesu::CppAnonym::Metadata;
+    using namespace MockB805337D;
+
+    struct TestAssemblyNameMetadataApi;
+    struct TestAssemblyMetadataApi;
+        
+    class TestMetadataDispenserProtoB8DF5A21
     {
     public:
         template<class T>
@@ -78,11 +131,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return m_pType;
         }
 
+        struct Hoge
+        {
+            Hoge() { }
+
+            BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi> *New() const
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+        };
+
+        Hoge const &AssemblyNameMetadataHeap() const
+        {
+            return m_obj;
+        }
+
     private:
         mutable Utilities::AnyPointer m_pType;
+        Hoge m_obj;
     };
 
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+    struct TestAssemblyNameMetadataApi
+    {
+        typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi> >, 
+                         mpl::pair<Interfaces::MetadataDispenserLabel, TestMetadataDispenserProtoB8DF5A21>, 
+                         mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport> > api_cartridges;
+    };
+
+    struct TestAssemblyMetadataApi
+    {
+        typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi> >, 
+                         mpl::pair<Interfaces::MetadataDispenserLabel, TestMetadataDispenserProtoB8DF5A21>, 
+                         mpl::pair<IMetaDataImport2, IMetaDataImport2> > api_cartridges;
+    };
+
+}   // namespace MockB805337D {
+
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseAssemblyMetadataProtoB8DF5A21Test.*
 namespace {
@@ -301,23 +385,10 @@ namespace {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace MockB805337D;
+
 
         // Arrange
-        struct TestAssemblyMetadataApi;
-
-        struct TestAssemblyNameMetadataApi
-        {
-            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
-                             mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>> api_cartridges;
-        };
-
-        struct TestAssemblyMetadataApi
-        {
-            typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
-                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>, 
-                             mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
-        };
-
         typedef BaseAssemblyMetadata<TestAssemblyMetadataApi> AssemblyMetadata;
         typedef AssemblyMetadata::metadata_dispenser_type MetadataDispenser;
 
@@ -350,24 +421,25 @@ namespace {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace MockB805337D;
 
         // Arrange
-        struct TestAssemblyMetadataApi;
+        //struct TestAssemblyMetadataApi;
 
-        struct TestAssemblyNameMetadataApi
-        {
-            typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
-                             mpl::pair<StrongNaming::Interfaces::StrongNameInfoLabel, StrongNaming::BaseStrongNameInfo<>>, 
-                             mpl::pair<StrongNaming::Interfaces::StrongNameKeyLabel, StrongNaming::BaseStrongNameKey<>>, 
-                             mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>> api_cartridges;
-        };
+        //struct TestAssemblyNameMetadataApi
+        //{
+        //    typedef mpl::map<mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<TestAssemblyMetadataApi>>, 
+        //                     mpl::pair<StrongNaming::Interfaces::StrongNameInfoLabel, StrongNaming::BaseStrongNameInfo<>>, 
+        //                     mpl::pair<StrongNaming::Interfaces::StrongNameKeyLabel, StrongNaming::BaseStrongNameKey<>>, 
+        //                     mpl::pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>> api_cartridges;
+        //};
 
-        struct TestAssemblyMetadataApi
-        {
-            typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
-                             mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>,
-                             mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
-        };
+        //struct TestAssemblyMetadataApi
+        //{
+        //    typedef mpl::map<mpl::pair<Interfaces::AssemblyNameMetadataLabel, BaseAssemblyNameMetadata<TestAssemblyNameMetadataApi>>, 
+        //                     mpl::pair<Interfaces::MetadataDispenserLabel, BaseTestMetadataDispenserProtoB8DF5A21<mpl::void_>>,
+        //                     mpl::pair<IMetaDataImport2, IMetaDataImport2>> api_cartridges;
+        //};
 
         typedef BaseAssemblyMetadata<TestAssemblyMetadataApi> AssemblyMetadata;
         typedef AssemblyMetadata::metadata_dispenser_type MetadataDispenser;

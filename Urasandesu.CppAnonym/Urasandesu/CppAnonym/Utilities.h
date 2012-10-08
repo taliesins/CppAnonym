@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Utilities/AnyPointer.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
+#include <Urasandesu/CppAnonym/Utilities/IsAnyT.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif

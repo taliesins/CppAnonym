@@ -24,12 +24,22 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    //struct DefaultAssemblyMetadataApiHolder;
+    namespace Detail {
 
-    struct DefaultMetadataDispenserApiHolder
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+        
+        struct DefaultMetadataDispenserApiHolderImpl
+        {
+            typedef map<pair<MetadataInfoLabel, BaseMetadataInfo<> >, 
+                        pair<AssemblyMetadataLabel, BaseAssemblyMetadata<> > > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultMetadataDispenserApiHolder : 
+        Detail::DefaultMetadataDispenserApiHolderImpl
     {
-        typedef boost::mpl::map<boost::mpl::pair<Interfaces::MetadataInfoLabel, BaseMetadataInfo<> >, 
-                                boost::mpl::pair<Interfaces::AssemblyMetadataLabel, BaseAssemblyMetadata<> > > api_cartridges;
     };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {

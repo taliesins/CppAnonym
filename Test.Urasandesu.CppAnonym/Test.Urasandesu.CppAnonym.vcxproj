@@ -125,6 +125,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\MetadataTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoTest.cpp" />
