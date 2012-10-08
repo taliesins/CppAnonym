@@ -18,6 +18,14 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenserFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIASSEMBLYMETADATAAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIAssemblyMetadataApiHolderFwd.h>
 #endif
@@ -35,7 +43,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         {
             typedef map<
                 pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
-                pair<MetadataDispenserLabel, MetadataDispenser>
+                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<StrongNameKeyLabel, StrongNameKey>
             > api_cartridges;
         };
 

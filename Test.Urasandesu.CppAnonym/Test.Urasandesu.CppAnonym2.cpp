@@ -35,12 +35,68 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKey.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATASPECIALVALUES_H
+#include <Urasandesu/CppAnonym/Metadata/MetadataSpecialValues.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_SIGNATUREUTIL_HPP
+#include <Urasandesu/CppAnonym/Metadata/SignatureUtil.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEATTRIBUTES_HPP
+#include <Urasandesu/CppAnonym/Metadata/TypeAttributes.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_FIELDATTRIBUTES_HPP
+#include <Urasandesu/CppAnonym/Metadata/FieldAttributes.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_METHODATTRIBUTES_HPP
+#include <Urasandesu/CppAnonym/Metadata/MethodAttributes.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_PROPERTYATTRIBUTES_HPP
+#include <Urasandesu/CppAnonym/Metadata/PropertyAttributes.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIASSEMBLYMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIAssemblyMetadataApiHolder.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEIASSEMBLYMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseIAssemblyMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIMODULEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIModuleMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIModuleMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTITYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultITypeMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEITYPEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseITypeMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIMETHODMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIMethodMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIMETHODMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIMethodMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
 #endif
 
 // foward declarations
@@ -78,108 +134,53 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
-    //struct IAssemblyMetadataApiHolderLabel { };
-    //struct IAssemblyMetadataLabel { };
-    //struct IAssemblyMetadataHashLabel { };
-    //struct IAssemblyMetadataEqualToLabel { };
+    struct IFieldMetadataApiHolderLabel { };
+    struct IFieldMetadataLabel { };
+    struct IFieldMetadataHashLabel { };
+    struct IFieldMetadataEqualToLabel { };
 
-    struct IModuleMetadataApiHolderLabel { };
-    struct IModuleMetadataLabel { };
-    struct IModuleMetadataHashLabel { };
-    struct IModuleMetadataEqualToLabel { };
+    struct IPropertyMetadataApiHolderLabel { };
+    struct IPropertyMetadataLabel { };
+    struct IPropertyMetadataHashLabel { };
+    struct IPropertyMetadataEqualToLabel { };
 
-    struct ITypeMetadataApiHolderLabel { };
-    struct ITypeMetadataLabel { };
-    struct ITypeMetadataHashLabel { };
-    struct ITypeMetadataEqualToLabel { };
+    struct AssemblyMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct AssemblyMetadataGenerator7FAEDE99Label { };
+    
+    struct ModuleMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct ModuleMetadataGenerator7FAEDE99Label { };
 
-    struct IMethodMetadataApiHolderLabel { };
-    struct IMethodMetadataLabel { };
-    struct IMethodMetadataHashLabel { };
-    struct IMethodMetadataEqualToLabel { };
+    struct TypeMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct TypeMetadataGenerator7FAEDE99Label { };
+    
+    struct FieldMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct FieldMetadataGenerator7FAEDE99Label { };
 
-    struct MetadataInfoApiHolderLabel { };
-    //struct MetadataInfoLabel { };
-
-    struct MetadataDispenserApiHolderLabel { };
-    //struct MetadataDispenserLabel { };
-
-    struct AssemblyMetadataApiHolderLabel { };
-    struct AssemblyMetadataLabel { };
-
-    struct ModuleMetadataApiHolderLabel { };
-    struct ModuleMetadataLabel { };
-
-    struct TypeMetadataApiHolderLabel { };
-    struct TypeMetadataLabel { };
-
-    struct MethodMetadataApiHolderLabel { };
-    struct MethodMetadataLabel { };
-
-    struct MetadataSpecialValues
-    {
-        static std::wstring const TYPE_NAME_OF_VOID;
-        static std::wstring const TYPE_NAME_OF_BOOLEAN;
-        static std::wstring const TYPE_NAME_OF_CHAR;
-        static std::wstring const TYPE_NAME_OF_SBYTE;
-        static std::wstring const TYPE_NAME_OF_BYTE;
-        static std::wstring const TYPE_NAME_OF_INT16;
-        static std::wstring const TYPE_NAME_OF_UINT16;
-        static std::wstring const TYPE_NAME_OF_INT32;
-        static std::wstring const TYPE_NAME_OF_UINT32;
-        static std::wstring const TYPE_NAME_OF_INT64;
-        static std::wstring const TYPE_NAME_OF_UINT64;
-        static std::wstring const TYPE_NAME_OF_SINGLE;
-        static std::wstring const TYPE_NAME_OF_DOUBLE;
-        static std::wstring const TYPE_NAME_OF_STRING;
-        static std::wstring const TYPE_NAME_OF_INTPTR;
-        static std::wstring const TYPE_NAME_OF_OBJECT;
-        static std::wstring const TYPE_NAME_OF_VALUETYPE;
-        static std::wstring const GENERIC_TYPE_IDENTIFIER;
-    };
-
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_VOID = L"System.Void";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_BOOLEAN = L"System.Boolean";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_CHAR = L"System.Char";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_SBYTE = L"System.SByte";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_BYTE = L"System.Byte";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_INT16 = L"System.Int16";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_UINT16 = L"System.UInt16";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_INT32 = L"System.Int32";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_UINT32 = L"System.UInt32";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_INT64 = L"System.Int64";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_UINT64 = L"System.UInt64";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_SINGLE = L"System.Single";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_DOUBLE = L"System.Double";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_STRING = L"System.String";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_INTPTR = L"System.IntPtr";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_OBJECT = L"System.Object";
-    std::wstring const MetadataSpecialValues::TYPE_NAME_OF_VALUETYPE = L"System.ValueType";
-    std::wstring const MetadataSpecialValues::GENERIC_TYPE_IDENTIFIER = L"`";
+    struct MethodMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct MethodMetadataGenerator7FAEDE99Label { };
+    
+    struct PropertyMetadataGenerator7FAEDE99ApiHolderLabel { };
+    struct PropertyMetadataGenerator7FAEDE99Label { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    //struct DefaultIAssemblyMetadataApiHolder;
+    struct DefaultIFieldMetadataApiHolder;
 
-    struct DefaultIModuleMetadataApiHolder;
+    struct DefaultIPropertyMetadataApiHolder;
 
-    struct DefaultITypeMetadataApiHolder;
+    struct DefaultAssemblyMetadataGenerator7FAEDE99ApiHolder;
 
-    struct DefaultIMethodMetadataApiHolder;
+    struct DefaultModuleMetadataGenerator7FAEDE99ApiHolder;
 
-    struct DefaultMetadataInfoApiHolder;
+    struct DefaultTypeMetadataGenerator7FAEDE99ApiHolder;
 
-    struct DefaultMetadataDispenserApiHolder;
+    struct DefaultFieldMetadataGenerator7FAEDE99ApiHolder;
 
-    struct DefaultAssemblyMetadataApiHolder;
+    struct DefaultMethodMetadataGenerator7FAEDE99ApiHolder;
 
-    struct DefaultModuleMetadataApiHolder;
-
-    struct DefaultTypeMetadataApiHolder;
-
-    struct DefaultMethodMetadataApiHolder;
+    struct DefaultPropertyMetadataGenerator7FAEDE99ApiHolder;
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
@@ -189,245 +190,190 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    //template<
-    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadata;
+    template<
+        class IFieldMetadataApiHolder = ApiHolders::DefaultIFieldMetadataApiHolder
+    >    
+    class BaseIFieldMetadata;
 
-    //typedef BaseIAssemblyMetadata<> IAssemblyMetadata;
+    typedef BaseIFieldMetadata<> IFieldMetadata;
+    
+    
+    
+    
+    
+    template<
+        class IFieldMetadataApiHolder = ApiHolders::DefaultIFieldMetadataApiHolder
+    >    
+    struct BaseIFieldMetadataHash;
 
+    typedef BaseIFieldMetadataHash<> IFieldMetadataHash;
+    
+    
+    
+    
+    
+    template<
+        class IFieldMetadataApiHolder = ApiHolders::DefaultIFieldMetadataApiHolder
+    >    
+    struct BaseIFieldMetadataEqualTo;
 
-
-
-    //
-    //template<
-    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadataHash;
-
-    //typedef BaseIAssemblyMetadataHash<> IAssemblyMetadataHash;
-
-    //
-    //
-    //
-    //
-    //template<
-    //    class IAssemblyMetadataApiHolder = ApiHolders::DefaultIAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadataEqualTo;
-
-    //typedef BaseIAssemblyMetadataEqualTo<> IAssemblyMetadataEqualTo;
+    typedef BaseIFieldMetadataEqualTo<> IFieldMetadataEqualTo;
 
 
 
 
 
     template<
-        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
+        class IPropertyMetadataApiHolder = ApiHolders::DefaultIPropertyMetadataApiHolder
     >    
-    class BaseIModuleMetadata;
+    class BaseIPropertyMetadata;
 
-    typedef BaseIModuleMetadata<> IModuleMetadata;
-
-
-
-
+    typedef BaseIPropertyMetadata<> IPropertyMetadata;
     
-    template<
-        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
-    >    
-    class BaseIModuleMetadataHash;
-
-    typedef BaseIModuleMetadataHash<> IModuleMetadataHash;
-
     
     
     
     
     template<
-        class IModuleMetadataApiHolder = ApiHolders::DefaultIModuleMetadataApiHolder
+        class IPropertyMetadataApiHolder = ApiHolders::DefaultIPropertyMetadataApiHolder
     >    
-    class BaseIModuleMetadataEqualTo;
+    struct BaseIPropertyMetadataHash;
 
-    typedef BaseIModuleMetadataEqualTo<> IModuleMetadataEqualTo;
-
-
-
-
-
-    template<
-        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
-    >    
-    class BaseITypeMetadata;
-
-    typedef BaseITypeMetadata<> ITypeMetadata;
-
-
-
-
+    typedef BaseIPropertyMetadataHash<> IPropertyMetadataHash;
     
-    template<
-        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
-    >    
-    class BaseITypeMetadataHash;
-
-    typedef BaseITypeMetadataHash<> ITypeMetadataHash;
-
     
     
     
     
     template<
-        class ITypeMetadataApiHolder = ApiHolders::DefaultITypeMetadataApiHolder
+        class IPropertyMetadataApiHolder = ApiHolders::DefaultIPropertyMetadataApiHolder
     >    
-    class BaseITypeMetadataEqualTo;
+    struct BaseIPropertyMetadataEqualTo;
 
-    typedef BaseITypeMetadataEqualTo<> ITypeMetadataEqualTo;
+    typedef BaseIPropertyMetadataEqualTo<> IPropertyMetadataEqualTo;
 
 
 
 
 
     template<
-        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
+        class AssemblyMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultAssemblyMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseIMethodMetadata;
+    class BaseAssemblyMetadataGenerator7FAEDE99;
 
-    typedef BaseIMethodMetadata<> IMethodMetadata;
-
-
-
-
-    
-    template<
-        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
-    >    
-    class BaseIMethodMetadataHash;
-
-    typedef BaseIMethodMetadataHash<> IMethodMetadataHash;
-
-    
-    
-    
-    
-    template<
-        class IMethodMetadataApiHolder = ApiHolders::DefaultIMethodMetadataApiHolder
-    >    
-    class BaseIMethodMetadataEqualTo;
-
-    typedef BaseIMethodMetadataEqualTo<> IMethodMetadataEqualTo;
-
-    
-    
-    
-    
-    template<
-        class MetadataInfoApiHolder = ApiHolders::DefaultMetadataInfoApiHolder
-    >    
-    class BaseMetadataInfo;
-
-    typedef BaseMetadataInfo<> MetadataInfo;
+    typedef BaseAssemblyMetadataGenerator7FAEDE99<> AssemblyMetadataGenerator7FAEDE99;
 
 
 
 
 
     template<
-        class MetadataDispenserApiHolder = ApiHolders::DefaultMetadataDispenserApiHolder
+        class ModuleMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultModuleMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseMetadataDispenser;
+    class BaseModuleMetadataGenerator7FAEDE99;
 
-    typedef BaseMetadataDispenser<> MetadataDispenser;
+    typedef BaseModuleMetadataGenerator7FAEDE99<> ModuleMetadataGenerator7FAEDE99;
 
 
 
 
 
     template<
-        class AssemblyMetadataApiHolder = ApiHolders::DefaultAssemblyMetadataApiHolder
+        class TypeMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultTypeMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseAssemblyMetadata;
+    class BaseTypeMetadataGenerator7FAEDE99;
 
-    typedef BaseAssemblyMetadata<> AssemblyMetadata;
+    typedef BaseTypeMetadataGenerator7FAEDE99<> TypeMetadataGenerator7FAEDE99;
 
 
 
 
 
     template<
-        class ModuleMetadataApiHolder = ApiHolders::DefaultModuleMetadataApiHolder
+        class FieldMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultFieldMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseModuleMetadata;
+    class BaseFieldMetadataGenerator7FAEDE99;
 
-    typedef BaseModuleMetadata<> ModuleMetadata;
+    typedef BaseFieldMetadataGenerator7FAEDE99<> FieldMetadataGenerator7FAEDE99;
 
 
 
 
 
     template<
-        class TypeMetadataApiHolder = ApiHolders::DefaultTypeMetadataApiHolder
+        class MethodMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultMethodMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseTypeMetadata;
+    class BaseMethodMetadataGenerator7FAEDE99;
 
-    typedef BaseTypeMetadata<> TypeMetadata;
+    typedef BaseMethodMetadataGenerator7FAEDE99<> MethodMetadataGenerator7FAEDE99;
 
 
 
 
 
     template<
-        class MethodMetadataApiHolder = ApiHolders::DefaultMethodMetadataApiHolder
+        class PropertyMetadataGenerator7FAEDE99ApiHolder = ApiHolders::DefaultPropertyMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseMethodMetadata;
+    class BasePropertyMetadataGenerator7FAEDE99;
 
-    typedef BaseMethodMetadata<> MethodMetadata;
+    typedef BasePropertyMetadataGenerator7FAEDE99<> PropertyMetadataGenerator7FAEDE99;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 
-    struct FusionInfoApiHolderLabel { };
-    //struct FusionInfoLabel { };
-
-    struct AssemblyInfoApiHolderLabel { };
-    struct AssemblyInfoLabel { };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
-    struct DefaultFusionInfoApiHolder;
-
-    struct DefaultAssemblyInfoApiHolder;
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
-
-    template<
-        class FusionInfoApiHolder = ApiHolders::DefaultFusionInfoApiHolder
-    >    
-    class BaseFusionInfo;
-
-    typedef BaseFusionInfo<> FusionInfo;
-
-
-
-
-
-    template<
-        class AssemblyInfoApiHolder = ApiHolders::DefaultAssemblyInfoApiHolder
-    >    
-    class BaseAssemblyInfo;
-
-    typedef BaseAssemblyInfo<> AssemblyInfo;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 
 
 
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATADISPENSERAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataDispenserApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSER_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenser.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultModuleMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseModuleMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMethodMetadata.hpp>
+#endif
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -455,51 +401,24 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    //namespace Detail {
-
-    //    using namespace boost::mpl;
-    //    using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-    //    using namespace Urasandesu::CppAnonym::StrongNaming;
-    //    using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
-
-    //    struct DefaultIAssemblyMetadataApiHolderImpl
-    //    {
-    //        typedef map<
-    //            pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
-    //            pair<MetadataDispenserLabel, MetadataDispenser>
-    //        > api_cartridges;
-    //    };
-
-    //}   // namespace Detail {
-
-    //struct DefaultIAssemblyMetadataApiHolder : 
-    //    Detail::DefaultIAssemblyMetadataApiHolderImpl
-    //{
-    //};
-
-
-
-
-
     namespace Detail {
 
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultIModuleMetadataApiHolderImpl
+        struct DefaultIFieldMetadataApiHolderImpl
         {
             typedef map<
-                pair<IModuleMetadataLabel, IModuleMetadata>,
-                pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
-                pair<IAssemblyMetadataHashLabel, IAssemblyMetadataHash>,
-                pair<IAssemblyMetadataEqualToLabel, IAssemblyMetadataEqualTo>
+                pair<IFieldMetadataLabel, IFieldMetadata>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<ITypeMetadataHashLabel, ITypeMetadataHash>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultIModuleMetadataApiHolder : 
-        Detail::DefaultIModuleMetadataApiHolderImpl
+    struct DefaultIFieldMetadataApiHolder : 
+        Detail::DefaultIFieldMetadataApiHolderImpl
     {
     };
 
@@ -512,44 +431,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultITypeMetadataApiHolderImpl
+        struct DefaultIPropertyMetadataApiHolderImpl
         {
             typedef map<
                 pair<ITypeMetadataLabel, ITypeMetadata>,
-                pair<IModuleMetadataLabel, IModuleMetadata>,
-                pair<IModuleMetadataHashLabel, IModuleMetadataHash>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultITypeMetadataApiHolder : 
-        Detail::DefaultITypeMetadataApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-
-        struct DefaultIMethodMetadataApiHolderImpl
-        {
-            typedef map<
-                pair<IMethodMetadataLabel, IMethodMetadata>,
                 pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
-                pair<ITypeMetadataLabel, ITypeMetadata>
+                pair<IPropertyMetadataLabel, IPropertyMetadata>
             > api_cartridges;
         };
 
     }   // namespace Detail {
 
-    struct DefaultIMethodMetadataApiHolder : 
-        Detail::DefaultIMethodMetadataApiHolderImpl
+    struct DefaultIPropertyMetadataApiHolder : 
+        Detail::DefaultIPropertyMetadataApiHolderImpl
     {
     };
 
@@ -558,90 +452,25 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
     
     
     namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMetadataInfoApiHolderImpl
-        {
-            typedef map<
-                pair<RuntimeHostLabel, RuntimeHost>,
-                pair<MetadataDispenserLabel, MetadataDispenser>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultMetadataInfoApiHolder : 
-        Detail::DefaultMetadataInfoApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-        
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMetadataDispenserApiHolderImpl
-        {
-            typedef map<
-                pair<MetadataInfoLabel, MetadataInfo>,
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<IAssemblyMetadataHashLabel, IAssemblyMetadataHash>,
-                pair<IAssemblyMetadataEqualToLabel, IAssemblyMetadataEqualTo>,
-                pair<ModuleMetadataLabel, ModuleMetadata>,
-                pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
-                pair<TypeMetadataLabel, TypeMetadata>,
-                pair<MethodMetadataLabel, MethodMetadata>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultMetadataDispenserApiHolder : 
-        Detail::DefaultMetadataDispenserApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
-        using namespace Urasandesu::CppAnonym::Fusion;
-
-        struct DefaultAssemblyMetadataApiHolderImpl
+        struct DefaultAssemblyMetadataGenerator7FAEDE99ApiHolderImpl
         {
             typedef map<
                 pair<IAssemblyMetadataLabel, IAssemblyMetadata>,
                 pair<MetadataDispenserLabel, MetadataDispenser>,
-                pair<FusionInfoLabel, FusionInfo>,
-                pair<AssemblyInfoLabel, AssemblyInfo>,
-                pair<IMetaDataAssemblyImport, IMetaDataAssemblyImport>,
-                pair<IMetaDataImport2, IMetaDataImport2>,
-                pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
-                pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<ModuleMetadataGenerator7FAEDE99Label, ModuleMetadataGenerator7FAEDE99>,
                 pair<IModuleMetadataHashLabel, IModuleMetadataHash>,
-                pair<IModuleMetadataEqualToLabel, IModuleMetadataEqualTo>,
-                pair<TypeMetadataLabel, TypeMetadata>,
-                pair<MethodMetadataLabel, MethodMetadata>
+                pair<IModuleMetadataEqualToLabel, IModuleMetadataEqualTo>
             > api_cartridges;
         };
 
     }   // namespace Detail {
-    
-    struct DefaultAssemblyMetadataApiHolder : 
-        Detail::DefaultAssemblyMetadataApiHolderImpl
+
+    struct DefaultAssemblyMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultAssemblyMetadataGenerator7FAEDE99ApiHolderImpl
     {
     };
 
@@ -650,58 +479,62 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 
     namespace Detail {
-        
+
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultModuleMetadataApiHolderImpl
+        struct DefaultModuleMetadataGenerator7FAEDE99ApiHolderImpl
         {
             typedef map<
                 pair<IModuleMetadataLabel, IModuleMetadata>,
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<IMetaDataImport2, IMetaDataImport2>,
+                pair<MetadataDispenserLabel, MetadataDispenser>,
+                pair<AssemblyMetadataGenerator7FAEDE99Label, AssemblyMetadataGenerator7FAEDE99>,
+                pair<TypeMetadataGenerator7FAEDE99Label, TypeMetadataGenerator7FAEDE99>,
+                pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
+                pair<ITypeMetadataEqualToLabel, ITypeMetadataEqualTo>
+            > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultModuleMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultModuleMetadataGenerator7FAEDE99ApiHolderImpl
+    {
+    };
+
+
+
+
+
+    namespace Detail {
+
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+
+        struct DefaultTypeMetadataGenerator7FAEDE99ApiHolderImpl
+        {
+            typedef map<
                 pair<ITypeMetadataLabel, ITypeMetadata>,
-                pair<TypeMetadataLabel, TypeMetadata>,
                 pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
                 pair<ITypeMetadataEqualToLabel, ITypeMetadataEqualTo>,
-                pair<MetadataDispenserLabel, MetadataDispenser>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-    
-    struct DefaultModuleMetadataApiHolder : 
-        Detail::DefaultModuleMetadataApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-
-        struct DefaultTypeMetadataApiHolderImpl
-        {
-            typedef map<
-                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<ModuleMetadataGenerator7FAEDE99Label, ModuleMetadataGenerator7FAEDE99>,
                 pair<MetadataDispenserLabel, MetadataDispenser>,
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<ModuleMetadataLabel, ModuleMetadata>,
-                pair<MethodMetadataLabel, MethodMetadata>,
+                pair<FieldMetadataGenerator7FAEDE99Label, FieldMetadataGenerator7FAEDE99>,
+                pair<IFieldMetadataHashLabel, IFieldMetadataHash>,
+                pair<IFieldMetadataEqualToLabel, IFieldMetadataEqualTo>,
+                pair<MethodMetadataGenerator7FAEDE99Label, MethodMetadataGenerator7FAEDE99>,
                 pair<IMethodMetadataHashLabel, IMethodMetadataHash>,
                 pair<IMethodMetadataEqualToLabel, IMethodMetadataEqualTo>,
-                pair<IMetaDataImport2, IMetaDataImport2>
+                pair<PropertyMetadataGenerator7FAEDE99Label, PropertyMetadataGenerator7FAEDE99>,
+                pair<IPropertyMetadataHashLabel, IPropertyMetadataHash>,                 
+                pair<IPropertyMetadataEqualToLabel, IPropertyMetadataEqualTo> 
             > api_cartridges;
         };
 
     }   // namespace Detail {
-    
-    struct DefaultTypeMetadataApiHolder : 
-        Detail::DefaultTypeMetadataApiHolderImpl
+
+    struct DefaultTypeMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultTypeMetadataGenerator7FAEDE99ApiHolderImpl
     {
     };
 
@@ -710,25 +543,71 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 
     namespace Detail {
-        
+
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
-        struct DefaultMethodMetadataApiHolderImpl
+        struct DefaultFieldMetadataGenerator7FAEDE99ApiHolderImpl
+        {
+            typedef map<
+                pair<IFieldMetadataLabel, IFieldMetadata>,
+                pair<TypeMetadataGenerator7FAEDE99Label, TypeMetadataGenerator7FAEDE99>
+            > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultFieldMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultFieldMetadataGenerator7FAEDE99ApiHolderImpl
+    {
+    };
+
+
+
+
+
+    namespace Detail {
+
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+
+        struct DefaultMethodMetadataGenerator7FAEDE99ApiHolderImpl
         {
             typedef map<
                 pair<IMethodMetadataLabel, IMethodMetadata>,
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<TypeMetadataLabel, TypeMetadata>,
-                pair<ITypeMetadataLabel, ITypeMetadata>,
-                pair<IMetaDataImport2, IMetaDataImport2>
+                pair<TypeMetadataGenerator7FAEDE99Label, TypeMetadataGenerator7FAEDE99>
             > api_cartridges;
         };
 
     }   // namespace Detail {
-    
-    struct DefaultMethodMetadataApiHolder : 
-        Detail::DefaultMethodMetadataApiHolderImpl
+
+    struct DefaultMethodMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultMethodMetadataGenerator7FAEDE99ApiHolderImpl
+    {
+    };
+
+
+
+
+
+    namespace Detail {
+
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+
+        struct DefaultPropertyMetadataGenerator7FAEDE99ApiHolderImpl
+        {
+            typedef map<
+                pair<TypeMetadataGenerator7FAEDE99Label, TypeMetadataGenerator7FAEDE99>,
+                pair<MethodMetadataGenerator7FAEDE99Label, MethodMetadataGenerator7FAEDE99>,
+                pair<IPropertyMetadataLabel, IPropertyMetadata>
+            > api_cartridges;
+        };
+
+    }   // namespace Detail {
+
+    struct DefaultPropertyMetadataGenerator7FAEDE99ApiHolder : 
+        Detail::DefaultPropertyMetadataGenerator7FAEDE99ApiHolderImpl
     {
     };
 
@@ -736,204 +615,39 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    struct SignatureUtil
-    {
-        template<class SignatureHolder>
-        static void PutSignatures(SimpleBlob &sb, SignatureHolder const &sigHolder)
-        {
-            typedef std::vector<COR_SIGNATURE>::const_iterator Iterator;
-            std::vector<COR_SIGNATURE> const &sigs = sigHolder.GetSignatures();
-            for (Iterator i = sigs.cbegin(), i_end = sigs.cend(); i != i_end; ++i)
-                sb.Put<COR_SIGNATURE>(*i);
-        }
-    };
-
-    
-    
-    
-    
-    //template<class ApiCartridgesHolder, class ApiLabel>
-    //struct IAssemblyMetadataApiAt : 
-    //    Traits::ApiAt<ApiCartridgesHolder, Interfaces::IAssemblyMetadataApiHolderLabel, ApiLabel>
-    //{
-    //};
-
-    //template<
-    //    class IAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadata
-    //{
-    //public:
-    //    typedef BaseIAssemblyMetadata<IAssemblyMetadataApiHolder> this_type;
-
-    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
-    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-    //    typedef typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
-
-    //    virtual mdAssembly GetToken() const = 0;
-    //    virtual std::wstring const &GetName() const = 0;
-    //    virtual boost::shared_ptr<strong_name_key_type const> GetStrongNameKey() const = 0;
-    //    virtual boost::shared_ptr<metadata_dispenser_type const> GetResolutionScope() const = 0;
-    //};
-
-
-
-
-    //
-    //template<
-    //    class IAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadataHash : 
-    //    Traits::HashComputable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
-    //{
-    //public:
-    //    result_type operator()(param_type v) const
-    //    {
-    //        using namespace boost;
-    //        using namespace Urasandesu::CppAnonym::Utilities;
-
-    //        _ASSERTE(v);
-
-    //        std::size_t seed = 0;
-    //        hash_combine(seed, hash_value(v->GetName()));
-    //        hash_combine(seed, HashValue(v->GetResolutionScope().get()));
-    //        return seed;
-    //    }
-    //};
-
-    //
-    //
-    //
-    //
-    //template<
-    //    class IAssemblyMetadataApiHolder
-    //>    
-    //class BaseIAssemblyMetadataEqualTo : 
-    //    Traits::EqualityComparable<boost::shared_ptr<typename IAssemblyMetadataApiAt<IAssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type const> >
-    //{
-    //public:
-    //    result_type operator()(param_type x, param_type y) const
-    //    {
-    //        _ASSERTE(x && y);
-
-    //        return x->GetName() == y->GetName() &&
-    //               x->GetResolutionScope() == y->GetResolutionScope();
-    //    }
-    //};
-
-
-
-
-
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct IModuleMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IModuleMetadataApiHolderLabel, ApiLabel>
+    struct IFieldMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IFieldMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class IModuleMetadataApiHolder
+        class IFieldMetadataApiHolder
     >    
-    class BaseIModuleMetadata
+    class BaseIFieldMetadata
     {
     public:
-        typedef BaseIModuleMetadata<IModuleMetadataApiHolder> this_type;
+        typedef BaseIFieldMetadata<IFieldMetadataApiHolder> this_type;
 
-        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type i_assembly_metadata_type;
-
-        virtual mdModule GetToken() const = 0;
-        virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<i_assembly_metadata_type const> GetResolutionScope() const = 0;
-    };
-
-
-
-
-    
-    template<
-        class IModuleMetadataApiHolder
-    >    
-    class BaseIModuleMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
-    {
-    public:
-        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
-
-        result_type operator()(param_type v) const
-        {
-            using namespace boost;
-
-            _ASSERTE(v);
-
-            std::size_t seed = 0;
-            hash_combine(seed, hash_value(v->GetName()));
-            hash_combine(seed, i_assembly_metadata_hash_type()(v->GetResolutionScope()));
-            return seed;
-        }
-    };
-
-    
-    
-    
-    
-    template<
-        class IModuleMetadataApiHolder
-    >    
-    class BaseIModuleMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type const> >
-    {
-    public:
-        typedef typename IModuleMetadataApiAt<IModuleMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
-
-        result_type operator()(param_type x, param_type y) const
-        {
-            _ASSERTE(x && y);
-
-            return x->GetName() == y->GetName() &&
-                   i_assembly_metadata_equal_to_type()(x->GetResolutionScope(), y->GetResolutionScope());
-        }
-    };
-
-
-
-
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct ITypeMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ITypeMetadataApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class ITypeMetadataApiHolder
-    >    
-    class BaseITypeMetadata
-    {
-    public:
-        typedef BaseITypeMetadata<ITypeMetadataApiHolder> this_type;
-
-        typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type i_module_metadata_type;
+        typedef typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::IFieldMetadataLabel>::type i_field_metadata_type;
 
         virtual mdToken GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
-        virtual boost::shared_ptr<this_type const> GetBaseType() const = 0;
-        virtual boost::shared_ptr<i_module_metadata_type const> GetResolutionScope() const = 0;
-        virtual std::vector<COR_SIGNATURE> const &GetSignatures() const = 0;
-        virtual bool IsGenericParameter() const = 0;
+        virtual boost::shared_ptr<i_type_metadata_type const> GetResolutionScope() const = 0;
     };
 
-
-
-
     
+    
+    
+
     template<
-        class ITypeMetadataApiHolder
+        class IFieldMetadataApiHolder
     >    
-    class BaseITypeMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
+    struct BaseIFieldMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::IFieldMetadataLabel>::type const> >
     {
-    public:
-        typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
+        typedef typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
 
         result_type operator()(param_type v) const
         {
@@ -943,23 +657,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             std::size_t seed = 0;
             hash_combine(seed, hash_value(v->GetName()));
-            hash_combine(seed, i_module_metadata_hash_type()(v->GetResolutionScope()));
+            hash_combine(seed, i_type_metadata_hash_type()(v->GetResolutionScope()));
             return seed;
         }
     };
-
+    
     
     
     
     
     template<
-        class ITypeMetadataApiHolder
+        class IFieldMetadataApiHolder
     >    
-    class BaseITypeMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type const> >
+    struct BaseIFieldMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::IFieldMetadataLabel>::type const> >
     {
-    public:
-        //typedef typename ITypeMetadataApiAt<ITypeMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
+        //typedef typename IFieldMetadataApiAt<IFieldMetadataApiHolder, Interfaces::ITypeNameMetadataEqualToLabel>::type i_type_name_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
@@ -967,7 +680,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             //_ASSERTE(x != NULL && y != NULL);
 
             //return x->GetName() == y->GetName() &&
-            //       i_assembly_metadata_equal_to_type()(&x->GetResolutionScope(), &y->GetResolutionScope());
+            //       i_type_name_metadata_equal_to_type()(&x->GetResolutionScope(), &y->GetResolutionScope());
         }
     };
 
@@ -976,82 +689,71 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct IMethodMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IMethodMetadataApiHolderLabel, ApiLabel>
+    struct IPropertyMetadataApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::IPropertyMetadataApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class IMethodMetadataApiHolder
+        class IPropertyMetadataApiHolder
     >    
-    class BaseIMethodMetadata
+    class BaseIPropertyMetadata
     {
     public:
-        typedef BaseIMethodMetadata<IMethodMetadataApiHolder> this_type;
+        typedef BaseIPropertyMetadata<IPropertyMetadataApiHolder> this_type;
 
-        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
-        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type i_method_metadata_type;
+        typedef typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
+        typedef typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::IPropertyMetadataLabel>::type i_property_metadata_type;
 
         virtual mdToken GetToken() const = 0;
         virtual std::wstring const &GetName() const = 0;
-        virtual CallingConventions const &GetCallingConvention() const = 0;
-        virtual boost::shared_ptr<i_type_metadata_type const> GetReturnType() const = 0;
-        virtual std::vector<boost::shared_ptr<i_type_metadata_type const> > const &GetParameterTypes() const = 0;
         virtual boost::shared_ptr<i_type_metadata_type const> GetResolutionScope() const = 0;
     };
 
-
-
-
     
+    
+    
+
     template<
-        class IMethodMetadataApiHolder
+        class IPropertyMetadataApiHolder
     >    
-    class BaseIMethodMetadataHash : 
-        Traits::HashComputable<boost::shared_ptr<typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type const> >
+    struct BaseIPropertyMetadataHash : 
+        Traits::HashComputable<boost::shared_ptr<typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::IPropertyMetadataLabel>::type const> >
     {
-    public:
-        typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
+        typedef typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
 
         result_type operator()(param_type v) const
         {
             using namespace boost;
-            using namespace Urasandesu::CppAnonym::Collections;
 
             _ASSERTE(v);
 
             std::size_t seed = 0;
             hash_combine(seed, hash_value(v->GetName()));
-            hash_combine(seed, v->GetCallingConvention().Value());
-            hash_combine(seed, i_type_metadata_hash_type()(v->GetReturnType()));
-            hash_combine(seed, SequenceHashValue(v->GetParameterTypes().cbegin(), 
-                                                 v->GetParameterTypes().cend(), 
-                                                 i_type_metadata_hash_type()));
             hash_combine(seed, i_type_metadata_hash_type()(v->GetResolutionScope()));
             return seed;
         }
     };
-
+    
     
     
     
     
     template<
-        class IMethodMetadataApiHolder
+        class IPropertyMetadataApiHolder
     >    
-    class BaseIMethodMetadataEqualTo : 
-        Traits::EqualityComparable<boost::shared_ptr<typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type const> >
+    struct BaseIPropertyMetadataEqualTo : 
+        Traits::EqualityComparable<boost::shared_ptr<typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::IPropertyMetadataLabel>::type const> >
     {
-    public:
-        //typedef typename IMethodMetadataApiAt<IMethodMetadataApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
+        //typedef typename IPropertyMetadataApiAt<IPropertyMetadataApiHolder, Interfaces::ITypeNameMetadataEqualToLabel>::type i_type_name_metadata_equal_to_type;
 
         result_type operator()(param_type x, param_type y) const
         {
             BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-            //_ASSERTE(x && y);
+            //_ASSERTE(x != NULL && y != NULL);
 
             //return x->GetName() == y->GetName() &&
-            //       i_assembly_metadata_equal_to_type()(x->GetResolutionScope(), y->GetResolutionScope());
+            //       i_type_name_metadata_equal_to_type()(&x->GetResolutionScope(), &y->GetResolutionScope());
         }
     };
 
@@ -1060,289 +762,96 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct MetadataInfoApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataInfoApiHolderLabel, ApiLabel>
+    struct AssemblyMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class MetadataInfoApiHolder
+        class AssemblyMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseMetadataInfo : 
+    class BaseAssemblyMetadataGenerator7FAEDE99 : 
         public SmartPtrChain<
-            BaseMetadataInfo<MetadataInfoApiHolder>,
+            BaseAssemblyMetadataGenerator7FAEDE99<AssemblyMetadataGenerator7FAEDE99ApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type>
+                SmartPtrChainInfo<typename AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::MetadataDispenserLabel>::type>
             >
         >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-                typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type
-            >
-        >,
+        public AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IAssemblyMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
+        typedef BaseAssemblyMetadataGenerator7FAEDE99<AssemblyMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IAssemblyMetadataLabel>::type base_type;
 
-        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type module_metadata_generator_type;
+        typedef typename AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
+        typedef typename AssemblyMetadataGenerator7FAEDE99ApiAt<AssemblyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IModuleMetadataEqualToLabel>::type i_module_metadata_equal_to_type;
 
-        typedef typename provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
-
-        typedef typename chain_from<runtime_host_type>::type metadata_info_chain_type; 
-
-        BaseMetadataInfo()
-        { }
-
-        boost::shared_ptr<metadata_dispenser_type> CreateDispenser() const
-        {
-            metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            boost::shared_ptr<metadata_dispenser_type> pDisp = NewDispenser();
-            provider.Register(pDisp);
-            return pDisp;
-        }
-
-    private:
-        friend typename runtime_host_type;
-
-        boost::shared_ptr<metadata_dispenser_type> NewDispenser() const
-        {
-            metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            metadata_info_chain_type &chain = ChainFrom<runtime_host_type>();
-            return chain.NewObject<metadata_dispenser_type>(provider);
-        }
-    };
-
-
-
-
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct MetadataDispenserApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MetadataDispenserApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class MetadataDispenserApiHolder
-    >    
-    class BaseMetadataDispenser : 
-        public SmartPtrChain<
-            BaseMetadataDispenser<MetadataDispenserApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type>
-            >
-        >,
-        public DisposableHeapProvider<
-            boost::mpl::vector<
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type,
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type,
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type,
-                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type
-            >
-        >,
-        public SimpleDisposable
-    {
-    public:
-        typedef BaseMetadataDispenser<MetadataDispenserApiHolder> this_type;
-
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type metadata_info_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
-
-        typedef typename provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
-        typedef typename provider_of<module_metadata_type>::type module_metadata_provider_type;
-        typedef typename provider_of<type_metadata_type>::type type_metadata_provider_type;
-        typedef typename provider_of<method_metadata_type>::type method_metadata_provider_type;
-
-        typedef typename chain_from<metadata_info_type>::type metadata_dispenser_chain_type; 
-
-        BaseMetadataDispenser()
-        { }
-
-        boost::shared_ptr<assembly_metadata_type const> GetAssembly(std::wstring const &fullName) const
-        {
-            boost::shared_ptr<assembly_metadata_type> pNewAsm;
-            pNewAsm = NewAssembly(fullName);
-
-            boost::shared_ptr<assembly_metadata_type> pExistingAsm;
-            if (!TryGetAssembly(*pNewAsm, pExistingAsm))
-            {
-                assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
-                m_asmToIndex[pNewAsm] = provider.Register(pNewAsm);
-                return pNewAsm;
-            }
-            else
-            {
-                return pExistingAsm;
-            }
-        }
-
-    private:
-        friend typename metadata_info_type;
-        friend typename assembly_metadata_type;
-
-        boost::shared_ptr<assembly_metadata_type> NewAssembly(std::wstring const &fullName) const
-        {
-            assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
-            metadata_dispenser_chain_type &chain = ChainFrom<metadata_info_type>();
-            boost::shared_ptr<assembly_metadata_type> pAsm = chain.NewObject<assembly_metadata_type>(provider);
-            pAsm->SetName(fullName);
-            return pAsm;
-        }
-
-        bool TryGetAssembly(assembly_metadata_type const &keyAsm, boost::shared_ptr<assembly_metadata_type> &pExistingAsm) const
-        {
-            boost::shared_ptr<assembly_metadata_type const> pKeyAsm(&keyAsm, Utilities::MakeNullDeleter(&keyAsm));
-            if (m_asmToIndex.find(pKeyAsm) == m_asmToIndex.end())
-            {
-                return false;
-            }
-            else
-            {
-                size_t index = m_asmToIndex[pKeyAsm];
-                assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
-                pExistingAsm = provider[index];
-                return true;
-            }
-        }
-
-        com_meta_data_dispenser_type &GetCOMMetaDataDispenser()
-        {
-            if (m_pComMetaDisp.p == NULL)
-            {
-                HRESULT hr = ::CoCreateInstance(CLSID_CorMetaDataDispenser, NULL, CLSCTX_INPROC_SERVER, 
-                                                IID_IMetaDataDispenserEx, 
-                                                reinterpret_cast<void **>(&m_pComMetaDisp));
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-            return *m_pComMetaDisp;
-        }
-
-        mutable boost::unordered_map<boost::shared_ptr<assembly_metadata_type const>, 
-                                     size_t, 
-                                     i_assembly_metadata_hash_type, 
-                                     i_assembly_metadata_equal_to_type> m_asmToIndex;
-        mutable ATL::CComPtr<com_meta_data_dispenser_type> m_pComMetaDisp;
-    };
-
-
-
-
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct AssemblyMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyMetadataApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class AssemblyMetadataApiHolder
-    >    
-    class BaseAssemblyMetadata : 
-        public SmartPtrChain<
-            BaseAssemblyMetadata<AssemblyMetadataApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type>
-            >
-        >,
-        public AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type,
-        public SimpleDisposable
-    {
-    public:
-        typedef BaseAssemblyMetadata<AssemblyMetadataApiHolder> this_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IAssemblyMetadataLabel>::type base_type;
-
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataAssemblyImport>::type com_meta_data_assembly_import_type;        
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Fusion::Interfaces::FusionInfoLabel>::type fusion_info_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Fusion::Interfaces::AssemblyInfoLabel>::type assembly_info_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IModuleMetadataHashLabel>::type i_module_metadata_hash_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::IModuleMetadataEqualToLabel>::type i_module_metadata_equal_to_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename AssemblyMetadataApiAt<AssemblyMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
-        
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Asm, module_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Asm, module_metadata_provider_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(AsmGen, module_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(AsmGen, module_metadata_generator_provider_type);
         typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Asm, module_metadata_provider_type, typename base_type::metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Asm, module_metadata_provider_type, typename base_type::metadata_dispenser_type), 
+            CPP_ANONYM_HAS_MEMBER_TYPE(AsmGen, module_metadata_generator_provider_type, typename base_type::metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(AsmGen, module_metadata_generator_provider_type, typename base_type::metadata_dispenser_type), 
             boost::mpl::void_
-        >::type module_metadata_provider_type;
+        >::type module_metadata_generator_provider_type;
+
+        typedef typename chain_from<typename base_type::metadata_dispenser_type>::type assembly_metadata_generator_chain_type;
         
-        typedef typename chain_from<typename base_type::metadata_dispenser_type>::type assembly_metadata_chain_type; 
-
-        BaseAssemblyMetadata() : 
-            m_mda(mdAssemblyNil),
-            m_openFlags(ofRead)
-        { }
-
         mdAssembly GetToken() const
         {
-            if (m_mda == mdAssemblyNil)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                com_meta_data_assembly_import_type &comMetaAsmImp = pMutableThis->GetCOMMetaDataAssemblyImport();
-                HRESULT hr = comMetaAsmImp.GetAssemblyFromScope(&m_mda);
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-
-            return m_mda;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
-        
+
         std::wstring const &GetName() const
         {
             if (m_name.empty())
             {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
-            return m_name;
+            return m_name;            
         }
-        
+
         boost::shared_ptr<typename base_type::strong_name_key_type const> GetStrongNameKey() const
         {
-            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            if (!m_pSnKey)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_pSnKey;
         }
-        
+
         boost::shared_ptr<typename base_type::metadata_dispenser_type const> GetResolutionScope() const
         {
-            return MapFirst<typename base_type::metadata_dispenser_type>();
+            return Map<typename base_type::metadata_dispenser_type>();
         }
 
-        boost::shared_ptr<module_metadata_type const> GetModule(std::wstring const &name) const
+        void SetStrongNameKey(boost::shared_ptr<typename base_type::strong_name_key_type const> const &pSnKey)
         {
-            boost::shared_ptr<module_metadata_type> pMod;
-            pMod = NewModule(name);
+            m_pSnKey = pSnKey;
+        }
 
-            boost::shared_ptr<module_metadata_type> pExistingMod;
-            if (!TryGetModule(*pMod, pExistingMod))
+        boost::shared_ptr<module_metadata_generator_type> DefineModule(std::wstring const &name)
+        {
+            boost::shared_ptr<module_metadata_generator_type> pModGen;
+            pModGen = NewModuleGenerator(name);
+
+            boost::shared_ptr<module_metadata_generator_type> pExistingModGen;
+            if (!TryGetModuleGenerator(*pModGen, pExistingModGen))
             {
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-                m_modToIndex[pMod] = provider.Register(pMod);
-                return pMod;
+                module_metadata_generator_provider_type &provider = pDisp->ProviderOf<module_metadata_generator_type>();
+                m_modGenToIndex[pModGen] = provider.Register(pModGen);
+                return pModGen;
             }
             else
             {
-                return pExistingMod;
+                return pExistingModGen;
             }
         }
 
     private:
-        friend typename base_type::metadata_dispenser_type;
-        friend typename module_metadata_type;
-        friend typename type_metadata_type;
-        friend typename method_metadata_type;
+        friend typename typename base_type::metadata_dispenser_type;
 
         void SetName(std::wstring const &name)
         {
@@ -1351,125 +860,39 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
-        boost::shared_ptr<module_metadata_type> NewModule(std::wstring const &name) const
+        boost::shared_ptr<module_metadata_generator_type> NewModuleGenerator(std::wstring const &name) const
         {
             boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-            module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-            assembly_metadata_chain_type &chain = ChainFrom<typename base_type::metadata_dispenser_type>();
-            boost::shared_ptr<module_metadata_type> pMod = chain.NewObject<module_metadata_type>(provider);
-            pMod->SetName(name);
-            return pMod;
+            module_metadata_generator_provider_type &provider = pDisp->ProviderOf<module_metadata_generator_type>();
+            assembly_metadata_generator_chain_type &chain = ChainFrom<typename base_type::metadata_dispenser_type>();
+            boost::shared_ptr<module_metadata_generator_type> pModGen = chain.NewObject<module_metadata_generator_type>(provider);
+            pModGen->SetName(name);
+            return pModGen;
         }
 
-        bool TryGetModule(module_metadata_type const &keyMod, boost::shared_ptr<module_metadata_type> &pExistingMod) const
+        bool TryGetModuleGenerator(module_metadata_generator_type const &keyModGen, boost::shared_ptr<module_metadata_generator_type> &pExistingModGen) const
         {
-            boost::shared_ptr<module_metadata_type const> pKeyMod(&keyMod, Utilities::MakeNullDeleter(&keyMod));
-            if (m_modToIndex.find(pKeyMod) == m_modToIndex.end())
+            boost::shared_ptr<module_metadata_generator_type const> pKeyModGen(&keyModGen, Utilities::MakeNullDeleter(&keyModGen));
+            if (m_modGenToIndex.find(pKeyModGen) == m_modGenToIndex.end())
             {
                 return false;
             }
             else
             {
-                size_t index = m_modToIndex[pKeyMod];
+                size_t index = m_modGenToIndex[pKeyModGen];
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                module_metadata_provider_type &provider = pDisp->ProviderOf<module_metadata_type>();
-                pExistingMod = provider[index];
+                module_metadata_generator_provider_type &provider = pDisp->ProviderOf<module_metadata_generator_type>();
+                pExistingModGen = provider[index];
                 return true;
             }
         }
 
-        com_meta_data_assembly_import_type &GetCOMMetaDataAssemblyImport()
-        {
-            if (m_pComMetaAsmImp.p == NULL)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                
-                com_meta_data_import_type &comMetaImp = pMutableThis->GetCOMMetaDataImport();
-                HRESULT hr = comMetaImp.QueryInterface(IID_IMetaDataAssemblyImport, 
-                                               reinterpret_cast<void **>(&m_pComMetaAsmImp));
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-            return *m_pComMetaAsmImp;
-        }
-
-        com_meta_data_import_type &GetCOMMetaDataImport()
-        {
-            namespace fs = boost::filesystem;
-
-            if (m_pComMetaImp.p == NULL)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-
-                boost::shared_ptr<metadata_dispenser_type> pMetaDisp;
-                pMetaDisp = pMutableThis->MapFirst<metadata_dispenser_type>();
-
-                com_meta_data_dispenser_type &comMetaDisp = pMetaDisp->GetCOMMetaDataDispenser();
-
-                fs::path const &asmPath = GetAssemblyFilePath();
-                DWORD openFlags = GetOpenFlags();
-                REFIID riid = GetCOMMetaDataImportIID();
-                HRESULT hr = comMetaDisp.OpenScope(asmPath.c_str(), openFlags, 
-                                                   riid, reinterpret_cast<IUnknown **>(&m_pComMetaImp));
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-            return *m_pComMetaImp.p;
-        }
-
-        boost::filesystem::path const &GetAssemblyFilePath() const
-        {
-            using namespace Urasandesu::CppAnonym::Fusion;
-
-            if (m_asmPath.empty())
-            {
-                _ASSERTE(!m_name.empty());
-
-                boost::shared_ptr<fusion_info_type const> pFuInfo;
-                pFuInfo = Map<fusion_info_type>();
-                boost::shared_ptr<assembly_info_type> pAsmInfo;
-                pAsmInfo = pFuInfo->QueryAssemblyInfo(AssemblyQueryTypes::AQT_DEFAULT, m_name);
-                m_asmPath = pAsmInfo->GetAssemblyPath();
-            }
-            return m_asmPath;
-        }
-
-        void SetAssemblyFilePath(boost::filesystem::path const &asmPath)
-        {
-            _ASSERTE(!asmPath.empty());
-            _ASSERTE(m_asmPath.empty());
-            
-            m_asmPath = asmPath;
-        }
-
-        DWORD GetOpenFlags() const
-        {
-            return m_openFlags;
-        }
-
-        void SetOpenFlags(DWORD openFlags)
-        {
-            _ASSERTE(openFlags != ofRead);
-            _ASSERTE(m_openFlags == ofRead);
-
-            m_openFlags = openFlags;
-        }
-
-        REFIID GetCOMMetaDataImportIID()
-        {
-            return IID_IMetaDataImport2;
-        }
-
-        mutable mdAssembly m_mda;
         std::wstring m_name;
-        mutable boost::filesystem::path m_asmPath;
-        DWORD m_openFlags;
-        mutable ATL::CComPtr<com_meta_data_assembly_import_type> m_pComMetaAsmImp;
-        mutable ATL::CComPtr<com_meta_data_import_type> m_pComMetaImp;
-        mutable boost::unordered_map<boost::shared_ptr<module_metadata_type const>, 
+        boost::shared_ptr<typename base_type::strong_name_key_type const> m_pSnKey;
+        mutable boost::unordered_map<boost::shared_ptr<module_metadata_generator_type const>, 
                                      size_t, 
                                      i_module_metadata_hash_type, 
-                                     i_module_metadata_equal_to_type> m_modToIndex;
+                                     i_module_metadata_equal_to_type> m_modGenToIndex;
     };
 
 
@@ -1477,66 +900,49 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct ModuleMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ModuleMetadataApiHolderLabel, ApiLabel>
+    struct ModuleMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::ModuleMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class ModuleMetadataApiHolder
+        class ModuleMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseModuleMetadata : 
+    class BaseModuleMetadataGenerator7FAEDE99 : 
         public SmartPtrChain<
-            BaseModuleMetadata<ModuleMetadataApiHolder>,
+            BaseModuleMetadataGenerator7FAEDE99<ModuleMetadataGenerator7FAEDE99ApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type>
+                SmartPtrChainInfo<typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type>
             >
         >,
-        public ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type,
+        public ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::IModuleMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseModuleMetadata<ModuleMetadataApiHolder> this_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::IModuleMetadataLabel>::type base_type;
+        typedef BaseModuleMetadataGenerator7FAEDE99<ModuleMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::IModuleMetadataLabel>::type base_type;
+        
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type assembly_metadata_generator_type;
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type type_metadata_generator_type;        
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
+        typedef typename ModuleMetadataGenerator7FAEDE99ApiAt<ModuleMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataEqualToLabel>::type i_type_metadata_equal_to_type;
 
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::ITypeMetadataEqualToLabel>::type i_type_metadata_equal_to_type;
-        typedef typename ModuleMetadataApiAt<ModuleMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Mod, type_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Mod, type_metadata_provider_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ModGen, type_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ModGen, type_metadata_generator_provider_type);
         typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Mod, type_metadata_provider_type, metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Mod, type_metadata_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_HAS_MEMBER_TYPE(ModGen, type_metadata_generator_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(ModGen, type_metadata_generator_provider_type, metadata_dispenser_type), 
             boost::mpl::void_
-        >::type type_metadata_provider_type;
+        >::type type_metadata_generator_provider_type;
 
-        typedef typename chain_from<assembly_metadata_type>::type module_metadata_chain_type; 
-
-        BaseModuleMetadata() : 
-            m_mdm(mdModuleNil)
-        { }
+        typedef typename chain_from<assembly_metadata_generator_type>::type module_metadata_generator_chain_type;
 
         mdModule GetToken() const
         {
-            if (m_mdm == mdModuleNil)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                boost::shared_ptr<assembly_metadata_type> pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
-
-                com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
-
-                HRESULT hr = comMetaImp.GetModuleFromScope(&m_mdm);
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-            return m_mdm;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
-
+        
         std::wstring const &GetName() const
         {
             if (m_name.empty())
@@ -1548,31 +954,30 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         boost::shared_ptr<typename base_type::i_assembly_metadata_type const> GetResolutionScope() const
         {
-            return MapFirst<assembly_metadata_type>();
+            return Map<assembly_metadata_generator_type>();
         }
 
-        boost::shared_ptr<type_metadata_type const> GetType(std::wstring const &name) const
+        boost::shared_ptr<type_metadata_generator_type> DefineType(std::wstring const &name, TypeAttributes const &attr)
         {
-            boost::shared_ptr<type_metadata_type> pType;
-            pType = NewType(name);
+            boost::shared_ptr<type_metadata_generator_type> pTypeGen;
+            pTypeGen = NewTypeGenerator(name, attr);
 
-            boost::shared_ptr<type_metadata_type> pExistingType;
-            if (!TryGetType(*pType, pExistingType))
+            boost::shared_ptr<type_metadata_generator_type> pExistingTypeGen;
+            if (!TryGetTypeGenerator(*pTypeGen, pExistingTypeGen))
             {
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-                m_typeToIndex[pType] = provider.Register(pType);
-                return pType;
+                type_metadata_generator_provider_type &provider = pDisp->ProviderOf<type_metadata_generator_type>();
+                m_typeGenToIndex[pTypeGen] = provider.Register(pTypeGen);
+                return pTypeGen;
             }
             else
             {
-                return pExistingType;
+                return pExistingTypeGen;
             }
         }
 
     private:
-        friend typename assembly_metadata_type;
-        friend typename type_metadata_type;
+        friend typename assembly_metadata_generator_type;
 
         void SetName(std::wstring const &name)
         {
@@ -1581,51 +986,39 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
-        boost::shared_ptr<type_metadata_type> NewType(std::wstring const &name) const
-        {
-            boost::shared_ptr<type_metadata_type> pType = NewTypeCore();
-            pType->SetName(name);
-            return pType;
-        }
-
-        boost::shared_ptr<type_metadata_type> NewType(mdToken mdt) const
-        {
-            boost::shared_ptr<type_metadata_type> pType = NewTypeCore();
-            pType->SetToken(mdt);
-            return pType;
-        }
-
-        boost::shared_ptr<type_metadata_type> NewTypeCore() const
+        boost::shared_ptr<type_metadata_generator_type> NewTypeGenerator(std::wstring const &name, TypeAttributes const &attr) const
         {
             boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-            type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-            module_metadata_chain_type &chain = ChainFrom<assembly_metadata_type>();
-            return chain.NewObject<type_metadata_type>(provider);
+            type_metadata_generator_provider_type &provider = pDisp->ProviderOf<type_metadata_generator_type>();
+            module_metadata_generator_chain_type &chain = ChainFrom<assembly_metadata_generator_type>();
+            boost::shared_ptr<type_metadata_generator_type> pTypeGen = chain.NewObject<type_metadata_generator_type>(provider);
+            pTypeGen->SetName(name);
+            pTypeGen->SetAttribute(attr);
+            return pTypeGen;
         }
 
-        bool TryGetType(type_metadata_type const &keyType, boost::shared_ptr<type_metadata_type> &pExistingType) const
+        bool TryGetTypeGenerator(type_metadata_generator_type const &keyTypeGen, boost::shared_ptr<type_metadata_generator_type> &pExistingTypeGen) const
         {
-            boost::shared_ptr<type_metadata_type const> pKeyType(&keyType, Utilities::MakeNullDeleter(&keyType));
-            if (m_typeToIndex.find(pKeyType) == m_typeToIndex.end())
+            boost::shared_ptr<type_metadata_generator_type const> pKeyTypeGen(&keyTypeGen, Utilities::MakeNullDeleter(&keyTypeGen));
+            if (m_typeGenToIndex.find(pKeyTypeGen) == m_typeGenToIndex.end())
             {
                 return false;
             }
             else
             {
-                size_t index = m_typeToIndex[pKeyType];
+                size_t index = m_typeGenToIndex[pKeyTypeGen];
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
-                pExistingType = provider[index];
+                type_metadata_generator_provider_type &provider = pDisp->ProviderOf<type_metadata_generator_type>();
+                pExistingTypeGen = provider[index];
                 return true;
             }
         }
 
-        mutable mdModule m_mdm;
         std::wstring m_name;
-        mutable boost::unordered_map<boost::shared_ptr<type_metadata_type const>, 
-                                     SIZE_T, 
+        mutable boost::unordered_map<boost::shared_ptr<type_metadata_generator_type const>, 
+                                     size_t, 
                                      i_type_metadata_hash_type, 
-                                     i_type_metadata_equal_to_type> m_typeToIndex;
+                                     i_type_metadata_equal_to_type> m_typeGenToIndex;        
     };
 
 
@@ -1633,217 +1026,212 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct TypeMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::TypeMetadataApiHolderLabel, ApiLabel>
+    struct TypeMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::TypeMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class TypeMetadataApiHolder
+        class TypeMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseTypeMetadata : 
+    class BaseTypeMetadataGenerator7FAEDE99 : 
         public SmartPtrChain<
-            BaseTypeMetadata<TypeMetadataApiHolder>,
+            BaseTypeMetadataGenerator7FAEDE99<TypeMetadataGenerator7FAEDE99ApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<BaseTypeMetadata<TypeMetadataApiHolder> >,
-                SmartPtrChainInfo<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type>
+                SmartPtrChainInfo<BaseTypeMetadataGenerator7FAEDE99<TypeMetadataGenerator7FAEDE99ApiHolder> >,
+                SmartPtrChainInfo<typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type>
             >
         >,
-        public TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type,
+        public TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseTypeMetadata<TypeMetadataApiHolder> this_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
+        typedef BaseTypeMetadataGenerator7FAEDE99<TypeMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
 
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type module_metadata_generator_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::ITypeMetadataEqualToLabel>::type i_type_metadata_equal_to_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::FieldMetadataGenerator7FAEDE99Label>::type field_metadata_generator_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IFieldMetadataHashLabel>::type i_field_metadata_hash_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IFieldMetadataEqualToLabel>::type i_field_metadata_equal_to_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::MethodMetadataGenerator7FAEDE99Label>::type method_metadata_generator_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IMethodMetadataHashLabel>::type i_method_metadata_hash_type; 
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::PropertyMetadataGenerator7FAEDE99Label>::type property_metadata_generator_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IPropertyMetadataHashLabel>::type i_property_metadata_hash_type;
+        typedef typename TypeMetadataGenerator7FAEDE99ApiAt<TypeMetadataGenerator7FAEDE99ApiHolder, Interfaces::IPropertyMetadataEqualToLabel>::type i_property_metadata_equal_to_type;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, type_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, type_metadata_provider_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeGen, type_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeGen, type_metadata_generator_provider_type);
         typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_HAS_MEMBER_TYPE(TypeGen, type_metadata_generator_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(TypeGen, type_metadata_generator_provider_type, metadata_dispenser_type), 
             boost::mpl::void_
-        >::type type_metadata_provider_type;
+        >::type type_metadata_generator_provider_type;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, method_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, method_metadata_provider_type);
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeGen, field_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeGen, field_metadata_generator_provider_type);
         typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_HAS_MEMBER_TYPE(TypeGen, field_metadata_generator_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(TypeGen, field_metadata_generator_provider_type, metadata_dispenser_type), 
             boost::mpl::void_
-        >::type method_metadata_provider_type;        
+        >::type field_metadata_generator_provider_type;
 
-        typedef typename chain_from<this_type>::type nested_type_metadata_chain_type; 
-        typedef typename chain_from<module_metadata_type>::type type_metadata_chain_type; 
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeGen, method_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeGen, method_metadata_generator_provider_type);
+        typedef typename boost::mpl::eval_if<
+            CPP_ANONYM_HAS_MEMBER_TYPE(TypeGen, method_metadata_generator_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(TypeGen, method_metadata_generator_provider_type, metadata_dispenser_type), 
+            boost::mpl::void_
+        >::type method_metadata_generator_provider_type;
 
-        BaseTypeMetadata() : 
-            m_mdt(mdTokenNil),
-            m_genericArgsInit(false),
-            m_kindInitialized(false),
-            m_kind(TypeKinds::TK_END),
-            m_filled(false)
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeGen, property_metadata_generator_provider_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeGen, property_metadata_generator_provider_type);
+        typedef typename boost::mpl::eval_if<
+            CPP_ANONYM_HAS_MEMBER_TYPE(TypeGen, property_metadata_generator_provider_type, metadata_dispenser_type), 
+            CPP_ANONYM_GET_MEMBER_TYPE(TypeGen, property_metadata_generator_provider_type, metadata_dispenser_type), 
+            boost::mpl::void_
+        >::type property_metadata_generator_provider_type;
+
+        typedef typename chain_from<this_type>::type type_metadata_generator_chain_type;
+
+        BaseTypeMetadataGenerator7FAEDE99() : 
+            m_attrInitialized(false),
+            m_attr(TypeAttributes::TA_VISIBILITY_MASK)
         { }
 
         mdToken GetToken() const
         {
-            if (m_mdt == mdTokenNil)
-            {
-                if (boost::shared_ptr<this_type> p = MapFirstAncestor<this_type>())
-                {
-                    return p->GetToken();
-                }
-                else
-                {
-                    _ASSERTE(!m_name.empty());
-
-                    this_type *pMutableThis = const_cast<this_type *>(this);
-
-                    boost::shared_ptr<assembly_metadata_type> pAsmMeta = MapFirst<assembly_metadata_type>();
-                
-                    com_meta_data_import_type &comMetaImp = pAsmMeta->GetCOMMetaDataImport();
-
-                    HRESULT hr = comMetaImp.FindTypeDefByName(m_name.c_str(), NULL, &m_mdt);
-                    if (FAILED(hr))
-                        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-                }
-            }
-            return m_mdt;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
-        
+
         std::wstring const &GetName() const
         {
             if (m_name.empty())
-                FillPropertiesIfNecessary();
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
             return m_name;
         }
 
         boost::shared_ptr<typename base_type::this_type const> GetBaseType() const
         {
-            if (!m_pBaseType)
-                FillPropertiesIfNecessary();
-            return m_pBaseType;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
 
         boost::shared_ptr<typename base_type::i_module_metadata_type const> GetResolutionScope() const
         {
-            return MapFirst<module_metadata_type>();
+            return MapFirst<module_metadata_generator_type>();
         }
 
         std::vector<COR_SIGNATURE> const &GetSignatures() const
         {
-            if (m_sigs.empty())
-                PushBackSignatures(m_sigs, *this);
-
-            return m_sigs;
-        }
-
-        std::vector<boost::shared_ptr<base_type const> > const &GetGenericArguments() const
-        {
-            if (!m_genericArgsInit)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-
-                boost::shared_ptr<assembly_metadata_type> pAsm = pMutableThis->MapFirst<assembly_metadata_type>();
-                boost::shared_ptr<module_metadata_type> pMod = pMutableThis->MapFirst<module_metadata_type>();
-                
-                com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
-
-                HCORENUM hEnum = NULL;
-                    BOOST_SCOPE_EXIT((&hEnum)(&comMetaImp))
-                    {
-                        if (hEnum)
-                            comMetaImp.CloseEnum(hEnum);
-                    }
-                    BOOST_SCOPE_EXIT_END
-                boost::array<mdGenericParam, 16> m_mdgps;
-                ULONG count = 0;
-                HRESULT hr = E_FAIL;
-                mdToken mdtTarget = GetToken();
-                do
-                {
-                    hr = comMetaImp.EnumGenericParams(&hEnum, mdtTarget, m_mdgps.c_array(), m_mdgps.size(), &count);
-                    if (FAILED(hr))
-                        BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-                    m_genericArgs.reserve(m_genericArgs.size() + count);
-                    for (UINT i = 0; i < count; ++i)
-                    {
-                        boost::shared_ptr<this_type> pType;
-                        pType = pMod->NewType(m_mdgps[i]);
-                        m_genericArgs.push_back(pType);
-                    }
-                } while (0 < count);
-
-                m_genericArgsInit = true;
-            }
-            return m_genericArgs;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
 
         bool IsGenericParameter() const
         {
-            return TypeFromToken(GetToken()) == mdtGenericParam;
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
 
-        bool IsGenericType() const
+        TypeAttributes const &GetAttribute() const
         {
-            return !GetGenericArguments().empty();
-        }
-        
-        bool IsGenericTypeDefinition() const
-        {
-            if (!IsGenericType())
+            if (!m_attrInitialized)
             {
-                return false;
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
-            else
-            {
-                nested_type_metadata_chain_type &chain = ChainFrom<this_type>();
-                boost::shared_ptr<base_type> pGenericTypeDef = chain.GetPrevious().lock();
-                return !pGenericTypeDef;
-            }
+            return m_attr;
         }
 
-        boost::shared_ptr<this_type const> MakeGenericType(std::vector<boost::shared_ptr<base_type const> > const &genericArgs) const
+        boost::shared_ptr<this_type> DefineNestedType(std::wstring const &name, TypeAttributes const &attr)
         {
-            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-            type_metadata_provider_type &provider = pDisp->ProviderOf<this_type>();
-            nested_type_metadata_chain_type &chain = ChainFrom<this_type>();
-            boost::shared_ptr<this_type> pType = chain.NewObject<this_type>(provider);
-            pType->SetGenericArguments(genericArgs);
-            return pType;
-        }
+            boost::shared_ptr<this_type> pNestedTypeGen;
+            pNestedTypeGen = NewNestedTypeGenerator(name, attr);
 
-        boost::shared_ptr<method_metadata_type const> GetMethod(std::wstring const &name, 
-                                                                CallingConventions const &callingConvention, 
-                                                                boost::shared_ptr<base_type const> const &pRetType, 
-                                                                std::vector<boost::shared_ptr<base_type const> > const &paramTypes) const
-        {
-            boost::shared_ptr<method_metadata_type> pMethod;
-            pMethod = NewMethod(name, callingConvention, pRetType, paramTypes);
-
-            boost::shared_ptr<method_metadata_type> pExistingMethod;
-            if (!TryGetMethod(*pMethod, pExistingMethod))
+            boost::shared_ptr<this_type> pExistingNestedTypeGen;
+            if (!TryGetNestedTypeGenerator(*pNestedTypeGen, pExistingNestedTypeGen))
             {
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                method_metadata_provider_type &provider = pDisp->ProviderOf<method_metadata_type>();
-                m_methodToIndex[pMethod] = provider.Register(pMethod);
-                return pMethod;
+                type_metadata_generator_provider_type &provider = pDisp->ProviderOf<this_type>();
+                m_nestedTypeGenToIndex[pNestedTypeGen] = provider.Register(pNestedTypeGen);
+                return pNestedTypeGen;
             }
             else
             {
-                return pExistingMethod;
+                return pExistingNestedTypeGen;
+            }
+        }
+
+        boost::shared_ptr<field_metadata_generator_type> DefineField(std::wstring const &name, 
+                                                                     boost::shared_ptr<typename base_type::this_type const> const &pFieldType, 
+                                                                     FieldAttributes const &attr)
+        {
+            boost::shared_ptr<field_metadata_generator_type> pFieldGen;
+            pFieldGen = NewFieldGenerator(name, pFieldType, attr);
+
+            boost::shared_ptr<field_metadata_generator_type> pExistingFieldGen;
+            if (!TryGetFieldGenerator(*pFieldGen, pExistingFieldGen))
+            {
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                field_metadata_generator_provider_type &provider = pDisp->ProviderOf<field_metadata_generator_type>();
+                m_fieldGenToIndex[pFieldGen] = provider.Register(pFieldGen);
+                return pFieldGen;
+            }
+            else
+            {
+                return pExistingFieldGen;
+            }
+        }
+
+        boost::shared_ptr<method_metadata_generator_type> DefineMethod(std::wstring const &name, 
+                                                                       CallingConventions const &callingConvention, 
+                                                                       boost::shared_ptr<typename base_type::this_type const> const &pRetType, 
+                                                                       std::vector<boost::shared_ptr<typename base_type::this_type const> > const &paramTypes,
+                                                                       MethodAttributes const &attr)
+        {
+            boost::shared_ptr<method_metadata_generator_type> pMethodGen;
+            pMethodGen = NewMethodGenerator(name, callingConvention, pRetType, paramTypes, attr);
+
+            boost::shared_ptr<method_metadata_generator_type> pExistingMethodGen;
+            if (!TryGetMethodGenerator(*pMethodGen, pExistingMethodGen))
+            {
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                method_metadata_generator_provider_type &provider = pDisp->ProviderOf<method_metadata_generator_type>();
+                m_methodGenToIndex[pMethodGen] = provider.Register(pMethodGen);
+                return pMethodGen;
+            }
+            else
+            {
+                return pExistingMethodGen;
+            }
+        }
+
+        boost::shared_ptr<property_metadata_generator_type> DefineProperty(std::wstring const &name, 
+                                                                           boost::shared_ptr<typename base_type::this_type const> const &pPropType,
+                                                                           std::vector<boost::shared_ptr<typename base_type::this_type const> > const &paramTypes,
+                                                                           PropertyAttributes const &attr) const
+        {
+            boost::shared_ptr<property_metadata_generator_type> pPropGen;
+            pPropGen = NewPropertyGenerator(name, pPropType, paramTypes, attr);
+
+            boost::shared_ptr<property_metadata_generator_type> pExistingPropGen;
+            if (!TryGetPropertyGenerator(*pPropGen, pExistingPropGen))
+            {
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                property_metadata_generator_provider_type &provider = pDisp->ProviderOf<property_metadata_generator_type>();
+                m_propGenToIndex[pPropGen] = provider.Register(pPropGen);
+                return pPropGen;
+            }
+            else
+            {
+                return pExistingPropGen;
             }
         }
 
     private:
-        friend typename module_metadata_type;
+        friend typename module_metadata_generator_type;
 
         void SetName(std::wstring const &name)
         {
@@ -1852,198 +1240,156 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_name = name;
         }
 
-        void SetToken(mdToken mdt)
+        void SetAttribute(TypeAttributes const &attr)
         {
-            _ASSERTE(!IsNilToken(mdt));
-            _ASSERTE(m_mdt == mdTokenNil);
-            m_mdt = mdt;
+            _ASSERTE(!m_attrInitialized);
+            m_attr = attr;
+            m_attrInitialized = true;
         }
 
-        void SetGenericArguments(std::vector<boost::shared_ptr<base_type const> > const &genericArgs)
-        {
-            _ASSERTE(!m_genericArgsInit);
-            _ASSERTE(genericArgs.size() != 0);
-            m_genericArgs = genericArgs;
-            m_genericArgsInit = true;
-        }
-
-        boost::shared_ptr<method_metadata_type> NewMethod(std::wstring const &name, 
-                                                          CallingConventions const &callingConvention, 
-                                                          boost::shared_ptr<base_type const> const &pRetType, 
-                                                          std::vector<boost::shared_ptr<base_type const> > const &paramTypes) const
+        boost::shared_ptr<this_type> NewNestedTypeGenerator(std::wstring const &name, TypeAttributes const &attr) const
         {
             boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-            method_metadata_provider_type &provider = pDisp->ProviderOf<method_metadata_type>();
-            boost::shared_ptr<method_metadata_type> pMethod = NewObjectFirst<method_metadata_type>(provider);
-            pMethod->SetName(name);
-            pMethod->SetCallingConvention(callingConvention);
-            pMethod->SetReturnType(pRetType);
-            pMethod->SetParameterTypes(paramTypes);
-            return pMethod;
+            type_metadata_generator_provider_type &provider = pDisp->ProviderOf<this_type>();
+            type_metadata_generator_chain_type &chain = ChainFrom<this_type>();
+            boost::shared_ptr<this_type> pTypeGen = chain.NewObject<this_type>(provider);
+            pTypeGen->SetName(name);
+            pTypeGen->SetAttribute(attr);
+            return pTypeGen;
         }
 
-        bool TryGetMethod(method_metadata_type const &keyMethod, boost::shared_ptr<method_metadata_type> &pExistingMethod) const
+        bool TryGetNestedTypeGenerator(this_type const &keyNestedTypeGen, boost::shared_ptr<this_type> &pExistingNestedTypeGen) const
         {
-            boost::shared_ptr<method_metadata_type const> pKeyMethod(&keyMethod, Utilities::MakeNullDeleter(&keyMethod));
-            if (m_methodToIndex.find(pKeyMethod) == m_methodToIndex.end())
+            boost::shared_ptr<this_type const> pKeyNestedTypeGen(&keyNestedTypeGen, Utilities::MakeNullDeleter(&keyNestedTypeGen));
+            if (m_nestedTypeGenToIndex.find(pKeyNestedTypeGen) == m_nestedTypeGenToIndex.end())
             {
                 return false;
             }
             else
             {
-                size_t index = m_methodToIndex[pKeyMethod];
+                size_t index = m_nestedTypeGenToIndex[pKeyNestedTypeGen];
                 boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-                method_metadata_provider_type &provider = pDisp->ProviderOf<method_metadata_type>();
-                pExistingMethod = provider[index];
+                type_metadata_generator_provider_type &provider = pDisp->ProviderOf<this_type>();
+                pExistingNestedTypeGen = provider[index];
                 return true;
             }
         }
 
-        void FillPropertiesIfNecessary() const
+        boost::shared_ptr<field_metadata_generator_type> NewFieldGenerator(std::wstring const &name, 
+                                                                           boost::shared_ptr<typename base_type::this_type const> const &pFieldType, 
+                                                                           FieldAttributes const &attr) const
         {
-            if (m_filled)
-                return;
+            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            field_metadata_generator_provider_type &provider = pDisp->ProviderOf<field_metadata_generator_type>();
+            boost::shared_ptr<field_metadata_generator_type> pFieldGen = NewObjectFirst<field_metadata_generator_type>(provider);
+            pFieldGen->SetName(name);
+            pFieldGen->SetFieldType(pFieldType);
+            pFieldGen->SetAttribute(attr);
+            return pFieldGen;
+        }
 
-            this_type *pMutableThis = const_cast<this_type *>(this);
-
-            boost::shared_ptr<module_metadata_type> pMod = MapFirst<module_metadata_type>();
-            boost::shared_ptr<assembly_metadata_type> pAsm = pMod->MapFirst<assembly_metadata_type>();
-
-            com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
-
-            mdToken mdtTarget = GetToken();
-            if (TypeFromToken(mdtTarget) == mdtTypeRef)
+        bool TryGetFieldGenerator(field_metadata_generator_type const &keyFieldGen, boost::shared_ptr<field_metadata_generator_type> &pExistingFieldGen) const
+        {
+            boost::shared_ptr<field_metadata_generator_type const> pKeyFieldGen(&keyFieldGen, Utilities::MakeNullDeleter(&keyFieldGen));
+            if (m_fieldGenToIndex.find(pKeyFieldGen) == m_fieldGenToIndex.end())
             {
-                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-            }
-            else if (TypeFromToken(mdtTarget) == mdtTypeDef)
-            {
-                WCHAR name[MAX_SYM_NAME] = { 0 };
-                ULONG nameSize = sizeof(name);
-                DWORD attr = 0;
-                mdToken mdtExt = mdTokenNil;
-                HRESULT hr = comMetaImp.GetTypeDefProps(mdtTarget, name, nameSize, 
-                                                        &nameSize, &attr, &mdtExt);
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-                m_name = name;
-                if (!IsNilToken(mdtExt) && 
-                    (TypeFromToken(mdtExt) == mdtTypeDef ||
-                     TypeFromToken(mdtExt) == mdtTypeRef))
-                {
-                    m_pBaseType = pMod->NewType(mdtExt);
-                }
-                else if (!IsNilToken(mdtExt))
-                {
-                    BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-                }
+                return false;
             }
             else
             {
-                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+                size_t index = m_fieldGenToIndex[pKeyFieldGen];
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                field_metadata_generator_provider_type &provider = pDisp->ProviderOf<field_metadata_generator_type>();
+                pExistingFieldGen = provider[index];
+                return true;
             }
-
-
-            m_filled = true;
         }
 
-        TypeKinds const &GetKind() const
+        boost::shared_ptr<method_metadata_generator_type> NewMethodGenerator(std::wstring const &name, 
+                                                                             CallingConventions const &callingConvention, 
+                                                                             boost::shared_ptr<typename base_type::this_type const> const &pRetType, 
+                                                                             std::vector<boost::shared_ptr<typename base_type::this_type const> > const &paramTypes,
+                                                                             MethodAttributes const &attr) const
         {
-            using Interfaces::MetadataSpecialValues;
-
-            if (!m_kindInitialized)
-            {
-                std::wstring const &name = GetName();
-                if (name == MetadataSpecialValues::TYPE_NAME_OF_VOID) m_kind = TypeKinds::TK_VOID;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_BOOLEAN) m_kind = TypeKinds::TK_BOOLEAN;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_CHAR) m_kind = TypeKinds::TK_CHAR;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_SBYTE) m_kind = TypeKinds::TK_I1;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_BYTE) m_kind = TypeKinds::TK_U1;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_INT16) m_kind = TypeKinds::TK_I2;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_UINT16) m_kind = TypeKinds::TK_U2;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_INT32) m_kind = TypeKinds::TK_I4;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_UINT32) m_kind = TypeKinds::TK_U4;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_INT64) m_kind = TypeKinds::TK_I8;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_UINT64) m_kind = TypeKinds::TK_U8;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_SINGLE) m_kind = TypeKinds::TK_R4;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_DOUBLE) m_kind = TypeKinds::TK_R8;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_STRING) m_kind = TypeKinds::TK_STRING;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_INTPTR) m_kind = TypeKinds::TK_I;
-                else if (name == MetadataSpecialValues::TYPE_NAME_OF_OBJECT) m_kind = TypeKinds::TK_OBJECT;
-                else
-                {
-                    if (name.find(MetadataSpecialValues::GENERIC_TYPE_IDENTIFIER) != std::wstring::npos)
-                    {
-                        m_kind = TypeKinds::TK_GENERICINST;
-                    }
-                    else
-                    {
-                        boost::shared_ptr<base_type const> pBaseType = GetBaseType();
-                        if (pBaseType && pBaseType->GetName() == MetadataSpecialValues::TYPE_NAME_OF_VALUETYPE)
-                        {
-                            m_kind = TypeKinds::TK_VALUETYPE;
-                        }
-                        else
-                        {
-                            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-                        }
-                    }
-                }
-
-                m_kindInitialized = true;
-            }
-            return m_kind;
+            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            method_metadata_generator_provider_type &provider = pDisp->ProviderOf<method_metadata_generator_type>();
+            boost::shared_ptr<method_metadata_generator_type> pMethodGen = NewObjectFirst<method_metadata_generator_type>(provider);
+            pMethodGen->SetName(name);
+            pMethodGen->SetCallingConvention(callingConvention);
+            pMethodGen->SetReturnType(pRetType);
+            pMethodGen->SetParameterTypes(paramTypes);
+            pMethodGen->SetAttribute(attr);
+            return pMethodGen;
         }
 
-        static void PushBackSignatures(std::vector<COR_SIGNATURE> &sigs, this_type const &this_)
+        bool TryGetMethodGenerator(method_metadata_generator_type const &keyMethodGen, boost::shared_ptr<method_metadata_generator_type> &pExistingMethodGen) const
         {
-            TypeKinds const &typeKind = this_.GetKind();
-            switch (typeKind.Value())
+            boost::shared_ptr<method_metadata_generator_type const> pKeyMethodGen(&keyMethodGen, Utilities::MakeNullDeleter(&keyMethodGen));
+            if (m_methodGenToIndex.find(pKeyMethodGen) == m_methodGenToIndex.end())
             {
-                case TypeKinds::TK_VOID:
-                case TypeKinds::TK_I:
-                case TypeKinds::TK_OBJECT:
-                case TypeKinds::TK_STRING:
-                    sigs.push_back(typeKind.Value());
-                    break;
-
-                case TypeKinds::TK_VALUETYPE:
-                    sigs.push_back(typeKind.Value());
-                    {
-                        BYTE pData[4] = { 0 };
-                        ULONG length = ::CorSigCompressToken(this_.GetToken(), pData);
-                        for (BYTE const *i = pData, *i_end = i + length; i != i_end; ++i)
-                            sigs.push_back(*i);
-                    }
-                    break;
-
-                case TypeKinds::TK_GENERICINST:
-                    sigs.push_back(typeKind.Value());
-                    {
-                    }
-                    BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-                    break;
-
-                default:
-                    BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
-                    break;
+                return false;
+            }
+            else
+            {
+                size_t index = m_methodGenToIndex[pKeyMethodGen];
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                method_metadata_generator_provider_type &provider = pDisp->ProviderOf<method_metadata_generator_type>();
+                pExistingMethodGen = provider[index];
+                return true;
             }
         }
 
-        mutable std::wstring m_name;
-        mutable boost::shared_ptr<base_type const> m_pBaseType;
-        mutable mdToken m_mdt;
-        mutable bool m_genericArgsInit;
-        mutable bool m_kindInitialized;
-        mutable TypeKinds m_kind;
-        mutable std::vector<COR_SIGNATURE> m_sigs;
-        mutable std::vector<boost::shared_ptr<base_type const> > m_genericArgs;
-        mutable boost::unordered_map<boost::shared_ptr<method_metadata_type const>, 
+        boost::shared_ptr<property_metadata_generator_type> NewPropertyGenerator(std::wstring const &name, 
+                                                                                 boost::shared_ptr<typename base_type::this_type const> const &pPropType,
+                                                                                 std::vector<boost::shared_ptr<typename base_type::this_type const> > const &paramTypes,
+                                                                                 PropertyAttributes const &attr) const
+        {
+            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            property_metadata_generator_provider_type &provider = pDisp->ProviderOf<property_metadata_generator_type>();
+            boost::shared_ptr<property_metadata_generator_type> pPropGen = NewObjectFirst<property_metadata_generator_type>(provider);
+            pPropGen->SetName(name);
+            pPropGen->SetPropertyType(pPropType);
+            pPropGen->SetParameterTypes(paramTypes);
+            pPropGen->SetAttribute(attr);
+            return pPropGen;
+        }
+
+        bool TryGetPropertyGenerator(property_metadata_generator_type const &keyPropGen, boost::shared_ptr<property_metadata_generator_type> &pExistingPropGen) const
+        {
+            boost::shared_ptr<property_metadata_generator_type const> pKeyPropGen(&keyPropGen, Utilities::MakeNullDeleter(&keyPropGen));
+            if (m_propGenToIndex.find(pKeyPropGen) == m_propGenToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_propGenToIndex[pKeyPropGen];
+                boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+                property_metadata_generator_provider_type &provider = pDisp->ProviderOf<property_metadata_generator_type>();
+                pExistingPropGen = provider[index];
+                return true;
+            }
+        }
+
+        std::wstring m_name;
+        bool m_attrInitialized;
+        TypeAttributes m_attr;
+        mutable boost::unordered_map<boost::shared_ptr<this_type const>, 
+                                     size_t, 
+                                     i_type_metadata_hash_type, 
+                                     i_type_metadata_equal_to_type> m_nestedTypeGenToIndex;
+        mutable boost::unordered_map<boost::shared_ptr<field_metadata_generator_type const>, 
+                                     size_t, 
+                                     i_field_metadata_hash_type, 
+                                     i_field_metadata_equal_to_type> m_fieldGenToIndex;        
+        mutable boost::unordered_map<boost::shared_ptr<method_metadata_generator_type const>, 
                                      size_t, 
                                      i_method_metadata_hash_type, 
-                                     i_method_metadata_equal_to_type> m_methodToIndex;        
-        mutable bool m_filled;
+                                     i_method_metadata_equal_to_type> m_methodGenToIndex;
+        mutable boost::unordered_map<boost::shared_ptr<property_metadata_generator_type const>, 
+                                     size_t, 
+                                     i_property_metadata_hash_type, 
+                                     i_property_metadata_equal_to_type> m_propGenToIndex;                                     
     };
 
 
@@ -2051,74 +1397,131 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
     template<class ApiCartridgesHolder, class ApiLabel>
-    struct MethodMetadataApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodMetadataApiHolderLabel, ApiLabel>
+    struct FieldMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::FieldMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
     {
     };
 
     template<
-        class MethodMetadataApiHolder
+        class FieldMetadataGenerator7FAEDE99ApiHolder
     >    
-    class BaseMethodMetadata : 
+    class BaseFieldMetadataGenerator7FAEDE99 : 
         public SmartPtrChain<
-            BaseMethodMetadata<MethodMetadataApiHolder>,
+            BaseFieldMetadataGenerator7FAEDE99<FieldMetadataGenerator7FAEDE99ApiHolder>,
             boost::mpl::vector<
-                SmartPtrChainInfo<typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::TypeMetadataLabel>::type>
+                SmartPtrChainInfo<typename FieldMetadataGenerator7FAEDE99ApiAt<FieldMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type>
             >
         >,
-        public MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type,
+        public FieldMetadataGenerator7FAEDE99ApiAt<FieldMetadataGenerator7FAEDE99ApiHolder, Interfaces::IFieldMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
-        typedef BaseMethodMetadata<MethodMetadataApiHolder> this_type;
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::IMethodMetadataLabel>::type base_type;
+        typedef BaseFieldMetadataGenerator7FAEDE99<FieldMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename FieldMetadataGenerator7FAEDE99ApiAt<FieldMetadataGenerator7FAEDE99ApiHolder, Interfaces::IFieldMetadataLabel>::type base_type;
 
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type i_type_metadata_type;
-        typedef typename MethodMetadataApiAt<MethodMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
-        
-        BaseMethodMetadata() : 
-            m_mdt(mdTokenNil),
-            m_callingConvention(CallingConventions::CC_NO_VALUE),
-            m_retTypeInitialized(false), 
-            m_paramTypesInitialized(false)
+        typedef typename FieldMetadataGenerator7FAEDE99ApiAt<FieldMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type type_metadata_generator_type;
+
+        BaseFieldMetadataGenerator7FAEDE99() : 
+            m_attrInitialized(false),
+            m_attr(FieldAttributes::FA_FIELD_ACCESS_MASK)
         { }
 
         mdToken GetToken() const
         {
-            if (m_mdt == mdTokenNil)
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+        }
+
+        std::wstring const &GetName() const
+        {
+            if (m_name.empty())
             {
-                _ASSERTE(!m_name.empty());
-
-                SimpleBlob sig;
-
-                _ASSERTE(m_callingConvention != CallingConventions::CC_NO_VALUE);
-                SignatureUtil::PutSignatures(sig, m_callingConvention);
-
-                _ASSERTE(m_paramTypesInitialized);
-                sig.Put<COR_SIGNATURE>(m_paramTypes.size());
-
-                _ASSERTE(m_retTypeInitialized);
-                SignatureUtil::PutSignatures(sig, *m_pRetType);
-
-                typedef std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> >::const_iterator ConstIterator;
-                for (ConstIterator ci = m_paramTypes.cbegin(), ci_end = m_paramTypes.cend(); ci != ci_end; ++ci)
-                    SignatureUtil::PutSignatures(sig, **ci);
-
-                this_type *pMutableThis = const_cast<this_type *>(this);
-
-                boost::shared_ptr<assembly_metadata_type> pAsm = MapFirst<assembly_metadata_type>();
-                boost::shared_ptr<type_metadata_type> pType = MapFirst<type_metadata_type>();
-                
-                com_meta_data_import_type &comMetaImp = pAsm->GetCOMMetaDataImport();
-
-                HRESULT hr = comMetaImp.FindMethod(pType->GetToken(), m_name.c_str(), 
-                                                   sig.Ptr(), sig.Size(), &m_mdt);
-                if (FAILED(hr))
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
-            return m_mdt;
+            return m_name;
+        }
+
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> GetResolutionScope() const
+        {
+            return MapFirst<type_metadata_generator_type>();
+        }
+
+        FieldAttributes const &GetAttribute() const
+        {
+            if (!m_attrInitialized)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_attr;
+        }
+
+    private:
+        friend typename type_metadata_generator_type;
+
+        void SetName(std::wstring const &name)
+        {
+            _ASSERTE(!name.empty());
+            _ASSERTE(m_name.empty());
+            m_name = name;
+        }
+
+        void SetFieldType(boost::shared_ptr<typename base_type::i_type_metadata_type const> const &pFieldType)
+        {
+            _ASSERTE(!m_pFieldType);
+            m_pFieldType = pFieldType;
+        }
+
+        void SetAttribute(FieldAttributes const &attr)
+        {
+            _ASSERTE(!m_attrInitialized);
+            m_attr = attr;
+            m_attrInitialized = true;
+        }
+
+        std::wstring m_name;
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> m_pFieldType;
+        bool m_attrInitialized;
+        FieldAttributes m_attr;
+    };
+
+
+
+
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct MethodMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::MethodMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
+    {
+    };
+
+    template<
+        class MethodMetadataGenerator7FAEDE99ApiHolder
+    >    
+    class BaseMethodMetadataGenerator7FAEDE99 : 
+        public SmartPtrChain<
+            BaseMethodMetadataGenerator7FAEDE99<MethodMetadataGenerator7FAEDE99ApiHolder>,
+            boost::mpl::vector<
+                SmartPtrChainInfo<typename MethodMetadataGenerator7FAEDE99ApiAt<MethodMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type>
+            >
+        >,
+        public MethodMetadataGenerator7FAEDE99ApiAt<MethodMetadataGenerator7FAEDE99ApiHolder, Interfaces::IMethodMetadataLabel>::type,
+        public SimpleDisposable
+    {
+    public:
+        typedef BaseMethodMetadataGenerator7FAEDE99<MethodMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename MethodMetadataGenerator7FAEDE99ApiAt<MethodMetadataGenerator7FAEDE99ApiHolder, Interfaces::IMethodMetadataLabel>::type base_type;
+
+        typedef typename MethodMetadataGenerator7FAEDE99ApiAt<MethodMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type type_metadata_generator_type;
+
+        BaseMethodMetadataGenerator7FAEDE99() : 
+            m_callingConvention(CallingConventions::CC_NO_VALUE), 
+            m_paramTypesInitialized(false),
+            m_attrInitialized(false),
+            m_attr(MethodAttributes::MA_MEMBER_ACCESS_MASK)
+        { }
+
+        mdToken GetToken() const
+        {
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
         }
 
         std::wstring const &GetName() const
@@ -2138,10 +1541,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
             return m_callingConvention;
         }
-        
+
         boost::shared_ptr<typename base_type::i_type_metadata_type const> GetReturnType() const
         {
-            if (!m_retTypeInitialized)
+            if (!m_pRetType)
             {
                 BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
             }
@@ -2159,11 +1562,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         boost::shared_ptr<typename base_type::i_type_metadata_type const> GetResolutionScope() const
         {
-            return MapFirst<type_metadata_type>();
+            return MapFirst<type_metadata_generator_type>();
+        }
+
+        MethodAttributes const &GetAttribute() const
+        {
+            if (!m_attrInitialized)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_attr;
         }
 
     private:
-        friend typename type_metadata_type;
+        friend typename type_metadata_generator_type;
 
         void SetName(std::wstring const &name)
         {
@@ -2179,265 +1591,273 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_callingConvention = callingConvention;
         }
 
-        void SetReturnType(boost::shared_ptr<i_type_metadata_type const> const &pRetType)
+        void SetReturnType(boost::shared_ptr<typename base_type::i_type_metadata_type const> const &pRetType)
         {
-            _ASSERTE(!m_retTypeInitialized);
+            _ASSERTE(!m_pRetType);
             m_pRetType = pRetType;
-            m_retTypeInitialized = true;
         }
 
-        void SetParameterTypes(std::vector<boost::shared_ptr<i_type_metadata_type const> > const &paramTypes)
+        void SetParameterTypes(std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> > const &paramTypes)
         {
             _ASSERTE(!m_paramTypesInitialized);
             m_paramTypes = paramTypes;
             m_paramTypesInitialized = true;
         }
 
-        mutable mdToken m_mdt;
+        void SetAttribute(MethodAttributes const &attr)
+        {
+            _ASSERTE(!m_attrInitialized);
+            m_attr = attr;
+            m_attrInitialized = true;
+        }
+
         std::wstring m_name;
         CallingConventions m_callingConvention;
-        bool m_retTypeInitialized; 
-        boost::shared_ptr<i_type_metadata_type const> m_pRetType;
-        bool m_paramTypesInitialized; 
-        std::vector<boost::shared_ptr<i_type_metadata_type const> > m_paramTypes;
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> m_pRetType;
+        bool m_paramTypesInitialized;
+        std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> > m_paramTypes;
+        bool m_attrInitialized;
+        MethodAttributes m_attr;
+    };
+
+    template<class ApiCartridgesHolder, class ApiLabel>
+    struct PropertyMetadataGenerator7FAEDE99ApiAt : 
+        Traits::ApiAt<ApiCartridgesHolder, Interfaces::PropertyMetadataGenerator7FAEDE99ApiHolderLabel, ApiLabel>
+    {
+    };
+
+    template<
+        class PropertyMetadataGenerator7FAEDE99ApiHolder
+    >    
+    class BasePropertyMetadataGenerator7FAEDE99 : 
+        public SmartPtrChain<
+            BasePropertyMetadataGenerator7FAEDE99<PropertyMetadataGenerator7FAEDE99ApiHolder>,
+            boost::mpl::vector<
+                SmartPtrChainInfo<typename PropertyMetadataGenerator7FAEDE99ApiAt<PropertyMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type>
+            >
+        >,
+        public PropertyMetadataGenerator7FAEDE99ApiAt<PropertyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IPropertyMetadataLabel>::type,
+        public SimpleDisposable
+    {
+    public:
+        typedef BasePropertyMetadataGenerator7FAEDE99<PropertyMetadataGenerator7FAEDE99ApiHolder> this_type;
+        typedef typename PropertyMetadataGenerator7FAEDE99ApiAt<PropertyMetadataGenerator7FAEDE99ApiHolder, Interfaces::IPropertyMetadataLabel>::type base_type;
+
+        typedef typename PropertyMetadataGenerator7FAEDE99ApiAt<PropertyMetadataGenerator7FAEDE99ApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type type_metadata_generator_type;
+        typedef typename PropertyMetadataGenerator7FAEDE99ApiAt<PropertyMetadataGenerator7FAEDE99ApiHolder, Interfaces::MethodMetadataGenerator7FAEDE99Label>::type method_metadata_generator_type;
+
+        BasePropertyMetadataGenerator7FAEDE99() : 
+            m_paramTypesInitialized(false),
+            m_attrInitialized(false),
+            m_attr(PropertyAttributes::PA_NONE)
+        { }
+
+        mdToken GetToken() const
+        {
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+        }
+
+        std::wstring const &GetName() const
+        {
+            if (m_name.empty())
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_name;
+        }
+
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> GetResolutionScope() const
+        {
+            return MapFirst<type_metadata_generator_type>();
+        }
+
+        boost::shared_ptr<method_metadata_generator_type const> GetGetMethod() const
+        {
+            return m_pGetMethod;
+        }
+
+        boost::shared_ptr<method_metadata_generator_type const> GetSetMethod() const
+        {
+            return m_pSetMethod;
+        }
+
+        void SetGetMethod(boost::shared_ptr<method_metadata_generator_type const> const &pGetMethod)
+        {
+            m_pGetMethod = pGetMethod;
+        }
+
+        void SetSetMethod(boost::shared_ptr<method_metadata_generator_type const> const &pSetMethod)
+        {
+            m_pSetMethod = pSetMethod;
+        }
+
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> GetPropertyType() const
+        {
+            if (!m_pPropType)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_pPropType;
+        }
+
+        std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> > const &GetParameterTypes() const
+        {
+            if (!m_paramTypesInitialized)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_paramTypes;
+        }
+
+        PropertyAttributes const &GetAttribute() const
+        {
+            if (!m_attrInitialized)
+            {
+                BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            }
+            return m_attr;
+        }
+
+    private:
+        friend typename type_metadata_generator_type;
+        
+        void SetName(std::wstring const &name)
+        {
+            _ASSERTE(!name.empty());
+            _ASSERTE(m_name.empty());
+            m_name = name;
+        }
+
+        void SetPropertyType(boost::shared_ptr<typename base_type::i_type_metadata_type const> const &pPropType)
+        {
+            _ASSERTE(!m_pPropType);
+            m_pPropType = pPropType;
+        }
+
+        void SetParameterTypes(std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> > const &paramTypes)
+        {
+            _ASSERTE(!m_paramTypesInitialized);
+            m_paramTypes = paramTypes;
+            m_paramTypesInitialized = true;
+        }
+
+        void SetAttribute(PropertyAttributes const &attr)
+        {
+            _ASSERTE(!m_attrInitialized);
+            m_attr = attr;
+            m_attrInitialized = true;
+        }
+
+        std::wstring m_name;
+        boost::shared_ptr<typename base_type::i_type_metadata_type const> m_pPropType;
+        bool m_paramTypesInitialized;
+        std::vector<boost::shared_ptr<typename base_type::i_type_metadata_type const> > m_paramTypes;
+        bool m_attrInitialized;
+        PropertyAttributes m_attr;
+        boost::shared_ptr<method_metadata_generator_type const> m_pGetMethod;
+        boost::shared_ptr<method_metadata_generator_type const> m_pSetMethod;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
-
-        struct DefaultFusionInfoApiHolderImpl
-        {
-            typedef map<
-                pair<RuntimeHostLabel, RuntimeHost>,
-                pair<AssemblyInfoLabel, AssemblyInfo>,
-                pair<IAssemblyCache, IAssemblyCache>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultFusionInfoApiHolder : 
-        Detail::DefaultFusionInfoApiHolderImpl
-    {
-    };
-
-
-
-
-
-    namespace Detail {
-        
-        using namespace boost::mpl;
-        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
-
-        struct DefaultAssemblyInfoApiHolderImpl
-        {
-            typedef map<
-                pair<FusionInfoLabel, FusionInfo>
-            > api_cartridges;
-        };
-
-    }   // namespace Detail {
-
-    struct DefaultAssemblyInfoApiHolder : 
-        Detail::DefaultAssemblyInfoApiHolderImpl
-    {
-    };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct FusionInfoApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::FusionInfoApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class FusionInfoApiHolder
-    >    
-    class BaseFusionInfo : 
-        public SmartPtrChain<
-            BaseFusionInfo<FusionInfoApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type>
-            >
-        >,
-        SmartHeapProvider<
-            boost::mpl::vector<
-                typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type
-            >
-        >,
-        public SimpleDisposable
-    {
-    public:
-        typedef BaseFusionInfo<FusionInfoApiHolder> this_type;
-        
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type assembly_info_type;
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, IAssemblyCache>::type com_assembly_cache_type;
-
-        typedef typename provider_of<assembly_info_type>::type assembly_info_provider_type;
-
-        BaseFusionInfo()
-        { }
-
-        boost::shared_ptr<assembly_info_type> QueryAssemblyInfo(
-                  AssemblyQueryTypes const &type, std::wstring const &assemblyName) const
-        {
-            using namespace boost::filesystem;
-
-            this_type *pMutableThis = const_cast<this_type *>(this);
-
-            WCHAR buffer[MAX_PATH] = { 0 };
-            ASSEMBLY_INFO asmInfo;
-            ::ZeroMemory(&asmInfo, sizeof(ASSEMBLY_INFO));
-            asmInfo.cbAssemblyInfo = sizeof(ASSEMBLY_INFO);
-            asmInfo.pszCurrentAssemblyPathBuf = buffer;
-            asmInfo.cchBuf = MAX_PATH;
-            HRESULT hr = pMutableThis->GetCOMAssemblyCache().QueryAssemblyInfo(type.Value(), assemblyName.c_str(), &asmInfo);
-            if (FAILED(hr)) 
-                BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-
-            ULONGLONG assemblySizeInKB = 0;
-            ::memcpy_s(&assemblySizeInKB, sizeof(ULONGLONG), 
-                       &asmInfo.uliAssemblySizeInKB, sizeof(ULARGE_INTEGER));
-
-            assembly_info_provider_type &provider = ProviderOf<assembly_info_type>();
-            boost::shared_ptr<assembly_info_type> pAsmInfo = provider.NewObject();
-            pAsmInfo->SetAssemblySizeInKB(assemblySizeInKB);
-            pAsmInfo->SetAssemblyPath(asmInfo.pszCurrentAssemblyPathBuf);
-            return pAsmInfo;
-        }
-
-    private:
-        friend typename runtime_host_type;
-
-        void Init(boost::weak_ptr<runtime_host_type> const &pRuntimeAsScope) const
-        {
-            _ASSERTE(m_pRuntimeAsScope.use_count() == 0);
-            m_pRuntimeAsScope = pRuntimeAsScope;
-        }
-
-        void SetThis(boost::weak_ptr<this_type> const &pThis) const
-        {
-            _ASSERTE(m_pThis.use_count() == 0);
-            m_pThis = pThis;
-        }
-
-        void SetVersion(std::wstring const &version)
-        {
-            _ASSERTE(!version.empty());
-            _ASSERTE(m_version.empty());
-            m_version = version;
-        }
-
-        com_assembly_cache_type &GetCOMAssemblyCache()
-        {
-            using namespace boost::filesystem;
-            
-            if (m_pComAsmCache.p == NULL)
-            {
-                boost::shared_ptr<runtime_host_type> pRuntimeHost = MapFirst<runtime_host_type>();
-
-                path const &corSysDirPath = pRuntimeHost->GetCORSystemDirectoryPath();
-                path fusionPath = corSysDirPath;
-                fusionPath /= L"fusion.dll";
-
-                HMODULE hmodCorEE = ::LoadLibraryW(fusionPath.c_str());
-                if (hmodCorEE == NULL)
-                    BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
-                BOOST_SCOPE_EXIT((hmodCorEE))
-                {
-                    ::FreeLibrary(hmodCorEE);
-                }
-                BOOST_SCOPE_EXIT_END
-
-                typedef HRESULT (__stdcall *CreateAsmCachePtr)(IAssemblyCache **ppAsmCache, DWORD dwReserved);
-
-                CreateAsmCachePtr pfnCreateAsmCache = NULL;
-                pfnCreateAsmCache = reinterpret_cast<CreateAsmCachePtr>(
-                                                ::GetProcAddress(hmodCorEE, "CreateAssemblyCache"));
-                if (!pfnCreateAsmCache)
-                    BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
-        
-                HRESULT hr = pfnCreateAsmCache(&m_pComAsmCache, 0);
-                if (FAILED(hr)) 
-                    BOOST_THROW_EXCEPTION(CppAnonymCOMException(hr));
-            }
-            return *m_pComAsmCache;
-        }
-        
-        mutable boost::weak_ptr<runtime_host_type> m_pRuntimeAsScope;
-        mutable boost::weak_ptr<this_type> m_pThis;
-        std::wstring m_version;
-        mutable ATL::CComPtr<com_assembly_cache_type> m_pComAsmCache;
-    };
-
-    
-    
-    
-    
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct AssemblyInfoApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, Interfaces::AssemblyInfoApiHolderLabel, ApiLabel>
-    {
-    };
-
-    template<
-        class AssemblyInfoApiHolder
-    >    
-    class BaseAssemblyInfo
-    {
-    public:
-        typedef BaseAssemblyInfo<AssemblyInfoApiHolder> this_type;
-
-        typedef typename AssemblyInfoApiAt<AssemblyInfoApiHolder, Interfaces::FusionInfoLabel>::type fusion_info_type;
-
-        BaseAssemblyInfo() :
-            m_assemblySizeInKB(0)
-        { }
-        
-        ULONGLONG GetAssemblySizeInKB() const 
-        { 
-            return m_assemblySizeInKB; 
-        }
-        
-        boost::filesystem::path const &GetAssemblyPath() const 
-        { 
-            return m_assemblyPath; 
-        }
-
-    private:
-        friend typename fusion_info_type;
-
-        void SetAssemblySizeInKB(ULONGLONG assemblySizeInKB)
-        { 
-            m_assemblySizeInKB = assemblySizeInKB; 
-        }
-        
-        void SetAssemblyPath(boost::filesystem::path const &assemblyPath)
-        { 
-            m_assemblyPath = assemblyPath; 
-        }
-
-        ULONGLONG m_assemblySizeInKB;
-        boost::filesystem::path m_assemblyPath;
-    };
-
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
+
+#ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTFUSIONINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultFusionInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFO_HPP
+#include <Urasandesu/CppAnonym/Fusion/BaseFusionInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_APIHOLDERS_DEFAULTASSEMBLYINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Fusion/ApiHolders/DefaultAssemblyInfoApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_BASEASSEMBLYINFO_HPP
+#include <Urasandesu/CppAnonym/Fusion/BaseAssemblyInfo.hpp>
+#endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test2.*
 namespace {
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, StrongNaming_Test_01)
+    {
+        namespace mpl = boost::mpl;
+        using boost::shared_ptr;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace Urasandesu::CppAnonym::StrongNaming;
+
+        shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
+        shared_ptr<RuntimeHost const> pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
+
+        shared_ptr<StrongNameInfo const> pSnInfo = pRuntimeHost->Map<StrongNameInfo>();
+        
+        shared_ptr<StrongNameKey const> pSnKey;
+        pSnKey = pSnInfo->GetStrongNameKey(L"..\\Test.prig\\mscorlib.Prig.snk");
+        std::vector<BYTE> const &publicKey = pSnKey->GetPublicKey();
+
+        BYTE const PUB_KEY_BLOB[] = {
+            0x00, 0x24, 0x00, 0x00, 0x04, 0x80, 0x00, 0x00, 
+            0x94, 0x00, 0x00, 0x00, 0x06, 0x02, 0x00, 0x00, 
+            0x00, 0x24, 0x00, 0x00, 0x52, 0x53, 0x41, 0x31, 
+            0x00, 0x04, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 
+            0x19, 0xc4, 0x67, 0xdf, 0x70, 0xd1, 0xae, 0xf6, 
+            0x96, 0x95, 0xf6, 0x8e, 0x65, 0xaf, 0x52, 0x46, 
+            0x0b, 0x8e, 0x00, 0x94, 0x1f, 0x4a, 0x17, 0x5f, 
+            0x4d, 0xf8, 0xd3, 0x70, 0x9f, 0x1a, 0x32, 0xd9, 
+            0xf3, 0xff, 0xf6, 0xfd, 0x68, 0xb8, 0x79, 0xdc, 
+            0x3d, 0xad, 0x60, 0x63, 0x2a, 0x9b, 0x6d, 0x9a, 
+            0x5f, 0xc1, 0x9e, 0xf8, 0xb9, 0xd9, 0xae, 0x7a, 
+            0xe9, 0xfe, 0x2a, 0xf2, 0x5e, 0x29, 0x02, 0x1b, 
+            0xa2, 0x66, 0xad, 0x0b, 0x83, 0x7f, 0xc8, 0x22, 
+            0x2f, 0xf5, 0x51, 0x55, 0x67, 0x68, 0xa1, 0x1b, 
+            0xae, 0x1d, 0xe5, 0xf7, 0xca, 0xad, 0xf8, 0xc7, 
+            0x78, 0x19, 0xfc, 0xfb, 0x8b, 0x3b, 0x73, 0x0b, 
+            0x38, 0xe1, 0xeb, 0xcd, 0x68, 0x3d, 0x12, 0xdd, 
+            0x87, 0x4f, 0x42, 0x8f, 0xbb, 0x0d, 0xb5, 0xd6, 
+            0x92, 0xda, 0xfa, 0x66, 0xa3, 0xe3, 0x6a, 0x8b, 
+            0x28, 0xb2, 0x36, 0xb8, 0xde, 0x56, 0x07, 0xda
+        };
+        DWORD const PUB_KEY_BLOB_SIZE = sizeof(PUB_KEY_BLOB) / sizeof(BYTE);
+
+        ASSERT_EQ(148, publicKey.size());
+        for (UINT i = 0; i < publicKey.size(); ++i)
+            ASSERT_EQ(PUB_KEY_BLOB[PUB_KEY_BLOB_SIZE - publicKey.size() + i], publicKey[i]);
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, StrongNaming_Test_02)
+    {
+        namespace mpl = boost::mpl;
+        using boost::shared_ptr;
+        using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace Urasandesu::CppAnonym::StrongNaming;
+
+        shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
+        shared_ptr<RuntimeHost const> pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
+
+        shared_ptr<StrongNameInfo const> pSnInfo = pRuntimeHost->Map<StrongNameInfo>();
+        
+        shared_ptr<StrongNameKey const> pSnKey;
+        pSnKey = pSnInfo->GetStrongNameKey(L"..\\Test.prig\\mscorlib.Prig.snk");
+        std::vector<BYTE> const &publicKeyToken = pSnKey->GetPublicKeyToken();
+
+        BYTE const PUB_KEY_TOKEN[] = { 0xf3, 0xc5, 0xad, 0xb8, 0x52, 0x21, 0xac, 0x4f };
+
+        ASSERT_EQ(8, publicKeyToken.size());
+        for (UINT i = 0; i < publicKeyToken.size(); ++i)
+            ASSERT_EQ(PUB_KEY_TOKEN[i], publicKeyToken[i]);
+    }
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test2, Test_01)
     {
@@ -2448,6 +1868,8 @@ namespace {
         using namespace Urasandesu::CppAnonym::Metadata;
         using namespace Urasandesu::CppAnonym::StrongNaming;
 
+        //::_CrtSetBreakAlloc(5787);
+
         //typedef HostInfo HostInfo;
         //typedef RuntimeHost RuntimeHost;
         //typedef MetadataInfo MetadataInfo;
@@ -2457,6 +1879,12 @@ namespace {
         //typedef ITypeMetadata ITypeMetadata;
         //typedef TypeMetadata TypeMetadata;
         //typedef MethodMetadata MethodMetadata;
+        typedef AssemblyMetadataGenerator7FAEDE99 AssemblyMetadataGenerator;
+        typedef ModuleMetadataGenerator7FAEDE99 ModuleMetadataGenerator;
+        typedef TypeMetadataGenerator7FAEDE99 TypeMetadataGenerator;
+        typedef FieldMetadataGenerator7FAEDE99 FieldMetadataGenerator;
+        typedef MethodMetadataGenerator7FAEDE99 MethodMetadataGenerator;
+        typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
         shared_ptr<HostInfo const> pHostInfo = HostInfo::NewHost();
 
@@ -2558,6 +1986,7 @@ namespace {
         }
         ASSERT_EQ(0x060002D3, pget_UtcNow->GetToken());
 
+#if 0
         shared_ptr<MethodMetadata const> pToLocalTime;
         {
             std::vector<shared_ptr<ITypeMetadata const> > params;
@@ -2568,7 +1997,100 @@ namespace {
 
 
 
-#if 0
+        shared_ptr<StrongNameInfo const> pSnInfo = pRuntimeHost->Map<StrongNameInfo>();
+
+        shared_ptr<AssemblyMetadataGenerator> pMSCorLibPrigGen;
+        pMSCorLibPrigGen = pMetaDisp->DefineAssembly(L"mscorlib.Prig");
+        shared_ptr<StrongNameKey const> pSnKey;
+        pSnKey = pSnInfo->GetStrongNameKey(L"..\\Test.prig\\mscorlib.Prig.snk");
+        pMSCorLibPrigGen->SetStrongNameKey(pSnKey);
+        ASSERT_STREQ(L"mscorlib.Prig", pMSCorLibPrigGen->GetName().c_str());
+        ASSERT_TRUE(pMSCorLibPrigGen->GetStrongNameKey());
+
+        shared_ptr<ModuleMetadataGenerator> pMSCorLibPrigModGen;
+        pMSCorLibPrigModGen = pMSCorLibPrigGen->DefineModule(L"mscorlib.Prig.dll");
+        ASSERT_STREQ(L"mscorlib.Prig.dll", pMSCorLibPrigModGen->GetName().c_str());
+
+        shared_ptr<TypeMetadataGenerator> pPDateTimeGen;
+        pPDateTimeGen = pMSCorLibPrigModGen->DefineType(L"System.Prig.PDateTime",
+                                                        TypeAttributes::TA_PUBLIC | 
+                                                        TypeAttributes::TA_ABSTRACT | 
+                                                        TypeAttributes::TA_ANSI_CLASS | 
+                                                        TypeAttributes::TA_SEALED | 
+                                                        TypeAttributes::TA_BEFORE_FIELD_INIT);
+        ASSERT_STREQ(L"System.Prig.PDateTime", pPDateTimeGen->GetName().c_str());
+        ASSERT_TRUE((pPDateTimeGen->GetAttribute().Value() & TypeAttributes::TA_ANSI_CLASS) == TypeAttributes::TA_ANSI_CLASS);
+        ASSERT_FALSE((pPDateTimeGen->GetAttribute().Value() & TypeAttributes::TA_NESTED_PUBLIC) == TypeAttributes::TA_NESTED_PUBLIC);
+
+        shared_ptr<TypeMetadataGenerator> pNowGetGen;
+        pNowGetGen = pPDateTimeGen->DefineNestedType(L"NowGet", 
+                                                     TypeAttributes::TA_ABSTRACT | 
+                                                     TypeAttributes::TA_ANSI_CLASS | 
+                                                     TypeAttributes::TA_SEALED | 
+                                                     TypeAttributes::TA_NESTED_PUBLIC | 
+                                                     TypeAttributes::TA_BEFORE_FIELD_INIT);
+        ASSERT_STREQ(L"NowGet", pNowGetGen->GetName().c_str());
+        ASSERT_TRUE((pNowGetGen->GetAttribute().Value() & TypeAttributes::TA_ANSI_CLASS) == TypeAttributes::TA_ANSI_CLASS);
+        ASSERT_TRUE((pNowGetGen->GetAttribute().Value() & TypeAttributes::TA_NESTED_PUBLIC) == TypeAttributes::TA_NESTED_PUBLIC);
+        
+        shared_ptr<FieldMetadataGenerator> pm_bodyGen;
+        pm_bodyGen = pPDateTimeGen->DefineField(L"m_body", 
+                                                pFunc1DateTime, 
+                                                FieldAttributes::FA_PRIVATE | 
+                                                FieldAttributes::FA_STATIC);
+        ASSERT_STREQ(L"m_body", pm_bodyGen->GetName().c_str());
+        ASSERT_TRUE((pm_bodyGen->GetAttribute().Value() & FieldAttributes::FA_PRIVATE) == FieldAttributes::FA_PRIVATE);
+        ASSERT_FALSE((pm_bodyGen->GetAttribute().Value() & FieldAttributes::FA_PUBLIC) == FieldAttributes::FA_PUBLIC);
+
+        shared_ptr<MethodMetadataGenerator> pget_BodyGen;
+        pget_BodyGen = pPDateTimeGen->DefineMethod(L"get_Body", 
+                                                   CallingConventions::CC_STANDARD, 
+                                                   pFunc1DateTime, 
+                                                   std::vector<shared_ptr<ITypeMetadata const> >(), 
+                                                   MethodAttributes::MA_PUBLIC | 
+                                                   MethodAttributes::MA_HIDE_BY_SIG | 
+                                                   MethodAttributes::MA_SPECIAL_NAME | 
+                                                   MethodAttributes::MA_STATIC);
+        ASSERT_STREQ(L"get_Body", pget_BodyGen->GetName().c_str());
+        ASSERT_EQ(CallingConventions::CC_STANDARD, pget_BodyGen->GetCallingConvention().Value());
+        ASSERT_TRUE(pget_BodyGen->GetReturnType() == pFunc1DateTime);
+        ASSERT_EQ(0, pget_BodyGen->GetParameterTypes().size());
+        ASSERT_TRUE((pget_BodyGen->GetAttribute().Value() & MethodAttributes::MA_PUBLIC) == MethodAttributes::MA_PUBLIC);
+        ASSERT_FALSE((pget_BodyGen->GetAttribute().Value() & MethodAttributes::MA_PRIVATE) == MethodAttributes::MA_PRIVATE);
+
+        std::vector<shared_ptr<ITypeMetadata const> > set_BodyParams;
+        set_BodyParams.push_back(pFunc1DateTime);
+        shared_ptr<MethodMetadataGenerator> pset_BodyGen;
+        pset_BodyGen = pPDateTimeGen->DefineMethod(L"set_Body",
+                                                   CallingConventions::CC_STANDARD, 
+                                                   pVoid, 
+                                                   set_BodyParams, 
+                                                   MethodAttributes::MA_PUBLIC | 
+                                                   MethodAttributes::MA_HIDE_BY_SIG | 
+                                                   MethodAttributes::MA_SPECIAL_NAME | 
+                                                   MethodAttributes::MA_STATIC);
+        ASSERT_STREQ(L"set_Body", pset_BodyGen->GetName().c_str());
+        ASSERT_EQ(CallingConventions::CC_STANDARD, pset_BodyGen->GetCallingConvention().Value());
+        ASSERT_TRUE(pset_BodyGen->GetReturnType() == pVoid);
+        ASSERT_EQ(1, pset_BodyGen->GetParameterTypes().size());
+        ASSERT_TRUE((pset_BodyGen->GetAttribute().Value() & MethodAttributes::MA_PUBLIC) == MethodAttributes::MA_PUBLIC);
+        ASSERT_FALSE((pset_BodyGen->GetAttribute().Value() & MethodAttributes::MA_PRIVATE) == MethodAttributes::MA_PRIVATE);
+
+        shared_ptr<PropertyMetadataGenerator> pBodyGen;
+        pBodyGen = pPDateTimeGen->DefineProperty(L"Body", 
+                                                 pFunc1DateTime, 
+                                                 std::vector<shared_ptr<ITypeMetadata const> >(), 
+                                                 PropertyAttributes::PA_NONE);
+        pBodyGen->SetGetMethod(pget_BodyGen);
+        pBodyGen->SetSetMethod(pset_BodyGen);
+        ASSERT_STREQ(L"Body", pBodyGen->GetName().c_str());
+        ASSERT_TRUE(pBodyGen->GetPropertyType() == pFunc1DateTime);
+        ASSERT_EQ(0, pBodyGen->GetParameterTypes().size());
+        ASSERT_TRUE((pBodyGen->GetAttribute().Value() & PropertyAttributes::PA_NONE) == PropertyAttributes::PA_NONE);
+        ASSERT_FALSE((pBodyGen->GetAttribute().Value() & PropertyAttributes::PA_SPECIAL_NAME) == PropertyAttributes::PA_SPECIAL_NAME);
+        ASSERT_TRUE(pBodyGen->GetGetMethod() == pget_BodyGen);
+        ASSERT_TRUE(pBodyGen->GetSetMethod() == pset_BodyGen);
+
 #endif
     }
 

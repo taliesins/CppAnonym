@@ -2,38 +2,6 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULEMETADATAAPIHOLDER_H
 #define URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULEMETADATAAPIHOLDER_H
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadataFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadataFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPENAMEMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadataFwd.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPEMETADATAFWD_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadataFwd.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULEMETADATAAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultModuleMetadataApiHolderFwd.h>
 #endif
@@ -48,19 +16,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         struct DefaultModuleMetadataApiHolderImpl
         {
             typedef map<
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<ModuleNameMetadataLabel, ModuleNameMetadata>,
                 pair<IModuleMetadataLabel, IModuleMetadata>,
-                pair<TypeNameMetadataLabel, TypeNameMetadata>,
-                pair<ITypeNameMetadataHashLabel, ITypeNameMetadataHash>,
-                pair<ITypeNameMetadataEqualToLabel, ITypeNameMetadataEqualTo>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<IMetaDataImport2, IMetaDataImport2>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<TypeMetadataLabel, TypeMetadata>,
-                pair<IMetaDataImport2, IMetaDataImport2>
+                pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
+                pair<ITypeMetadataEqualToLabel, ITypeMetadataEqualTo>,
+                pair<MetadataDispenserLabel, MetadataDispenser>
             > api_cartridges;
         };
 
     }   // namespace Detail {
-
+    
     struct DefaultModuleMetadataApiHolder : 
         Detail::DefaultModuleMetadataApiHolderImpl
     {

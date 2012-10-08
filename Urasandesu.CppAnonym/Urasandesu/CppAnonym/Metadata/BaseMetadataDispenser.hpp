@@ -2,56 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSER_HPP
 #define URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSER_HPP
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
-#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
-#include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/HeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
-#include <Urasandesu/CppAnonym/ObjectTag.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabel.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYMETADATAAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyMetadataApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
-#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATADISPENSERFWD_H
@@ -69,201 +21,151 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     template<
         class MetadataDispenserApiHolder
     >    
-    class BaseMetadataDispenser :
-        public SimpleHeapProvider<
+    class BaseMetadataDispenser : 
+        public SmartPtrChain<
+            BaseMetadataDispenser<MetadataDispenserApiHolder>,
             boost::mpl::vector<
-                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type, QuickHeap>,
-                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type, QuickHeap>,
-                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type, QuickHeap>,
-                ObjectTag<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type, QuickHeap>
+                SmartPtrChainInfo<typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type>
             >
-        >
+        >,
+        public DisposableHeapProvider<
+            boost::mpl::vector<
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::FieldMetadataGenerator7FAEDE99Label>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataGenerator7FAEDE99Label>::type,
+                typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::PropertyMetadataGenerator7FAEDE99Label>::type
+            >
+        >,
+        public SimpleDisposable
     {
     public:
         typedef BaseMetadataDispenser<MetadataDispenserApiHolder> this_type;
 
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MetadataInfoLabel>::type metadata_info_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataLabel>::type assembly_name_metadata_type;
         typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;        
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyNameMetadataGeneratorLabel>::type assembly_name_metadata_generator_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyNameMetadataHashLabel>::type i_assembly_name_metadata_hash_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyNameMetadataEqualToLabel>::type i_assembly_name_metadata_equal_to_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, StrongNaming::Interfaces::StrongNameKeyLabel>::type strong_name_key_type;
-        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGeneratorLabel>::type assembly_metadata_generator_type;        
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataHashLabel>::type i_assembly_metadata_hash_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::IAssemblyMetadataEqualToLabel>::type i_assembly_metadata_equal_to_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataLabel>::type type_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::AssemblyMetadataGenerator7FAEDE99Label>::type assembly_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::ModuleMetadataGenerator7FAEDE99Label>::type module_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::TypeMetadataGenerator7FAEDE99Label>::type type_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::FieldMetadataGenerator7FAEDE99Label>::type field_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::MethodMetadataGenerator7FAEDE99Label>::type method_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, Interfaces::PropertyMetadataGenerator7FAEDE99Label>::type property_metadata_generator_type;
+        typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, IMetaDataDispenserEx>::type com_meta_data_dispenser_type;
 
-        typedef ObjectTag<assembly_metadata_type, QuickHeap> assembly_metadata_obj_tag_type;
-        typedef typename type_decided_by<assembly_metadata_obj_tag_type>::type assembly_metadata_heap_type;
-        typedef ObjectTag<assembly_name_metadata_type, QuickHeap> assembly_name_metadata_obj_tag_type;
-        typedef typename type_decided_by<assembly_name_metadata_obj_tag_type>::type assembly_name_metadata_heap_type;
-        typedef ObjectTag<assembly_name_metadata_generator_type, QuickHeap> assembly_name_metadata_generator_obj_tag_type;
-        typedef typename type_decided_by<assembly_name_metadata_generator_obj_tag_type>::type assembly_name_metadata_generator_heap_type;
-        typedef ObjectTag<assembly_metadata_generator_type, QuickHeap> assembly_metadata_generator_obj_tag_type;
-        typedef typename type_decided_by<assembly_metadata_generator_obj_tag_type>::type assembly_metadata_generator_heap_type;
+        typedef typename provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
+        typedef typename provider_of<module_metadata_type>::type module_metadata_provider_type;
+        typedef typename provider_of<type_metadata_type>::type type_metadata_provider_type;
+        typedef typename provider_of<method_metadata_type>::type method_metadata_provider_type;
+        typedef typename provider_of<assembly_metadata_generator_type>::type assembly_metadata_generator_provider_type;
+        typedef typename provider_of<module_metadata_generator_type>::type module_metadata_generator_provider_type;
+        typedef typename provider_of<type_metadata_generator_type>::type type_metadata_generator_provider_type;
+        typedef typename provider_of<field_metadata_generator_type>::type field_metadata_generator_provider_type;
+        typedef typename provider_of<method_metadata_generator_type>::type method_metadata_generator_provider_type;
+        typedef typename provider_of<property_metadata_generator_type>::type property_metadata_generator_provider_type;
 
-        BaseMetadataDispenser() : 
-            m_pMetaInfo(NULL)
+        typedef typename chain_from<metadata_info_type>::type metadata_dispenser_chain_type; 
+
+        BaseMetadataDispenser()
         { }
 
-        void Init(metadata_info_type &metaInfo) const
+        boost::shared_ptr<assembly_metadata_type const> GetAssembly(std::wstring const &fullName) const
         {
-            _ASSERTE(m_pMetaInfo == NULL);
-            m_pMetaInfo = &metaInfo;
-        }
+            boost::shared_ptr<assembly_metadata_type> pNewAsm;
+            pNewAsm = NewAssembly(fullName);
 
-        template<class T>
-        T const &Map() const { _ASSERTE(m_pMetaInfo != NULL); return static_cast<metadata_info_type const *>(m_pMetaInfo)->Map<T>(); }
-
-        template<class T>
-        T &Map() { _ASSERTE(m_pMetaInfo != NULL); return m_pMetaInfo->Map<T>(); }
-      
-        template<>
-        this_type const &Map<this_type>() const { return *this; }
-      
-        template<>
-        this_type &Map<this_type>() { return *this; }
-
-        assembly_name_metadata_type *NewAssemblyName(std::wstring const &name) const
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-
-            assembly_name_metadata_type *pAsmNameMeta = NULL;
-            pAsmNameMeta = pMutableThis->AssemblyNameMetadataHeap().New();
-            pAsmNameMeta->Init(*pMutableThis);
-            pAsmNameMeta->SetName(name);
-            //pAsmNameMeta->SetName(name);
-            //pAsmNameMeta->SetResolutionScope(*pMutableThis);
-            return pAsmNameMeta;
-        }
-
-        assembly_metadata_type const *LoadAssembly(std::wstring const &name) const
-        {
-            if (m_asmStrNameToIndex.find(name) == m_asmStrNameToIndex.end())
+            boost::shared_ptr<assembly_metadata_type> pExistingAsm;
+            if (!TryGetAssembly(*pNewAsm, pExistingAsm))
             {
-                m_asmStrNameToIndex[name] = MAXULONG_PTR;
-            }
-
-            SIZE_T index = m_asmStrNameToIndex[name];
-            if (index == MAXULONG_PTR)
-            {
-                assembly_name_metadata_type *pAsmNameMeta = NULL;
-                pAsmNameMeta = NewAssemblyName(name);
-
-                assembly_metadata_type const &asmMeta = pAsmNameMeta->ResolveCore(); // Internally, LoadAssemblyFromFile is dispatched. 
-                m_asmStrNameToIndex[name] = AssemblyMetadataHeap().Size() - 1;
-
-                return &asmMeta;
+                assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
+                m_asmToIndex[pNewAsm] = provider.Register(pNewAsm);
+                return pNewAsm;
             }
             else
             {
-                return AssemblyMetadataHeap()[index];
+                return pExistingAsm;
             }
         }
 
-        assembly_metadata_type const *LoadAssemblyFromFile(boost::filesystem::path const &asmPath) const
+        boost::shared_ptr<assembly_metadata_generator_type> DefineAssembly(std::wstring const &fullName)
         {
-            if (m_asmPathToToIndex.find(asmPath) == m_asmPathToToIndex.end())
+            boost::shared_ptr<assembly_metadata_generator_type> pNewAsmGen;
+            pNewAsmGen = NewAssemblyGenerator(fullName);
+
+            boost::shared_ptr<assembly_metadata_generator_type> pExistingAsmGen;
+            if (!TryGetAssemblyGenerator(*pNewAsmGen, pExistingAsmGen))
             {
-                m_asmPathToToIndex[asmPath] = MAXULONG_PTR;
-            }
-
-            SIZE_T index = m_asmPathToToIndex[asmPath];
-            if (index == MAXULONG_PTR)
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-
-                assembly_metadata_type *pAsmMeta = NULL;
-                pAsmMeta = pMutableThis->AssemblyMetadataHeap().New();
-                pAsmMeta->Init(*pMutableThis);
-                pAsmMeta->SetAssemblyFilePath(asmPath);
-
-                m_asmPathToToIndex[asmPath] = pMutableThis->AssemblyMetadataHeap().Size() - 1;
-
-                return pAsmMeta;
+                assembly_metadata_generator_provider_type &provider = ProviderOf<assembly_metadata_generator_type>();
+                m_asmGenToIndex[pNewAsmGen] = provider.Register(pNewAsmGen);
+                return pNewAsmGen;
             }
             else
             {
-                return AssemblyMetadataHeap()[index];
-            }
-        }
-
-        assembly_name_metadata_generator_type *NewAssemblyNameGenerator(std::wstring const &name)
-        {
-            this_type *pMutableThis = const_cast<this_type *>(this);
-
-            assembly_name_metadata_generator_type *pAsmNameMetaGen = NULL;
-            pAsmNameMetaGen = pMutableThis->AssemblyNameMetadataGeneratorHeap().New();
-            pAsmNameMetaGen->Init(*pMutableThis);
-            pAsmNameMetaGen->SetName(name);
-            return pAsmNameMetaGen;
-        }
-
-        assembly_metadata_generator_type *DefineAssembly(assembly_name_metadata_generator_type const &asmNameGen)
-        {
-            if (m_asmNameGenToIndex.find(&asmNameGen) == m_asmNameGenToIndex.end())
-            {
-                m_asmNameGenToIndex[&asmNameGen] = MAXULONG_PTR;
-            }
-
-            SIZE_T index = m_asmNameGenToIndex[&asmNameGen];
-            if (index == MAXULONG_PTR)
-            {
-                assembly_metadata_generator_type *pAsmMetaGen = NULL;
-                pAsmMetaGen = AssemblyMetadataGeneratorHeap().New();
-                pAsmMetaGen->Init(*this);
-                pAsmMetaGen->SetAssemblyName(const_cast<assembly_name_metadata_generator_type &>(asmNameGen));
-
-                m_asmNameGenToIndex[&asmNameGen] = AssemblyMetadataGeneratorHeap().Size() - 1;
-
-                return pAsmMetaGen;
-            }
-            else
-            {
-                return AssemblyMetadataGeneratorHeap()[index];
+                return pExistingAsmGen;
             }
         }
 
     private:
+        friend typename metadata_info_type;
         friend typename assembly_metadata_type;
 
-        assembly_name_metadata_heap_type &AssemblyNameMetadataHeap()
+        boost::shared_ptr<assembly_metadata_type> NewAssembly(std::wstring const &fullName) const
         {
-            return Of<assembly_name_metadata_obj_tag_type>();
-        }
-        
-        assembly_name_metadata_heap_type const &AssemblyNameMetadataHeap() const
-        {
-            return Of<assembly_name_metadata_obj_tag_type>();
-        }
-
-        assembly_metadata_heap_type &AssemblyMetadataHeap()
-        {
-            return Of<assembly_metadata_obj_tag_type>();
-        }
-        
-        assembly_metadata_heap_type const &AssemblyMetadataHeap() const
-        {
-            return Of<assembly_metadata_obj_tag_type>();
+            assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
+            metadata_dispenser_chain_type &chain = ChainFrom<metadata_info_type>();
+            boost::shared_ptr<assembly_metadata_type> pAsm = chain.NewObject<assembly_metadata_type>(provider);
+            pAsm->SetName(fullName);
+            return pAsm;
         }
 
-        assembly_name_metadata_generator_heap_type &AssemblyNameMetadataGeneratorHeap()
+        bool TryGetAssembly(assembly_metadata_type const &keyAsm, boost::shared_ptr<assembly_metadata_type> &pExistingAsm) const
         {
-            return Of<assembly_name_metadata_generator_obj_tag_type>();
-        }
-        
-        assembly_name_metadata_generator_heap_type const &AssemblyNameMetadataGeneratorHeap() const
-        {
-            return Of<assembly_name_metadata_generator_obj_tag_type>();
+            boost::shared_ptr<assembly_metadata_type const> pKeyAsm(&keyAsm, Utilities::MakeNullDeleter(&keyAsm));
+            if (m_asmToIndex.find(pKeyAsm) == m_asmToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_asmToIndex[pKeyAsm];
+                assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
+                pExistingAsm = provider[index];
+                return true;
+            }
         }
 
-        assembly_metadata_generator_heap_type &AssemblyMetadataGeneratorHeap()
+        boost::shared_ptr<assembly_metadata_generator_type> NewAssemblyGenerator(std::wstring const &fullName) const
         {
-            return Of<assembly_metadata_generator_obj_tag_type>();
+            assembly_metadata_generator_provider_type &provider = ProviderOf<assembly_metadata_generator_type>();
+            metadata_dispenser_chain_type &chain = ChainFrom<metadata_info_type>();
+            boost::shared_ptr<assembly_metadata_generator_type> pAsmGen = chain.NewObject<assembly_metadata_generator_type>(provider);
+            pAsmGen->SetName(fullName);
+            return pAsmGen;
         }
-        
-        assembly_metadata_generator_heap_type const &AssemblyMetadataGeneratorHeap() const
+
+        bool TryGetAssemblyGenerator(assembly_metadata_generator_type const &keyAsmGen, boost::shared_ptr<assembly_metadata_generator_type> &pExistingAsmGen) const
         {
-            return Of<assembly_metadata_generator_obj_tag_type>();
+            boost::shared_ptr<assembly_metadata_generator_type const> pKeyAsmGen(&keyAsmGen, Utilities::MakeNullDeleter(&keyAsmGen));
+            if (m_asmGenToIndex.find(pKeyAsmGen) == m_asmGenToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_asmGenToIndex[pKeyAsmGen];
+                assembly_metadata_generator_provider_type &provider = ProviderOf<assembly_metadata_generator_type>();
+                pExistingAsmGen = provider[index];
+                return true;
+            }
         }
 
         com_meta_data_dispenser_type &GetCOMMetaDataDispenser()
@@ -279,16 +181,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             return *m_pComMetaDisp;
         }
 
-        mutable metadata_info_type *m_pMetaInfo;
-        typedef boost::filesystem::path path;
-        typedef Utilities::Hash<path> path_hash;
-        typedef Utilities::EqualTo<path> path_equal_to;
-        mutable boost::unordered_map<std::wstring, mdToken> m_asmStrNameToIndex;
-        mutable boost::unordered_map<path, mdToken, path_hash, path_equal_to> m_asmPathToToIndex;
-        mutable boost::unordered_map<assembly_name_metadata_generator_type const *, 
-                                     SIZE_T, 
-                                     i_assembly_name_metadata_hash_type, 
-                                     i_assembly_name_metadata_equal_to_type> m_asmNameGenToIndex;
+        mutable boost::unordered_map<boost::shared_ptr<assembly_metadata_type const>, 
+                                     size_t, 
+                                     i_assembly_metadata_hash_type, 
+                                     i_assembly_metadata_equal_to_type> m_asmToIndex;
+        mutable boost::unordered_map<boost::shared_ptr<assembly_metadata_generator_type const>, 
+                                     size_t, 
+                                     i_assembly_metadata_hash_type, 
+                                     i_assembly_metadata_equal_to_type> m_asmGenToIndex;        
         mutable ATL::CComPtr<com_meta_data_dispenser_type> m_pComMetaDisp;
     };
 

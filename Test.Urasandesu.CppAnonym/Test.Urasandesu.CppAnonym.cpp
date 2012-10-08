@@ -4043,7 +4043,6 @@ namespace {
 
 
 
-#if 0
         StrongNameInfo const &snInfo = pRuntimeHost->Map<StrongNameInfo>();
 
         AssemblyNameMetadataGenerator *pMSCorLibPrigNameGen = NULL;
@@ -4147,6 +4146,7 @@ namespace {
         ASSERT_TRUE(pBodyNameGen->GetGetMethod() == pget_BodyNameGen);
         ASSERT_TRUE(pBodyNameGen->GetSetMethod() == pset_BodyNameGen);
 
+#if 0
         MethodNameMetadataGenerator *pNowGetcctorNameGen = NULL;
         pNowGetcctorNameGen = pNowGetNameGen->NewMethodNameGenerator(L".cctor", 
                                                                      CallingConventions::CC_STANDARD, 

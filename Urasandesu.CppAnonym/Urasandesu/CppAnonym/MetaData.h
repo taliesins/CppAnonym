@@ -10,8 +10,16 @@
 #include <Urasandesu/CppAnonym/Metadata/IMetaDataImport2Impl.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_METADATASPECIALVALUES_H
+#include <Urasandesu/CppAnonym/Metadata/MetadataSpecialValues.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_OPCODETYPES_H
 #include <Urasandesu/CppAnonym/Metadata/OpCodeTypes.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_SIGNATUREUTIL_HPP
+#include <Urasandesu/CppAnonym/Metadata/SignatureUtil.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_STACKBEHAVIOURTYPES_H
@@ -134,22 +142,6 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyMetadata.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYNAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyNameMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATA_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseAssemblyNameMetadata.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ASSEMBLYNAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/AssemblyNameMetadataGeneratorApiHolderLabel.hpp>
 #endif
@@ -164,22 +156,6 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYNAMEMETADATAGENERATOR_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseAssemblyNameMetadataGenerator.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATAAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleNameMetadataApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMODULENAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultModuleNameMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULENAMEMETADATA_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadata.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
@@ -198,6 +174,22 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseModuleNameMetadataGenerator.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IMODULEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IModuleMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIMODULEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIModuleMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IMODULEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IModuleMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEASSEMBLYMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIModuleMetadata.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULEMETADATAAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/ModuleMetadataApiHolderLabel.hpp>
 #endif
@@ -212,6 +204,22 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMODULEMETADATA_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseModuleMetadata.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ITYPEMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ITypeMetadataApiHolderLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTITYPEMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultITypeMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_ITYPEMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/ITypeMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEITYPEMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseITypeMetadata.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPEMETADATAAPIHOLDERLABEL_HPP
@@ -230,22 +238,6 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATAAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTTYPENAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultTypeNameMetadataApiHolder.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASETYPENAMEMETADATA_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadata.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_TYPENAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/TypeNameMetadataGeneratorApiHolderLabel.hpp>
 #endif
@@ -260,14 +252,6 @@
 
 #ifndef URASANDESU_CPPANONYM_METADATA_BASETYPENAMEMETADATAGENERATOR_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeNameMetadataGenerator.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATALABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETHODNAMEMETADATA_HPP
-#include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadata.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
@@ -286,12 +270,20 @@
 #include <Urasandesu/CppAnonym/Metadata/BaseMethodNameMetadataGenerator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MethodNameMetadataApiHolderLabel.hpp>
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IMETHODMETADATAAPIHOLDERLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IMethodMetadataApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODNAMEMETADATAAPIHOLDER_H
-#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodNameMetadataApiHolder.h>
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTIMETHODMETADATAAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultIMethodMetadataApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_IMETHODMETADATALABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/IMethodMetadataLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEIMETHODMETADATA_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseIMethodMetadata.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODMETADATAAPIHOLDERLABEL_HPP

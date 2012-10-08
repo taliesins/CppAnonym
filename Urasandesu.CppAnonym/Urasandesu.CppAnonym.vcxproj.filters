@@ -136,9 +136,6 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
-    <ClCompile Include="Urasandesu\CppAnonym\Fusion\AssemblyInfo.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
@@ -177,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,9 +301,6 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\FusionDependsOn.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyInfo.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Hosting\HostingDependsOn.h">
@@ -654,9 +651,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\ApiHolders\DefaultStrongNameKeyApiHolderFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming\ApiHolders</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Fusion\AssemblyInfoFwd.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
@@ -971,6 +965,84 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseIAssemblyMetadata.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\IModuleMetadataApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\IModuleMetadataLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultIModuleMetadataApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultIModuleMetadataApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseIModuleMetadataFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseIModuleMetadata.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ITypeMetadataApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\ITypeMetadataLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultITypeMetadataApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultITypeMetadataApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseITypeMetadataFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseITypeMetadata.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\IMethodMetadataApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\IMethodMetadataLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultIMethodMetadataApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\ApiHolders\DefaultIMethodMetadataApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseIMethodMetadataFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\BaseIMethodMetadata.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Metadata\SignatureUtil.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\AssemblyInfoApiHolderLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\Interfaces\AssemblyInfoLabel.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultAssemblyInfoApiHolder.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultAssemblyInfoApiHolderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseAssemblyInfo.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Fusion\BaseAssemblyInfoFwd.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Fusion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

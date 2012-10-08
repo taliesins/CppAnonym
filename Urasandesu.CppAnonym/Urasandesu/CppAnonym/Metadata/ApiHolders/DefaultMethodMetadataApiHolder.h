@@ -16,23 +16,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         struct DefaultMethodMetadataApiHolderImpl
         {
             typedef map<
-                //pair<TypeMetadataLabel, TypeMetadata>, 
-                //pair<TypeNameMetadataLabel, TypeNameMetadata>, 
-                //pair<TypeNameMetadataHashLabel, TypeNameMetadataHash>, 
-                //pair<TypeNameMetadataEqualToLabel, TypeNameMetadataEqualTo>, 
-                //pair<IMethodNameMetadataLabel, IMethodNameMetadata>,
-                //pair<MethodNameMetadataLabel, MethodNameMetadata>,
-                pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<ITypeNameMetadataLabel, ITypeNameMetadata>,
-                pair<TypeMetadataLabel, TypeMetadata>,
                 pair<IMethodMetadataLabel, IMethodMetadata>,
-                pair<MethodNameMetadataLabel, MethodNameMetadata>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<IMetaDataImport2, IMetaDataImport2>
             > api_cartridges;
         };
 
     }   // namespace Detail {
-
+    
     struct DefaultMethodMetadataApiHolder : 
         Detail::DefaultMethodMetadataApiHolderImpl
     {

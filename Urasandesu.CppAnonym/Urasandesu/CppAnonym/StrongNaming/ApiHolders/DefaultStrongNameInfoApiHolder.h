@@ -2,26 +2,39 @@
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
 #define URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDER_H
 
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_INTERFACES_STRONGNAMEKEYLABEL_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/Interfaces/StrongNameKeyLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STRONGNAMING_BASESTRONGNAMEKEYFWD_HPP
+#include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameKeyFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_STRONGNAMING_APIHOLDERS_DEFAULTSTRONGNAMEINFOAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/StrongNaming/ApiHolders/DefaultStrongNameInfoApiHolderFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
-    //namespace Detail {
-    //    
-    //    namespace mpl = boost::mpl;
+    namespace Detail {
+        
+        using namespace boost::mpl;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Hosting;
+        using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
 
-    //    struct DefaultHostInfoApiHolderImpl
-    //    {
-    //        typedef mpl::map<
-    //            mpl::pair<Interfaces::StrongNameInfoLabel, StrongNameInfo> 
-    //        > api_cartridges;
-    //    };
+        struct DefaultStrongNameInfoApiHolderImpl
+        {
+            typedef map<
+                pair<RuntimeHostLabel, RuntimeHost>,
+                pair<StrongNameKeyLabel, StrongNameKey>
+            > api_cartridges;
+        };
 
-    //}   // namespace Detail {
+    }   // namespace Detail {
 
-    struct DefaultStrongNameInfoApiHolder
+    struct DefaultStrongNameInfoApiHolder : 
+        Detail::DefaultStrongNameInfoApiHolderImpl
     {
     };
 
