@@ -14,14 +14,6 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-//#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-//#endif
-
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
@@ -111,7 +103,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             impl_deleter_type m_impld;
         };
 
-        // 例えば、, , MakeValueHolderImpl, MakeValueHeapHolderImpl, とか。
         template<class T, class TD, class ImplD>
         struct MakeHolderImpl : 
             Traits::MakePointerHolderImpl<T, TD, ImplD, SemiAutoPtrHolderImpl>

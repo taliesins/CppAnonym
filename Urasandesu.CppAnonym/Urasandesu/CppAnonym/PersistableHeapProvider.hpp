@@ -35,8 +35,8 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::object_deleter_type object_deleter_type;
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::type holder_impl_type;
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
-            typedef typename TempPtr<object_type>::default_heap_persisted_handler_impl<handler_type>::type persisted_handler_impl_type;
-            typedef typename TempPtr<object_type>::default_heap_persisted_handler_impl<handler_type>::deleter_type persisted_handler_impl_deleter_type;
+            typedef typename TempPtr<object_type>::make_heap_persisted_handler_impl<handler_type>::type persisted_handler_impl_type;
+            typedef typename TempPtr<object_type>::make_heap_persisted_handler_impl<handler_type>::deleter_type persisted_handler_impl_deleter_type;
             typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> object_object_tag_type;
             typedef ObjectTag<holder_impl_type, QuickHeapWithoutSubscriptOperator> holder_impl_object_tag_type;
             typedef ObjectTag<persisted_handler_impl_type, QuickHeapWithoutSubscriptOperator> persisted_handler_impl_object_tag_type;

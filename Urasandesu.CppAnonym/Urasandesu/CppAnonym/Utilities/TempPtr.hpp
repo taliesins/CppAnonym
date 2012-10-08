@@ -10,6 +10,65 @@
 #include <Urasandesu/CppAnonym/Utilities/TempPtrFwd.hpp>
 #endif
 
+namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
+    template<
+        class T, 
+        class ImplD, 
+        template<class, class> class ValueHolderImpl
+    >
+    struct MakeValueHolderImpl
+    {
+        typedef ValueHolderImpl<T, ImplD> type;
+    };
+
+    template<
+        class T, 
+        template<class, class> class ValueHolderImpl,
+        class Tag = QuickHeapWithoutSubscriptOperator
+    >
+    struct MakeHeapValueHolderImpl
+    {
+        struct deleter_type;
+        typedef ValueHolderImpl<T, deleter_type> type;
+        typedef SimpleHeap<type, Tag> heap_type;
+        struct deleter_type : 
+            Utilities::HeapDeleter<heap_type>
+        {
+            typedef Utilities::HeapDeleter<heap_type> base_type;
+                
+            deleter_type(heap_type &heap) : 
+                base_type(heap)
+            { }
+
+            template<class T>
+            void operator()(T *p) 
+            { 
+                base_type::operator()(p);
+            }
+        };
+
+        //typedef typename persisted_handler_impl_type<T, deleter_type>::type type;
+        //typedef SimpleHeap<type, QuickHeapWithoutSubscriptOperator> heap_type;
+        //struct deleter_type : 
+        //    HeapDeleter<heap_type>
+        //{
+        //    typedef HeapDeleter<heap_type> base_type;
+        //        
+        //    deleter_type(heap_type &heap) : 
+        //        base_type(heap)
+        //    { }
+
+        //    template<class T>
+        //    void operator()(T *p) 
+        //    { 
+        //        base_type::operator()(p);
+        //    }
+        //};
+    };
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
+
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace TempPtrDetail {
@@ -88,6 +147,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             ImplD m_impld;
         };
 
+        template<class Handler, class ImplD>
+        struct MakePersistedHandlerImpl : 
+            Traits::MakeValueHolderImpl<Handler, ImplD, PersistedHandlerImpl>
+        {
+        };
+
+        template<
+            class Handler, 
+            class Tag = QuickHeapWithoutSubscriptOperator
+        >
+        struct MakeHeapPersistedHandlerImpl : 
+            Traits::MakeHeapValueHolderImpl<Handler, PersistedHandlerImpl, Tag>
+        {
+        };
+
         template<class T>
         class TempPtrImpl : 
             public SemiAutoPtr<T>
@@ -99,33 +173,45 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef Collections::RapidVector<intrusive_ptr<persisted_handler_type>, 1 > persisted_handlers_type;
 
             template<class Handler, class ImplD>
-            struct persisted_handler_impl_type
+            struct make_persisted_handler_impl : 
+                MakePersistedHandlerImpl<Handler, ImplD>
             {
-                typedef PersistedHandlerImpl<Handler, ImplD> type;
             };
 
-            template<class Handler>
-            struct default_heap_persisted_handler_impl
+            template<class Handler, class Tag = QuickHeapWithoutSubscriptOperator>
+            struct make_heap_persisted_handler_impl : 
+                MakeHeapPersistedHandlerImpl<Handler, Tag>
             {
-                struct deleter_type;
-                typedef typename persisted_handler_impl_type<Handler, deleter_type>::type type;
-                typedef SimpleHeap<type, QuickHeapWithoutSubscriptOperator> heap_type;
-                struct deleter_type : 
-                    HeapDeleter<heap_type>
-                {
-                    typedef HeapDeleter<heap_type> base_type;
-                
-                    deleter_type(heap_type &heap) : 
-                        base_type(heap)
-                    { }
-
-                    template<class T>
-                    void operator()(T *p) 
-                    { 
-                        base_type::operator()(p);
-                    }
-                };
             };
+
+            //template<class Handler, class ImplD>
+            //struct persisted_handler_impl_type
+            //{
+            //    typedef PersistedHandlerImpl<Handler, ImplD> type;
+            //};
+
+            //template<class Handler>
+            //struct default_heap_persisted_handler_impl
+            //{
+            //    struct deleter_type;
+            //    typedef typename persisted_handler_impl_type<Handler, deleter_type>::type type;
+            //    typedef SimpleHeap<type, QuickHeapWithoutSubscriptOperator> heap_type;
+            //    struct deleter_type : 
+            //        HeapDeleter<heap_type>
+            //    {
+            //        typedef HeapDeleter<heap_type> base_type;
+            //    
+            //        deleter_type(heap_type &heap) : 
+            //            base_type(heap)
+            //        { }
+
+            //        template<class T>
+            //        void operator()(T *p) 
+            //        { 
+            //            base_type::operator()(p);
+            //        }
+            //    };
+            //};
 
             TempPtrImpl() : 
                 base_type(),
@@ -202,7 +288,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class Handler>
             inline size_t AddPersistedHandler(Handler handler)
             {
-                m_persistedHandlers.push_back(new persisted_handler_impl_type<Handler, DefaultDeleter>::type(handler));
+                m_persistedHandlers.push_back(new MakePersistedHandlerImpl<Handler, DefaultDeleter>::type(handler));
                 return m_persistedHandlers.size() - 1;
             }
 

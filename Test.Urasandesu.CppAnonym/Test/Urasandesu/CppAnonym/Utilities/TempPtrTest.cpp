@@ -117,7 +117,7 @@ namespace {
         Deleter::m_count = 0;
         Deleter deleter;
 
-        typedef TempPtr<int>::persisted_handler_impl_type<Handler, Deleter>::type PersistedHandlerImpl;
+        typedef TempPtr<int>::make_persisted_handler_impl<Handler, Deleter>::type PersistedHandlerImpl;
 
         { 
             TempPtr<int> p(new int(10), deleter);
@@ -151,7 +151,7 @@ namespace {
         Deleter::m_count = 0;
         Deleter deleter;
 
-        typedef TempPtr<int>::persisted_handler_impl_type<Handler, Deleter>::type PersistedHandlerImpl;
+        typedef TempPtr<int>::make_persisted_handler_impl<Handler, Deleter>::type PersistedHandlerImpl;
 
         { 
             int *pi = new int(10);
@@ -198,7 +198,7 @@ namespace {
         Deleter::m_count = 0;
         Deleter deleter;
 
-        typedef TempPtr<int>::persisted_handler_impl_type<Handler, Deleter>::type PersistedHandlerImpl;
+        typedef TempPtr<int>::make_persisted_handler_impl<Handler, Deleter>::type PersistedHandlerImpl;
 
         { 
             int *pi = new int(10);
@@ -226,7 +226,7 @@ namespace {
         Deleter::m_count = 0;
         Deleter deleter;
 
-        typedef TempPtr<int>::persisted_handler_impl_type<Handler, Deleter>::type PersistedHandlerImpl;
+        typedef TempPtr<int>::make_persisted_handler_impl<Handler, Deleter>::type PersistedHandlerImpl;
 
         { 
             int *pi = new int(10);

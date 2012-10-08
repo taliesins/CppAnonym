@@ -18,10 +18,6 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-//#endif
-
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace AnyPtrDetail {

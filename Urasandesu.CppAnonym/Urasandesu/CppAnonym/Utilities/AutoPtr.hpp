@@ -14,14 +14,6 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-//#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
-//#endif
-//
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
-//#endif
-
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTRFWD_HPP
 #include <Urasandesu/CppAnonym/Utilities/AutoPtrFwd.hpp>
 #endif
