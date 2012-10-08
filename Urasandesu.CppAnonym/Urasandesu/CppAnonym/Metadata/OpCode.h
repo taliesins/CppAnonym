@@ -119,7 +119,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         std::wstring m_cstr;
     };
 
-    namespace Detail {
+    namespace OpCodeDetail {
 
         template<int type>
         class OpCode_;
@@ -234,7 +234,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 #undef PopI
 #undef Pop1
 #undef Pop0
-    }   // namespace Detail
+    }   // namespace OpCodeDetail {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

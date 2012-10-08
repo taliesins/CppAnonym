@@ -8,6 +8,18 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
+#define CPPANONYM_DISPOSABLE_HEAP_PROVIDER_LIMIT_TYPES \
+    BOOST_MPL_LIMIT_VECTOR_SIZE
+
+#define CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS_IMPL(z, N, T) \
+    class BOOST_PP_CAT(T, N) = boost::mpl::void_
+
+#define CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS \
+    BOOST_PP_ENUM(CPPANONYM_DISPOSABLE_HEAP_PROVIDER_LIMIT_TYPES, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS_IMPL, T)
+
+#define CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(param)  \
+    BOOST_PP_ENUM_SHIFTED_PARAMS(CPPANONYM_DISPOSABLE_HEAP_PROVIDER_LIMIT_TYPES, param)
+
     namespace DisposableHeapProviderDetail {
 
         CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(DisposingInfoDispose, Dispose, void, ());
@@ -32,9 +44,12 @@ namespace Urasandesu { namespace CppAnonym {
         template<class DisposingInfoTypes>
         struct ATL_NO_VTABLE DisposableHeapProviderImpl;
 
+        template<CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
+        class DesignatedSequence;
+
     }   // namespace DisposableHeapProviderDetail {
 
-    template<class DisposingInfoTypes>
+    template<CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
     struct ATL_NO_VTABLE DisposableHeapProvider;
 
 }}   // namespace Urasandesu { namespace CppAnonym {

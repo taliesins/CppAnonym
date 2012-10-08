@@ -23,7 +23,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         typedef boost::mpl::map<boost::mpl::pair<CurrentApiLabel, this_type>> api_cartridges;
     };
 
-    namespace Detail {
+    namespace ApiAtDetail {
 
         namespace mpl = boost::mpl;
         using namespace mpl::placeholders;
@@ -83,12 +83,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
                                 ApiAtImplCore<ApiCartridgesHolder, CurrentApiLabel, ApiLabel>>::type type;
         };
 
-    }   // Detail
+    }   // namespace ApiAtDetail {
 
     template<class ApiCartridgesHolder, class CurrentApiLabel, class ApiLabel>
     struct ApiAt
     {
-        typedef typename Detail::ApiAtImpl<ApiCartridgesHolder, CurrentApiLabel, ApiLabel>::type type;
+        typedef typename ApiAtDetail::ApiAtImpl<ApiCartridgesHolder, CurrentApiLabel, ApiLabel>::type type;
     };
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 

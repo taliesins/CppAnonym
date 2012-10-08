@@ -24,7 +24,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    namespace Detail {
+    namespace DefaultMethodBodyWriterApiHolderDetail {
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Hosting;
@@ -49,10 +49,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultMethodBodyWriterApiHolderDetail {
 
     struct DefaultMethodBodyWriterApiHolder : 
-        Detail::DefaultMethodBodyWriterApiHolderImpl
+        DefaultMethodBodyWriterApiHolderDetail::DefaultMethodBodyWriterApiHolderImpl
     {
     };
 

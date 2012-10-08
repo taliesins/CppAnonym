@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    namespace Detail {
+    namespace PortableExecutableKindsDetail {
 
         struct PortableExecutableKindsDef
         {
@@ -29,9 +29,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             }
         };
 
-    }   // Detail
+    }   // PortableExecutableKindsDetail
 
-    typedef SafeEnum<Detail::PortableExecutableKindsDef> PortableExecutableKinds;
+    typedef SafeEnum<PortableExecutableKindsDetail::PortableExecutableKindsDef> PortableExecutableKinds;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

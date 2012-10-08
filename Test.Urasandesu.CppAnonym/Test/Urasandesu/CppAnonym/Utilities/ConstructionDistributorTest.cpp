@@ -12,14 +12,14 @@ namespace {
         using namespace Urasandesu::CppAnonym::Utilities;
 
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
+        ASSERT_EQ(0, Counter::Instance().Value());
         
-        BYTE buf[sizeof(Tester *)];
-        ASSERT_EQ(0, Tester::Counter().Value());
+        BYTE buf[sizeof(Counter *)];
+        ASSERT_EQ(0, Counter::Instance().Value());
 
-        ConstructionDistributor<Tester *>::Construct(buf);
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ConstructionDistributor<Counter *>::Construct(buf);
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
 
@@ -31,20 +31,20 @@ namespace {
         using namespace Urasandesu::CppAnonym::Utilities;
 
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
+        ASSERT_EQ(0, Counter::Instance().Value());
         
-        BYTE buf[sizeof(Tester *)];
-        ASSERT_EQ(0, Tester::Counter().Value());
+        BYTE buf[sizeof(Counter *)];
+        ASSERT_EQ(0, Counter::Instance().Value());
 
-        ConstructionDistributor<Tester *>::Construct(buf, new Tester());
-        ASSERT_EQ(1, Tester::Counter().Value());
+        ConstructionDistributor<Counter *>::Construct(buf, new Counter());
+        ASSERT_EQ(1, Counter::Instance().Value());
 
-        Tester *&p = reinterpret_cast<Tester *&>(buf);
+        Counter *&p = reinterpret_cast<Counter *&>(buf);
         ASSERT_TRUE(p != NULL);
 
         delete p;
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
 
@@ -57,16 +57,16 @@ namespace {
         using namespace Urasandesu::CppAnonym::Utilities;
 
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
+        ASSERT_EQ(0, Counter::Instance().Value());
         
-        BYTE buf[sizeof(shared_ptr<Tester>)];
-        ASSERT_EQ(0, Tester::Counter().Value());
+        BYTE buf[sizeof(shared_ptr<Counter>)];
+        ASSERT_EQ(0, Counter::Instance().Value());
 
-        ConstructionDistributor<shared_ptr<Tester> >::Construct(buf);
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ConstructionDistributor<shared_ptr<Counter> >::Construct(buf);
+        ASSERT_EQ(0, Counter::Instance().Value());
 
-        shared_ptr<Tester> &p = reinterpret_cast<shared_ptr<Tester> &>(buf);
+        shared_ptr<Counter> &p = reinterpret_cast<shared_ptr<Counter> &>(buf);
         ASSERT_FALSE(p);
     }
 
@@ -80,20 +80,20 @@ namespace {
         using namespace Urasandesu::CppAnonym::Utilities;
 
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_02) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
-        ASSERT_EQ(0, Tester::Counter().Value());
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
+        ASSERT_EQ(0, Counter::Instance().Value());
         
-        BYTE buf[sizeof(shared_ptr<Tester>)];
-        ASSERT_EQ(0, Tester::Counter().Value());
+        BYTE buf[sizeof(shared_ptr<Counter>)];
+        ASSERT_EQ(0, Counter::Instance().Value());
 
-        ConstructionDistributor<shared_ptr<Tester> >::Construct(buf, new Tester());
-        ASSERT_EQ(1, Tester::Counter().Value());
+        ConstructionDistributor<shared_ptr<Counter> >::Construct(buf, new Counter());
+        ASSERT_EQ(1, Counter::Instance().Value());
 
-        shared_ptr<Tester> &p = reinterpret_cast<shared_ptr<Tester> &>(buf);
+        shared_ptr<Counter> &p = reinterpret_cast<shared_ptr<Counter> &>(buf);
         ASSERT_TRUE(p);
 
-        p.~shared_ptr<Tester>();
-        ASSERT_EQ(0, Tester::Counter().Value());
+        p.~shared_ptr<Counter>();
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
 }

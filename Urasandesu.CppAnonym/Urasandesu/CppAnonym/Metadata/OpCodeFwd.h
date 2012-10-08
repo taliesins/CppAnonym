@@ -6,12 +6,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
     class OpCode;
 
-    namespace Detail {
+    namespace OpCodeDetail {
 
         template<int type>
         class OpCode_;
     
-    }   // namespace Detail
+    }   // namespace OpCodeDetail {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

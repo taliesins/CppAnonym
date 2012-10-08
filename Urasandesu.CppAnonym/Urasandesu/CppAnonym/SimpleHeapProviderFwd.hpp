@@ -2,6 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP
 #define URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDERFWD_HPP
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
     namespace SimpleHeapProviderDetail {

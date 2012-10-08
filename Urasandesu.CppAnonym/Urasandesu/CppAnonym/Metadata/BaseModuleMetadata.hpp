@@ -96,6 +96,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename facade::i_type_metadata_equal_to_type i_type_metadata_equal_to_type;
         typedef typename facade::com_meta_data_import_type com_meta_data_import_type;
         typedef typename facade::type_metadata_provider_type type_metadata_provider_type;
+        typedef typename facade::module_metadata_previous_type module_metadata_previous_type;
         typedef typename facade::module_metadata_chain_type module_metadata_chain_type;
         typedef typename facade::base_type base_type;
 

@@ -40,7 +40,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
-    namespace Detail {
+    namespace DefaultRuntimeHostApiHolderDetail {
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
@@ -64,10 +64,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultRuntimeHostApiHolderDetail {
 
     struct DefaultRuntimeHostApiHolder : 
-        Detail::DefaultRuntimeHostApiHolderImpl
+        DefaultRuntimeHostApiHolderDetail::DefaultRuntimeHostApiHolderImpl
     {
     };
 

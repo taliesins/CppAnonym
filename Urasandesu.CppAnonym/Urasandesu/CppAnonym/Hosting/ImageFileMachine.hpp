@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
-    namespace Detail {
+    namespace ImageFileMachineDetail {
 
         struct ImageFileMachineDef
         {
@@ -21,9 +21,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             };
         };
 
-    }   // Detail
+    }   // namespace ImageFileMachineDetail {
 
-    typedef SafeEnum<Detail::ImageFileMachineDef> ImageFileMachine;
+    typedef SafeEnum<ImageFileMachineDetail::ImageFileMachineDef> ImageFileMachine;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

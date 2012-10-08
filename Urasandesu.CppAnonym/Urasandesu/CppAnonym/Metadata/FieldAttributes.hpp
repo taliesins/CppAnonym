@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace FieldAttributesDetail {
 
         struct FieldAttributesDef
         {
@@ -42,9 +42,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         };
 
-    }   // Detail
+    }   // namespace FieldAttributesDetail {
 
-    typedef SafeEnum<Detail::FieldAttributesDef> FieldAttributes;
+    typedef SafeEnum<FieldAttributesDetail::FieldAttributesDef> FieldAttributes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

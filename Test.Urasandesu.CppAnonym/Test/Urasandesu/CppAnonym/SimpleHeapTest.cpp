@@ -193,22 +193,22 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, DefaultHeapTest_Construction_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
 
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
         {
-            SimpleHeap<Tester> testerHeap;
+            SimpleHeap<Counter> testerHeap;
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(1, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(1, Counter::Instance().Value());
             }
             
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(2, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(2, Counter::Instance().Value());
             }
         }
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
     
@@ -217,22 +217,22 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, QuickHeapTest_Construction_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
 
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
         {
-            SimpleHeap<Tester, QuickHeap> testerHeap;
+            SimpleHeap<Counter, QuickHeap> testerHeap;
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(1, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(1, Counter::Instance().Value());
             }
             
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(2, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(2, Counter::Instance().Value());
             }
         }
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
     
@@ -241,22 +241,22 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorTest_Construction_01) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
 
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
         {
-            SimpleHeap<Tester, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
+            SimpleHeap<Counter, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(1, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(1, Counter::Instance().Value());
             }
             
             {
-                Tester *pTester = testerHeap.New();
-                ASSERT_EQ(2, Tester::Counter().Value());
+                Counter *pTester = testerHeap.New();
+                ASSERT_EQ(2, Counter::Instance().Value());
             }
         }
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 
 
@@ -520,20 +520,20 @@ namespace {
         using namespace Urasandesu::CppAnonym;
 
         typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_SimpleHeapTest, VeryQuickHeapButMustUseSubscriptOperatorDeleteTest_03) Tag;
-        typedef ConstructionTester<Tag, 0> Tester;
+        typedef SurvivalCounter<BasicCounter<Tag, 0> > Counter;
         
         SimpleHeap<MyPOD2, VeryQuickHeapButMustUseSubscriptOperator> pod2Heap;
         
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
         {
-            SimpleHeap<Tester, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
-            Tester *pTester1 = testerHeap.New();
-            ASSERT_EQ(1, Tester::Counter().Value());
-            Tester *pTester2 = testerHeap.New();
-            ASSERT_EQ(2, Tester::Counter().Value());
+            SimpleHeap<Counter, VeryQuickHeapButMustUseSubscriptOperator> testerHeap;
+            Counter *pTester1 = testerHeap.New();
+            ASSERT_EQ(1, Counter::Instance().Value());
+            Counter *pTester2 = testerHeap.New();
+            ASSERT_EQ(2, Counter::Instance().Value());
             testerHeap.Delete(pTester1);
-            ASSERT_EQ(1, Tester::Counter().Value());
+            ASSERT_EQ(1, Counter::Instance().Value());
         }
-        ASSERT_EQ(0, Tester::Counter().Value());
+        ASSERT_EQ(0, Counter::Instance().Value());
     }
 }

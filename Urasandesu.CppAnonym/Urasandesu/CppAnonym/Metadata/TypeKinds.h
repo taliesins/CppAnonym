@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace TypeKindsDetail {
 
         struct TypeKindsDef
         {
@@ -61,9 +61,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         };
 
-    }   // Detail
+    }   // namespace TypeKindsDetail {
 
-    typedef SafeEnum<Detail::TypeKindsDef> TypeKinds;
+    typedef SafeEnum<TypeKindsDetail::TypeKindsDef> TypeKinds;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

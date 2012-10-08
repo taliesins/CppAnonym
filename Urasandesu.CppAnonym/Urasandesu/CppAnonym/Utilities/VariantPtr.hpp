@@ -10,6 +10,18 @@
 #include <Urasandesu/CppAnonym/Traits/MaxSizeType.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTRFWD_HPP
 #include <Urasandesu/CppAnonym/Utilities/VariantPtrFwd.hpp>
 #endif
@@ -23,15 +35,29 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
-        template<class Types>
+        template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
         class VariantPtrImpl : 
             noncopyable
         {
         public:
-            typedef fold<Types, true_, and_<_1, IsLikePointer<_2> > > all_types_are_like_pointer;
+            typedef VariantPtrImpl<T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(T)> this_type;
+
+            typedef mpl::vector<T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(T)> types;
+            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
+            typedef fold<filter_view<types, is_designated>, true_, and_<_1, IsLikePointer<_2> > > all_types_are_like_pointer;
             BOOST_MPL_ASSERT((typename all_types_are_like_pointer::type));
 
-            typedef typename MaxSizeType<Types>::type max_size_type;
+            typedef typename MaxSizeType<types>::type max_size_type;
+
+            typedef typename mpl::lambda<
+                and_<
+                    apply<is_designated, _1>, 
+                    or_<
+                        boost::is_same<_1, _2>, 
+                        boost::is_same<boost::add_const<_1>, _2> 
+                    > 
+                > 
+            >::type is_T_or_const_T;
 
 #ifdef _DEBUG
             VariantPtrImpl() : 
@@ -44,36 +70,52 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             template<class T>
-            VariantPtrImpl(T &p)
+            VariantPtrImpl(T const &p)
             {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
                 BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
                 m_which = I::pos::value;
 #else
 #endif
-                ConstructionDistributor<T>::Construct<T &>(m_storage, p);
+                ConstructionDistributor<T>::Construct<T const &>(m_storage, p);
             }
 
             template<class T>
-            T &Get()
+            T &Get() const
             {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
                 BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
                 _ASSERTE(m_which == I::pos::value);
 #else
 #endif
-                return reinterpret_cast<T &>(m_storage);
+                return *reinterpret_cast<T *>(m_storage);
+            }
+
+            template<class T>
+            void Set(T const &p)
+            {
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                _ASSERTE(m_which == -1 || m_which == I::pos::value);
+                m_which = I::pos::value;
+#else
+#endif
+                DestructionDistributor<T>::Destruct(m_storage);
+                ::ZeroMemory(m_storage, sizeof(max_size_type));
+                ConstructionDistributor<T>::Construct<T const &>(m_storage, p);
             }
 
             template<class T>
             void Clear()
             {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
                 BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
                 _ASSERTE(m_which == -1 || m_which == I::pos::value);
@@ -85,60 +127,135 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             template<class T>
-            void AssignTo(VariantPtrImpl<Types> &other)
+            void Assign(this_type const &other)
             {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
                 BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
-                _ASSERTE(m_which == I::pos::value);
+                _ASSERTE(m_which == -1 || m_which == I::pos::value);
+                _ASSERTE(other.m_which == I::pos::value);
 #else
 #endif
                 if (this != &other)
-                    AssignationDistributor<T>::Assign(other.m_storage, m_storage);
+                {
+                    DestructionDistributor<T>::Destruct(m_storage);
+                    ::ZeroMemory(m_storage, sizeof(max_size_type));
+                    ConstructionDistributor<T>::Construct<T const &>(m_storage, *reinterpret_cast<T *>(other.m_storage));
+#ifdef _DEBUG
+                    m_which = I::pos::value;
+#else
+#endif
+                }
             }
+
+            template<class T, class U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class U)>
+            void Assign(VariantPtrImpl<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> const &other)
+            {
+                typedef mpl::vector<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> OtherTypes;
+                typedef typename mpl::find_if<OtherTypes, mpl::bind<is_T_or_const_T, T, _1> >::type OtherI;
+                typedef typename mpl::end<OtherTypes>::type OtherIEnd;
+                BOOST_MPL_ASSERT((not_<is_same<OtherI, OtherIEnd> >));
+
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+
+#ifdef _DEBUG
+                _ASSERTE(m_which == -1 || m_which == I::pos::value);
+                typedef WhichAccessor<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> WhichAccessor;
+                _ASSERTE(WhichAccessor::Get(other) == OtherI::pos::value);
+#else
+#endif
+
+                DestructionDistributor<T>::Destruct(m_storage);
+                ::ZeroMemory(m_storage, sizeof(max_size_type));
+                typedef StorageAccessor<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> StorageAccessor;
+                ConstructionDistributor<T>::Construct<T const &>(m_storage, *reinterpret_cast<T *>(StorageAccessor::Get(other)));
+#ifdef _DEBUG
+                m_which = I::pos::value;
+#else
+#endif
+            }
+
 
             template<class T>
             T Detach()
             {
-                typedef typename mpl::find<Types, T>::type I;
-                typedef typename mpl::end<Types>::type IEnd;
+                typedef typename mpl::find_if<types, mpl::bind<is_T_or_const_T, T, _1> >::type I;
+                typedef typename mpl::end<types>::type IEnd;
                 BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
                 _ASSERTE(m_which == I::pos::value);
                 m_which = -1;
 #else
 #endif
-                T p;
-                ::memcpy_s(&p, sizeof(T), m_storage, sizeof(T));
+                T p(*reinterpret_cast<T *>(m_storage));
                 DestructionDistributor<T>::Destruct(m_storage);
                 ::ZeroMemory(m_storage, sizeof(max_size_type));
                 return p;
             }
 
+            inline operator bool() const
+            {
+                return !!(*this);
+            }
+
+            bool operator !() const
+            {
+                return !*reinterpret_cast<max_size_type const *>(m_storage);
+            }
+
         private:
-            BYTE m_storage[sizeof(max_size_type)];
+            template<class U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class U)> friend struct WhichAccessor;
+            template<class U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class U)> friend struct StorageAccessor;
+            mutable BYTE m_storage[sizeof(max_size_type)];
 #ifdef _DEBUG
             INT m_which;
 #else
 #endif
         };
 
+#ifdef _DEBUG
+        template<class U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class U)>
+        struct WhichAccessor
+        {
+            typedef VariantPtrImpl<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> variant_ptr_type;
+
+            static INT Get(variant_ptr_type const &p)
+            {
+                return p.m_which;
+            }
+        };
+#else
+#endif
+
+        template<class U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class U)>
+        struct StorageAccessor
+        {
+            typedef VariantPtrImpl<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> variant_ptr_type;
+
+            static BYTE * const Get(variant_ptr_type const &p)
+            {
+                return p.m_storage;
+            }
+        };
+
     }   // namespace VariantPtrDetail {
 
-    template<class Types>
+    template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
     struct VariantPtr : 
-        VariantPtrDetail::VariantPtrImpl<Types>
+        VariantPtrDetail::VariantPtrImpl<T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(T)>
     {
-        typedef VariantPtr<Types> this_type;
-        typedef VariantPtrDetail::VariantPtrImpl<Types> base_type;
+        typedef VariantPtr<T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(T)> this_type;
+        typedef VariantPtrDetail::VariantPtrImpl<T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(T)> base_type;
 
         VariantPtr() : 
             base_type()
         { }
 
         template<class T>
-        VariantPtr(T &p) : 
+        VariantPtr(T const &p) : 
             base_type(p)
         { }
     };

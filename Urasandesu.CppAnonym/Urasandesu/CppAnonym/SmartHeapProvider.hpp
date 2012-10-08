@@ -20,6 +20,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class I>
@@ -125,11 +126,22 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
+        template<class T0, CPPANONYM_SMART_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
+        class DesignatedSequence
+        {
+            typedef mpl::vector<T0, CPPANONYM_SMART_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)> types;
+            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
+        public:
+            typedef typename fold<filter_view<types, is_designated>, mpl::vector<>, mpl::push_back<_1, _2> >::type type;
+        };
+
     }   // namespace SmartHeapProviderDetail {
 
-    template<class ProvidingTypes>
+    template<class T0, CPPANONYM_SMART_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
     struct ATL_NO_VTABLE SmartHeapProvider : 
-        SmartHeapProviderDetail::SmartHeapProviderImpl<ProvidingTypes>
+        SmartHeapProviderDetail::SmartHeapProviderImpl<
+            typename SmartHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_SMART_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
+        >
     {
     };
 

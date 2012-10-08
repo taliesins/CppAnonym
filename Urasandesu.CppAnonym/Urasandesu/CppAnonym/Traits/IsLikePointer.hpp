@@ -19,7 +19,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
         template<class T>
         class IsLikePointerImpl : 
-            public is_pointer<T>
+            public boost::is_pointer<T>
         {
         };
 

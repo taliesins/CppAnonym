@@ -129,6 +129,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Test.Urasandesu.CppAnonym3.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SmartHeapProviderTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SmartPtrChainTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StaticDependentObjectsStorageTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp">
@@ -188,6 +190,7 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\IsLikePointerTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\MaxSizeTypeTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AnyPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AssignationDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AutoPtrTest.cpp" />
@@ -198,6 +201,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\SemiAutoPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\TempPtrTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\VariantPtrTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,8 +23,7 @@ namespace {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
 
-        typedef mpl::vector<Hoge> Types;
-        typedef StaticDependentObjectsStorage<Types> MyStorage;
+        typedef StaticDependentObjectsStorage<Hoge> MyStorage;
         typedef MyStorage::host_type Host;
 
         struct OrderChecker
@@ -43,15 +42,15 @@ namespace {
         {
             typedef Hoge hoge_type;
             typedef HogePersistedHandler hoge_persisted_handler_type;
+            typedef PersistentInfo<hoge_type, hoge_persisted_handler_type> hoge_persistent_info_type;
 
             
-            typedef mpl::vector<
-                PersistentInfo<hoge_type, hoge_persisted_handler_type>
-            > persistent_info_types;
-            typedef PersistableHeapProvider<persistent_info_types> base_heap_provider_type;
+            typedef PersistableHeapProvider<
+                hoge_persistent_info_type
+            > base_heap_provider_type;
             
             
-            typedef base_heap_provider_type::provider_of<hoge_type>::type hoge_provider_type;
+            typedef base_heap_provider_type::provider_of<hoge_persistent_info_type>::type hoge_provider_type;
         };
 
         struct HogePersistedHandler
@@ -59,6 +58,7 @@ namespace {
             typedef HogeFacade facade;
             typedef facade::hoge_type hoge_type;
             typedef facade::hoge_persisted_handler_type hoge_persisted_handler_type;
+            typedef facade::hoge_persistent_info_type hoge_persistent_info_type;
             typedef facade::hoge_provider_type hoge_provider_type;
 
             typedef Utilities::TempPtr<hoge_type> sender_type;
@@ -75,6 +75,7 @@ namespace {
             typedef HogeFacade facade;
             typedef facade::hoge_type hoge_type;
             typedef facade::hoge_persisted_handler_type hoge_persisted_handler_type;
+            typedef facade::hoge_persistent_info_type hoge_persistent_info_type;
             typedef facade::hoge_provider_type hoge_provider_type;
 
             Hoge() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
@@ -90,7 +91,7 @@ namespace {
             static Utilities::TempPtr<hoge_type> NewStaticHoge()
             {
                 hoge_type &sHoge = MyStorage::Object<hoge_type>();
-                hoge_provider_type &provider = sHoge.ProviderOf<hoge_type>();
+                hoge_provider_type &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
                 Utilities::TempPtr<hoge_type> pHoge = provider.NewObject();
                 provider.AddPersistedHandler(pHoge, &sHoge);
                 return pHoge;
@@ -105,7 +106,7 @@ namespace {
 
             Utilities::TempPtr<hoge_type> NewHoge()
             {
-                hoge_provider_type &provider = ProviderOf<hoge_type>();
+                hoge_provider_type &provider = ProviderOf<hoge_persistent_info_type>();
                 Utilities::TempPtr<hoge_type> pHoge = provider.NewObject();
                 provider.AddPersistedHandler(pHoge, this);
                 return pHoge;
@@ -121,7 +122,7 @@ namespace {
         void HogePersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
             sender_type &pHoge = *pSender;
-            hoge_provider_type &provider = m_pHoge->ProviderOf<Hoge>();
+            hoge_provider_type &provider = m_pHoge->ProviderOf<hoge_persistent_info_type>();
             provider.RegisterObject(pHoge);
         }
 
@@ -142,7 +143,7 @@ namespace {
         ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_ctorOrder[2]);
         ASSERT_EQ(0, OrderChecker::Instance().m_dtorOrder.size());
 
-        StaticDependentObjectsStorageDetail::Host<Types>().~Host();
+        StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
         ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_dtorOrder[0]);
@@ -150,7 +151,7 @@ namespace {
         ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_dtorOrder[2]);
 
         // Restore static area to work the debug heap correctly.
-        new(&StaticDependentObjectsStorageDetail::Host<Types>())Host();
+        new(&StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host())Host();
     }
 
 }

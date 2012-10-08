@@ -2,9 +2,54 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace TempPtrDetail {
+
+        using namespace boost;
+
+        namespace TempPtrStatesDetail {
+
+            struct TempPtrStatesDef
+            {
+                enum type
+                {
+                    TPS_NONE, 
+                    TPS_PERSISTED, 
+                    TPS_HAS_ALREADY_PERSISTED, 
+                    TPS_UNREACHED
+                };
+            };
+
+        }   // TempPtrStatesDetail
+
+        typedef SafeEnum<TempPtrStatesDetail::TempPtrStatesDef> TempPtrStates;
+
+        struct TempPtrHolder;
+
+        template<class T, class TD, class ImplD>
+        struct TempPtrHolderImpl;
+
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl;
+
+        template<
+            class T, 
+            class Tag = QuickHeapWithoutSubscriptOperator
+        >
+        struct MakeHeapHolderImpl;
 
         struct PersistedHandlerHolder;
 
@@ -28,6 +73,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         template<class T>
         class TempPtrImpl;
+
+        template<class U> 
+        struct PersistedHandlersAccessor;
 
     }   // namespace TempPtrDetail {
 

@@ -142,20 +142,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             { }
 
             explicit SemiAutoPtrImpl(T *p) : 
-                m_pHolder(new MakeHolderImpl<T, DefaultDeleter, DefaultDeleter>::type(p, DefaultDeleter(), DefaultDeleter()))
+                m_pHolder(new SemiAutoPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
             { }
 
             template<class TD>
             SemiAutoPtrImpl(T *p, TD d) : 
-                m_pHolder(new MakeHolderImpl<T, TD, DefaultDeleter>::type(p, d, DefaultDeleter()))
+                m_pHolder(new SemiAutoPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
             { }
 
             template<class TD, class ImplD>
-            SemiAutoPtrImpl(typename MakeHolderImpl<T, TD, ImplD>::type *pHolder) : 
+            SemiAutoPtrImpl(SemiAutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
                 m_pHolder(pHolder)
             {
                 _ASSERTE(pHolder != NULL); 
             }
+
+            SemiAutoPtrImpl(this_type const &other) : 
+                m_pHolder(other.m_pHolder)
+            { }
 
             template<class U>
             SemiAutoPtrImpl(SemiAutoPtrImpl<U> const &other) : 
@@ -164,7 +168,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
             inline SemiAutoPtrImpl &operator =(SemiAutoPtrImpl &other)
             {
-                m_pHolder = other.m_pHolder;
+                if (this != &other)
+                {
+                    m_pHolder = other.m_pHolder;
+                }
                 return *this;
             }
 
@@ -212,15 +219,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_pHolder->DisableDeletion();
             }
 
-        protected:
-            SemiAutoPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
-                m_pHolder(pHolder)
-            { }
-
-            intrusive_ptr<holder_type> m_pHolder;
-
         private:
             template<class U> friend struct SemiAutoPtrHolderAccessor;
+            intrusive_ptr<holder_type> m_pHolder;
         };
 
         template<class U> 
@@ -261,10 +262,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type(pHolder)
         { }
 
+        SemiAutoPtr(this_type const &other) : 
+            base_type(other)
+        { }
+
         template<class U>
         SemiAutoPtr(SemiAutoPtr<U> const &other) : 
             base_type(other)
         { }
+
+        ~SemiAutoPtr()
+        {
+        }
 
         inline SemiAutoPtr &operator =(SemiAutoPtr &other)
         {

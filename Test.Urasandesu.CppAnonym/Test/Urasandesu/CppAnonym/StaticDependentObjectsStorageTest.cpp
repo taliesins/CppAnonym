@@ -12,7 +12,7 @@ namespace {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
 
-        typedef StaticDependentObjectsStorage<mpl::vector<int, long, float, double> > MyStorage;
+        typedef StaticDependentObjectsStorage<int, long, float, double > MyStorage;
 
         MyStorage::Object<int>() = 10;
         MyStorage::Object<long>() = 20L;
@@ -45,25 +45,25 @@ namespace {
             std::vector<int> m_dtorOrder;
         };
 
-        struct Tester0 : 
-            ConstructionTester<Tag, 0>
+        struct Counter0 : 
+            SurvivalCounter<BasicCounter<Tag, 0> >
         {
-            Tester0() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
-            ~Tester0() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
+            Counter0() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
+            ~Counter0() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
         };
 
-        struct Tester1 : 
-            ConstructionTester<Tag, 1>
+        struct Counter1 : 
+            SurvivalCounter<BasicCounter<Tag, 1> >
         {
-            Tester1() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
-            ~Tester1() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
+            Counter1() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
+            ~Counter1() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
         };
 
-        struct Tester2 : 
-            ConstructionTester<Tag, 2>
+        struct Counter2 : 
+            SurvivalCounter<BasicCounter<Tag, 2> >
         {
-            Tester2() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
-            ~Tester2() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
+            Counter2() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
+            ~Counter2() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
         };
 
     }   // namespace _C317D758 {
@@ -74,30 +74,30 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         using namespace _C317D758;
 
-        typedef mpl::vector<Tester0, Tester1, Tester2> Types;
-        typedef StaticDependentObjectsStorage<Types> MyStorage;
+        typedef StaticDependentObjectsStorage<Counter0, Counter1, Counter2> MyStorage;
         typedef MyStorage::host_type Host;
-        Tester1 &tester1 = MyStorage::Object<Tester1>();
-        Tester0 &tester0 = MyStorage::Object<Tester0>();
-        Tester2 &tester2 = MyStorage::Object<Tester2>();
+        Counter1 &counter1 = MyStorage::Object<Counter1>();
+        Counter0 &counter0 = MyStorage::Object<Counter0>();
+        Counter2 &counter2 = MyStorage::Object<Counter2>();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_ctorOrder.size());
-        ASSERT_EQ(reinterpret_cast<int>(&tester1), OrderChecker::Instance().m_ctorOrder[0]);
-        ASSERT_EQ(reinterpret_cast<int>(&tester0), OrderChecker::Instance().m_ctorOrder[1]);
-        ASSERT_EQ(reinterpret_cast<int>(&tester2), OrderChecker::Instance().m_ctorOrder[2]);
+        ASSERT_EQ(reinterpret_cast<int>(&counter1), OrderChecker::Instance().m_ctorOrder[0]);
+        ASSERT_EQ(reinterpret_cast<int>(&counter0), OrderChecker::Instance().m_ctorOrder[1]);
+        ASSERT_EQ(reinterpret_cast<int>(&counter2), OrderChecker::Instance().m_ctorOrder[2]);
         ASSERT_EQ(0, OrderChecker::Instance().m_dtorOrder.size());
-        ASSERT_EQ(1, Tester0::Counter().Value());
-        ASSERT_EQ(1, Tester1::Counter().Value());
-        ASSERT_EQ(1, Tester2::Counter().Value());
+        ASSERT_EQ(1, Counter0::Instance().Value());
+        ASSERT_EQ(1, Counter1::Instance().Value());
+        ASSERT_EQ(1, Counter2::Instance().Value());
 
-        StaticDependentObjectsStorageDetail::Host<Types>().~Host();
+        StaticDependentObjectsStorageDetail::HostAccessor<Counter0, Counter1, Counter2>::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
-        ASSERT_EQ(reinterpret_cast<int>(&tester2), OrderChecker::Instance().m_dtorOrder[0]);
-        ASSERT_EQ(reinterpret_cast<int>(&tester1), OrderChecker::Instance().m_dtorOrder[1]);
-        ASSERT_EQ(reinterpret_cast<int>(&tester0), OrderChecker::Instance().m_dtorOrder[2]);
-        ASSERT_EQ(0, Tester0::Counter().Value());
-        ASSERT_EQ(0, Tester1::Counter().Value());
-        ASSERT_EQ(0, Tester2::Counter().Value());
+        ASSERT_EQ(reinterpret_cast<int>(&counter2), OrderChecker::Instance().m_dtorOrder[0]);
+        ASSERT_EQ(reinterpret_cast<int>(&counter1), OrderChecker::Instance().m_dtorOrder[1]);
+        ASSERT_EQ(reinterpret_cast<int>(&counter0), OrderChecker::Instance().m_dtorOrder[2]);
+        ASSERT_EQ(0, Counter0::Instance().Value());
+        ASSERT_EQ(0, Counter1::Instance().Value());
+        ASSERT_EQ(0, Counter2::Instance().Value());
     }
+
 }

@@ -14,7 +14,6 @@ namespace {
     namespace _DF280537 {
 
         struct Foo;
-        struct pFoo_Persisted;
 
     }   // namespace _DF280537 {
 
@@ -23,8 +22,7 @@ namespace {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
 
-        typedef mpl::vector<Foo> Types;
-        typedef StaticDependentObjectsStorage<Types> MyStorage;
+        typedef StaticDependentObjectsStorage<Foo> MyStorage;
         typedef MyStorage::host_type Host;
 
         struct OrderChecker
@@ -40,11 +38,7 @@ namespace {
         };
 
         struct Foo : 
-            SmartHeapProvider<
-                boost::mpl::vector<
-                    Foo
-                >
-            >
+            SmartHeapProvider<Foo>
         {
             typedef providing_type_at<0>::type foo_type;
             typedef provider_of<foo_type>::type foo_provider_type;
@@ -95,13 +89,13 @@ namespace {
         ASSERT_EQ(pFooAddr, OrderChecker::Instance().m_dtorOrder[0]);
         ASSERT_EQ(pFooRootAddr, OrderChecker::Instance().m_dtorOrder[1]);
 
-        StaticDependentObjectsStorageDetail::Host<Types>().~Host();
+        StaticDependentObjectsStorageDetail::HostAccessor<Foo>::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
         ASSERT_EQ(sFooAddr, OrderChecker::Instance().m_dtorOrder[2]);
 
         // Restore static area to work the debug heap correctly.
-        new(&StaticDependentObjectsStorageDetail::Host<Types>())Host();
+        new(&StaticDependentObjectsStorageDetail::HostAccessor<Foo>::Host())Host();
     }
 
 }

@@ -24,7 +24,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHolders {
     
-    namespace Detail {
+    namespace DefaultFusionInfoApiHolderDetail {
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
@@ -41,10 +41,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultFusionInfoApiHolderDetail {
 
     struct DefaultFusionInfoApiHolder : 
-        Detail::DefaultFusionInfoApiHolderImpl
+        DefaultFusionInfoApiHolderDetail::DefaultFusionInfoApiHolderImpl
     {
     };
         

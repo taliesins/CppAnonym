@@ -16,7 +16,7 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    namespace Detail {
+    namespace SimpleHeapDetail {
     
         template<class T, class Tag>
         struct SimpleHeapImpl;
@@ -421,7 +421,7 @@ namespace Urasandesu { namespace CppAnonym {
             T *operator[] (SIZE_T ix);              // not supported
             T const *operator[] (SIZE_T ix) const;  // not supported
         };
-    }   // namespace Detail
+    }   // namespace SimpleHeapDetail
     
     template<
         class T, 
@@ -430,7 +430,7 @@ namespace Urasandesu { namespace CppAnonym {
     class SimpleHeap : 
         boost::noncopyable
     {
-        Detail::SimpleHeapImpl<T, Tag> m_impl;
+        SimpleHeapDetail::SimpleHeapImpl<T, Tag> m_impl;
         
     public:
         typedef T object_type;

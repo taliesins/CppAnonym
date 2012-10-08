@@ -11,6 +11,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     };
 
     template<class T>
+    struct RemoveConst<const T>
+    {
+        typedef T type;
+    };
+
+    template<class T>
     struct RemoveConst<const T *>
     {
         typedef T * type;

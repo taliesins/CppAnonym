@@ -2,6 +2,18 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
+#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
 #include <Urasandesu/CppAnonym/Traits/MakeValueHolderImpl.hpp>
 #endif
@@ -10,8 +22,12 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/VariantPtr.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
+#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
@@ -23,6 +39,90 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     namespace TempPtrDetail {
 
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Traits;
+
+        struct TempPtrHolder
+        {
+            typedef TempPtrHolder this_type;
+
+            TempPtrHolder() : m_useCount(0) { }
+            virtual ~TempPtrHolder() { };
+            virtual void *Pointer() const = 0;
+            virtual void Delete() = 0;
+            virtual void DisableDeletion() = 0;
+
+            inline friend void intrusive_ptr_add_ref(this_type *p)
+            {
+                ++p->m_useCount;
+            }
+
+            inline friend void intrusive_ptr_release(this_type *p)
+            {
+                if(--p->m_useCount == 0) 
+                    p->Delete();
+            }
+
+            LONG m_useCount;
+        };
+
+        template<class T, class TD, class ImplD>
+        struct TempPtrHolderImpl : 
+            TempPtrHolder
+        {
+            typedef TempPtrHolderImpl<T, TD, ImplD> this_type;
+            typedef TempPtrHolder base_type;
+            typedef T object_type;
+            typedef DeletionSwitchablePolicy<TD> object_deleter_type;
+            typedef ImplD impl_deleter_type; 
+
+            TempPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+                base_type(), 
+                m_p(p),
+                m_d(d),
+                m_impld(impld)
+            { 
+                _ASSERTE(p != NULL); 
+            }
+
+            virtual ~TempPtrHolderImpl()
+            {
+            }
+
+            virtual void *Pointer() const
+            {
+                return const_cast<typename RemoveConst<object_type>::type *>(m_p);
+            }
+
+            virtual void Delete()
+            {
+                m_d(m_p);
+                m_impld(this);
+            }
+
+            virtual void DisableDeletion()
+            {
+                m_d.DisableDeletion();
+            }
+
+            object_type *m_p;
+            mutable object_deleter_type m_d;
+            impl_deleter_type m_impld;
+        };
+
+        template<class T, class TD, class ImplD>
+        struct MakeHolderImpl : 
+            Traits::MakePointerHolderImpl<T, TD, ImplD, TempPtrHolderImpl>
+        {
+        };
+
+        template<
+            class T, 
+            class Tag
+        >
+        struct MakeHeapHolderImpl : 
+            Traits::MakeHeapPointerHolderImpl<T, TempPtrHolderImpl, Tag>
+        {
+        };
 
         struct PersistedHandlerHolder
         {
@@ -112,14 +212,27 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class T>
-        class TempPtrImpl : 
-            public SemiAutoPtr<T>
+        class TempPtrImpl
         {
         public:
             typedef TempPtrImpl<T> this_type;
-            typedef SemiAutoPtr<T> base_type;
+            typedef TempPtrHolder holder_type;
             typedef PersistedHandlerHolder persisted_handler_holder_type;
+            typedef VariantPtr<intrusive_ptr<holder_type>, T *> variant_holder_type;
+            typedef TempPtrStates state_type;
             typedef Collections::RapidVector<intrusive_ptr<persisted_handler_holder_type>, 1 > persisted_handlers_type;
+
+            template<class TD, class ImplD>
+            struct make_holder_impl : 
+                MakeHolderImpl<T, TD, ImplD>
+            {
+            };
+
+            template<class Tag = QuickHeapWithoutSubscriptOperator>
+            struct make_heap_holder_impl : 
+                MakeHeapHolderImpl<T, Tag>
+            {
+            };
 
             template<class Handler, class ImplD>
             struct make_persisted_handler_holder_impl : 
@@ -134,107 +247,215 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             };
 
             TempPtrImpl() : 
-                base_type(),
-                m_isPersisted(false)
+                m_pHolder(),
+                m_state(TempPtrStates::TPS_NONE),
+                m_persistedHandlers()
             { }
 
-            explicit TempPtrImpl(T *p) : 
-                base_type(p),
-                m_isPersisted(false)
-            { }
+            TempPtrImpl(T *p, bool hasAlreadyPersisted) : 
+                m_pHolder(),
+                m_state(!hasAlreadyPersisted ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED),
+                m_persistedHandlers()
+            { 
+                if (!hasAlreadyPersisted)
+                    m_pHolder.Set<intrusive_ptr<holder_type> >(new TempPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()));
+                else
+                    m_pHolder.Set<T *>(p);
+            }
 
             template<class TD>
             TempPtrImpl(T *p, TD td) : 
-                base_type(p, td),
-                m_isPersisted(false)
-            { }
+                m_pHolder(),
+                m_state(TempPtrStates::TPS_NONE),
+                m_persistedHandlers()
+            { 
+                m_pHolder.Set<intrusive_ptr<holder_type> >(new TempPtrHolderImpl<T, TD, DefaultDeleter>(p, td, DefaultDeleter()));
+            }
 
             template<class TD, class ImplD>
-            explicit TempPtrImpl(SemiAutoPtrDetail::SemiAutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
-                base_type(pHolder),
-                m_isPersisted(false)
-            { }
+            TempPtrImpl(TempPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+                m_pHolder(),
+                m_state(TempPtrStates::TPS_NONE),
+                m_persistedHandlers()
+            { 
+                m_pHolder.Set<intrusive_ptr<holder_type> >(pHolder);
+            }
 
             TempPtrImpl(this_type const &other) : 
-                base_type(other),
-                m_isPersisted(other.m_isPersisted),
+                m_pHolder(),
+                m_state(!other.IsPersisted() ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED),
                 m_persistedHandlers(other.m_persistedHandlers)
-            { }
+            { 
+                if (!other.IsPersisted())
+                    m_pHolder.Assign<intrusive_ptr<holder_type> >(other.m_pHolder);
+                else
+                    m_pHolder.Set<T *>(other.Get());
+            }
 
             template<class U>
             TempPtrImpl(TempPtrImpl<U> const &other) : 
-                base_type(other),
-                m_isPersisted(other.IsPersisted()),
+                m_pHolder(),
+                m_state(!other.IsPersisted() ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED),
                 m_persistedHandlers(PersistedHandlersAccessor<U>::Get(other))
-            { }
+            { 
+                if (!other.IsPersisted())
+                    m_pHolder.Assign<intrusive_ptr<holder_type> >(TempPtrHolderAccessor<U>::Get(other));
+                else
+                    m_pHolder.Set<T *>(other.Get());
+            }
+
+            ~TempPtrImpl()
+            {
+                switch (m_state.Value())
+                {
+                    case TempPtrStates::TPS_NONE:
+                    case TempPtrStates::TPS_PERSISTED:
+                        m_pHolder.Clear<intrusive_ptr<holder_type> >();
+                        break;
+                    case TempPtrStates::TPS_HAS_ALREADY_PERSISTED:
+                        m_pHolder.Clear<T *>();
+                        break;
+                    default:
+                        BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException());
+                }
+            }
 
             inline this_type &operator =(this_type &other)
             {
-                base_type::operator =(other);
-                m_isPersisted = other.m_isPersisted;
-                m_persistedHandlers = other.m_persistedHandlers;
+                if (this != &other)
+                {
+                    if (!other.IsPersisted())
+                        m_pHolder.Assign<intrusive_ptr<holder_type> >(other.m_pHolder);
+                    else
+                        m_pHolder.Set<T *>(other.Get());
+
+                    m_state = !other.IsPersisted() ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED;
+                    
+                    m_persistedHandlers = other.m_persistedHandlers;
+                }
                 return *this;
             }
 
             template<class U>
             inline TempPtrImpl &operator =(TempPtrImpl<U> &other)
             {
+                if (!other.IsPersisted())
+                    m_pHolder.Assign<intrusive_ptr<holder_type> >(TempPtrHolderAccessor<U>::Get(other));
+                else
+                    m_pHolder.Set<T *>(other.Get());
+
+                m_state = !other.IsPersisted() ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED;
+                    
                 typedef typename PersistedHandlersAccessor<U>::persisted_handlers_type PersistedHandlers;
-                
-                base_type::operator =(other);
-                m_isPersisted = other.IsPersisted();
                 PersistedHandlers const &persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
                 m_persistedHandlers.reserve(persistedHandlers.size());
                 m_persistedHandlers.assign(persistedHandlers.begin(), persistedHandlers.end());
+                
                 return *this;
+            }
+
+            inline operator bool() const
+            {
+                return m_pHolder;
+            }
+
+            bool operator !() const
+            {
+                return !m_pHolder;
+            }
+
+            inline T *operator->()
+            {
+                return Get();
+            }
+
+            inline T *Get() const
+            {
+                switch (m_state.Value())
+                {
+                    case TempPtrStates::TPS_NONE:
+                    case TempPtrStates::TPS_PERSISTED:
+                        return static_cast<T *>(m_pHolder.Get<intrusive_ptr<holder_type> >()->Pointer());
+                    case TempPtrStates::TPS_HAS_ALREADY_PERSISTED:
+                        return m_pHolder.Get<T *>();
+                    default:
+                        BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException());
+                }
+            }
+
+            inline T &operator *()
+            {
+                T *p = Get();
+                _ASSERTE(p != NULL);
+                return *p;
             }
 
             inline bool IsPersisted() const
             {
-                return m_isPersisted;
+                return m_state != TempPtrStates::TPS_NONE;
             }
 
             inline void Persist()
             {
-                if (!m_isPersisted)
+                if (!IsPersisted())
                 {
-                    base_type::SetManual();
-                    m_isPersisted = true;
+                    TempPtrStates lastState(m_state);
+                    m_state = TempPtrStates::TPS_PERSISTED;
                     if (!m_persistedHandlers.empty())
                     {
-                        typedef persisted_handlers_type::iterator Iterator;
-                        for (Iterator i = m_persistedHandlers.begin(), i_end = m_persistedHandlers.end(); i != i_end; ++i)
-                            (**i)(this, NULL);
+                        try
+                        {
+                            typedef persisted_handlers_type::iterator Iterator;
+                            for (Iterator i = m_persistedHandlers.begin(), i_end = m_persistedHandlers.end(); i != i_end; ++i)
+                                (**i)(this, NULL);
+                        }
+                        catch (...)
+                        {
+                            m_state = lastState;
+                            throw;
+                        }
                     }
+                    m_pHolder.Get<intrusive_ptr<holder_type> >()->DisableDeletion();
                 }
             }
 
             template<class Handler>
-            inline size_t AddPersistedHandler(Handler handler)
+            inline SIZE_T AddPersistedHandler(Handler handler)
             {
                 m_persistedHandlers.push_back(new MakePersistedHandlerHolderImpl<Handler, DefaultDeleter>::type(handler));
                 return m_persistedHandlers.size() - 1;
             }
 
             template<class Handler, class ImplD>
-            inline size_t AddPersistedHandler(PersistedHandlerHolderImpl<Handler, ImplD> *pPersistedHandlerHolder)
+            inline SIZE_T AddPersistedHandler(PersistedHandlerHolderImpl<Handler, ImplD> *pPersistedHandlerHolder)
             {
                 m_persistedHandlers.push_back(pPersistedHandlerHolder);
                 return m_persistedHandlers.size() - 1;
             }
 
-            inline void RemovePersistedHandler(size_t id)
+            inline void RemovePersistedHandler(SIZE_T id)
             {
                 _ASSERTE(id < m_persistedHandlers.size());
                 m_persistedHandlers.erace(m_persistedHandlers.begin() + id);
             }
 
         private:
+            template<class U> friend struct TempPtrHolderAccessor;
             template<class U> friend struct PersistedHandlersAccessor;
-            void SetAuto();
-            void SetManual();
-            bool m_isPersisted;
+            VariantPtr<intrusive_ptr<holder_type>, T *> m_pHolder;
+            TempPtrStates m_state;
             persisted_handlers_type m_persistedHandlers;
+        };
+
+        template<class U> 
+        struct TempPtrHolderAccessor
+        {
+            typedef typename TempPtrImpl<U>::variant_holder_type variant_holder_type;
+
+            static variant_holder_type const &Get(TempPtrImpl<U> const &p)
+            {
+                return p.m_pHolder;
+            }
         };
 
         template<class U> 
@@ -261,8 +482,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type()
         { }
 
-        explicit TempPtr(T *p) : 
-            base_type(p)
+        TempPtr(T *p, bool hasAlreadyPersisted = false) : 
+            base_type(p, hasAlreadyPersisted)
         { }
 
         template<class TD>
@@ -271,9 +492,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         { }
 
         template<class TD, class ImplD>
-        explicit TempPtr(SemiAutoPtrDetail::SemiAutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+        explicit TempPtr(TempPtrDetail::TempPtrHolderImpl<T, TD, ImplD> *pHolder) : 
             base_type(pHolder)
-        { }
+        {
+        }
 
         TempPtr(this_type const &other) : 
             base_type(other)
@@ -283,6 +505,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         TempPtr(TempPtr<U> const &other) : 
             base_type(other)
         { }
+
+        ~TempPtr()
+        {
+        }
 
         inline TempPtr &operator =(TempPtr &other)
         {

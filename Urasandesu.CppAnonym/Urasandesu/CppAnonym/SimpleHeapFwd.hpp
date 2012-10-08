@@ -13,12 +13,12 @@ namespace Urasandesu { namespace CppAnonym {
                                                         // Although must use the subscript operator [] if access the allocated object after a while, 
                                                         // because the allocated objects are moved when the heap is over a threshold size.
     
-    namespace Detail {
+    namespace SimpleHeapDetail {
     
         template<class T, class Tag>
         struct SimpleHeapImpl;
 
-    }   // namespace Detail
+    }   // namespace SimpleHeapDetail
     
     template<
         class T, 

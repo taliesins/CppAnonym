@@ -125,20 +125,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             { }
 
             explicit AutoPtrImpl(T *p) : 
-                m_pHolder(new MakeHolderImpl<T, DefaultDeleter, DefaultDeleter>::type(p, DefaultDeleter(), DefaultDeleter()))
+                m_pHolder(new AutoPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
             { }
 
             template<class TD>
             AutoPtrImpl(T *p, TD d) : 
-                m_pHolder(new MakeHolderImpl<T, TD, DefaultDeleter>::type(p, d, DefaultDeleter()))
+                m_pHolder(new AutoPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
             { }
 
             template<class TD, class ImplD>
-            AutoPtrImpl(typename MakeHolderImpl<T, TD, ImplD>::type *pHolder) : 
+            AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
                 m_pHolder(pHolder)
             {
                 _ASSERTE(pHolder != NULL); 
             }
+
+            AutoPtrImpl(this_type const &other) : 
+                m_pHolder(other.m_pHolder)
+            { }
 
             template<class U>
             AutoPtrImpl(AutoPtrImpl<U> const &other) : 
@@ -232,6 +236,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         template<class TD, class ImplD>
         explicit AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
             base_type(pHolder)
+        { }
+
+        AutoPtr(this_type const &other) : 
+            base_type(other)
         { }
 
         template<class U>

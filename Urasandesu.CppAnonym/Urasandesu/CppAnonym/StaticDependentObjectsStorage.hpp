@@ -14,17 +14,17 @@ namespace Urasandesu { namespace CppAnonym {
 
     namespace StaticDependentObjectsStorageDetail {
 
-        template<class Types>
+        template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
         struct DependentObjectsProvidersHost : 
-            DependentObjectsProvider<Types>
+            DependentObjectsProvider<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>
         {
         };
 
-        template<class Types>
+        template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
         class StaticDependentObjectsStorageImpl
         {
         public:
-            typedef DependentObjectsProvidersHost<Types> host_type;
+            typedef DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> host_type;
         
             template<class T>
             static T &Object()
@@ -35,8 +35,8 @@ namespace Urasandesu { namespace CppAnonym {
             }
 
         private:
-            template<class Types>
-            friend DependentObjectsProvidersHost<Types> &Host();
+            template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
+            friend struct HostAccessor;
 
             static host_type &Host()
             {
@@ -45,17 +45,20 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
-        template<class Types>
-        DependentObjectsProvidersHost<Types> &Host()
+        template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
+        struct HostAccessor
         {
-            return StaticDependentObjectsStorageImpl<Types>::Host();
-        }
+            static DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> &Host()
+            {
+                return StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host();
+            }
+        };
 
     }   // namespace StaticDependentObjectsStorageDetail {
 
-    template<class Types>
+    template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
     struct StaticDependentObjectsStorage : 
-        StaticDependentObjectsStorageDetail::StaticDependentObjectsStorageImpl<Types>
+        StaticDependentObjectsStorageDetail::StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>
     {
     };
 

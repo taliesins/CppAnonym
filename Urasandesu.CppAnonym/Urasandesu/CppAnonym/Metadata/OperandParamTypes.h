@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace OperandParamTypesDetail {
 
         struct OperandParamTypesDef
         {
@@ -35,9 +35,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             };
         };
 
-    }   // Detail
+    }   // namespace OperandParamTypesDetail {
 
-    typedef SafeEnum<Detail::OperandParamTypesDef> OperandParamTypes;
+    typedef SafeEnum<OperandParamTypesDetail::OperandParamTypesDef> OperandParamTypes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

@@ -346,7 +346,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         mutable ATL::CComPtr<com_meta_data_assembly_import_type> m_pComMetaAsmImp;
         mutable ATL::CComPtr<com_meta_data_import_type> m_pComMetaImp;
         mutable boost::unordered_map<module_metadata_type const *, 
-                                     size_t, 
+                                     SIZE_T, 
                                      i_module_metadata_hash_type, 
                                      i_module_metadata_equal_to_type> m_modToIndex;
     };

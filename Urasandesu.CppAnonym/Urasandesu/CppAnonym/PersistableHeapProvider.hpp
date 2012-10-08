@@ -24,6 +24,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class I>
@@ -87,37 +88,19 @@ namespace Urasandesu { namespace CppAnonym {
                 return TempPtr<object_type>(pHolderImpl);
             }
 
-            TempPtr<object_type> WrapRegisteredObject(object_type *pObj)
-            {
-#if _DEBUG
-                if (AnyObjects())
-                {
-                    typedef std::vector<object_type *>::iterator Iterator;
-                    Iterator result = std::find(Objects().begin(), Objects().end(), pObj);
-                    _ASSERTE(result != Objects().end());
-                }
-#endif
-                holder_impl_deleter_type implDeleter(HolderImplHeap());
-                holder_impl_type *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
-
-                TempPtr<object_type> p(pHolderImpl);
-                p.Persist();
-                return p;
-            }
-
-            size_t RegisterObject(TempPtr<object_type> &p)
+            SIZE_T RegisterObject(TempPtr<object_type> &p)
             {
                 p.Persist();
                 Objects().push_back(p.Get());
                 return Objects().size() - 1;
             }
 
-            object_type *GetObject(size_t n)
+            object_type *GetObject(SIZE_T n)
             {
                 return Objects()[n];
             }
 
-            size_t AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
+            SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
             {
                 persisted_handler_holder_impl_deleter_type implDeleter(PersistedHandlerImplHeap());
                 persisted_handler_holder_impl_type *pHandlerImpl = PersistedHandlerImplHeap().New(handler, implDeleter);
@@ -175,12 +158,6 @@ namespace Urasandesu { namespace CppAnonym {
         {
         };
 
-        template<class PersistentInfo, class T>
-        struct HasObjectT : 
-            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(PersistentInfoObject, PersistentInfo)::type, T>
-        {
-        };
-
         template<class PersistentInfoTypes, LONG N>
         class ProvidingTypeAtImpl
         {
@@ -200,8 +177,9 @@ namespace Urasandesu { namespace CppAnonym {
         template<class ReversedPersistentInfoTypes, class ProvidingType>
         class ProviderOfImpl
         {
-            typedef typename mpl::find_if<ReversedPersistentInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::find<ReversedPersistentInfoTypes, ProvidingType>::type i;
             typedef typename mpl::end<ReversedPersistentInfoTypes>::type i_end;
+            BOOST_MPL_ASSERT((not_<boost::is_same<i, i_end> >));
         public:
             typedef PersistableHeapProviderImplImpl<ReversedPersistentInfoTypes, i, i_end> type;
         };
@@ -247,11 +225,22 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
+        template<class T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
+        class DesignatedSequence
+        {
+            typedef mpl::vector<T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)> types;
+            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
+        public:
+            typedef typename fold<filter_view<types, is_designated>, mpl::vector<>, mpl::push_back<_1, _2> >::type type;
+        };
+
     }   // namespace PersistableHeapProviderDetail {
 
-    template<class PersistentInfoTypes>
+    template<class T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
     struct ATL_NO_VTABLE PersistableHeapProvider : 
-        PersistableHeapProviderDetail::PersistableHeapProviderImpl<PersistentInfoTypes>
+        PersistableHeapProviderDetail::PersistableHeapProviderImpl<
+            typename PersistableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
+        >
     {
     };
 

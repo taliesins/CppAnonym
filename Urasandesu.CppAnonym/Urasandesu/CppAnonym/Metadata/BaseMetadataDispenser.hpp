@@ -304,7 +304,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         }
 
         mutable boost::unordered_map<assembly_metadata_type const *, 
-                                     size_t, 
+                                     SIZE_T, 
                                      i_assembly_metadata_hash_type, 
                                      i_assembly_metadata_equal_to_type> m_asmToIndex;
         //mutable boost::unordered_map<boost::shared_ptr<assembly_metadata_generator_type const>, 

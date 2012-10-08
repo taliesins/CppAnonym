@@ -24,7 +24,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
-    namespace Detail {
+    namespace DefaultHostInfoApiHolderDetail {
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
@@ -39,10 +39,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultHostInfoApiHolderDetail {
 
     struct DefaultHostInfoApiHolder : 
-        Detail::DefaultHostInfoApiHolderImpl
+        DefaultHostInfoApiHolderDetail::DefaultHostInfoApiHolderImpl
     {
     };
 

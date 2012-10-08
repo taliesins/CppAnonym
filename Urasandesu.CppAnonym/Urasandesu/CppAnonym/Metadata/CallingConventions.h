@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace CallingConventionsDetail {
 
         class ATL_NO_VTABLE CallingConventionsDef
         {
@@ -59,9 +59,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             mutable std::vector<COR_SIGNATURE> m_sigs;
         };
 
-    }   // Detail
+    }   // namespace CallingConventionsDetail {
 
-    typedef SafeEnum<Detail::CallingConventionsDef> CallingConventions;
+    typedef SafeEnum<CallingConventionsDetail::CallingConventionsDef> CallingConventions;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

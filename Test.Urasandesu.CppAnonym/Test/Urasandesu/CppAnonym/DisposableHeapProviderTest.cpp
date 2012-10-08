@@ -27,8 +27,7 @@ namespace {
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym;
 
-        typedef mpl::vector<Piyo> Types;
-        typedef StaticDependentObjectsStorage<Types> MyStorage;
+        typedef StaticDependentObjectsStorage<Piyo> MyStorage;
         typedef MyStorage::host_type Host;
 
         struct OrderChecker
@@ -48,15 +47,15 @@ namespace {
         {
             typedef Piyo piyo_type;
             typedef PiyoPersistedHandler piyo_persisted_handler_type;
+            typedef DisposingInfo<piyo_type, piyo_persisted_handler_type> piyo_disposing_info_type;
 
             
-            typedef mpl::vector<
-                DisposingInfo<piyo_type, piyo_persisted_handler_type>
-            > disposing_info_types;
-            typedef DisposableHeapProvider<disposing_info_types> base_heap_provider_type;
+            typedef DisposableHeapProvider<
+                piyo_disposing_info_type
+            > base_heap_provider_type;
             
             
-            typedef base_heap_provider_type::provider_of<piyo_type>::type piyo_provider_type;
+            typedef base_heap_provider_type::provider_of<piyo_disposing_info_type>::type piyo_provider_type;
         };
 
         struct PiyoPersistedHandler
@@ -64,6 +63,7 @@ namespace {
             typedef PiyoFacade facade;
             typedef facade::piyo_type piyo_type;
             typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_disposing_info_type piyo_disposing_info_type;
             typedef facade::piyo_provider_type piyo_provider_type;
 
             typedef Utilities::TempPtr<piyo_type> sender_type;
@@ -80,6 +80,7 @@ namespace {
             typedef PiyoFacade facade;
             typedef facade::piyo_type piyo_type;
             typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_disposing_info_type piyo_disposing_info_type;
             typedef facade::piyo_provider_type piyo_provider_type;
 
             Piyo() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
@@ -95,7 +96,7 @@ namespace {
             static Utilities::TempPtr<piyo_type> NewStaticPiyo()
             {
                 piyo_type &sPiyo = MyStorage::Object<piyo_type>();
-                piyo_provider_type &provider = sPiyo.ProviderOf<piyo_type>();
+                piyo_provider_type &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
                 Utilities::TempPtr<piyo_type> pPiyo = provider.NewObject();
                 provider.AddPersistedHandler(pPiyo, &sPiyo);
                 return pPiyo;
@@ -110,7 +111,7 @@ namespace {
 
             Utilities::TempPtr<piyo_type> NewPiyo()
             {
-                piyo_provider_type &provider = ProviderOf<piyo_type>();
+                piyo_provider_type &provider = ProviderOf<piyo_disposing_info_type>();
                 Utilities::TempPtr<piyo_type> pPiyo = provider.NewObject();
                 provider.AddPersistedHandler(pPiyo, this);
                 return pPiyo;
@@ -131,7 +132,7 @@ namespace {
         void PiyoPersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
             sender_type &pPiyo = *pSender;
-            piyo_provider_type &provider = m_pPiyo->ProviderOf<piyo_type>();
+            piyo_provider_type &provider = m_pPiyo->ProviderOf<piyo_disposing_info_type>();
             provider.RegisterObject(pPiyo);
         }
 
@@ -153,7 +154,7 @@ namespace {
         ASSERT_EQ(0, OrderChecker::Instance().m_dtorOrder.size());
         ASSERT_EQ(0, OrderChecker::Instance().m_disposingOrder.size());
 
-        StaticDependentObjectsStorageDetail::Host<Types>().~Host();
+        StaticDependentObjectsStorageDetail::HostAccessor<Piyo>::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
         ASSERT_EQ(reinterpret_cast<int>(&sPiyo), OrderChecker::Instance().m_dtorOrder[0]);
@@ -165,7 +166,7 @@ namespace {
         ASSERT_EQ(reinterpret_cast<int>(pPiyo), OrderChecker::Instance().m_disposingOrder[1]);
 
         // Restore static area to work the debug heap correctly.
-        new(&StaticDependentObjectsStorageDetail::Host<Types>())Host();
+        new(&StaticDependentObjectsStorageDetail::HostAccessor<Piyo>::Host())Host();
     }
 
 }

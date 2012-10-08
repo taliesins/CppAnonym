@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
-    namespace Detail {
+    namespace AssemblyQueryTypesDetail {
 
         struct AssemblyQueryTypesDef
         {
@@ -21,9 +21,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             };
         };
 
-    }   // Detail
+    }   // AssemblyQueryTypesDetail
 
-    typedef SafeEnum<Detail::AssemblyQueryTypesDef> AssemblyQueryTypes;
+    typedef SafeEnum<AssemblyQueryTypesDetail::AssemblyQueryTypesDef> AssemblyQueryTypes;
 
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 

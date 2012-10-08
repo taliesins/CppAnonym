@@ -29,7 +29,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     //const StackBehaviour StackBehaviours::VarPush = StackBehaviour(StackBehaviourTypes::SBT_VAR_PUSH);
 
 #define OPDEF_EX(canonicalName, canonicalNameEx) \
-    const Detail::OpCode_<OpCodeTypes::canonicalName> OpCodes::canonicalNameEx = Detail::OpCode_<OpCodeTypes::canonicalName>();
+    const OpCodeDetail::OpCode_<OpCodeTypes::canonicalName> OpCodes::canonicalNameEx = OpCodeDetail::OpCode_<OpCodeTypes::canonicalName>();
 #include <Urasandesu/CppAnonym/Metadata/OpCodeEx.def>
 #undef OPDEF_EX
 

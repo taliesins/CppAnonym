@@ -35,6 +35,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ModuleMetadataLabel>::type module_metadata_type;
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, TypeMetadataLabel>::type type_metadata_type;
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ITypeMetadataLabel>::type i_type_metadata_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ITypeMetadataHashLabel>::type i_type_metadata_hash_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ITypeMetadataEqualToLabel>::type i_type_metadata_equal_to_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, NestedTypeMetadataPersistedHandlerLabel>::type nested_type_metadata_persisted_handler_type;
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodMetadataLabel>::type method_metadata_type;        
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
             typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
@@ -83,6 +86,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 
             typedef i_type_metadata_type base_type;
+
+            typedef boost::unordered_map<method_metadata_type const *, 
+                                         SIZE_T, 
+                                         i_method_metadata_hash_type, 
+                                         i_method_metadata_equal_to_type> method_to_index_map_type;;        
+
+            typedef boost::unordered_map<type_metadata_type const *, 
+                                         SIZE_T, 
+                                         i_type_metadata_hash_type, 
+                                         i_type_metadata_equal_to_type> type_to_index_map_type;
         };
 
     }   // namespace TypeMetadataDetail {
@@ -112,15 +125,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename facade::module_metadata_type module_metadata_type;
         typedef typename facade::type_metadata_type type_metadata_type;
         typedef typename facade::i_type_metadata_type i_type_metadata_type;
+        typedef typename facade::nested_type_metadata_persisted_handler_type nested_type_metadata_persisted_handler_type;
         typedef typename facade::method_metadata_type method_metadata_type;
         typedef typename facade::i_method_metadata_hash_type i_method_metadata_hash_type;
         typedef typename facade::i_method_metadata_equal_to_type i_method_metadata_equal_to_type;
         typedef typename facade::com_meta_data_import_type com_meta_data_import_type;
         typedef typename facade::type_metadata_provider_type type_metadata_provider_type;
         typedef typename facade::method_metadata_provider_type method_metadata_provider_type;
+        typedef typename facade::type_metadata_previous_type type_metadata_previous_type;
+        typedef typename facade::nested_type_metadata_previous_type nested_type_metadata_previous_type;
         typedef typename facade::nested_type_metadata_chain_type nested_type_metadata_chain_type;
         typedef typename facade::type_metadata_chain_type type_metadata_chain_type;
         typedef typename facade::base_type base_type;
+        typedef typename facade::type_to_index_map_type type_to_index_map_type;
         //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
 
         //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
@@ -370,9 +387,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
             TempPtrVector<base_type const> genericArgs_;
             genericArgs_.reserve(genericArgs.size());
-            typedef std::vector<i_type_metadata_type const *>::iterator Iterator;
-            for (Iterator i = genericArgs.begin(), i_end = genericArgs.end(); i != i_end; ++i)
-                genericArgs_.push_back(provider.WrapRegisteredObject(*i));  // うーむ・・・i_type_metadata_type からじゃ、再 wrap できない・・・
+            typedef std::vector<i_type_metadata_type const *>::const_iterator Iterator;
+            for (Iterator i = genericArgs.cbegin(), i_end = genericArgs.cend(); i != i_end; ++i)
+                genericArgs_.push_back(TempPtr<base_type const>(*i, true));
             pType->SetGenericArguments(genericArgs_);
 
             return pType;
@@ -380,6 +397,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
         Utilities::TempPtr<type_metadata_type> NewTypeCore() const
         {
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+#if 0
             using namespace Urasandesu::CppAnonym::Utilities;
 
             metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
@@ -389,6 +408,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             nested_type_metadata_persisted_handler_type handler(const_cast<this_type *>(this));
             provider.AddPersistedHandler(pType, handler);
             return pType;
+#endif
         }
 
         bool TryGetType(type_metadata_type const &keyType, type_metadata_type *&pExistingType) const
@@ -595,9 +615,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         mutable std::vector<COR_SIGNATURE> m_sigs;
         mutable Utilities::TempPtrVector<base_type const> m_genericArgs;
         mutable boost::unordered_map<boost::shared_ptr<method_metadata_type const>, 
-                                     size_t, 
+                                     SIZE_T, 
                                      i_method_metadata_hash_type, 
                                      i_method_metadata_equal_to_type> m_methodToIndex;        
+        mutable type_to_index_map_type m_typeToIndex;
         mutable bool m_filled;
     };
 
@@ -652,6 +673,59 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     
     private:
         module_metadata_type *m_pMod;
+    };
+
+
+
+
+
+    namespace TypeMetadataDetail {
+
+        template<
+            class TypeMetadataApiHolder
+        >    
+        struct NestedTypeMetadataPersistedHandlerFacade : 
+            TypeMetadataFacade<TypeMetadataApiHolder>
+        {
+            //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            //typedef typename mpl::eval_if<
+            //    CPP_ANONYM_HAS_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+            //    CPP_ANONYM_GET_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+            //    mpl::void_
+            //>::type type_metadata_provider_type;
+        };
+
+    }   // namespace TypeMetadataDetail {
+
+    template<
+        class TypeMetadataApiHolder
+    >    
+    class BaseNestedTypeMetadataPersistedHandler  // つまり、ここも Nested Type 向けの Persisted Handler が必要になるってことかな。
+    {
+    public:
+        typedef TypeMetadataDetail::NestedTypeMetadataPersistedHandlerFacade<TypeMetadataApiHolder> facade;
+        typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
+        //typedef typename facade::module_metadata_type module_metadata_type;
+        typedef typename facade::type_metadata_type type_metadata_type;
+        typedef typename facade::type_metadata_provider_type type_metadata_provider_type;
+
+        typedef Utilities::TempPtr<type_metadata_type> sender_type;
+
+        BaseNestedTypeMetadataPersistedHandler(type_metadata_type *pType) : 
+            m_pType(pType)
+        { }
+        
+        void operator()(sender_type *pSender, void *pArg)
+        {
+            sender_type &pType = *pSender;
+            metadata_dispenser_type const *pDisp = m_pType->MapFirst<metadata_dispenser_type>();
+            type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+            m_pType->m_typeToIndex[pType.Get()] = provider.RegisterObject(pType);
+        }
+    
+    private:
+        type_metadata_type *m_pType;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

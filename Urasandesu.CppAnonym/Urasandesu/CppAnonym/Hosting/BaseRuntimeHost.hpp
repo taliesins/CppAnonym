@@ -310,7 +310,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             }
             else
             {
-                size_t index = m_infoToIndex[key];
+                SIZE_T index = m_infoToIndex[key];
                 InfoProvider &provider = ProviderOf<Info>();
                 pExistingInfo = provider.GetObject(index);
                 return true;
@@ -321,7 +321,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         mutable std::wstring m_corVersion;
         mutable bool m_corSysDirPathInitialized;
         mutable boost::filesystem::path m_corSysDirPath;
-        mutable boost::unordered_map<Utilities::TypeInfo, size_t, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infoToIndex;
+        mutable boost::unordered_map<Utilities::TypeInfo, SIZE_T, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infoToIndex;
     };
 
     

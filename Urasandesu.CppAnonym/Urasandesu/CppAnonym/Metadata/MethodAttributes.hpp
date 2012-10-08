@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace MethodAttributesDetail {
 
         struct MethodAttributesDef
         {
@@ -47,9 +47,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         };
 
-    }   // Detail
+    }   // MethodAttributesDetail
 
-    typedef SafeEnum<Detail::MethodAttributesDef> MethodAttributes;
+    typedef SafeEnum<MethodAttributesDetail::MethodAttributesDef> MethodAttributes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

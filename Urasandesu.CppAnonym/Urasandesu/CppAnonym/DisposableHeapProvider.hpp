@@ -20,13 +20,14 @@ namespace Urasandesu { namespace CppAnonym {
 
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class I>
         struct DisposingInfoFacade
         {
             typedef typename mpl::deref<I>::type disposing_info_type;
-            typedef PersistableHeapProvider<mpl::vector<disposing_info_type> > base_type;
+            typedef PersistableHeapProvider<disposing_info_type> base_type;
             typedef typename base_type::object_type object_type;
             typedef typename base_type::persisted_handler_type persisted_handler_type;
         };
@@ -52,22 +53,17 @@ namespace Urasandesu { namespace CppAnonym {
                 return base_type::NewObject();
             }
 
-            TempPtr<object_type> WrapRegisteredObject(object_type *pObj)
-            {
-                return base_type::WrapRegisteredObject(pObj);
-            }
-
-            size_t RegisterObject(TempPtr<object_type> &p)
+            SIZE_T RegisterObject(TempPtr<object_type> &p)
             {
                 return base_type::RegisterObject(p);
             }
 
-            object_type *GetObject(size_t n)
+            object_type *GetObject(SIZE_T n)
             {
                 return base_type::GetObject(n);
             }
 
-            size_t AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
+            SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
             {
                 return base_type::AddPersistedHandler(p, handler);
             }
@@ -136,8 +132,9 @@ namespace Urasandesu { namespace CppAnonym {
         template<class ReversedDisposingInfoTypes, class ProvidingType>
         class ProviderOfImpl
         {
-            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::find<ReversedDisposingInfoTypes, ProvidingType>::type i;
             typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
+            BOOST_MPL_ASSERT((not_<boost::is_same<i, i_end> >));
         public:
             typedef DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, i, i_end> type;
         };
@@ -207,11 +204,22 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
+        template<class T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
+        class DesignatedSequence
+        {
+            typedef mpl::vector<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)> types;
+            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
+        public:
+            typedef typename fold<filter_view<types, is_designated>, mpl::vector<>, mpl::push_back<_1, _2> >::type type;
+        };
+
     }   // namespace DisposableHeapProviderDetail {
 
-    template<class DisposingInfoTypes>
+    template<class T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
     struct ATL_NO_VTABLE DisposableHeapProvider : 
-        DisposableHeapProviderDetail::DisposableHeapProviderImpl<DisposingInfoTypes>
+        DisposableHeapProviderDetail::DisposableHeapProviderImpl<
+            typename DisposableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
+        >
     {
     };
 

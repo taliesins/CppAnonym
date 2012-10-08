@@ -12,6 +12,7 @@ namespace Urasandesu { namespace CppAnonym {
         
         namespace mpl = boost::mpl;
         using namespace boost;
+        using namespace boost::mpl;
 
         template<class ReversedProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE DependentObjectsProviderImplImpl : 
@@ -78,11 +79,22 @@ namespace Urasandesu { namespace CppAnonym {
             }
         };
 
+        template<class T0, CPPANONYM_DEPENDENT_OBJECTS_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
+        class DesignatedSequence
+        {
+            typedef mpl::vector<T0, CPPANONYM_DEPENDENT_OBJECTS_PROVIDER_ENUM_SHIFTED_PARAMS(T)> types;
+            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
+        public:
+            typedef typename fold<filter_view<types, is_designated>, mpl::vector<>, mpl::push_back<_1, _2> >::type type;
+        };
+
     }   // namespace DependentObjectsProviderDetail {
 
-    template<class ProvidingTypes>
+    template<class T0, CPPANONYM_DEPENDENT_OBJECTS_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
     struct ATL_NO_VTABLE DependentObjectsProvider : 
-        DependentObjectsProviderDetail::DependentObjectsProviderImpl<ProvidingTypes>
+        DependentObjectsProviderDetail::DependentObjectsProviderImpl<
+            typename DependentObjectsProviderDetail::DesignatedSequence<T0, CPPANONYM_DEPENDENT_OBJECTS_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
+        >
     {
     };
 

@@ -6,7 +6,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-    namespace Detail {
+    namespace FlattenDetail {
 
         namespace mpl = boost::mpl;
 
@@ -25,12 +25,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         {
         };
     
-    }   // namespace Detail {
+    }   // namespace FlattenDetail {
 
 
     template<class Sequence, class F>
     struct Flatten : 
-        Detail::FlattenImpl<Sequence, F>
+        FlattenDetail::FlattenImpl<Sequence, F>
     {
     };
 

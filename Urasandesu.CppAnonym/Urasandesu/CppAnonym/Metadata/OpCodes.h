@@ -12,7 +12,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     public:
 #define OPDEF_EX(canonicalName, canonicalNameEx) \
-        static const Detail::OpCode_<OpCodeTypes::canonicalName> canonicalNameEx;
+        static const OpCodeDetail::OpCode_<OpCodeTypes::canonicalName> canonicalNameEx;
 #include <Urasandesu/CppAnonym/Metadata/OpCodeEx.def>
 #undef OPDEF_EX
     private:

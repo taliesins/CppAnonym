@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace OpCodeKindTypesDetail {
 
         struct OpCodeKindTypesDef
         {
@@ -23,9 +23,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             };
         };
 
-    }   // Detail
+    }   // namespace OpCodeKindTypesDetail {
 
-    typedef SafeEnum<Detail::OpCodeKindTypesDef> OpCodeKindTypes;
+    typedef SafeEnum<OpCodeKindTypesDetail::OpCodeKindTypesDef> OpCodeKindTypes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

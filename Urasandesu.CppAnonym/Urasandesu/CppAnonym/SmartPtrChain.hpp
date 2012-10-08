@@ -103,8 +103,8 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current, class ChainInfoTypes>
         class ATL_NO_VTABLE SmartPtrChainImplImpl<Current, 
                                               ChainInfoTypes, 
-                                              typename Traits::DistinctEnd<ChainInfoTypes>::type, 
-                                              typename Traits::DistinctEnd<ChainInfoTypes>::type> : 
+                                              typename mpl::end<ChainInfoTypes>::type, 
+                                              typename mpl::end<ChainInfoTypes>::type> : 
             noncopyable
         {
         };
@@ -184,9 +184,9 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current, class ChainInfoTypes, class ChainingPreviousType>
         class ChainFromImpl
         {
-            typedef typename Traits::Distinct<ChainInfoTypes>::type distinct_chain_info_types;
-            typedef typename mpl::find_if<distinct_chain_info_types, HasPreviousT<mpl::_1, ChainingPreviousType> >::type i;
-            typedef typename Traits::DistinctEnd<ChainInfoTypes>::type i_end;
+            typedef typename mpl::find_if<ChainInfoTypes, HasPreviousT<mpl::_1, ChainingPreviousType> >::type i;
+            typedef typename mpl::end<ChainInfoTypes>::type i_end;
+            BOOST_MPL_ASSERT((mpl::not_<boost::is_same<i, i_end> >));
         public:
             typedef SmartPtrChainImplImpl<Current, ChainInfoTypes, i, i_end> type;
         };
@@ -195,8 +195,8 @@ namespace Urasandesu { namespace CppAnonym {
         class ATL_NO_VTABLE SmartPtrChainImpl : 
             public SmartPtrChainImplImpl<Current, 
                                          ChainInfoTypes, 
-                                         typename Traits::DistinctBegin<ChainInfoTypes>::type, 
-                                         typename Traits::DistinctEnd<ChainInfoTypes>::type>
+                                         typename mpl::begin<ChainInfoTypes>::type, 
+                                         typename mpl::end<ChainInfoTypes>::type>
         {
         public:
             typedef SmartPtrChainImpl<Current, ChainInfoTypes> this_type;
@@ -249,18 +249,18 @@ namespace Urasandesu { namespace CppAnonym {
                 return Map<Current>();
             }
 
-            template<
-                class T,
-                class HeapProvider
-            >
-            T *NewObjectFirst(HeapProvider &provider) const
-            {
-                container<T> container;
-                new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-                mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
-                _ASSERTE(container.m_p);
-                return container.m_p;
-            }
+            //template<
+            //    class T,
+            //    class HeapProvider
+            //>
+            //T *NewObjectFirst(HeapProvider &provider) const
+            //{
+            //    container<T> container;
+            //    new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
+            //    mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
+            //    _ASSERTE(container.m_p);
+            //    return container.m_p;
+            //}
 
         private:
             template<class T>
@@ -323,33 +323,33 @@ namespace Urasandesu { namespace CppAnonym {
                 container<T> *m_pContainer;
             };
 
-            template<
-                class T,
-                class HeapProvider
-            >
-            struct new_object_first_selector
-            {
-                new_object_first_selector(this_type const &this_, HeapProvider &provider, container<T> &container) : 
-                    m_pThis(&this_),
-                    m_pProvider(&provider),
-                    m_pContainer(&container)
-                { }
+            //template<
+            //    class T,
+            //    class HeapProvider
+            //>
+            //struct new_object_first_selector
+            //{
+            //    new_object_first_selector(this_type const &this_, HeapProvider &provider, container<T> &container) : 
+            //        m_pThis(&this_),
+            //        m_pProvider(&provider),
+            //        m_pContainer(&container)
+            //    { }
 
-                template<class Previous>
-                void operator()(wrap<Previous> const &)
-                {
-                    if (!m_pContainer->m_p)
-                    {
-                        typedef typename chain_from<Previous>::type PreviousChain;
-                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                        m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
-                    }
-                }
+            //    template<class Previous>
+            //    void operator()(wrap<Previous> const &)
+            //    {
+            //        if (!m_pContainer->m_p)
+            //        {
+            //            typedef typename chain_from<Previous>::type PreviousChain;
+            //            PreviousChain &chain = m_pThis->ChainFrom<Previous>();
+            //            m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
+            //        }
+            //    }
 
-                this_type const *m_pThis;
-                HeapProvider *m_pProvider;
-                container<T> *m_pContainer;
-            };
+            //    this_type const *m_pThis;
+            //    HeapProvider *m_pProvider;
+            //    container<T> *m_pContainer;
+            //};
         };
     
     }   // namespace SmartPtrChainDetail

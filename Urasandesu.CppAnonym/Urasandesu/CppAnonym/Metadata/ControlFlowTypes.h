@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace ControlFlowTypesDetail {
 
         struct ControlFlowTypesDef
         {
@@ -26,9 +26,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             };
         };
 
-    }   // Detail
+    }   // namespace ControlFlowTypesDetail {
 
-    typedef SafeEnum<Detail::ControlFlowTypesDef> ControlFlowTypes;
+    typedef SafeEnum<ControlFlowTypesDetail::ControlFlowTypesDef> ControlFlowTypes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

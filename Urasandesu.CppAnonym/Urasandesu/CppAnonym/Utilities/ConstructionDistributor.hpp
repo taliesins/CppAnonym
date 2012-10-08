@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
 
+#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
+#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTORFWD_HPP
 #include <Urasandesu/CppAnonym/Utilities/ConstructionDistributorFwd.hpp>
 #endif
@@ -11,6 +15,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     namespace ConstructionDistributorDetail {
 
         using namespace boost;
+        using namespace Urasandesu::CppAnonym::Traits;
 
         template<class T, class IsPointer, class HasTrivialConstructor>
         struct ConstructImpl
@@ -23,7 +28,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class A1>
             static void Construct(void *p, A1 arg1)
             {
-                BOOST_MPL_ASSERT((is_same<T, A1>));
+                BOOST_MPL_ASSERT((is_same<T, typename RemoveConst<typename remove_reference<A1>::type>::type>));
                 ::memcpy_s(p, sizeof(T), &arg1, sizeof(T));
             }
         };

@@ -8,7 +8,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-    namespace Detail {
+    namespace StackBehaviourTypesDetail {
 
         struct StackBehaviourTypesDef
         {
@@ -34,9 +34,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             };
         };
 
-    }   // Detail
+    }   // namespace StackBehaviourTypesDetail {
 
-    typedef SafeEnum<Detail::StackBehaviourTypesDef> StackBehaviourTypes;
+    typedef SafeEnum<StackBehaviourTypesDetail::StackBehaviourTypesDef> StackBehaviourTypes;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

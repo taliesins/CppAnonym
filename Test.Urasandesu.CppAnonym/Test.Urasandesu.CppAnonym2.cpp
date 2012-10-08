@@ -2245,6 +2245,7 @@ namespace {
         typedef PropertyMetadataGenerator7FAEDE99 PropertyMetadataGenerator;
 
         HostInfo const *pHostInfo = HostInfo::CreateHost();
+        ASSERT_TRUE(pHostInfo != NULL);
 
         RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost != NULL);

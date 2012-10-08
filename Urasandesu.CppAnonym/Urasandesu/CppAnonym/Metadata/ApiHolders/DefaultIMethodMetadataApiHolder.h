@@ -24,7 +24,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    namespace Detail {
+    namespace DefaultIMethodMetadataApiHolderDetail {
 
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
@@ -38,10 +38,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultIMethodMetadataApiHolderDetail {
 
     struct DefaultIMethodMetadataApiHolder : 
-        Detail::DefaultIMethodMetadataApiHolderImpl
+        DefaultIMethodMetadataApiHolderDetail::DefaultIMethodMetadataApiHolderImpl
     {
     };
 

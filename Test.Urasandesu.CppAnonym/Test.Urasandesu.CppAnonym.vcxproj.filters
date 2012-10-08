@@ -248,5 +248,17 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AssignationDistributorTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\MaxSizeTypeTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\VariantPtrTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.Urasandesu.CppAnonym3.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SmartPtrChainTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,6 +4,18 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
+#define CPPANONYM_PERSISTABLE_HEAP_PROVIDER_LIMIT_TYPES \
+    BOOST_MPL_LIMIT_VECTOR_SIZE
+
+#define CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS_IMPL(z, N, T) \
+    class BOOST_PP_CAT(T, N) = boost::mpl::void_
+
+#define CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS \
+    BOOST_PP_ENUM(CPPANONYM_PERSISTABLE_HEAP_PROVIDER_LIMIT_TYPES, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS_IMPL, T)
+
+#define CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(param)  \
+    BOOST_PP_ENUM_SHIFTED_PARAMS(CPPANONYM_PERSISTABLE_HEAP_PROVIDER_LIMIT_TYPES, param)
+
     namespace PersistableHeapProviderDetail {
 
         template<class I>
@@ -11,11 +23,6 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class ReversedProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE PersistableHeapProviderImplImpl;
-
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistentInfoObject, object_type);
-
-        template<class PersistentInfo, class T>
-        struct HasObjectT;
 
         template<class PersistentInfoTypes, LONG N>
         class ProvidingTypeAtImpl;
@@ -26,9 +33,12 @@ namespace Urasandesu { namespace CppAnonym {
         template<class PersistentInfoTypes>
         struct ATL_NO_VTABLE PersistableHeapProviderImpl;
 
+        template<CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
+        class DesignatedSequence;
+
     }   // namespace PersistableHeapProviderDetail {
 
-    template<class PersistentInfoTypes>
+    template<CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
     struct ATL_NO_VTABLE PersistableHeapProvider;
 
 }}   // namespace Urasandesu { namespace CppAnonym {

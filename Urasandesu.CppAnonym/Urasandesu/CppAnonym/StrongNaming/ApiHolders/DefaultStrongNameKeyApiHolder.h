@@ -16,7 +16,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace ApiHolders {
 
-    namespace Detail {
+    namespace DefaultStrongNameKeyApiHolderDetail {
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::StrongNaming::Interfaces;
@@ -28,10 +28,10 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming { namespace 
             > api_cartridges;
         };
 
-    }   // namespace Detail {
+    }   // namespace DefaultStrongNameKeyApiHolderDetail {
 
     struct DefaultStrongNameKeyApiHolder : 
-        Detail::DefaultStrongNameKeyApiHolderImpl
+        DefaultStrongNameKeyApiHolderDetail::DefaultStrongNameKeyApiHolderImpl
     {
     };
 
