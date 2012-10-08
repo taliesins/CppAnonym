@@ -24,14 +24,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         struct DefaultModuleMetadataApiHolderImpl
         {
             typedef map<
-                pair<IModuleMetadataLabel, IModuleMetadata>,
+                pair<MetadataDispenserLabel, MetadataDispenser>,
                 pair<AssemblyMetadataLabel, AssemblyMetadata>,
-                pair<IMetaDataImport2, IMetaDataImport2>,
-                pair<ITypeMetadataLabel, ITypeMetadata>,
+                pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<IModuleMetadataLabel, IModuleMetadata>,
                 pair<TypeMetadataLabel, TypeMetadata>,
+                pair<TypeMetadataPersistedHandlerLabel, TypeMetadataPersistedHandler>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<ITypeMetadataHashLabel, ITypeMetadataHash>,
                 pair<ITypeMetadataEqualToLabel, ITypeMetadataEqualTo>,
-                pair<MetadataDispenserLabel, MetadataDispenser>
+                pair<IMetaDataImport2, IMetaDataImport2>
             > api_cartridges;
         };
 

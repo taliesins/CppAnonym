@@ -31,22 +31,22 @@ namespace Urasandesu { namespace CppAnonym {
         {
             typedef typename mpl::deref<I>::type persistent_info_type;
             typedef typename persistent_info_type::object_type object_type;
-            typedef typename persistent_info_type::handler_type handler_type;
+            typedef typename persistent_info_type::persisted_handler_type persisted_handler_type;
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::object_deleter_type object_deleter_type;
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::type holder_impl_type;
             typedef typename TempPtr<object_type>::make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
-            typedef typename TempPtr<object_type>::make_heap_persisted_handler_impl<handler_type>::type persisted_handler_impl_type;
-            typedef typename TempPtr<object_type>::make_heap_persisted_handler_impl<handler_type>::deleter_type persisted_handler_impl_deleter_type;
+            typedef typename TempPtr<object_type>::make_heap_persisted_handler_holder_impl<persisted_handler_type>::type persisted_handler_holder_impl_type;
+            typedef typename TempPtr<object_type>::make_heap_persisted_handler_holder_impl<persisted_handler_type>::deleter_type persisted_handler_holder_impl_deleter_type;
             typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> object_object_tag_type;
             typedef ObjectTag<holder_impl_type, QuickHeapWithoutSubscriptOperator> holder_impl_object_tag_type;
-            typedef ObjectTag<persisted_handler_impl_type, QuickHeapWithoutSubscriptOperator> persisted_handler_impl_object_tag_type;
-            typedef SimpleHeapProvider<mpl::vector<object_object_tag_type, holder_impl_object_tag_type, persisted_handler_impl_object_tag_type> > base_type;
+            typedef ObjectTag<persisted_handler_holder_impl_type, QuickHeapWithoutSubscriptOperator> persisted_handler_holder_impl_object_tag_type;
+            typedef SimpleHeapProvider<mpl::vector<object_object_tag_type, holder_impl_object_tag_type, persisted_handler_holder_impl_object_tag_type> > base_type;
             typedef typename base_type::provider_of<object_type>::type object_provider_type;
             typedef typename base_type::provider_of<holder_impl_type>::type holder_impl_provider_type;
-            typedef typename base_type::provider_of<persisted_handler_impl_type>::type persisted_handler_impl_provider_type;
+            typedef typename base_type::provider_of<persisted_handler_holder_impl_type>::type persisted_handler_holder_impl_provider_type;
             typedef typename object_provider_type::object_heap_type object_heap_type;
             typedef typename holder_impl_provider_type::object_heap_type holder_impl_heap_type;
-            typedef typename persisted_handler_impl_provider_type::object_heap_type persisted_handler_impl_heap_type;
+            typedef typename persisted_handler_holder_impl_provider_type::object_heap_type persisted_handler_holder_impl_heap_type;
         };
 
         template<class ReversedPersistentInfoTypes, class I, class IEnd>
@@ -57,18 +57,18 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef typename PersistentInfoFacade<I>::base_type base_type;
             typedef typename PersistentInfoFacade<I>::object_type object_type;
-            typedef typename PersistentInfoFacade<I>::handler_type handler_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_type persisted_handler_type;
             typedef typename PersistentInfoFacade<I>::object_deleter_type object_deleter_type;
             typedef typename PersistentInfoFacade<I>::holder_impl_type holder_impl_type;
             typedef typename PersistentInfoFacade<I>::holder_impl_deleter_type holder_impl_deleter_type;
-            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_type persisted_handler_impl_type;
-            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_deleter_type persisted_handler_impl_deleter_type;            
+            typedef typename PersistentInfoFacade<I>::persisted_handler_holder_impl_type persisted_handler_holder_impl_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_holder_impl_deleter_type persisted_handler_holder_impl_deleter_type;            
             typedef typename PersistentInfoFacade<I>::object_provider_type object_provider_type;
             typedef typename PersistentInfoFacade<I>::holder_impl_provider_type holder_impl_provider_type;
-            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_provider_type persisted_handler_impl_provider_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_holder_impl_provider_type persisted_handler_holder_impl_provider_type;
             typedef typename PersistentInfoFacade<I>::object_heap_type object_heap_type;
             typedef typename PersistentInfoFacade<I>::holder_impl_heap_type holder_impl_heap_type;
-            typedef typename PersistentInfoFacade<I>::persisted_handler_impl_heap_type persisted_handler_impl_heap_type;
+            typedef typename PersistentInfoFacade<I>::persisted_handler_holder_impl_heap_type persisted_handler_holder_impl_heap_type;
 
             ~PersistableHeapProviderImplImpl()
             {
@@ -87,6 +87,24 @@ namespace Urasandesu { namespace CppAnonym {
                 return TempPtr<object_type>(pHolderImpl);
             }
 
+            TempPtr<object_type> WrapRegisteredObject(object_type *pObj)
+            {
+#if _DEBUG
+                if (AnyObjects())
+                {
+                    typedef std::vector<object_type *>::iterator Iterator;
+                    Iterator result = std::find(Objects().begin(), Objects().end(), pObj);
+                    _ASSERTE(result != Objects().end());
+                }
+#endif
+                holder_impl_deleter_type implDeleter(HolderImplHeap());
+                holder_impl_type *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
+
+                TempPtr<object_type> p(pHolderImpl);
+                p.Persist();
+                return p;
+            }
+
             size_t RegisterObject(TempPtr<object_type> &p)
             {
                 p.Persist();
@@ -99,11 +117,10 @@ namespace Urasandesu { namespace CppAnonym {
                 return Objects()[n];
             }
 
-            template<class A1>
-            size_t AddPersistedHandler(TempPtr<object_type> &p, A1 arg1)
+            size_t AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
             {
-                persisted_handler_impl_deleter_type implDeleter(PersistedHandlerImplHeap());
-                persisted_handler_impl_type *pHandlerImpl = PersistedHandlerImplHeap().New(handler_type(arg1), implDeleter);
+                persisted_handler_holder_impl_deleter_type implDeleter(PersistedHandlerImplHeap());
+                persisted_handler_holder_impl_type *pHandlerImpl = PersistedHandlerImplHeap().New(handler, implDeleter);
 
                 return p.AddPersistedHandler(pHandlerImpl);
             }
@@ -141,9 +158,9 @@ namespace Urasandesu { namespace CppAnonym {
                 return provider.Heap();
             }
 
-            persisted_handler_impl_heap_type &PersistedHandlerImplHeap()
+            persisted_handler_holder_impl_heap_type &PersistedHandlerImplHeap()
             {
-                persisted_handler_impl_provider_type &provider = base_type::ProviderOf<persisted_handler_impl_type>();
+                persisted_handler_holder_impl_provider_type &provider = base_type::ProviderOf<persisted_handler_holder_impl_type>();
                 return provider.Heap();
             }
 
@@ -170,6 +187,14 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename mpl::at_c<PersistentInfoTypes, N>::type persistent_info_type;
         public:
             typedef typename persistent_info_type::object_type type;
+        };
+
+        template<class PersistentInfoTypes, LONG N>
+        class ProvidingHandlerTypeAtImpl
+        {
+            typedef typename mpl::at_c<PersistentInfoTypes, N>::type persistent_info_type;
+        public:
+            typedef typename persistent_info_type::persisted_handler_type type;
         };
 
         template<class ReversedPersistentInfoTypes, class ProvidingType>
@@ -199,6 +224,12 @@ namespace Urasandesu { namespace CppAnonym {
             template<LONG N>
             struct providing_type_at : 
                 ProvidingTypeAtImpl<persistent_info_types, N>
+            {
+            };
+
+            template<LONG N>
+            struct providing_handler_type_at : 
+                ProvidingHandlerTypeAtImpl<persistent_info_types, N>
             {
             };
 

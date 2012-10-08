@@ -5,10 +5,10 @@
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 #define CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(name, member) \
-    template<class T> \
+    template<class GetMemberTypeT> \
     struct Get_##name \
     { \
-        typedef typename T::member type; \
+        typedef typename GetMemberTypeT::member type; \
     };
 
 #define CPP_ANONYM_USING_GET_MEMBER_TYPE(name) \

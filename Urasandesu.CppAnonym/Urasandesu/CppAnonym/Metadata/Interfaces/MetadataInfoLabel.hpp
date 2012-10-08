@@ -5,6 +5,7 @@
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
     struct MetadataInfoLabel { };
+    struct MetadataInfoPersistedHandlerLabel { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 

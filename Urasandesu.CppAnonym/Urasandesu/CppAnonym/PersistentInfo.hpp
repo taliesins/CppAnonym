@@ -10,12 +10,12 @@ namespace Urasandesu { namespace CppAnonym {
     
     template<
         class T,
-        class Handler
+        class PersistedHandler
     >
     struct PersistentInfo
     {
         typedef T object_type;
-        typedef Handler handler_type;
+        typedef PersistedHandler persisted_handler_type;
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

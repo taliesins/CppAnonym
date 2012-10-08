@@ -26,33 +26,63 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
     {
     };
 
+    namespace FusionInfoDetail {
+
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
+
+        template<
+            class FusionInfoApiHolder
+        >    
+        struct FusionInfoFacade
+        {
+            typedef typename FusionInfoApiAt<FusionInfoApiHolder, IAssemblyCache>::type com_assembly_cache_type;
+            typedef typename FusionInfoApiAt<FusionInfoApiHolder, RuntimeHostLabel>::type runtime_host_type;
+            typedef typename FusionInfoApiAt<FusionInfoApiHolder, FusionInfoLabel>::type fusion_info_type;
+            typedef typename FusionInfoApiAt<FusionInfoApiHolder, AssemblyInfoLabel>::type assembly_info_type;
+
+
+            typedef mpl::vector<
+                assembly_info_type
+            > providing_types;
+            typedef SmartHeapProvider<providing_types> base_heap_provider_type;
+
+
+            typedef typename base_heap_provider_type::provider_of<assembly_info_type>::type assembly_info_provider_type;
+
+
+            typedef runtime_host_type fusion_info_previous_type;
+            
+            
+            typedef mpl::vector<
+                SmartPtrChainInfo<fusion_info_previous_type>
+            > chain_info_types;
+            typedef SmartPtrChain<fusion_info_type, chain_info_types> base_ptr_chain_type;
+            
+            
+            typedef typename base_ptr_chain_type::chain_from<fusion_info_previous_type>::type fusion_info_chain_type;
+        };
+
+    }   // namespace FusionInfoDetail {
+
     template<
         class FusionInfoApiHolder
     >    
     class BaseFusionInfo : 
-        public SmartPtrChain<
-            BaseFusionInfo<FusionInfoApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type>
-            >
-        >,
-        SmartHeapProvider<
-            boost::mpl::vector<
-                typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type
-            >
-        >,
+        public FusionInfoDetail::FusionInfoFacade<FusionInfoApiHolder>::base_ptr_chain_type,
+        public FusionInfoDetail::FusionInfoFacade<FusionInfoApiHolder>::base_heap_provider_type,
         public SimpleDisposable
     {
     public:
         typedef BaseFusionInfo<FusionInfoApiHolder> this_type;
-        
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, Hosting::Interfaces::RuntimeHostLabel>::type runtime_host_type;
-        //typedef typename FusionInfoApiAt<FusionInfoApiHolder, Interfaces::AssemblyInfoLabel>::type assembly_info_type;
-        typedef typename FusionInfoApiAt<FusionInfoApiHolder, IAssemblyCache>::type com_assembly_cache_type;
 
-        typedef typename providing_type_at<0>::type assembly_info_type;
+        typedef FusionInfoDetail::FusionInfoFacade<FusionInfoApiHolder> facade;
+        typedef typename facade::com_assembly_cache_type com_assembly_cache_type;
+        typedef typename facade::runtime_host_type runtime_host_type;
+        typedef typename facade::assembly_info_type assembly_info_type;
+        typedef typename facade::assembly_info_provider_type assembly_info_provider_type;
 
-        typedef typename provider_of<assembly_info_type>::type assembly_info_provider_type;
 
         BaseFusionInfo()
         { }
@@ -87,25 +117,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
     private:
         friend typename runtime_host_type;
-
-        //void Init(boost::weak_ptr<runtime_host_type> const &pRuntimeAsScope) const
-        //{
-        //    _ASSERTE(m_pRuntimeAsScope.use_count() == 0);
-        //    m_pRuntimeAsScope = pRuntimeAsScope;
-        //}
-
-        //void SetThis(boost::weak_ptr<this_type> const &pThis) const
-        //{
-        //    _ASSERTE(m_pThis.use_count() == 0);
-        //    m_pThis = pThis;
-        //}
-
-        //void SetVersion(std::wstring const &version)
-        //{
-        //    _ASSERTE(!version.empty());
-        //    _ASSERTE(m_version.empty());
-        //    m_version = version;
-        //}
 
         com_assembly_cache_type &GetCOMAssemblyCache()
         {
@@ -142,11 +153,62 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
             }
             return *m_pComAsmCache;
         }
-        
-        //mutable boost::weak_ptr<runtime_host_type> m_pRuntimeAsScope;
-        //mutable boost::weak_ptr<this_type> m_pThis;
-        //std::wstring m_version;
+
         mutable ATL::CComPtr<com_assembly_cache_type> m_pComAsmCache;
+    };
+
+
+
+
+
+    namespace FusionInfoDetail {
+
+        template<
+            class FusionInfoApiHolder
+        >    
+        struct FusionInfoPersistedHandlerFacade : 
+            FusionInfoFacade<FusionInfoApiHolder>
+        {
+            CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(FusionInfoProvider, fusion_info_provider_type);
+            CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(FusionInfoProvider, fusion_info_provider_type);
+            typedef typename mpl::eval_if<
+                CPP_ANONYM_HAS_MEMBER_TYPE(FusionInfoProvider, runtime_host_type), 
+                CPP_ANONYM_GET_MEMBER_TYPE(FusionInfoProvider, runtime_host_type), 
+                mpl::void_
+            >::type fusion_info_provider_type;
+        };
+
+    }   // namespace FusionInfoDetail {
+
+    template<
+        class FusionInfoApiHolder
+    >    
+    class BaseFusionInfoPersistedHandler
+    {
+    public:
+        typedef FusionInfoDetail::FusionInfoPersistedHandlerFacade<FusionInfoApiHolder> facade;
+        typedef typename facade::runtime_host_type runtime_host_type;
+        typedef typename facade::fusion_info_type fusion_info_type;
+        typedef typename facade::fusion_info_provider_type fusion_info_provider_type;
+
+        typedef Utilities::TempPtr<fusion_info_type> sender_type;
+
+        BaseFusionInfoPersistedHandler(runtime_host_type *pRuntimeHost) : 
+            m_pRuntimeHost(pRuntimeHost)
+        { 
+            _ASSERTE(pRuntimeHost != NULL);
+        }
+                
+        void operator()(sender_type *pSender, void *pArg)
+        {
+            sender_type &pFuInfo = *pSender;
+            fusion_info_provider_type &provider = m_pRuntimeHost->ProviderOf<fusion_info_type>();
+            TypeInfo key = mpl::identity<fusion_info_type>();
+            m_pRuntimeHost->m_infoToIndex[key] = provider.RegisterObject(pFuInfo);
+        }
+                
+    private:                
+        runtime_host_type *m_pRuntimeHost;
     };
         
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {

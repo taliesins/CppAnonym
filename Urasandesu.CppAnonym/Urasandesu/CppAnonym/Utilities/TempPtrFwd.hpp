@@ -6,7 +6,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace TempPtrDetail {
 
-        struct PersistedHandler;
+        struct PersistedHandlerHolder;
 
         CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(PersistedHandlerSender, sender_type);
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandlerSender, sender_type);
@@ -15,10 +15,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(PersistedHandlerArg, arg_type);
 
         template<class Handler, class ImplD>
-        struct PersistedHandlerImpl;
+        struct PersistedHandlerHolderImpl;
 
-        template<class Handler>
-        struct PersistedHandlerImplFactory;
+        template<class Handler, class ImplD>
+        struct MakePersistedHandlerHolderImpl;
+
+        template<
+            class Handler, 
+            class Tag = QuickHeapWithoutSubscriptOperator
+        >
+        struct MakeHeapPersistedHandlerHolderImpl;
 
         template<class T>
         class TempPtrImpl;

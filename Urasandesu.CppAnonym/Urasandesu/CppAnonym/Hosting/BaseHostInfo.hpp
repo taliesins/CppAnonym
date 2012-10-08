@@ -51,19 +51,32 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         >    
         struct HostInfoFacade
         {
-            typedef BaseHostInfo<HostInfoApiHolder> host_info_type;
-            typedef BaseHostInfoPersistedHandler<HostInfoApiHolder> host_info_persisted_handler_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type host_info_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoPersistedHandlerLabel>::type host_info_persisted_handler_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type runtime_host_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostPersistedHandlerLabel>::type runtime_host_persisted_handler_type;
+            
+            
             typedef mpl::vector<
-                DisposingInfo<host_info_type, host_info_persisted_handler_type>
+                DisposingInfo<host_info_type, host_info_persisted_handler_type>,
+                DisposingInfo<runtime_host_type, runtime_host_persisted_handler_type>
             > disposing_info_types;
             typedef DisposableHeapProvider<disposing_info_types> base_heap_provider_type;
+            
+            
             typedef typename base_heap_provider_type::provider_of<host_info_type>::type host_info_provider_type;
+            typedef typename base_heap_provider_type::provider_of<runtime_host_type>::type runtime_host_provider_type;
 
+            
             typedef mpl::void_ host_info_previous_type;
+            
+            
             typedef mpl::vector<
                 SmartPtrChainInfo<host_info_previous_type>
             > chain_info_types;
             typedef SmartPtrChain<host_info_type, chain_info_types> base_ptr_chain_type;
+            
+            
             typedef typename base_ptr_chain_type::chain_from<host_info_previous_type>::type host_info_chain_type;
         }; 
     
@@ -76,44 +89,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     class BaseHostInfo : 
         public HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::base_ptr_chain_type, 
         public HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::base_heap_provider_type,
-        //public SmartPtrChain<
-        //    BaseHostInfo<HostInfoApiHolder>,
-        //    boost::mpl::vector<
-        //        SmartPtrChainInfo<boost::mpl::void_>
-        //    >
-        //>,
-        //public DisposableHeapProvider<
-        //    boost::mpl::vector<
-        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type
-        //    >
-        //>,
-        //public DisposableHeapProvider<
-        //    boost::mpl::vector<
-        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::HostInfoLabel>::type,
-        //        typename HostInfoApiAt<HostInfoApiHolder, Interfaces::RuntimeHostLabel>::type
-        //    >
-        //>,
         public SimpleDisposable
     {
     public:
         typedef BaseHostInfo<HostInfoApiHolder> this_type;
         
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_type host_info_type;
-        //typedef typename providing_type_at<0>::type host_info_type;
-        //typedef typename providing_type_at<1>::type runtime_host_type;
-        typedef int runtime_host_type;
-
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_provider_type host_info_provider_type;
-        //typedef typename provider_of<host_info_type>::type host_info_provider_type;
-        //typedef typename provider_of<runtime_host_type>::type runtime_host_provider_type;        
-        typedef int runtime_host_provider_type;        
-
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_previous_type host_info_previous_type;
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_chain_type host_info_chain_type;
-        //typedef typename chaining_previous_type_at<0>::type host_info_previous_type;        
-        //typedef typename chain_from<host_info_previous_type>::type host_info_chain_type; 
-
-        //typedef typename HostInfoApiAt<HostInfoApiHolder, Utilities::Interfaces::InfrastructureFactoryLabel>::type factory_type;
+        typedef HostInfoDetail::HostInfoFacade<HostInfoApiHolder> facade;
+        typedef typename facade::host_info_type host_info_type;
+        typedef typename facade::runtime_host_type runtime_host_type;
+        typedef typename facade::runtime_host_persisted_handler_type runtime_host_persisted_handler_type;
+        typedef typename facade::host_info_provider_type host_info_provider_type;
+        typedef typename facade::runtime_host_provider_type runtime_host_provider_type;
+        typedef typename facade::host_info_previous_type host_info_previous_type;
+        typedef typename facade::host_info_chain_type host_info_chain_type;
 
         static host_info_type *CreateHost()
         {
@@ -126,6 +114,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
         runtime_host_type const *GetRuntime(std::wstring const &version) const
         {
+            using namespace Urasandesu::CppAnonym::Utilities;
+            
             if (version.empty())
                 BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
 
@@ -156,6 +146,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
     private:
+        friend typename runtime_host_persisted_handler_type;
+
         static Utilities::TempPtr<host_info_type> NewHost()
         {
             using namespace Urasandesu::CppAnonym::Utilities;
@@ -165,26 +157,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             TempPtr<host_info_type> pHostInfo = host_info_chain_type::NewRootObject<host_info_type>(provider);
             provider.AddPersistedHandler(pHostInfo, &hostInfo);
             return pHostInfo;
-
-            //    //piyo_type &sPiyo = MyStorage::Object<piyo_type>();
-            //    //piyo_provider_type &provider = sPiyo.ProviderOf<piyo_type>();
-            //    //Utilities::TempPtr<piyo_type> pPiyo = provider.NewObject();
-            //    provider.AddPersistedHandler(pPiyo, &sPiyo);
-            //    return pPiyo;
-
-            //TempPtr<host_info_type> pHost = host_info_chain_type::NewRootObject<this_type, host_info_provider_type>();
-            ////struct pHost_Persisted
-            ////{
-            ////    typedef TempPtr<host_info_type> sender_type;
-
-            ////    void operator()(sender_type *pSender, void *pArg)
-            ////    {
-            ////        sender_type &pHost = *pSender;
-            ////        host_info_provider_type::RegisterStaticObject(pHost);
-            ////    }
-            ////};
-            //pHost.AddPersistedHandler(pHost_Persisted());
-            //return pHost;
         }
 
         Utilities::TempPtr<runtime_host_type> NewRuntime(std::wstring const &version) const
@@ -194,26 +166,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             runtime_host_provider_type &provider = ProviderOf<runtime_host_type>();
             host_info_chain_type &chain = ChainFrom<host_info_previous_type>();
             TempPtr<runtime_host_type> pRuntime = chain.NewObject<runtime_host_type>(provider);
-            struct pRuntime_Persisted
-            {
-                typedef TempPtr<runtime_host_type> sender_type;
-
-                pRuntime_Persisted(this_type &this_, std::wstring const &version) : 
-                    m_pThis(&this_),
-                    m_version(version)
-                { }
-                
-                void operator()(sender_type *pSender, void *pArg)
-                {
-                    sender_type &pRuntime = *pSender;
-                    runtime_host_provider_type &provider = m_pThis->ProviderOf<runtime_host_type>();
-                    m_pThis->m_versionToIndex[m_version] = provider.RegisterObject(pRuntime);
-                }
-                
-                this_type *m_pThis;
-                std::wstring m_version;
-            };
-            pRuntime.AddPersistedHandler(pRuntime_Persisted(const_cast<this_type &>(*this), version));
+            runtime_host_persisted_handler_type handler(const_cast<this_type *>(this), version);
+            provider.AddPersistedHandler(pRuntime, handler);
             return pRuntime;
         }
 
@@ -245,8 +199,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     class BaseHostInfoPersistedHandler
     {
     public:
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_type host_info_type;
-        typedef typename HostInfoDetail::HostInfoFacade<HostInfoApiHolder>::host_info_provider_type host_info_provider_type;
+        typedef HostInfoDetail::HostInfoFacade<HostInfoApiHolder> facade;
+        typedef typename facade::host_info_type host_info_type;
+        typedef typename facade::host_info_provider_type host_info_provider_type;
         
         typedef Utilities::TempPtr<host_info_type> sender_type;
 
@@ -260,16 +215,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
             host_info_provider_type &provider = m_pHostInfo->ProviderOf<host_info_type>();
             provider.RegisterObject(pHostInfo);
-            //host_info_provider_type::RegisterStaticObject(pHostInfo);
-            //piyo_provider_type &provider = m_pPiyo->ProviderOf<Piyo>();
-            //provider.RegisterObject(pPiyo);
         }
 
     private:
         host_info_type *m_pHostInfo;
     };
-
-
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

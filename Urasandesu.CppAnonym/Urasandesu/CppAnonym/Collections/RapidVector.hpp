@@ -161,7 +161,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         typedef typename boost::has_trivial_destructor<raw_value_type>::type has_raw_value_type_trivial_destructor;
         typedef boost::integral_constant<bool, false> false_;
 
-        RapidVector() : m_size(0), m_pVec(NULL) 
+        RapidVector() : 
+            m_pVec(NULL), 
+            m_size(0), 
+            m_capacity(RAPID_SIZE)
         { 
             ConstructRapidBuf(RapidBuf());
         }
@@ -174,37 +177,50 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 DestroyVec(); 
         }
 
-        RapidVector(type const &other)
+        RapidVector(type const &other) : 
+            m_pVec(NULL), 
+            m_size(0), 
+            m_capacity(RAPID_SIZE)
         {
-            if (other.RunAsRapid())
+            ConstructRapidBuf(RapidBuf());
+            
+            if (this != &other)
             {
-                ConstructRapidBuf(RapidBuf());
-                CopyRapidBuf(RapidBuf(), other.RapidBuf(), other.m_size);
-                m_pVec = NULL;
-                m_size = other.m_size;
+                reserve(other.size());
+                assign(other.begin(), other.end());
             }
-            else
-            {
-                ConstructRapidBuf(RapidBuf());
-                m_pVec = new std::vector<T, Alloc>(*other.m_pVec);
-                m_size = other.m_size;
-            }
+        }
+
+        void reserve(size_type count)
+        {
+            if (count <= capacity())
+                return;
+
+            if (count <= RAPID_SIZE)
+                return;
+
+            if (RunAsRapid() && RAPID_SIZE < count)
+                AssignVec(m_pVec, count, RapidBuf(), m_size);
+            m_pVec->reserve(count);
+            m_capacity = m_pVec->capacity();
         }
         
         void push_back(typename boost::call_traits<T>::param_type val)
         {
-            if (m_size < RAPID_SIZE)
+            if (RunAsRapid() && m_size < RAPID_SIZE)
             {
                 RapidBuf()[m_size++] = val;
                 return;
             }
             
-            if (m_size == RAPID_SIZE)
+            if (RunAsRapid() && m_size == RAPID_SIZE)
             {
                 AssignVec(m_pVec, m_size, RapidBuf(), RAPID_SIZE);
                 ++m_size;
             }
             m_pVec->push_back(val);
+            m_size = m_pVec->size();
+            m_capacity = m_pVec->capacity();
         }
 
         void pop_back()
@@ -219,12 +235,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
 
             m_pVec->pop_back();
-            // NOTE: std::vector::max_size has no effect by calling the pop_back method.
-            if (--m_size == RAPID_SIZE)
-            {
-                AssignRapidBuf(RapidBuf(), m_size, m_pVec);
-                DestroyVec();
-            }
+            m_size = m_pVec->size();
+            // NOTE: std::vector::capacity() has no effect by calling the pop_back method.
+        }
+
+        template<class Iterator>
+        void assign(Iterator first, Iterator last)
+        {
+            if (!empty())
+                erase(begin(), end());
+            
+            for (Iterator i = first, i_end = last; i != i_end; ++i)
+                push_back(*i);
         }
 
         iterator erase(const_iterator first, const_iterator last)
@@ -255,11 +277,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
             m_pVec->erase(first.m_i, last.m_i);
             m_size = m_pVec->size();
-            if (m_size < RAPID_SIZE)
-            {
-                AssignRapidBuf(RapidBuf(), m_size, m_pVec);
-                DestroyVec();
-            }
+            // NOTE: std::vector::capacity() has no effect by calling the erase() method.
 
             return begin();
         }
@@ -268,25 +286,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         {
             if (this != &other)
             {
-                if (other.RunAsRapid())
-                {
-                    if (RunAsRapid())
-                        DestructRapidBuf(RapidBuf(), m_size);
-                    else
-                        DestroyVec();
-                    CopyRapidBuf(RapidBuf(), other.RapidBuf(), other.m_size);
-                    m_pVec = other.m_pVec;
-                    m_size = other.m_size;
-                }
-                else
-                {
-                    if (RunAsRapid())
-                        DestructRapidBuf(RapidBuf(), m_size);
-                    else
-                        DestroyVec();
-                    m_pVec = new std::vector<T, Alloc>(*other.m_pVec);
-                    m_size = other.m_size;
-                }
+                reserve(other.size());
+                assign(other.begin(), other.end());
             }
             return *this;
         }
@@ -323,12 +324,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         inline size_type size() const
         {
-            return RunAsRapid() ? m_size : m_pVec->size();
+            return m_size;
         }
 
-        inline size_type max_size() const
+        inline size_type capacity() const
         {
-            return RunAsRapid() ? RAPID_SIZE : m_pVec->max_size();
+            return m_capacity;
         }
 
         inline bool empty() const
@@ -350,11 +351,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 m_size = newSize;
             }
             m_pVec->resize(newSize);
+            m_capacity = m_pVec->capacity();
         }
 
         inline bool RunAsRapid() const
         {
-            return m_size <= RAPID_SIZE;
+            return m_capacity <= RAPID_SIZE;
         }
     
     private:
@@ -439,9 +441,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         {
             _ASSERTE(size <= RAPID_SIZE);
 
-            pVec = new std::vector<T, Alloc>(newSize);
-            pVec->assign(pRapidBuf, pRapidBuf + size);
-            DestructRapidBuf(pRapidBuf, size);
+            pVec = new std::vector<T, Alloc>();
+            pVec->reserve(newSize);
+            if (0 < size)
+            {
+                pVec->assign(pRapidBuf, pRapidBuf + size);
+                DestructRapidBuf(pRapidBuf, size);
+            }
         }
 
         static void AssignRapidBuf(T *pRapidBuf, size_type newSize, std::vector<T, Alloc> const *pVec)
@@ -550,6 +556,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	    
         std::vector<T, Alloc> *m_pVec;
         SIZE_T m_size;
+        SIZE_T m_capacity;
         static size_t const RAPID_BUF_SIZE = (RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64);
         UINT64 m_pRapidBuf[RAPID_BUF_SIZE];
     };

@@ -127,7 +127,7 @@ namespace {
         INT assignCount = 0;
         {
             SimpleBlob sb;
-            assignCount = static_cast<INT>(sb.MaxSize() / sizeof(MyPOD2));
+            assignCount = static_cast<INT>(sb.Capacity() / sizeof(MyPOD2));
         }
         ASSERT_EQ(21, assignCount);
         

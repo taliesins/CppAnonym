@@ -15,6 +15,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
     typedef BaseFusionInfo<> FusionInfo;
 
+    
+    
+    
+    
+    template<
+        class FusionInfoApiHolder = ApiHolders::DefaultFusionInfoApiHolder
+    >    
+    class BaseFusionInfoPersistedHandler;
+
+    typedef BaseFusionInfoPersistedHandler<> FusionInfoPersistedHandler;
+
 }}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 
 #endif  // URASANDESU_CPPANONYM_FUSION_BASEFUSIONINFOFWD_HPP

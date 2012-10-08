@@ -24,10 +24,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         struct DefaultTypeMetadataApiHolderImpl
         {
             typedef map<
-                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<MetadataDispenserLabel, MetadataDispenser>,
                 pair<AssemblyMetadataLabel, AssemblyMetadata>,
                 pair<ModuleMetadataLabel, ModuleMetadata>,
+                pair<TypeMetadataLabel, TypeMetadata>,
+                pair<ITypeMetadataLabel, ITypeMetadata>,
                 pair<MethodMetadataLabel, MethodMetadata>,
                 pair<IMethodMetadataHashLabel, IMethodMetadataHash>,
                 pair<IMethodMetadataEqualToLabel, IMethodMetadataEqualTo>,

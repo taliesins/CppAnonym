@@ -5,6 +5,7 @@
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 
     struct RuntimeHostLabel { };
+    struct RuntimeHostPersistedHandlerLabel { };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace Interfaces {
 

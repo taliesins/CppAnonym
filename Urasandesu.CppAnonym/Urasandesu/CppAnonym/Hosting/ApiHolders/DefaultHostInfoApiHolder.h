@@ -33,7 +33,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
         {
             typedef map<
                 pair<HostInfoLabel, HostInfo>,
-                pair<RuntimeHostLabel, RuntimeHost>
+                pair<HostInfoPersistedHandlerLabel, HostInfoPersistedHandler>,
+                pair<RuntimeHostLabel, RuntimeHost>,
+                pair<RuntimeHostPersistedHandlerLabel, RuntimeHostPersistedHandler>
             > api_cartridges;
         };
 

@@ -18,7 +18,7 @@ namespace {
     namespace _731D234E {
 
         struct Piyo;
-        struct pPiyo_Persisted;
+        struct PiyoPersistedHandler;
 
     }   // namespace _731D234E {
 
@@ -44,15 +44,43 @@ namespace {
             std::vector<int> m_disposingOrder;
         };
 
-        struct Piyo : 
-            DisposableHeapProvider<
-                boost::mpl::vector<
-                    DisposingInfo<Piyo, pPiyo_Persisted>
-                >
-            >
+        struct PiyoFacade
         {
-            typedef providing_type_at<0>::type piyo_type;
-            typedef provider_of<piyo_type>::type piyo_provider_type;
+            typedef Piyo piyo_type;
+            typedef PiyoPersistedHandler piyo_persisted_handler_type;
+
+            
+            typedef mpl::vector<
+                DisposingInfo<piyo_type, piyo_persisted_handler_type>
+            > disposing_info_types;
+            typedef DisposableHeapProvider<disposing_info_types> base_heap_provider_type;
+            
+            
+            typedef base_heap_provider_type::provider_of<piyo_type>::type piyo_provider_type;
+        };
+
+        struct PiyoPersistedHandler
+        {
+            typedef PiyoFacade facade;
+            typedef facade::piyo_type piyo_type;
+            typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_provider_type piyo_provider_type;
+
+            typedef Utilities::TempPtr<piyo_type> sender_type;
+
+            PiyoPersistedHandler(piyo_type *pPiyo);
+            void operator()(sender_type *pSender, void *pArg);
+
+            piyo_type *m_pPiyo;
+        };
+
+        struct Piyo : 
+            PiyoFacade::base_heap_provider_type
+        {
+            typedef PiyoFacade facade;
+            typedef facade::piyo_type piyo_type;
+            typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_provider_type piyo_provider_type;
 
             Piyo() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
             ~Piyo() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
@@ -94,26 +122,18 @@ namespace {
             }
         };
 
-        struct pPiyo_Persisted
+        PiyoPersistedHandler::PiyoPersistedHandler(piyo_type *pPiyo) : 
+            m_pPiyo(pPiyo)
+        { 
+            _ASSERTE(pPiyo != NULL);
+        }
+                
+        void PiyoPersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
-            typedef Utilities::TempPtr<Piyo> sender_type;
-
-            pPiyo_Persisted(Piyo *pPiyo) : 
-                m_pPiyo(pPiyo)
-            { 
-                _ASSERTE(pPiyo != NULL);
-            }
-                
-            void operator()(sender_type *pSender, void *pArg)
-            {
-                sender_type &pPiyo = *pSender;
-                typedef Piyo::piyo_provider_type piyo_provider_type;
-                piyo_provider_type &provider = m_pPiyo->ProviderOf<Piyo>();
-                provider.RegisterObject(pPiyo);
-            }
-                
-            Piyo *m_pPiyo;
-        };
+            sender_type &pPiyo = *pSender;
+            piyo_provider_type &provider = m_pPiyo->ProviderOf<piyo_type>();
+            provider.RegisterObject(pPiyo);
+        }
 
     }   // namespace _731D234E {
 

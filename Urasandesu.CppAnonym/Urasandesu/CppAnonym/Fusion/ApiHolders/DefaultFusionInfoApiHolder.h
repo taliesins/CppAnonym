@@ -34,9 +34,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
         struct DefaultFusionInfoApiHolderImpl
         {
             typedef map<
+                pair<IAssemblyCache, IAssemblyCache>,
                 pair<RuntimeHostLabel, RuntimeHost>,
-                pair<AssemblyInfoLabel, AssemblyInfo>,
-                pair<IAssemblyCache, IAssemblyCache>
+                pair<FusionInfoLabel, FusionInfo>,
+                pair<AssemblyInfoLabel, AssemblyInfo>
             > api_cartridges;
         };
 

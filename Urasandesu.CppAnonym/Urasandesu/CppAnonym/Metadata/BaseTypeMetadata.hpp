@@ -18,50 +18,137 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     {
     };
 
+    namespace TypeMetadataDetail {
+
+        namespace mpl = boost::mpl;
+        using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
+        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
+
+        template<
+            class TypeMetadataApiHolder
+        >    
+        struct TypeMetadataFacade
+        {
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, MetadataDispenserLabel>::type metadata_dispenser_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, AssemblyMetadataLabel>::type assembly_metadata_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ModuleMetadataLabel>::type module_metadata_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, TypeMetadataLabel>::type type_metadata_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, ITypeMetadataLabel>::type i_type_metadata_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, MethodMetadataLabel>::type method_metadata_type;        
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
+            typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
+
+
+            CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            typedef typename mpl::eval_if<
+                CPP_ANONYM_HAS_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+                CPP_ANONYM_GET_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+                mpl::void_
+            >::type type_metadata_provider_type;
+
+            
+            CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(MethodMetadataProvider, method_metadata_provider_type);
+            CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(MethodMetadataProvider, method_metadata_provider_type);
+            typedef typename mpl::eval_if<
+                CPP_ANONYM_HAS_MEMBER_TYPE(MethodMetadataProvider, metadata_dispenser_type), 
+                CPP_ANONYM_GET_MEMBER_TYPE(MethodMetadataProvider, metadata_dispenser_type), 
+                mpl::void_
+            >::type method_metadata_provider_type;
+            //typedef typename base_heap_provider_type::provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
+
+
+            typedef module_metadata_type type_metadata_previous_type;
+            typedef type_metadata_type nested_type_metadata_previous_type;
+        //public SmartPtrChain<
+        //    BaseTypeMetadata<TypeMetadataApiHolder>,
+        //    boost::mpl::vector<
+        //        SmartPtrChainInfo<BaseTypeMetadata<TypeMetadataApiHolder> >,
+        //        SmartPtrChainInfo<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type>
+        //    >
+        //>,
+            
+            
+            typedef mpl::vector<
+                SmartPtrChainInfo<nested_type_metadata_previous_type>,
+                SmartPtrChainInfo<type_metadata_previous_type>
+            > chain_info_types;
+            typedef SmartPtrChain<type_metadata_type, chain_info_types> base_ptr_chain_type;
+            
+            
+            typedef typename base_ptr_chain_type::chain_from<nested_type_metadata_previous_type>::type nested_type_metadata_chain_type;
+            typedef typename base_ptr_chain_type::chain_from<type_metadata_previous_type>::type type_metadata_chain_type;
+
+
+            typedef i_type_metadata_type base_type;
+        };
+
+    }   // namespace TypeMetadataDetail {
+
     template<
         class TypeMetadataApiHolder
     >    
     class BaseTypeMetadata : 
-        public SmartPtrChain<
-            BaseTypeMetadata<TypeMetadataApiHolder>,
-            boost::mpl::vector<
-                SmartPtrChainInfo<BaseTypeMetadata<TypeMetadataApiHolder> >,
-                SmartPtrChainInfo<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type>
-            >
-        >,
-        public TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type,
+        public TypeMetadataDetail::TypeMetadataFacade<TypeMetadataApiHolder>::base_ptr_chain_type, 
+        public TypeMetadataDetail::TypeMetadataFacade<TypeMetadataApiHolder>::base_type, 
+        //public SmartPtrChain<
+        //    BaseTypeMetadata<TypeMetadataApiHolder>,
+        //    boost::mpl::vector<
+        //        SmartPtrChainInfo<BaseTypeMetadata<TypeMetadataApiHolder> >,
+        //        SmartPtrChainInfo<typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type>
+        //    >
+        //>,
+        //public TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type,
         public SimpleDisposable
     {
     public:
         typedef BaseTypeMetadata<TypeMetadataApiHolder> this_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
 
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
-        typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
+        typedef TypeMetadataDetail::TypeMetadataFacade<TypeMetadataApiHolder> facade;
+        typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
+        typedef typename facade::assembly_metadata_type assembly_metadata_type;
+        typedef typename facade::module_metadata_type module_metadata_type;
+        typedef typename facade::type_metadata_type type_metadata_type;
+        typedef typename facade::i_type_metadata_type i_type_metadata_type;
+        typedef typename facade::method_metadata_type method_metadata_type;
+        typedef typename facade::i_method_metadata_hash_type i_method_metadata_hash_type;
+        typedef typename facade::i_method_metadata_equal_to_type i_method_metadata_equal_to_type;
+        typedef typename facade::com_meta_data_import_type com_meta_data_import_type;
+        typedef typename facade::type_metadata_provider_type type_metadata_provider_type;
+        typedef typename facade::method_metadata_provider_type method_metadata_provider_type;
+        typedef typename facade::nested_type_metadata_chain_type nested_type_metadata_chain_type;
+        typedef typename facade::type_metadata_chain_type type_metadata_chain_type;
+        typedef typename facade::base_type base_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ITypeMetadataLabel>::type base_type;
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, type_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, type_metadata_provider_type);
-        typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
-            boost::mpl::void_
-        >::type type_metadata_provider_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MetadataDispenserLabel>::type metadata_dispenser_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::AssemblyMetadataLabel>::type assembly_metadata_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::ModuleMetadataLabel>::type module_metadata_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::MethodMetadataLabel>::type method_metadata_type;        
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataHashLabel>::type i_method_metadata_hash_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, Interfaces::IMethodMetadataEqualToLabel>::type i_method_metadata_equal_to_type;
+        //typedef typename TypeMetadataApiAt<TypeMetadataApiHolder, IMetaDataImport2>::type com_meta_data_import_type;        
 
-        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, method_metadata_provider_type);
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, method_metadata_provider_type);
-        typedef typename boost::mpl::eval_if<
-            CPP_ANONYM_HAS_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
-            CPP_ANONYM_GET_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
-            boost::mpl::void_
-        >::type method_metadata_provider_type;        
+        //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, type_metadata_provider_type);
+        //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, type_metadata_provider_type);
+        //typedef typename boost::mpl::eval_if<
+        //    CPP_ANONYM_HAS_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
+        //    CPP_ANONYM_GET_MEMBER_TYPE(Type, type_metadata_provider_type, metadata_dispenser_type), 
+        //    boost::mpl::void_
+        //>::type type_metadata_provider_type;
 
-        typedef typename chain_from<this_type>::type nested_type_metadata_chain_type; 
-        typedef typename chain_from<module_metadata_type>::type type_metadata_chain_type; 
+        //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(Type, method_metadata_provider_type);
+        //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(Type, method_metadata_provider_type);
+        //typedef typename boost::mpl::eval_if<
+        //    CPP_ANONYM_HAS_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
+        //    CPP_ANONYM_GET_MEMBER_TYPE(Type, method_metadata_provider_type, metadata_dispenser_type), 
+        //    boost::mpl::void_
+        //>::type method_metadata_provider_type;        
+
+        //typedef typename chain_from<this_type>::type nested_type_metadata_chain_type; 
+        //typedef typename chain_from<module_metadata_type>::type type_metadata_chain_type; 
 
         BaseTypeMetadata() : 
             m_mdt(mdTokenNil),
@@ -160,7 +247,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                     m_genericArgs.reserve(m_genericArgs.size() + count);
                     for (UINT i = 0; i < count; ++i)
                     {
-                        Utilities::TempPtr<this_type> pType = pMod->NewType(m_mdgps[i]);
+                        Utilities::TempPtr<this_type> pType = pMod->NewType(m_mdgps[i]);    // この型から取得してるんだから、Nested Type と同様に扱うべきか。
                         m_genericArgs.push_back(pType);
                     }
                 } while (0 < count);
@@ -194,14 +281,35 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             }
         }
 
-        boost::shared_ptr<this_type const> MakeGenericType(std::vector<boost::shared_ptr<base_type const> > const &genericArgs) const
+        type_metadata_type const *MakeGenericType(std::vector<i_type_metadata_type const *> const &genericArgs) const
         {
-            boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
-            type_metadata_provider_type &provider = pDisp->ProviderOf<this_type>();
-            nested_type_metadata_chain_type &chain = ChainFrom<this_type>();
-            boost::shared_ptr<this_type> pType = chain.NewObject<this_type>(provider);
-            pType->SetGenericArguments(genericArgs);
-            return pType;
+            // Generic Instance は、対象の Type からしか作れないわけだから、Nested Type と同じ扱いにするのも悪くない。
+            // Nested Type と同じ扱いにするのであれば、BaseTypeMetadata 内に repository が必要。。。
+            // 例えばこんな・・・
+            Utilities::TempPtr<type_metadata_type> pType = NewType(genericArgs);
+
+            type_metadata_type *pExistingType = NULL;
+            if (!TryGetType(*pType, pExistingType))
+            {
+                pType.Persist();
+                return pType.Get();
+            }
+            else
+            {
+                return pExistingType;
+            }
+
+            //metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
+            //type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+            ////module_metadata_type *pMod = MapFirst<module_metadata_type>();
+
+            //BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            ////boost::shared_ptr<metadata_dispenser_type const> pDisp = MapFirst<metadata_dispenser_type>();
+            ////type_metadata_provider_type &provider = pDisp->ProviderOf<this_type>();
+            ////nested_type_metadata_chain_type &chain = ChainFrom<this_type>();
+            ////boost::shared_ptr<this_type> pType = chain.NewObject<this_type>(provider);
+            ////pType->SetGenericArguments(genericArgs);
+            ////return pType;
         }
 
         boost::shared_ptr<method_metadata_type const> GetMethod(std::wstring const &name, 
@@ -243,12 +351,60 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             m_mdt = mdt;
         }
 
-        void SetGenericArguments(std::vector<boost::shared_ptr<base_type const> > const &genericArgs)
+        void SetGenericArguments(Utilities::TempPtrVector<base_type const> const &genericArgs)
         {
             _ASSERTE(!m_genericArgsInit);
             _ASSERTE(genericArgs.size() != 0);
             m_genericArgs = genericArgs;
             m_genericArgsInit = true;
+        }
+
+        Utilities::TempPtr<type_metadata_type> NewType(std::vector<i_type_metadata_type const *> const &genericArgs) const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
+            type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+
+            TempPtr<type_metadata_type> pType = NewTypeCore();
+
+            TempPtrVector<base_type const> genericArgs_;
+            genericArgs_.reserve(genericArgs.size());
+            typedef std::vector<i_type_metadata_type const *>::iterator Iterator;
+            for (Iterator i = genericArgs.begin(), i_end = genericArgs.end(); i != i_end; ++i)
+                genericArgs_.push_back(provider.WrapRegisteredObject(*i));  // うーむ・・・i_type_metadata_type からじゃ、再 wrap できない・・・
+            pType->SetGenericArguments(genericArgs_);
+
+            return pType;
+        }
+
+        Utilities::TempPtr<type_metadata_type> NewTypeCore() const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
+            type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+            nested_type_metadata_chain_type &chain = ChainFrom<nested_type_metadata_previous_type>();
+            TempPtr<type_metadata_type> pType = chain.NewObject<type_metadata_type>(provider);
+            nested_type_metadata_persisted_handler_type handler(const_cast<this_type *>(this));
+            provider.AddPersistedHandler(pType, handler);
+            return pType;
+        }
+
+        bool TryGetType(type_metadata_type const &keyType, type_metadata_type *&pExistingType) const
+        {
+            if (m_typeToIndex.find(&keyType) == m_typeToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_typeToIndex[&keyType];
+                metadata_dispenser_type const *pDisp = MapFirst<metadata_dispenser_type>();
+                type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+                pExistingType = provider.GetObject(index);
+                return true;
+            }
         }
 
         boost::shared_ptr<method_metadata_type> NewMethod(std::wstring const &name, 
@@ -443,6 +599,59 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
                                      i_method_metadata_hash_type, 
                                      i_method_metadata_equal_to_type> m_methodToIndex;        
         mutable bool m_filled;
+    };
+
+
+
+
+
+    namespace TypeMetadataDetail {
+
+        template<
+            class TypeMetadataApiHolder
+        >    
+        struct TypeMetadataPersistedHandlerFacade : 
+            TypeMetadataFacade<TypeMetadataApiHolder>
+        {
+            //CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            //CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(TypeMetadataProvider, type_metadata_provider_type);
+            //typedef typename mpl::eval_if<
+            //    CPP_ANONYM_HAS_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+            //    CPP_ANONYM_GET_MEMBER_TYPE(TypeMetadataProvider, metadata_dispenser_type), 
+            //    mpl::void_
+            //>::type type_metadata_provider_type;
+        };
+
+    }   // namespace TypeMetadataDetail {
+
+    template<
+        class TypeMetadataApiHolder
+    >    
+    class BaseTypeMetadataPersistedHandler  // つまり、ここも Nested Type 向けの Persisted Handler が必要になるってことかな。
+    {
+    public:
+        typedef TypeMetadataDetail::TypeMetadataPersistedHandlerFacade<TypeMetadataApiHolder> facade;
+        typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
+        typedef typename facade::module_metadata_type module_metadata_type;
+        typedef typename facade::type_metadata_type type_metadata_type;
+        typedef typename facade::type_metadata_provider_type type_metadata_provider_type;
+
+        typedef Utilities::TempPtr<type_metadata_type> sender_type;
+
+        BaseTypeMetadataPersistedHandler(module_metadata_type *pMod) : 
+            m_pMod(pMod)
+        { }
+        
+        void operator()(sender_type *pSender, void *pArg)
+        {
+            sender_type &pType = *pSender;
+            metadata_dispenser_type const *pDisp = m_pMod->MapFirst<metadata_dispenser_type>();
+            type_metadata_provider_type &provider = pDisp->ProviderOf<type_metadata_type>();
+            m_pMod->m_typeToIndex[pType.Get()] = provider.RegisterObject(pType);
+        }
+    
+    private:
+        module_metadata_type *m_pMod;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {

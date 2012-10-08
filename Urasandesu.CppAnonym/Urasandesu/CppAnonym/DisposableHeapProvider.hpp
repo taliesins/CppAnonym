@@ -28,6 +28,7 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename mpl::deref<I>::type disposing_info_type;
             typedef PersistableHeapProvider<mpl::vector<disposing_info_type> > base_type;
             typedef typename base_type::object_type object_type;
+            typedef typename base_type::persisted_handler_type persisted_handler_type;
         };
 
         template<class ReversedDisposingInfoTypes, class I, class IEnd>
@@ -38,11 +39,37 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef typename DisposingInfoFacade<I>::base_type base_type;
             typedef typename DisposingInfoFacade<I>::object_type object_type;
+            typedef typename DisposingInfoFacade<I>::persisted_handler_type persisted_handler_type;
 
             ~DisposableHeapProviderImplImpl()
             {
-                if (AnyObjects())
-                    Destruct(Objects());
+                if (base_type::AnyObjects())
+                    Destruct(base_type::Objects());
+            }
+
+            TempPtr<object_type> NewObject()
+            {
+                return base_type::NewObject();
+            }
+
+            TempPtr<object_type> WrapRegisteredObject(object_type *pObj)
+            {
+                return base_type::WrapRegisteredObject(pObj);
+            }
+
+            size_t RegisterObject(TempPtr<object_type> &p)
+            {
+                return base_type::RegisterObject(p);
+            }
+
+            object_type *GetObject(size_t n)
+            {
+                return base_type::GetObject(n);
+            }
+
+            size_t AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
+            {
+                return base_type::AddPersistedHandler(p, handler);
             }
 
         private:
@@ -114,12 +141,30 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, i, i_end> type;
         };
+
+        template<class ReversedDisposingInfoTypes, class T>
+        class IsProvidedImpl
+        {
+            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
+            typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
+        public:
+            typedef typename mpl::not_<is_same<i, i_end> >::type type;
+        };
+
+        template<class ReversedDisposingInfoTypes, class ProvidingType>
+        class ProvidingPersistedHandlerTypeAtImpl
+        {
+            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::deref<i>::type disposing_info_type;
+        public:
+            typedef typename disposing_info_type::persisted_handler_type type;
+        };
         
         template<class DisposingInfoTypes>
         struct ATL_NO_VTABLE DisposableHeapProviderImpl : 
             DisposableHeapProviderImplImpl<typename mpl::reverse<DisposingInfoTypes>::type, 
-                                            typename mpl::begin<typename mpl::reverse<DisposingInfoTypes>::type>::type, 
-                                            typename mpl::end<typename mpl::reverse<DisposingInfoTypes>::type>::type>
+                                           typename mpl::begin<typename mpl::reverse<DisposingInfoTypes>::type>::type, 
+                                           typename mpl::end<typename mpl::reverse<DisposingInfoTypes>::type>::type>
         {
             typedef DisposableHeapProviderImpl<DisposingInfoTypes> this_type;
             typedef DisposingInfoTypes disposing_info_types;
@@ -139,6 +184,18 @@ namespace Urasandesu { namespace CppAnonym {
             template<class ProvidingType>
             struct provider_of : 
                 ProviderOfImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
+            {
+            };
+
+            template<class T>
+            struct is_provided : 
+                IsProvidedImpl<typename mpl::reverse<disposing_info_types>::type, T>
+            {
+            };
+
+            template<class ProvidingType>
+            struct providing_persisted_handler_type_at : 
+                ProvidingPersistedHandlerTypeAtImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
             {
             };
 

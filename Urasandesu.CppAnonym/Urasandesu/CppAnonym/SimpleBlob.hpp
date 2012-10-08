@@ -55,9 +55,9 @@ namespace Urasandesu { namespace CppAnonym {
             return m_buffer.size();
         }
 
-        inline SIZE_T MaxSize() const
+        inline SIZE_T Capacity() const
         { 
-            return m_buffer.max_size();
+            return m_buffer.capacity();
         }
 
         inline BYTE& operator[] (SIZE_T ix)

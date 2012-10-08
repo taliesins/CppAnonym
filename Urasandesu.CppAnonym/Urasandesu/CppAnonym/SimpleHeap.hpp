@@ -27,16 +27,16 @@ namespace Urasandesu { namespace CppAnonym {
         public:
             typedef Collections::RapidVector<T> TArray;
             
-            SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastMaxSize(m_array.max_size()) { }            
+            SimpleHeapImpl() : m_pCurrent(&m_array[0]), m_lastCapacity(m_array.capacity()) { }            
             ~SimpleHeapImpl() { }
 
             T *New()
             {
                 T *pObj = NULL;
                 m_array.resize(m_array.size() + 1);
-                if (m_lastMaxSize < m_array.max_size())
+                if (m_lastCapacity < m_array.capacity())
                 {
-                    m_lastMaxSize = m_array.max_size();
+                    m_lastCapacity = m_array.capacity();
                     m_pCurrent = &m_array[0] + m_array.size() - 1;
                 }
                 pObj = m_pCurrent;
@@ -113,7 +113,7 @@ namespace Urasandesu { namespace CppAnonym {
 
             TArray m_array;
             T *m_pCurrent;
-            SIZE_T m_lastMaxSize;
+            SIZE_T m_lastCapacity;
         };
 
         template<class T>

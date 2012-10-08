@@ -6,7 +6,7 @@ namespace Urasandesu { namespace CppAnonym {
     
     template<
         class T,
-        class Handler
+        class PersistedHandler
     >
     struct PersistentInfo;
 

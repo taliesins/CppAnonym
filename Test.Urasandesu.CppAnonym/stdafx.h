@@ -33,6 +33,7 @@
 #include <boost/detail/atomic_count.hpp>
 #include <boost/unordered_set.hpp>
 #include <boost/weak_ptr.hpp>
+#include <boost/variant.hpp>
 
 #define CPPANONYM_TEST(test_case_name, test_name) \
     class GTEST_TEST_CLASS_NAME_(test_case_name, test_name); \

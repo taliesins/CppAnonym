@@ -5,6 +5,7 @@
 namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 
     struct FusionInfoLabel { };
+    struct FusionInfoPersistedHandlerLabel { };
 
 }}}}  // namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace Interfaces {
 

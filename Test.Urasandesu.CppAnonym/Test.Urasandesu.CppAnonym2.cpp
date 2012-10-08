@@ -420,7 +420,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataDispenser.hpp>
 #endif
 
-#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTASSEMBLYMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultAssemblyMetadataApiHolder.h>
 #endif
@@ -445,6 +444,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion {
 #include <Urasandesu/CppAnonym/Metadata/BaseTypeMetadata.hpp>
 #endif
 
+#if 0
 #ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETHODMETADATAAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodMetadataApiHolder.h>
 #endif
@@ -511,130 +511,6 @@ namespace Urasandesu { namespace CppAnonym {
         public CppAnonymStorageDetail::CppAnonymStorageFacade<CppAnonymStorageApiHolder>::base_type
     {
     };
-
-    //namespace Detail {
-
-    //    namespace mpl = boost::mpl;
-    //    using namespace boost;
-
-    //    template<class Sequence, class I, class IEnd>
-    //    class ATL_NO_VTABLE PersistableHeapProviderImpl : 
-    //        SimpleHeapProvider<
-    //            mpl::vector<
-    //                ObjectTag<typename mpl::deref<I>::type, QuickHeapWithoutSubscriptOperator>
-    //            >
-    //        >,
-    //        public PersistableHeapProviderImpl<Sequence, typename mpl::next<I>::type, IEnd>
-    //    {
-    //    public:
-    //        typedef PersistableHeapProviderImpl<Sequence, I, IEnd> this_type;
-    //        typedef typename mpl::deref<I>::type object_type;
-    //        typedef shared_ptr<object_type> sp_object_type;
-    //        typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> obj_tag_type;
-    //        typedef typename provider_of<obj_tag_type>::type provider_type;
-    //        typedef std::vector<object_type *> object_ptr_vector_type;
-
-    //        virtual ~PersistableHeapProviderImpl()
-    //        {
-    //            provider_type &provider = ProviderOf<obj_tag_type>();
-    //            typedef object_ptr_vector_type::reverse_iterator ReverseIterator;
-    //            for (ReverseIterator ri = Objects().rbegin(), ri_end = Objects().rend(); ri != ri_end; ++ri)
-    //                provider.Heap().Delete(*ri);
-    //        }
-
-    //        static sp_object_type NewStaticObject()
-    //        {
-    //            return sp_object_type(provider_type::StaticHeap().New(), deleter(provider_type::StaticHeap()));
-    //        }
-
-    //        sp_object_type NewObject()
-    //        {
-    //            provider_type &provider = ProviderOf<obj_tag_type>();
-    //            return sp_object_type(provider.Heap().New(), deleter(provider.Heap()));
-    //        }
-
-    //        typename object_ptr_vector_type::size_type Register(sp_object_type const &p)
-    //        {
-    //            if (deleter *pDel = get_deleter<deleter>(p))
-    //            {
-    //                pDel->DisableDeletion();
-    //                Objects().push_back(p.get());
-    //                return Objects().size() - 1;
-    //            }
-    //            else
-    //            {
-    //                return MAXSIZE_T;
-    //            }
-    //        }
-
-    //        object_type *operator[](typename object_ptr_vector_type::size_type n)
-    //        {
-    //            return Objects()[n];
-    //        }
-    //    
-    //    private:
-    //        shared_ptr<object_ptr_vector_type> m_pObjects;
-
-    //        object_ptr_vector_type &Objects()
-    //        {
-    //            if (!m_pObjects.get())
-    //                m_pObjects = make_shared<object_ptr_vector_type>();
-    //            return *m_pObjects.get();
-    //        }
-
-    //        class deleter
-    //        {
-    //        public:
-    //            deleter(typename provider_type::object_heap_type &heap) : m_pHeap(&heap) { m_disabled[0] = false; }
-    //            void operator()(object_type *p) { if (!m_disabled[0]) m_pHeap->Delete(p); }
-    //            void DisableDeletion() { m_disabled[0] = true; }
-    //        private:
-    //            typename provider_type::object_heap_type *m_pHeap;
-    //            bool m_disabled[1];
-    //        };
-    //    };
-
-    //    template<class Sequence>
-    //    class PersistableHeapProviderImpl<Sequence, 
-    //                                         typename Traits::DistinctEnd<Sequence>::type, 
-    //                                         typename Traits::DistinctEnd<Sequence>::type> : 
-    //        noncopyable
-    //    {
-    //    };
-
-    //}   // namespace Detail
-
-
-    //template<class Sequence>
-    //class ATL_NO_VTABLE PersistableHeapProvider : 
-    //    public Detail::PersistableHeapProviderImpl<Sequence, 
-    //                                              typename Traits::DistinctBegin<Sequence>::type, 
-    //                                              typename Traits::DistinctEnd<Sequence>::type>
-    //{
-    //public:
-    //    typedef PersistableHeapProvider<Sequence> this_type;
-    //    typedef Sequence sequence_type;
-
-    //    template<class T>
-    //    struct provider_of
-    //    {
-    //        typedef Detail::PersistableHeapProviderImpl<
-    //            Sequence,
-    //            typename boost::mpl::find<
-    //                typename Traits::Distinct<Sequence>::type,
-    //                T
-    //            >::type,
-    //            typename Traits::DistinctEnd<Sequence>::type
-    //        > type;
-    //    };
-
-    //    template<class T>
-    //    inline typename provider_of<T>::type &ProviderOf() const
-    //    {
-    //        this_type *pMutableThis = const_cast<this_type *>(this);
-    //        return static_cast<typename provider_of<T>::type &>(*pMutableThis);
-    //    }
-    //};
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
@@ -2370,7 +2246,6 @@ namespace {
 
         HostInfo const *pHostInfo = HostInfo::CreateHost();
 
-#if 0
         RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
         ASSERT_TRUE(pRuntimeHost != NULL);
 
@@ -2412,8 +2287,7 @@ namespace {
         ASSERT_TRUE(pFunc1->IsGenericType());
         ASSERT_TRUE(pFunc1->IsGenericTypeDefinition());
         {
-            TempPtrVector<ITypeMetadata const> const &genericArgs = pFunc1->GetGenericArguments();  // うーん・・・静的オブジェクトの初期化順序実装依存だって忘れてた・・・もう一回！
-#if 0
+            TempPtrVector<ITypeMetadata const> const &genericArgs = pFunc1->GetGenericArguments();
             ASSERT_EQ(1, genericArgs.size());
             for (UINT i = 0; i < genericArgs.size(); ++i)
             {
@@ -2426,20 +2300,19 @@ namespace {
                         FAIL() << "We shouldn't get here!!";
                 }
             }
-#endif
         }
         ASSERT_EQ(0x02000058, pFunc1->GetToken());
 
-        shared_ptr<TypeMetadata const> pFunc1DateTime;
+        TypeMetadata const *pFunc1DateTime = NULL;
         {
-            std::vector<shared_ptr<ITypeMetadata const> > genericArgs;
+            std::vector<ITypeMetadata const *> genericArgs;
             genericArgs.push_back(pDateTime);
             pFunc1DateTime = pFunc1->MakeGenericType(genericArgs);
         }
         ASSERT_TRUE(pFunc1DateTime->IsGenericType());
         ASSERT_FALSE(pFunc1DateTime->IsGenericTypeDefinition());
         {
-            std::vector<shared_ptr<ITypeMetadata const> > const &genericArgs = pFunc1DateTime->GetGenericArguments();
+            TempPtrVector<ITypeMetadata const> const &genericArgs = pFunc1DateTime->GetGenericArguments();
             ASSERT_EQ(1, genericArgs.size());
             for (UINT i = 0; i < genericArgs.size(); ++i)
             {
@@ -2455,6 +2328,7 @@ namespace {
         }
         ASSERT_EQ(0x02000058, pFunc1DateTime->GetToken());   // !! CAUTION: This is CORRECT !!
 
+#if 0
         shared_ptr<MethodMetadata const> pFunc1DateTimector;
         {
             std::vector<shared_ptr<ITypeMetadata const> > params;

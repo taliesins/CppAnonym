@@ -7,7 +7,7 @@
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Collections_RapidVectorTest.*
 namespace {
 
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_LessThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_LessThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -30,7 +30,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_EqualsOrGreaterThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, IterationTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -54,7 +54,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_LessThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_LessThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -74,7 +74,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_EqualsOrGreaterThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RandomAccessOperatorTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -95,7 +95,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_LessThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_LessThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -119,7 +119,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_EqualsOrGreaterThan512_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveTest_EqualsOrGreaterThan512_01)
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -143,7 +143,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_ToEnd_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_ToEnd_01)
     {
         using namespace std;
         using namespace boost::lambda;
@@ -165,7 +165,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_InBetween_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_InBetween_01)
     {
         using namespace std;
         using namespace boost::lambda;
@@ -190,7 +190,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_ToEnd_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_ToEnd_01)
     {
         using namespace std;
         using namespace boost::lambda;
@@ -212,7 +212,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_InBetween_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_EqualsOrGreaterThan512_InBetween_01)
     {
         using namespace std;
         using namespace boost::lambda;
@@ -261,7 +261,7 @@ namespace {
 
     }   // namespace _0B268749 {
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_01)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -284,7 +284,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, AddReferenceTest_02)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -308,7 +308,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_01)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -332,7 +332,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, RemoveReferenceTest_02)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -358,7 +358,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_01)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -383,7 +383,7 @@ namespace {
     
     
     
-    TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseReferenceTest_02)
     {
         using namespace boost;
         using namespace Urasandesu::CppAnonym::Collections;
@@ -404,4 +404,103 @@ namespace {
         delete pTester;
     }
 
+
+
+
+
+    namespace _FE50F05F {
+
+        struct Hoge
+        {
+            Hoge(int hogeValue) : m_hogeValue(hogeValue) { }
+            virtual ~Hoge() { }
+            int m_hogeValue;
+        };
+
+        struct Piyo : 
+            Hoge
+        {
+            Piyo(int hogeValue, int piyoValue) : Hoge(hogeValue), m_piyoValue(piyoValue) { }
+            virtual ~Piyo() { }
+            int m_piyoValue;
+        };
+
+    }   // namespace _FE50F05F {
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, ReserveAndAssignTest_01)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _FE50F05F;
+
+        typedef RapidVector<Hoge *, 1> HogeVector;
+        typedef RapidVector<Piyo *, 1> PiyoVector;
+
+        HogeVector hoges;
+        PiyoVector piyos;
+
+        {
+            Piyo *p = new Piyo(10, 20);
+            piyos.push_back(p);
+        }
+
+        hoges.reserve(piyos.size());
+        hoges.assign(piyos.begin(), piyos.end());
+
+        ASSERT_EQ(1, hoges.size());
+        {
+            Piyo *p = static_cast<Piyo *>(hoges[0]);
+            ASSERT_EQ(10, p->m_hogeValue);
+            ASSERT_EQ(20, p->m_piyoValue);
+        }
+
+        typedef HogeVector::iterator Iterator;
+        for (Iterator i = hoges.begin(), i_end = hoges.end(); i != i_end; ++i)
+            delete *i;
+    }
+
+    
+    
+    
+    
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, ReserveAndAssignTest_02)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace _FE50F05F;
+
+        typedef RapidVector<Hoge *, 1> HogeVector;
+        typedef RapidVector<Piyo *, 2> PiyoVector;
+
+        HogeVector hoges;
+        PiyoVector piyos;
+
+        {
+            Piyo *p = new Piyo(10, 20);
+            piyos.push_back(p);
+        }
+
+        {
+            Piyo *p = new Piyo(30, 40);
+            piyos.push_back(p);
+        }
+
+        hoges.reserve(piyos.size());
+        hoges.assign(piyos.begin(), piyos.end());
+
+        ASSERT_EQ(2, hoges.size());
+        {
+            Piyo *p = static_cast<Piyo *>(hoges[0]);
+            ASSERT_EQ(10, p->m_hogeValue);
+            ASSERT_EQ(20, p->m_piyoValue);
+        }
+
+        {
+            Piyo *p = static_cast<Piyo *>(hoges[1]);
+            ASSERT_EQ(30, p->m_hogeValue);
+            ASSERT_EQ(40, p->m_piyoValue);
+        }
+
+        typedef HogeVector::iterator Iterator;
+        for (Iterator i = hoges.begin(), i_end = hoges.end(); i != i_end; ++i)
+            delete *i;
+    }
 }

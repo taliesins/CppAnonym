@@ -15,6 +15,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     typedef BaseRuntimeHost<> RuntimeHost;
 
+    
+    
+    
+    
+    template<
+        class RuntimeHostApiHolder = ApiHolders::DefaultRuntimeHostApiHolder
+    >    
+    class BaseRuntimeHostPersistedHandler;
+
+    typedef BaseRuntimeHostPersistedHandler<> RuntimeHostPersistedHandler;
+
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
 #endif  // URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOSTFWD_HPP

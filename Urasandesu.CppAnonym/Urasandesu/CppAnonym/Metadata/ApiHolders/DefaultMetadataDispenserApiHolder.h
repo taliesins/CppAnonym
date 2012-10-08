@@ -57,19 +57,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
         {
             typedef map<
                 pair<MetadataInfoLabel, MetadataInfo>,
+                pair<MetadataDispenserLabel, MetadataDispenser>,
                 pair<AssemblyMetadataLabel, AssemblyMetadata>,
+                pair<AssemblyMetadataPersistedHandlerLabel, AssemblyMetadataPersistedHandler>,
                 pair<IAssemblyMetadataHashLabel, IAssemblyMetadataHash>,
                 pair<IAssemblyMetadataEqualToLabel, IAssemblyMetadataEqualTo>,
                 pair<ModuleMetadataLabel, ModuleMetadata>,
-                pair<IMetaDataDispenserEx, IMetaDataDispenserEx>,
+                pair<ModuleMetadataPersistedHandlerLabel, ModuleMetadataPersistedHandler>,
                 pair<TypeMetadataLabel, TypeMetadata>,
+                pair<TypeMetadataPersistedHandlerLabel, TypeMetadataPersistedHandler>,
                 pair<MethodMetadataLabel, MethodMetadata>,
                 pair<AssemblyMetadataGenerator7FAEDE99Label, AssemblyMetadataGenerator7FAEDE99>,
                 pair<ModuleMetadataGenerator7FAEDE99Label, ModuleMetadataGenerator7FAEDE99>,
                 pair<TypeMetadataGenerator7FAEDE99Label, TypeMetadataGenerator7FAEDE99>,
                 pair<FieldMetadataGenerator7FAEDE99Label, FieldMetadataGenerator7FAEDE99>,
                 pair<MethodMetadataGenerator7FAEDE99Label, MethodMetadataGenerator7FAEDE99>,
-                pair<PropertyMetadataGenerator7FAEDE99Label, PropertyMetadataGenerator7FAEDE99>                
+                pair<PropertyMetadataGenerator7FAEDE99Label, PropertyMetadataGenerator7FAEDE99>,
+                pair<IMetaDataDispenserEx, IMetaDataDispenserEx>
             > api_cartridges;
         };
 

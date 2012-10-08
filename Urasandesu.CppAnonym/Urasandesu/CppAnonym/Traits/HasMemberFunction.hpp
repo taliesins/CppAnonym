@@ -6,24 +6,24 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     template<class T, T> struct Identify { };
 
-// NOTE: enum { n = sizeof(T) }; is intended for to exclude any incomplete types.
+// NOTE: enum { n = sizeof(HasMemberFunctionT) }; is intended for to exclude any incomplete types.
 #define CPP_ANONYM_DECLARE_HAS_MEMBER_FUNCTION(name, member, member_ret, member_params) \
-    template<class T, class Tag = boost::mpl::void_> \
+    template<class HasMemberFunctionT, class Tag = boost::mpl::void_> \
     struct Has_##name \
     { \
-        enum { n = sizeof(T) }; \
+        enum { n = sizeof(HasMemberFunctionT) }; \
         typedef boost::mpl::false_ type; \
         static const bool value = false; \
     }; \
      \
-    template<class T> \
+    template<class HasMemberFunctionT> \
     struct Has_##name< \
-        T, \
+        HasMemberFunctionT, \
         typename boost::mpl::apply< \
             boost::mpl::always<boost::mpl::void_>, \
             Urasandesu::CppAnonym::Traits::Identify< \
-                member_ret(T::*)member_params, \
-                static_cast<member_ret(T::*)member_params>(&T::member) \
+                member_ret(HasMemberFunctionT::*)member_params, \
+                static_cast<member_ret(HasMemberFunctionT::*)member_params>(&HasMemberFunctionT::member) \
             > \
         >::type \
     > \
@@ -31,6 +31,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         typedef boost::mpl::true_ type; \
         static const bool value = true; \
     };
+
 
 #define CPP_ANONYM_USING_HAS_MEMBER_FUNCTION(name) \
     Has_##name

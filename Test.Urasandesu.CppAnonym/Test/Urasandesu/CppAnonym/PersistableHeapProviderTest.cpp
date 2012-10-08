@@ -14,7 +14,7 @@ namespace {
     namespace _E0BB97B4 {
 
         struct Hoge;
-        struct pHoge_Persisted;
+        struct HogePersistedHandler;
 
     }   // namespace _E0BB97B4 {
 
@@ -39,15 +39,43 @@ namespace {
             std::vector<int> m_dtorOrder;
         };
 
-        struct Hoge : 
-            PersistableHeapProvider<
-                boost::mpl::vector<
-                    PersistentInfo<Hoge, pHoge_Persisted>
-                >
-            >
+        struct HogeFacade
         {
-            typedef providing_type_at<0>::type hoge_type;
-            typedef provider_of<hoge_type>::type hoge_provider_type;
+            typedef Hoge hoge_type;
+            typedef HogePersistedHandler hoge_persisted_handler_type;
+
+            
+            typedef mpl::vector<
+                PersistentInfo<hoge_type, hoge_persisted_handler_type>
+            > persistent_info_types;
+            typedef PersistableHeapProvider<persistent_info_types> base_heap_provider_type;
+            
+            
+            typedef base_heap_provider_type::provider_of<hoge_type>::type hoge_provider_type;
+        };
+
+        struct HogePersistedHandler
+        {
+            typedef HogeFacade facade;
+            typedef facade::hoge_type hoge_type;
+            typedef facade::hoge_persisted_handler_type hoge_persisted_handler_type;
+            typedef facade::hoge_provider_type hoge_provider_type;
+
+            typedef Utilities::TempPtr<hoge_type> sender_type;
+
+            HogePersistedHandler(hoge_type *pHoge);
+            void operator()(sender_type *pSender, void *pArg);
+
+            hoge_type *m_pHoge;
+        };
+
+        struct Hoge : 
+            HogeFacade::base_heap_provider_type
+        {
+            typedef HogeFacade facade;
+            typedef facade::hoge_type hoge_type;
+            typedef facade::hoge_persisted_handler_type hoge_persisted_handler_type;
+            typedef facade::hoge_provider_type hoge_provider_type;
 
             Hoge() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
             ~Hoge() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
@@ -84,26 +112,18 @@ namespace {
             }
         };
 
-        struct pHoge_Persisted
+        HogePersistedHandler::HogePersistedHandler(hoge_type *pHoge) : 
+            m_pHoge(pHoge)
+        { 
+            _ASSERTE(pHoge != NULL);
+        }
+                
+        void HogePersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
-            typedef Utilities::TempPtr<Hoge> sender_type;
-
-            pHoge_Persisted(Hoge *pHoge) : 
-                m_pHoge(pHoge)
-            { 
-                _ASSERTE(pHoge != NULL);
-            }
-                
-            void operator()(sender_type *pSender, void *pArg)
-            {
-                sender_type &pHoge = *pSender;
-                typedef Hoge::hoge_provider_type hoge_provider_type;
-                hoge_provider_type &provider = m_pHoge->ProviderOf<Hoge>();
-                provider.RegisterObject(pHoge);
-            }
-                
-            Hoge *m_pHoge;
-        };
+            sender_type &pHoge = *pSender;
+            hoge_provider_type &provider = m_pHoge->ProviderOf<Hoge>();
+            provider.RegisterObject(pHoge);
+        }
 
     }   // namespace _E0BB97B4 {
 

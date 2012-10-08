@@ -15,6 +15,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
     typedef BaseHostInfo<> HostInfo;
 
+    
+    
+    
+    
     template<
         class HostInfoApiHolder = ApiHolders::DefaultHostInfoApiHolder
     >    

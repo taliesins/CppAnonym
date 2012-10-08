@@ -18,59 +18,18 @@
 #include <Urasandesu/CppAnonym/Utilities/TempPtrFwd.hpp>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Traits {
-
-    //template<
-    //    class T, 
-    //    class ImplD, 
-    //    template<class, class> class ValueHolderImpl
-    //>
-    //struct MakeValueHolderImpl
-    //{
-    //    typedef ValueHolderImpl<T, ImplD> type;
-    //};
-
-    //template<
-    //    class T, 
-    //    template<class, class> class ValueHolderImpl,
-    //    class Tag = QuickHeapWithoutSubscriptOperator
-    //>
-    //struct MakeHeapValueHolderImpl
-    //{
-    //    struct deleter_type;
-    //    typedef ValueHolderImpl<T, deleter_type> type;
-    //    typedef SimpleHeap<type, Tag> heap_type;
-    //    struct deleter_type : 
-    //        Utilities::HeapDeleter<heap_type>
-    //    {
-    //        typedef Utilities::HeapDeleter<heap_type> base_type;
-    //            
-    //        deleter_type(heap_type &heap) : 
-    //            base_type(heap)
-    //        { }
-
-    //        template<class T>
-    //        void operator()(T *p) 
-    //        { 
-    //            base_type::operator()(p);
-    //        }
-    //    };
-    //};
-
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
-
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace TempPtrDetail {
 
         using namespace boost;
 
-        struct PersistedHandler
+        struct PersistedHandlerHolder
         {
-            typedef PersistedHandler this_type;
+            typedef PersistedHandlerHolder this_type;
 
-            PersistedHandler() : m_useCount(0) { }
-            virtual ~PersistedHandler() { };
+            PersistedHandlerHolder() : m_useCount(0) { }
+            virtual ~PersistedHandlerHolder() { };
             virtual void operator()(void *pSender, void *pArg) = 0;
             virtual void Delete() = 0;
 
@@ -89,11 +48,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class Handler, class ImplD>
-        struct PersistedHandlerImpl : 
-            PersistedHandler
+        struct PersistedHandlerHolderImpl : 
+            PersistedHandlerHolder
         {
-            typedef PersistedHandlerImpl<Handler, ImplD> this_type;
-            typedef PersistedHandler base_type;
+            typedef PersistedHandlerHolderImpl<Handler, ImplD> this_type;
+            typedef PersistedHandlerHolder base_type;
 
             typedef typename mpl::eval_if<
                 CPP_ANONYM_HAS_MEMBER_TYPE(PersistedHandlerSender, Handler), 
@@ -107,19 +66,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 mpl::identity<void>
             >::type arg_type;
 
-            PersistedHandlerImpl(Handler handler) : 
+            PersistedHandlerHolderImpl(Handler handler) : 
                 base_type(),
                 m_handler(handler),
                 m_impld(ImplD())
             { }
 
-            PersistedHandlerImpl(Handler handler, ImplD impld) : 
+            PersistedHandlerHolderImpl(Handler handler, ImplD impld) : 
                 base_type(), 
                 m_handler(handler),
                 m_impld(impld)
             { }
             
-            virtual ~PersistedHandlerImpl() 
+            virtual ~PersistedHandlerHolderImpl() 
             { 
             }
 
@@ -138,17 +97,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class Handler, class ImplD>
-        struct MakePersistedHandlerImpl : 
-            Traits::MakeValueHolderImpl<Handler, ImplD, PersistedHandlerImpl>
+        struct MakePersistedHandlerHolderImpl : 
+            Traits::MakeValueHolderImpl<Handler, ImplD, PersistedHandlerHolderImpl>
         {
         };
 
         template<
             class Handler, 
-            class Tag = QuickHeapWithoutSubscriptOperator
+            class Tag
         >
-        struct MakeHeapPersistedHandlerImpl : 
-            Traits::MakeHeapValueHolderImpl<Handler, PersistedHandlerImpl, Tag>
+        struct MakeHeapPersistedHandlerHolderImpl : 
+            Traits::MakeHeapValueHolderImpl<Handler, PersistedHandlerHolderImpl, Tag>
         {
         };
 
@@ -159,18 +118,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         public:
             typedef TempPtrImpl<T> this_type;
             typedef SemiAutoPtr<T> base_type;
-            typedef PersistedHandler persisted_handler_type;
-            typedef Collections::RapidVector<intrusive_ptr<persisted_handler_type>, 1 > persisted_handlers_type;
+            typedef PersistedHandlerHolder persisted_handler_holder_type;
+            typedef Collections::RapidVector<intrusive_ptr<persisted_handler_holder_type>, 1 > persisted_handlers_type;
 
             template<class Handler, class ImplD>
-            struct make_persisted_handler_impl : 
-                MakePersistedHandlerImpl<Handler, ImplD>
+            struct make_persisted_handler_holder_impl : 
+                MakePersistedHandlerHolderImpl<Handler, ImplD>
             {
             };
 
             template<class Handler, class Tag = QuickHeapWithoutSubscriptOperator>
-            struct make_heap_persisted_handler_impl : 
-                MakeHeapPersistedHandlerImpl<Handler, Tag>
+            struct make_heap_persisted_handler_holder_impl : 
+                MakeHeapPersistedHandlerHolderImpl<Handler, Tag>
             {
             };
 
@@ -220,9 +179,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class U>
             inline TempPtrImpl &operator =(TempPtrImpl<U> &other)
             {
+                typedef typename PersistedHandlersAccessor<U>::persisted_handlers_type PersistedHandlers;
+                
                 base_type::operator =(other);
                 m_isPersisted = other.IsPersisted();
-                m_persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
+                PersistedHandlers const &persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
+                m_persistedHandlers.reserve(persistedHandlers.size());
+                m_persistedHandlers.assign(persistedHandlers.begin(), persistedHandlers.end());
                 return *this;
             }
 
@@ -249,14 +212,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class Handler>
             inline size_t AddPersistedHandler(Handler handler)
             {
-                m_persistedHandlers.push_back(new MakePersistedHandlerImpl<Handler, DefaultDeleter>::type(handler));
+                m_persistedHandlers.push_back(new MakePersistedHandlerHolderImpl<Handler, DefaultDeleter>::type(handler));
                 return m_persistedHandlers.size() - 1;
             }
 
             template<class Handler, class ImplD>
-            inline size_t AddPersistedHandler(PersistedHandlerImpl<Handler, ImplD> *pPersistedHandler)
+            inline size_t AddPersistedHandler(PersistedHandlerHolderImpl<Handler, ImplD> *pPersistedHandlerHolder)
             {
-                m_persistedHandlers.push_back(pPersistedHandler);
+                m_persistedHandlers.push_back(pPersistedHandlerHolder);
                 return m_persistedHandlers.size() - 1;
             }
 
