@@ -44,53 +44,54 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    //namespace DestructionDistributorDetail {
+    namespace AssignationDistributorDetail {
 
-    //    using namespace boost;
+        using namespace boost;
 
-    //    template<class T, class IsPointer, class HasTrivialConstructor>
-    //    struct DestructImpl
-    //    {
-    //        static void Destruct(void *p)
-    //        {
-    //            // nop
-    //        }
-    //    };
+        template<class T, class IsPointer, class HasTrivialAssign>
+        struct AssignImpl
+        {
+            static void Assign(void *pDst, void *pSrc)
+            {
+                if (pDst != pSrc)
+                    ::memcpy_s(pDst, sizeof(T), pSrc, sizeof(T));
+            }
+        };
 
-    //    template<class T>
-    //    struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
-    //    {
-    //        static void Destruct(void *p)
-    //        {
-    //            T *temp = reinterpret_cast<T *>(p);
-    //            temp->~T();
-    //        }
-    //    };
+        template<class T>
+        struct AssignImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+        {
+            static void Assign(void *pDst, void *pSrc)
+            {
+                if (pDst != pSrc)
+                    *reinterpret_cast<T *>(pDst) = *reinterpret_cast<T *>(pSrc);
+            }
+        };
 
-    //    template<class T>
-    //    struct DestructionDistributorImpl
-    //    {
-    //        typedef typename is_pointer<T>::type is_pointer_type;
-    //        typedef typename has_trivial_destructor<T>::type has_trivial_destructor_type;
-    //        typedef DestructImpl<T, is_pointer_type, has_trivial_destructor_type> impl_type;
-    //        
-    //        static void Destruct(void *p)
-    //        {
-    //            impl_type::Destruct(p);
-    //        }
-    //    };
+        template<class T>
+        struct AssignationDistributorImpl
+        {
+            typedef typename is_pointer<T>::type is_pointer_type;
+            typedef typename has_trivial_assign<T>::type has_trivial_assign_type;
+            typedef AssignImpl<T, is_pointer_type, has_trivial_assign_type> impl_type;
+            
+            static void Assign(void *pDst, void *pSrc)
+            {
+                impl_type::Assign(pDst, pSrc);
+            }
+        };
 
-    //}   // namespace DestructionDistributorDetail {
+    }   // namespace AssignationDistributorDetail {
 
-    //template<class T>
-    //struct DestructionDistributor : 
-    //    DestructionDistributorDetail::DestructionDistributorImpl<T>
-    //{
-    //};
-
-
+    template<class T>
+    struct AssignationDistributor : 
+        AssignationDistributorDetail::AssignationDistributorImpl<T>
+    {
+    };
 
 
+
+    
     
     namespace VariantPtrDetail {
 
@@ -148,24 +149,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class T>
             void Clear()
             {
-                // 指定された T が Types に含まれるかの検証が必要。
-                // 指定された T の位置が現在処理中の T と等しいかの検証を行う処理が必要。
-                // !has_trivial_destructor であれば destructor 呼ぶって処理が必要。
-                // !has_trivial_constructor であれば constructor 呼ぶって処理が必要。
-                reinterpret_cast<T &>(m_storage).~T();
-                //new(m_storage)T();
+                typedef typename mpl::find<Types, T>::type I;
+                typedef typename mpl::end<Types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                _ASSERTE(m_which == -1 || m_which == I::pos::value);
+                m_which = -1;
+#else
+#endif
+                DestructionDistributor<T>::Destruct(m_storage);
                 ::ZeroMemory(m_storage, sizeof(max_size_type));
             }
 
             template<class T>
-            void Copy(VariantPtrImpl<Types> &other)
+            void AssignTo(VariantPtrImpl<Types> &other)
             {
+                typedef typename mpl::find<Types, T>::type I;
+                typedef typename mpl::end<Types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                _ASSERTE(m_which == I::pos::value);
+#else
+#endif
                 // 指定された T が Types に含まれるかの検証が必要。
                 // 指定された T の位置が現在処理中の T と等しいかの検証を行う処理が必要。
                 // !has_trivial_assign であれば operator= 使う処理が必要。
                     // !has_trivial_destructor であれば destructor 呼ぶって処理が必要。
                     // !has_trivial_copy であれば copy constructor 呼ぶって処理が必要。
-                reinterpret_cast<T &>(other.m_storage) = reinterpret_cast<T &>(m_storage);
+                if (this != &other)
+                {
+                    reinterpret_cast<T &>(other.m_storage) = reinterpret_cast<T &>(m_storage);
+                }
                 //new(other.m_storage)T(reinterpret_cast<T &>(m_storage));
                 //other.Clear<T>();
                 //other.Get<T>() = Get<T>();
@@ -174,17 +188,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class T>
             T Detach()
             {
-                // 指定された T が Types に含まれるかの検証が必要。
-                // 指定された T の位置が現在処理中の T と等しいかの検証を行う処理が必要。
-                // !has_trivial_constructor であれば constructor 呼ぶって処理が必要。
-                // !has_trivial_destructor であれば destructor 呼ぶって処理が必要。
-                // !has_trivial_constructor であれば constructor 呼ぶって処理が必要。
+                typedef typename mpl::find<Types, T>::type I;
+                typedef typename mpl::end<Types>::type IEnd;
+                BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
+#ifdef _DEBUG
+                _ASSERTE(m_which == I::pos::value);
+                m_which = -1;
+#else
+#endif
                 T p;
                 ::memcpy_s(&p, sizeof(T), m_storage, sizeof(T));
-                //T p(reinterpret_cast<T &>(m_storage));
-                //reinterpret_cast<T &>(m_storage).~T();
-                reinterpret_cast<T &>(m_storage).~T();
-                //new(m_storage)T();
+                DestructionDistributor<T>::Destruct(m_storage);
                 ::ZeroMemory(m_storage, sizeof(max_size_type));
                 return p;
             }
@@ -225,84 +239,152 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_SemiAutoPtrTest.*
 namespace {
 
-    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_01)
-    //{
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_01) Tag;
-    //    typedef ConstructionTester<Tag, 0> Tester;
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //    
-    //    BYTE buf[sizeof(Tester *)] = { 0 };
-    //    ASSERT_EQ(0, Tester::Counter().Value());
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, RawPointerTest_01)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
 
-    //    DestructionDistributor<Tester *>::Destruct(buf);
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //}
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, RawPointerTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE bufSrc[sizeof(Tester *)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
+        BYTE bufDst[sizeof(Tester *)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-
-
-
-    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_02)
-    //{
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, RawPointerTest_02) Tag;
-    //    typedef ConstructionTester<Tag, 0> Tester;
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //    
-    //    BYTE buf[sizeof(Tester *)];
-    //    Tester *p_ = new Tester();
-    //    ::memcpy_s(buf, sizeof(Tester *), &p_, sizeof(Tester *));
-    //    ASSERT_EQ(1, Tester::Counter().Value());
-
-    //    DestructionDistributor<Tester *>::Destruct(buf);
-    //    ASSERT_EQ(1, Tester::Counter().Value());
-
-    //    delete p_;
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //}
+        AssignationDistributor<Tester *>::Assign(bufDst, bufSrc);
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
 
 
 
 
 
-    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_01)
-    //{
-    //    using namespace boost;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_01) Tag;
-    //    typedef ConstructionTester<Tag, 0> Tester;
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //    
-    //    BYTE buf[sizeof(shared_ptr<Tester>)] = { 0 };
-    //    ASSERT_EQ(0, Tester::Counter().Value());
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, RawPointerTest_02)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
 
-    //    DestructionDistributor<shared_ptr<Tester> >::Destruct(buf);
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //}
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, RawPointerTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE bufSrc[sizeof(Tester *)];
+        Tester *pSrc = new Tester();
+        ::memcpy_s(bufSrc, sizeof(Tester *), &pSrc, sizeof(Tester *));
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        BYTE bufDst[sizeof(Tester *)];
+        Tester *pDst = new Tester();
+        ::memcpy_s(bufDst, sizeof(Tester *), &pDst, sizeof(Tester *));
+        ASSERT_EQ(2, Tester::Counter().Value());
+
+        AssignationDistributor<Tester *>::Assign(bufDst, bufSrc);
+        ASSERT_EQ(2, Tester::Counter().Value());
+
+        delete pSrc;
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        delete pDst;
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
 
 
 
 
 
-    //CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_02)
-    //{
-    //    using namespace boost;
-    //    using namespace Urasandesu::CppAnonym::Utilities;
-    //    typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_DestructionDistributorTest, SmartPointerTest_02) Tag;
-    //    typedef ConstructionTester<Tag, 0> Tester;
-    //    ASSERT_EQ(0, Tester::Counter().Value());
-    //    
-    //    BYTE buf[sizeof(shared_ptr<Tester>)];
-    //    shared_ptr<Tester> p_(new Tester());
-    //    ::memcpy_s(buf, sizeof(shared_ptr<Tester>), &p_, sizeof(shared_ptr<Tester>));
-    //    ASSERT_EQ(1, Tester::Counter().Value());
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_01)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
 
-    //    DestructionDistributor<shared_ptr<Tester> >::Destruct(buf);
-    //    ASSERT_EQ(0, Tester::Counter().Value());
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE bufSrc[sizeof(shared_ptr<Tester>)] = { 0 };
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE bufDst[sizeof(shared_ptr<Tester>)] = { 0 };
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-    //    ::ZeroMemory(&p_, sizeof(shared_ptr<Tester>));  // suppress original auto destruction
-    //}
+        AssignationDistributor<shared_ptr<Tester> >::Assign(bufDst, bufSrc);
+        ASSERT_EQ(0, Tester::Counter().Value());
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_02)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        BYTE bufSrc[sizeof(shared_ptr<Tester>)];
+        shared_ptr<Tester> pSrc(new Tester());
+        ::memcpy_s(bufSrc, sizeof(shared_ptr<Tester>), &pSrc, sizeof(shared_ptr<Tester>));
+        ASSERT_EQ(1, Tester::Counter().Value());
+        
+        BYTE bufDst[sizeof(shared_ptr<Tester>)];
+        shared_ptr<Tester> pDst(new Tester());
+        ::memcpy_s(bufDst, sizeof(shared_ptr<Tester>), &pDst, sizeof(shared_ptr<Tester>));
+        ASSERT_EQ(2, Tester::Counter().Value());
+
+        shared_ptr<Tester> &pSrc_ = *reinterpret_cast<shared_ptr<Tester> *>(bufSrc);
+        shared_ptr<Tester> &pDst_ = *reinterpret_cast<shared_ptr<Tester> *>(bufDst);
+
+        ASSERT_EQ(1, pSrc_.use_count());
+        ASSERT_EQ(1, pDst_.use_count());
+        ASSERT_NE(pSrc_, pDst_);
+
+        AssignationDistributor<shared_ptr<Tester> >::Assign(bufDst, bufSrc);
+        ASSERT_EQ(1, Tester::Counter().Value());
+        
+        ASSERT_EQ(2, pSrc_.use_count());
+        ASSERT_EQ(2, pDst_.use_count());
+        ASSERT_EQ(pSrc_, pDst_);
+        
+        pSrc_.~shared_ptr<Tester>();
+        pDst_.~shared_ptr<Tester>();
+        ::ZeroMemory(&pSrc, sizeof(shared_ptr<Tester>));  // suppress original auto destruction
+        ::ZeroMemory(&pDst, sizeof(shared_ptr<Tester>));  // suppress original auto destruction
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_03)
+    {
+        using namespace boost;
+        using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_AssignationDistributorTest, NotPodTest_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
+        
+        shared_ptr<Tester> pSrc(new Tester());
+        ASSERT_EQ(1, Tester::Counter().Value());
+        
+        shared_ptr<Tester> pDst(new Tester());
+        ASSERT_EQ(2, Tester::Counter().Value());
+
+        ASSERT_EQ(1, pSrc.use_count());
+        ASSERT_EQ(1, pDst.use_count());
+        ASSERT_NE(pSrc, pDst);
+
+        AssignationDistributor<shared_ptr<Tester> >::Assign(&pSrc, &pDst);
+        ASSERT_EQ(1, Tester::Counter().Value());
+
+        ASSERT_EQ(2, pSrc.use_count());
+        ASSERT_EQ(2, pDst.use_count());
+        ASSERT_EQ(pSrc, pDst);
+    }
 
     
     
@@ -384,7 +466,7 @@ namespace {
                 ASSERT_EQ(2, p->m_useCount);
 
                 Var v2;
-                v1.Copy<intrusive_ptr<Hoge> >(v2);
+                v1.AssignTo<intrusive_ptr<Hoge> >(v2);
                 ASSERT_EQ(3, p->m_useCount);
 
                 v2.Clear<intrusive_ptr<Hoge> >();

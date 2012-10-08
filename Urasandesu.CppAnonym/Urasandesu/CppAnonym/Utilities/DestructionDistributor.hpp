@@ -12,7 +12,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         using namespace boost;
 
-        template<class T, class IsPointer, class HasTrivialConstructor>
+        template<class T, class IsPointer, class HasTrivialDestructor>
         struct DestructImpl
         {
             static void Destruct(void *p)

@@ -7,54 +7,66 @@
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest.*
 namespace {
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01)
     {
-        using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
         
-        BYTE buf[sizeof(int *)];
+        BYTE buf[sizeof(Tester *)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-        ConstructionDistributor<int *>::Construct(buf);
-
-        int *&p = reinterpret_cast<int *&>(buf);
-        ASSERT_FALSE(p);
+        ConstructionDistributor<Tester *>::Construct(buf);
+        ASSERT_EQ(0, Tester::Counter().Value());
     }
 
 
 
 
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02)
     {
-        using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, RawPointerTest_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
         
-        BYTE buf[sizeof(int *)];
+        BYTE buf[sizeof(Tester *)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-        ConstructionDistributor<int *>::Construct(buf, new int(10));
+        ConstructionDistributor<Tester *>::Construct(buf, new Tester());
+        ASSERT_EQ(1, Tester::Counter().Value());
 
-        int *&p = reinterpret_cast<int *&>(buf);
+        Tester *&p = reinterpret_cast<Tester *&>(buf);
         ASSERT_TRUE(p != NULL);
-        ASSERT_EQ(10, *p);
 
         delete p;
+        ASSERT_EQ(0, Tester::Counter().Value());
     }
 
 
 
 
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_01)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_01)
     {
         using namespace boost;
-        using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_01) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
         
-        BYTE buf[sizeof(shared_ptr<int>)];
+        BYTE buf[sizeof(shared_ptr<Tester>)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-        ConstructionDistributor<shared_ptr<int> >::Construct(buf);
+        ConstructionDistributor<shared_ptr<Tester> >::Construct(buf);
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-        shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
+        shared_ptr<Tester> &p = reinterpret_cast<shared_ptr<Tester> &>(buf);
         ASSERT_FALSE(p);
     }
 
@@ -62,21 +74,26 @@ namespace {
 
 
 
-    TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, SmartPointerTest_02)
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_02)
     {
         using namespace boost;
-        using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
+
+        typedef GTEST_TEST_CLASS_NAME_(Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest, NotPod_02) Tag;
+        typedef ConstructionTester<Tag, 0> Tester;
+        ASSERT_EQ(0, Tester::Counter().Value());
         
-        BYTE buf[sizeof(shared_ptr<int>)];
+        BYTE buf[sizeof(shared_ptr<Tester>)];
+        ASSERT_EQ(0, Tester::Counter().Value());
 
-        ConstructionDistributor<shared_ptr<int> >::Construct(buf, new int(10));
+        ConstructionDistributor<shared_ptr<Tester> >::Construct(buf, new Tester());
+        ASSERT_EQ(1, Tester::Counter().Value());
 
-        shared_ptr<int> &p = reinterpret_cast<shared_ptr<int> &>(buf);
+        shared_ptr<Tester> &p = reinterpret_cast<shared_ptr<Tester> &>(buf);
         ASSERT_TRUE(p);
-        ASSERT_EQ(10, *p);
 
-        p.~shared_ptr<int>();
+        p.~shared_ptr<Tester>();
+        ASSERT_EQ(0, Tester::Counter().Value());
     }
 
 }

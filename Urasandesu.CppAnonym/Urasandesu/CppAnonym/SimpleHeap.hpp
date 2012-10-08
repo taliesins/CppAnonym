@@ -108,7 +108,7 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                Utilities::DestructionDistributor<T *>::Destruct(pObj);
+                Utilities::DestructionDistributor<T>::Destruct(pObj);
             }
 
             TArray m_array;
@@ -133,7 +133,7 @@ namespace Urasandesu { namespace CppAnonym {
 
                 for (T **i = &m_array[0] - 1, **i_end = i + m_array.size(); i != i_end; --i_end)
                 {
-                    Utilities::DestructionDistributor<T *>::Destruct(*i_end);
+                    Utilities::DestructionDistributor<T>::Destruct(*i_end);
                     m_pool.free(*i_end);
                 }
             }
@@ -190,7 +190,7 @@ namespace Urasandesu { namespace CppAnonym {
                     // This loop is performed only one time.
                     for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
                     {
-                        Utilities::DestructionDistributor<T *>::Destruct(*i);
+                        Utilities::DestructionDistributor<T>::Destruct(*i);
                         m_pool.free(*i);
                     }
                     m_array.erase(obj, m_array.end());
@@ -217,7 +217,7 @@ namespace Urasandesu { namespace CppAnonym {
             {
                 T *pObj = (*this)[Size() - 1];
                 m_array.pop_back();
-                Utilities::DestructionDistributor<T *>::Destruct(pObj);
+                Utilities::DestructionDistributor<T>::Destruct(pObj);
                 m_pool.free(pObj);
             }
 
@@ -305,7 +305,7 @@ namespace Urasandesu { namespace CppAnonym {
 #ifdef DEBUG_SIMPLEHEAP
                 std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is destructing..." << std::endl;
 #endif
-                Utilities::DestructionDistributor<T *>::Destruct(pObj);
+                Utilities::DestructionDistributor<T>::Destruct(pObj);
                 m_pool.free(pObj);
 #ifdef DEBUG_SIMPLEHEAP
                 std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is destructed !!" << std::endl;
