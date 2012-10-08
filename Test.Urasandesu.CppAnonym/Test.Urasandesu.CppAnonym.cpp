@@ -3941,7 +3941,6 @@ namespace {
         ASSERT_TRUE(pMSCorLib != NULL);
         ASSERT_EQ(0x20000001, pMSCorLib->GetToken());   // !! CAUTION: This is CORRECT !!
 
-#if 0
         ModuleMetadata const *pSystemCoreModule = NULL;
         pSystemCoreModule = pSystemCore->GetModule(L"System.Core.dll");
         ASSERT_TRUE(pSystemCoreModule != NULL);
@@ -4025,6 +4024,7 @@ namespace {
         ASSERT_TRUE(pFunc1DateTimector != NULL);
         ASSERT_EQ(0x06000232, pFunc1DateTimector->GetToken());   // !! CAUTION: This is CORRECT !!
 
+#if 0
         MethodMetadata const *pget_UtcNow = NULL;
         {
             std::vector<ITypeMetadata const *> params;

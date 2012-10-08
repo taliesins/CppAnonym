@@ -15,6 +15,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         public:
             enum type
             {
+                CC_NO_VALUE,
                 CC_STANDARD, 
                 CC_VAR_ARGS, 
                 CC_ANY, 

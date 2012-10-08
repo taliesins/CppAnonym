@@ -395,4 +395,212 @@ namespace {
         BOOST_MPL_ASSERT((boost::is_same<Class2::class3_api_holder, TestClass3ApiHolder>));
         BOOST_MPL_ASSERT((boost::is_same<Class2::class3_type, Class3>));
     }
+
+    
+    namespace _200861B5 {
+
+        struct SmartPtrChainMapper;
+        struct SmartPtrChainConstructor;
+
+        
+        
+        
+        
+        template<
+            class Previous, 
+            class Mapper = SmartPtrChainMapper,
+            class Constructor = SmartPtrChainConstructor
+        >
+        struct SmartPtrChainInfo;
+
+        
+        
+        
+        
+        template<
+            class Previous, 
+            class Mapper,
+            class Constructor
+        >
+        struct SmartPtrChainInfo
+        {
+            typedef Previous previous_type;
+            typedef Mapper mapper_type;
+            typedef Constructor constructor_type;
+        };
+
+        struct A;
+        struct B;
+        struct C;
+        struct D;
+
+        template<class ChainInfo>
+        struct get_previous
+        {
+            typedef typename ChainInfo::previous_type type;
+        };
+
+    }   // namespace _200861B5 {
+
+    TEST(Urasandesu_CppAnonym_Traits_ApiStrategiesTest, Test_01)
+    {
+        using namespace _200861B5;
+        
+        typedef boost::mpl::vector<SmartPtrChainInfo<A>, SmartPtrChainInfo<B>, SmartPtrChainInfo<C> > Vec;
+        typedef boost::mpl::find_if<Vec, boost::is_same<get_previous<boost::mpl::_1>, C> >::type I;
+        //typedef boost::mpl::find_if<Vec, boost::is_same<get_previous<boost::mpl::_1>, D> >::type I;
+        typedef boost::mpl::end<Vec>::type IEnd;
+        BOOST_MPL_ASSERT((boost::mpl::not_<boost::is_same<I, IEnd> >));
+    }
+
+    namespace _E2724154 {
+
+        struct A
+        {
+            A() { }
+            int i;
+        };
+
+        struct B
+        {
+            char *str;
+        };
+
+    }   // namespace _E2724154 {
+
+    TEST(Urasandesu_CppAnonym_Traits_ApiStrategiesTest, Test_02)
+    {
+        using namespace _E2724154;
+
+        {
+            boost::shared_ptr<void> pVoid;
+            boost::shared_ptr<A> pA = boost::make_shared<A>();
+            pA->i = 10;
+            pVoid = pA;
+            boost::shared_ptr<B> pB = boost::static_pointer_cast<B>(pVoid);
+            ASSERT_TRUE(pB);    // reinterpret_cast と同じっぽ。
+        }
+        
+        {
+            boost::any any1;
+            boost::shared_ptr<A> pA1 = boost::make_shared<A>();
+            pA1->i = 10;
+            any1 = pA1;
+            ASSERT_EQ(2, pA1.use_count());
+
+            boost::any any2;
+            any2 = any1;
+            ASSERT_EQ(3, pA1.use_count());
+
+            boost::shared_ptr<B> *ppB = boost::any_cast<boost::shared_ptr<B> >(&any2);
+            ASSERT_FALSE(ppB);
+
+            boost::shared_ptr<A> *ppA = boost::any_cast<boost::shared_ptr<A> >(&any2);
+            ASSERT_TRUE(ppA != NULL);
+            boost::shared_ptr<A> pA2 = *ppA;
+            ASSERT_EQ(4, pA1.use_count());
+        }
+        
+    }
+
+    namespace _35C2C9F3 {
+
+        template<
+            class Previous 
+        >
+        struct SmartPtrChainInfo
+        {
+            typedef Previous previous_type;
+        };
+        
+        struct A
+        {
+            typedef boost::mpl::vector<SmartPtrChainInfo<boost::mpl::void_> > chain_info_sequence_type;
+        };
+
+        struct B
+        {
+            typedef boost::mpl::vector<SmartPtrChainInfo<A> > chain_info_sequence_type;
+        };
+
+        struct C
+        {
+            typedef boost::mpl::vector<SmartPtrChainInfo<B> > chain_info_sequence_type;
+        };
+
+        struct D
+        {
+            typedef boost::mpl::vector<SmartPtrChainInfo<D>, SmartPtrChainInfo<B> > chain_info_sequence_type;
+        };
+
+        struct E
+        {
+            typedef boost::mpl::vector<SmartPtrChainInfo<D> > chain_info_sequence_type;
+        };
+
+        namespace Detail {
+
+            namespace mpl = boost::mpl;
+
+            CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfo, previous_type);
+            CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfo, previous_type);
+
+            CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+            CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type);
+
+            template<class Last, class Current>
+            struct FlattenChainInfoImpl
+            {
+                typedef typename mpl::eval_if<
+                                    CPP_ANONYM_HAS_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                                    CPP_ANONYM_GET_MEMBER_TYPE(ChainInfo, previous_type, Current),
+                                    mpl::identity<Current> >::type current_type;
+                BOOST_MPL_ASSERT((mpl::or_<boost::is_same<current_type, D >, boost::is_same<current_type, B >, boost::is_same<current_type, A >, boost::is_same<current_type, mpl::void_ > >));
+                typedef typename mpl::eval_if<
+                                    mpl::and_<
+                                        CPP_ANONYM_HAS_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, current_type),
+                                        mpl::not_<boost::is_same<Last, current_type> >
+                                    >,
+                                    CPP_ANONYM_GET_MEMBER_TYPE(SmartPtrChain, chain_info_sequence_type, current_type),
+                                    mpl::identity<mpl::vector<current_type> > >::type chain_info_sequence_type;
+
+                typedef typename mpl::eval_if<
+                                    boost::is_same<chain_info_sequence_type, mpl::vector<current_type> >, 
+                                    chain_info_sequence_type,
+                                    mpl::fold<
+                                        chain_info_sequence_type, 
+                                        mpl::vector<current_type>, 
+                                        mpl::insert_range<
+                                            mpl::_1, 
+                                            mpl::end<mpl::_1>, 
+                                            FlattenChainInfoImpl<current_type, mpl::_2> > > >::type type;
+            };
+
+            template<class T>
+            struct FlattenChainInfo : 
+                FlattenChainInfoImpl<mpl::void_, T>
+            {
+            };
+
+        }   // namespace Detail {
+    }   // namespace _35C2C9F3 {
+
+    TEST(Urasandesu_CppAnonym_Traits_ApiStrategiesTest, Test_03)
+    {
+        namespace mpl = boost::mpl;
+        using _35C2C9F3::Detail::FlattenChainInfo;
+        using namespace _35C2C9F3;
+
+        typedef mpl::vector<int, float, double> Vec0;
+        typedef mpl::vector<Vec0, Vec0, Vec0> Vec1;
+        typedef mpl::fold<Vec1, mpl::vector0<>, mpl::insert_range<mpl::_1, mpl::end<mpl::_1>, mpl::deref<mpl::_2> > >::type Vec2;
+        BOOST_MPL_ASSERT_RELATION(mpl::size<Vec2>::value, ==, 9);
+
+        //typedef FlattenChainInfo<B>::type Vec3;
+        //BOOST_MPL_ASSERT_RELATION(mpl::size<Vec3>::value, ==, 3);
+
+        //typedef FlattenChainInfo<E>::type Vec4;
+        //BOOST_MPL_ASSERT_RELATION(mpl::size<Vec4>::value, ==, 6);
+        //BOOST_MPL_ASSERT((boost::is_same<FlattenChainInfo<D>::type, int >));
+    }
 }

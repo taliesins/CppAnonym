@@ -22,9 +22,14 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/range/algorithm_ext.hpp>
 
+#include <boost/mpl/filter_view.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/insert_range.hpp>
+
 #include <boost/intrusive_ptr.hpp>
 #include <boost/detail/atomic_count.hpp>
 #include <boost/unordered_set.hpp>
+#include <boost/weak_ptr.hpp>
 
 #define CPPANONYM_TEST(test_case_name, test_name) \
     class GTEST_TEST_CLASS_NAME_(test_case_name, test_name); \
@@ -48,3 +53,92 @@
         } \
     } \
     void CppAnonymTest(GTEST_TEST_CLASS_NAME_(test_case_name, test_name))
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMCOMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
+#include <Urasandesu/CppAnonym/Collections/Iterable.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
+#include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_DISTINCT_H
+#include <Urasandesu/CppAnonym/Traits/Distinct.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
+#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
+#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_CALLINGCONVENTIONS_H
+#include <Urasandesu/CppAnonym/Metadata/CallingConventions.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_TYPEKINDS_H
+#include <Urasandesu/CppAnonym/Metadata/TypeKinds.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
+#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
+#endif
+

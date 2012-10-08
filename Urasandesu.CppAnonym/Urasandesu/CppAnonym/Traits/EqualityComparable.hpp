@@ -12,6 +12,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     struct EqualityComparable : 
         std::binary_function<T, T, bool>
     {
+        typedef typename boost::call_traits<T>::value_type value_type;
         typedef typename boost::call_traits<T>::param_type param_type;
     };
 
