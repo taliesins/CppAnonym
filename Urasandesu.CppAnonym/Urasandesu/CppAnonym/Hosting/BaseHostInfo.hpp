@@ -31,14 +31,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             typedef typename HostInfoApiAt<HostInfoApiHolder, HostInfoLabel>::type host_info_type;
             typedef typename HostInfoApiAt<HostInfoApiHolder, HostInfoPersistedHandlerLabel>::type host_info_persisted_handler_type;
             typedef DisposingInfo<host_info_type, host_info_persisted_handler_type> host_info_disposing_info_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, RuntimeHostLabel>::type runtime_host_type;
+            typedef typename HostInfoApiAt<HostInfoApiHolder, RuntimeHostPersistedHandlerLabel>::type runtime_host_persisted_handler_type;
+            typedef DisposingInfo<runtime_host_type, runtime_host_persisted_handler_type> runtime_host_disposing_info_type;
 
 
             typedef DisposableHeapProvider<
-                host_info_disposing_info_type 
+                host_info_disposing_info_type, 
+                runtime_host_disposing_info_type
             > base_heap_provider_type;
 
 
             typedef typename base_heap_provider_type::provider_of<host_info_disposing_info_type>::type host_info_provider_type;
+            typedef typename base_heap_provider_type::provider_of<runtime_host_disposing_info_type>::type runtime_host_provider_type;
 
 
             typedef mpl::void_ host_info_previous_type;
@@ -70,8 +75,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename facade::host_info_type host_info_type;
         typedef typename facade::host_info_persisted_handler_type host_info_persisted_handler_type;
         typedef typename facade::host_info_disposing_info_type host_info_disposing_info_type;
+        typedef typename facade::runtime_host_type runtime_host_type;
+        typedef typename facade::runtime_host_persisted_handler_type runtime_host_persisted_handler_type;
+        typedef typename facade::runtime_host_disposing_info_type runtime_host_disposing_info_type;
         typedef typename facade::base_heap_provider_type base_heap_provider_type;
         typedef typename facade::host_info_provider_type host_info_provider_type;
+        typedef typename facade::runtime_host_provider_type runtime_host_provider_type;
         typedef typename facade::host_info_previous_type host_info_previous_type;
         typedef typename facade::chain_info_types chain_info_types;
         typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
@@ -88,8 +97,43 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             pHost.Persist();
             return pHost.Get();
         }
+
+        runtime_host_type const *GetRuntime(std::wstring const &version) const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+            
+            if (version.empty())
+                BOOST_THROW_EXCEPTION(CppAnonymArgumentException(L"The parameter must be non-empty.", L"version"));
+
+            runtime_host_type *pExistingRuntime = NULL;
+            if (!TryGetRuntime(version, pExistingRuntime))
+            {
+                TempPtr<runtime_host_type> pNewRuntime = NewRuntime(version);
+
+                std::wstring const &corVersion = pNewRuntime->GetCORVersion();
+                if (corVersion != version)
+                {
+                    std::wstring what;
+                    what += L"The version '";
+                    what += version;
+                    what += L"' is not supported. For your information, this process runs at version '";
+                    what += corVersion;
+                    what += L"'.";
+                    BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException(what));
+                }
+
+                pNewRuntime.Persist();
+                return pNewRuntime.Get();
+            }
+            else
+            {
+                return pExistingRuntime;
+            }
+        }
     
     private:
+        friend typename runtime_host_persisted_handler_type;
+
         static Utilities::TempPtr<host_info_type> NewHost()
         {
             using namespace Urasandesu::CppAnonym::Utilities;
@@ -101,6 +145,35 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             provider.AddPersistedHandler(pHostInfo, handler);
             return pHostInfo;
         }
+
+        Utilities::TempPtr<runtime_host_type> NewRuntime(std::wstring const &version) const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            runtime_host_provider_type &provider = ProviderOf<runtime_host_disposing_info_type>();
+            host_info_chain_type &chain = ChainFrom<host_info_previous_type>();
+            TempPtr<runtime_host_type> pRuntime = chain.NewObject<runtime_host_type>(provider);
+            runtime_host_persisted_handler_type handler(const_cast<this_type *>(this), version);
+            provider.AddPersistedHandler(pRuntime, handler);
+            return pRuntime;
+        }
+
+        bool TryGetRuntime(std::wstring const &version, runtime_host_type *&pExistingRuntime) const
+        {
+            if (m_versionToIndex.find(version) == m_versionToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                size_t index = m_versionToIndex[version];
+                runtime_host_provider_type &provider = ProviderOf<runtime_host_disposing_info_type>();
+                pExistingRuntime = provider.GetObject(index);
+                return true;
+            }
+        }
+
+        mutable boost::unordered_map<std::wstring, SIZE_T> m_versionToIndex;
     };
 
 

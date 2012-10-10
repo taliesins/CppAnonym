@@ -88,6 +88,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
+#ifndef URASANDESU_CPPANONYM_FUSION_DEFAULTRUNTIMEHOSTAPI_H
+#include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolder.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTHOSTINFOAPIHOLDER_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultHostInfoApiHolder.h>
 #endif
@@ -95,6 +99,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
+
+#ifndef URASANDESU_CPPANONYM_HOSTING_BASERUNTIMEHOST_HPP
+#include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHost.hpp>
+#endif
 
 #ifndef URASANDESU_CPPANONYM_HOSTING_BASEHOSTINFO_HPP
 #include <Urasandesu/CppAnonym/Hosting/BaseHostInfo.hpp>
@@ -143,6 +151,9 @@ namespace {
 
         HostInfo const *pHostInfo = HostInfo::CreateHost();
         ASSERT_TRUE(pHostInfo != NULL);
+
+        RuntimeHost const *pRuntimeHost = pHostInfo->GetRuntime(L"v2.0.50727");
+        ASSERT_TRUE(pRuntimeHost != NULL);
     }
 
 
