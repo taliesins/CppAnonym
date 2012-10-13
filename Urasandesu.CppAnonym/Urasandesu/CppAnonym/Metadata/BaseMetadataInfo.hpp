@@ -33,13 +33,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataInfoLabel>::type metadata_info_type;
             typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataInfoPersistedHandlerLabel>::type metadata_info_persisted_handler_type;
             typedef DisposingInfo<metadata_info_type, metadata_info_persisted_handler_type> metadata_info_disposing_info_type;
+            typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataDispenserLabel>::type metadata_dispenser_type;
+            typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataDispenserPersistedHandlerLabel>::type metadata_dispenser_persisted_handler_type;
+            typedef DisposingInfo<metadata_dispenser_type, metadata_dispenser_persisted_handler_type> metadata_dispenser_disposing_info_type;
 
-            //typedef DisposableHeapProvider<
-            //    metadata_info_disposing_info_type
-            //> base_heap_provider_type;
+            typedef DisposableHeapProvider<
+                metadata_dispenser_disposing_info_type
+            > base_heap_provider_type;
 
 
-            //typedef typename base_heap_provider_type::provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
+            typedef typename base_heap_provider_type::provider_of<metadata_dispenser_disposing_info_type>::type metadata_dispenser_provider_type;
 
 
             typedef runtime_host_type metadata_info_previous_type;
@@ -61,18 +64,47 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseMetadataInfo : 
         public MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder>::base_ptr_chain_type,
+        public MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder>::base_heap_provider_type,
         public SimpleDisposable
     {
     public:
+        typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
         typedef MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder> facade;
         typedef typename facade::runtime_host_type runtime_host_type;
         typedef typename facade::metadata_info_type metadata_info_type;
         typedef typename facade::metadata_info_persisted_handler_type metadata_info_persisted_handler_type;
         typedef typename facade::metadata_info_disposing_info_type metadata_info_disposing_info_type;
+        typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
+        typedef typename facade::metadata_dispenser_persisted_handler_type metadata_dispenser_persisted_handler_type;
+        typedef typename facade::metadata_dispenser_disposing_info_type metadata_dispenser_disposing_info_type;
+        typedef typename facade::base_heap_provider_type base_heap_provider_type;
+        typedef typename facade::metadata_dispenser_provider_type metadata_dispenser_provider_type;
         typedef typename facade::metadata_info_previous_type metadata_info_previous_type;
         typedef typename facade::chain_info_types chain_info_types;
         typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
         typedef typename facade::metadata_info_chain_type metadata_info_chain_type;
+
+        metadata_dispenser_type *CreateDispenser() const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+            
+            TempPtr<metadata_dispenser_type> pNewDisp = NewDispenser();
+            pNewDisp.Persist();
+            return pNewDisp.Get();
+        }
+
+    private:
+        Utilities::TempPtr<metadata_dispenser_type> NewDispenser() const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_disposing_info_type>();
+            metadata_info_chain_type &chain = ChainFrom<metadata_info_previous_type>();
+            TempPtr<metadata_dispenser_type> pDisp = chain.NewObject<metadata_dispenser_type>(provider);
+            metadata_dispenser_persisted_handler_type handler(const_cast<this_type *>(this));
+            provider.AddPersistedHandler(pDisp, handler);
+            return pDisp;
+        }
     };
 
 
