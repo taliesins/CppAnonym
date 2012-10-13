@@ -35,11 +35,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-    struct AssemblyMetadataApiHolderLabel { };
-
-}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+//namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+//
+//    struct AssemblyMetadataApiHolderLabel { };
+//
+//}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 namespace MockD7E6BF16 {
 

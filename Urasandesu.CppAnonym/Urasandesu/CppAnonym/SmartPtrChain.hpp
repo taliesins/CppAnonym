@@ -191,6 +191,66 @@ namespace Urasandesu { namespace CppAnonym {
             typedef SmartPtrChainImplImpl<Current, ChainInfoTypes, i, i_end> type;
         };
 
+        template<class T>
+        struct Wrap
+        {
+        };
+
+        template<class T>
+        struct Container
+        {
+            Container() : 
+                m_p(NULL)
+            { }
+            T *m_p;
+        };
+
+        template<class Chain, class T>
+        struct MapFirstAncestorSelector
+        {
+            MapFirstAncestorSelector(Chain const &chain, Container<T> &Container) : 
+                m_pChain(&chain),
+                m_pContainer(&Container)
+            { }
+
+            template<class Previous>
+            void operator()(Wrap<Previous> const &)
+            {
+                if (!m_pContainer->m_p)
+                {
+                    typedef typename Chain::chain_from<Previous>::type PreviousChain;
+                    PreviousChain &chain = m_pChain->ChainFrom<Previous>();
+                    m_pContainer->m_p = chain.MapFirstAncestor<T>();
+                }
+            }
+
+            Chain const *m_pChain;
+            Container<T> *m_pContainer;
+        };
+
+        template<class Chain, class T>
+        struct MapFirstSelector
+        {
+            MapFirstSelector(Chain const &chain, Container<T> &Container) : 
+                m_pChain(&chain),
+                m_pContainer(&Container)
+            { }
+
+            template<class Previous>
+            void operator()(Wrap<Previous> const &)
+            {
+                if (!m_pContainer->m_p)
+                {
+                    typedef typename Chain::chain_from<Previous>::type PreviousChain;
+                    PreviousChain &chain = m_pChain->ChainFrom<Previous>();
+                    m_pContainer->m_p = chain.MapFirst<T>();
+                }
+            }
+
+            Chain const *m_pChain;
+            Container<T> *m_pContainer;
+        };
+
         template<class Current, class ChainInfoTypes>
         class ATL_NO_VTABLE SmartPtrChainImpl : 
             public SmartPtrChainImplImpl<Current, 
@@ -222,135 +282,41 @@ namespace Urasandesu { namespace CppAnonym {
             }
 
             template<class T>
-            T *MapFirstAncestor() const
-            {
-                typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
-            
-                container<T> container;
-                map_first_ancestor_selector<T> selector(*this, container);
-                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
-                return container.m_p;
-            }
+            T *MapFirstAncestor() const;
 
             template<class T>
-            T *MapFirst() const
-            {
-                typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
-            
-                container<T> container;
-                map_first_selector<T> selector(*this, container);
-                mpl::for_each<MappableTypes, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
-                return container.m_p;
-            }
+            T *MapFirst() const;
 
             template<>
             Current *MapFirst<Current>() const
             {
                 return Map<Current>();
             }
-
-            //template<
-            //    class T,
-            //    class HeapProvider
-            //>
-            //T *NewObjectFirst(HeapProvider &provider) const
-            //{
-            //    container<T> container;
-            //    new_object_first_selector<T, HeapProvider> selector(*this, provider, container);
-            //    mpl::for_each<chain_info_types, wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
-            //    _ASSERTE(container.m_p);
-            //    return container.m_p;
-            //}
-
-        private:
-            template<class T>
-            struct wrap
-            {
-            };
-
-            template<class T>
-            struct container
-            {
-                container() : 
-                    m_p(NULL)
-                { }
-                T *m_p;
-            };
-
-            template<class T>
-            struct map_first_ancestor_selector
-            {
-                map_first_ancestor_selector(this_type const &this_, container<T> &container) : 
-                    m_pThis(&this_),
-                    m_pContainer(&container)
-                { }
-
-                template<class Previous>
-                void operator()(wrap<Previous> const &)
-                {
-                    if (!m_pContainer->m_p)
-                    {
-                        typedef typename chain_from<Previous>::type PreviousChain;
-                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                        m_pContainer->m_p = chain.MapFirstAncestor<T>();
-                    }
-                }
-
-                this_type const *m_pThis;
-                container<T> *m_pContainer;
-            };
-
-            template<class T>
-            struct map_first_selector
-            {
-                map_first_selector(this_type const &this_, container<T> &container) : 
-                    m_pThis(&this_),
-                    m_pContainer(&container)
-                { }
-
-                template<class Previous>
-                void operator()(wrap<Previous> const &)
-                {
-                    if (!m_pContainer->m_p)
-                    {
-                        typedef typename chain_from<Previous>::type PreviousChain;
-                        PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-                        m_pContainer->m_p = chain.MapFirst<T>();
-                    }
-                }
-
-                this_type const *m_pThis;
-                container<T> *m_pContainer;
-            };
-
-            //template<
-            //    class T,
-            //    class HeapProvider
-            //>
-            //struct new_object_first_selector
-            //{
-            //    new_object_first_selector(this_type const &this_, HeapProvider &provider, container<T> &container) : 
-            //        m_pThis(&this_),
-            //        m_pProvider(&provider),
-            //        m_pContainer(&container)
-            //    { }
-
-            //    template<class Previous>
-            //    void operator()(wrap<Previous> const &)
-            //    {
-            //        if (!m_pContainer->m_p)
-            //        {
-            //            typedef typename chain_from<Previous>::type PreviousChain;
-            //            PreviousChain &chain = m_pThis->ChainFrom<Previous>();
-            //            m_pContainer->m_p = chain.NewObject<T>(*m_pProvider);
-            //        }
-            //    }
-
-            //    this_type const *m_pThis;
-            //    HeapProvider *m_pProvider;
-            //    container<T> *m_pContainer;
-            //};
         };
+
+        template<class Current, class ChainInfoTypes>
+        template<class T>
+        T *SmartPtrChainImpl<Current, ChainInfoTypes>::MapFirstAncestor() const
+        {
+            typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            
+            Container<T> container;
+            MapFirstAncestorSelector<this_type, T> selector(*this, container);
+            mpl::for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
+            return container.m_p;
+        }
+
+        template<class Current, class ChainInfoTypes>
+        template<class T>
+        T *SmartPtrChainImpl<Current, ChainInfoTypes>::MapFirst() const
+        {
+            typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            
+            Container<T> container;
+            MapFirstSelector<this_type, T> selector(*this, container);
+            mpl::for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
+            return container.m_p;
+        }
     
     }   // namespace SmartPtrChainDetail
 

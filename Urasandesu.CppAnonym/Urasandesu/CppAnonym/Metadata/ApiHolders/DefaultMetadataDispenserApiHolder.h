@@ -34,7 +34,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
             typedef map<
                 pair<MetadataInfoLabel, MetadataInfo>,
                 pair<MetadataDispenserLabel, MetadataDispenser>,
-                pair<MetadataDispenserPersistedHandlerLabel, MetadataDispenserPersistedHandler>
+                pair<MetadataDispenserPersistedHandlerLabel, MetadataDispenserPersistedHandler>,
+                pair<AssemblyMetadataLabel, AssemblyMetadata>
             > api_cartridges;
         };
 

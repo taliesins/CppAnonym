@@ -226,9 +226,9 @@ private:
 #include <Urasandesu/CppAnonym/SystemError.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
-#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
+//#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
+//#endif
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymException.h>

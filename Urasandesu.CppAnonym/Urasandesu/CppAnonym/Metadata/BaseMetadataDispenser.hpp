@@ -32,13 +32,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
             typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, MetadataDispenserLabel>::type metadata_dispenser_type;
             typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, MetadataDispenserPersistedHandlerLabel>::type metadata_dispenser_persisted_handler_type;
             typedef DisposingInfo<metadata_dispenser_type, metadata_dispenser_persisted_handler_type> metadata_dispenser_disposing_info_type;
+            typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, AssemblyMetadataLabel>::type assembly_metadata_type;
+            typedef typename MetadataDispenserApiAt<MetadataDispenserApiHolder, AssemblyMetadataPersistedHandlerLabel>::type assembly_metadata_persisted_handler_type;
+            typedef DisposingInfo<assembly_metadata_type, assembly_metadata_persisted_handler_type> assembly_metadata_disposing_info_type;
 
 
-            //typedef DisposableHeapProvider<
-            //> base_heap_provider_type;
+            typedef DisposableHeapProvider<
+                assembly_metadata_disposing_info_type
+            > base_heap_provider_type;
 
 
-            //typedef typename base_heap_provider_type::provider_of<assembly_metadata_type>::type assembly_metadata_provider_type;
+            typedef typename base_heap_provider_type::provider_of<assembly_metadata_disposing_info_type>::type assembly_metadata_provider_type;
 
 
             typedef metadata_info_type metadata_dispenser_previous_type;
@@ -67,10 +71,68 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
         typedef typename facade::metadata_dispenser_persisted_handler_type metadata_dispenser_persisted_handler_type;
         typedef typename facade::metadata_dispenser_disposing_info_type metadata_dispenser_disposing_info_type;
+        typedef typename facade::assembly_metadata_type assembly_metadata_type;
+        typedef typename facade::assembly_metadata_persisted_handler_type assembly_metadata_persisted_handler_type;
+        typedef typename facade::assembly_metadata_disposing_info_type assembly_metadata_disposing_info_type;
+        typedef typename facade::base_heap_provider_type base_heap_provider_type;
+        typedef typename facade::assembly_metadata_provider_type assembly_metadata_provider_type;
         typedef typename facade::metadata_dispenser_previous_type metadata_dispenser_previous_type;
         typedef typename facade::chain_info_types chain_info_types;
         typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
         typedef typename facade::metadata_dispenser_chain_type metadata_dispenser_chain_type;
+
+        BaseMetadataDispenser()
+        { }
+
+        assembly_metadata_type const *GetAssembly(std::wstring const &fullName) const
+        {
+            using namespace Urasandesu::CppAnonym::Utilities;
+            
+            TempPtr<assembly_metadata_type> pNewAsm = NewAssembly(fullName);
+
+            assembly_metadata_type *pExistingAsm;
+            if (!TryGetAssembly(*pNewAsm, pExistingAsm))
+            {
+                pNewAsm.Persist();
+                return pNewAsm.Get();
+            }
+            else
+            {
+                return pExistingAsm;
+            }
+        }
+
+    private:
+        Utilities::TempPtr<assembly_metadata_type> NewAssembly(std::wstring const &fullName) const
+        {
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            //using namespace Urasandesu::CppAnonym::Utilities;
+
+            //assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
+            //metadata_dispenser_chain_type &chain = ChainFrom<metadata_dispenser_previous_type>();
+            //TempPtr<assembly_metadata_type> pAsm = chain.NewObject<assembly_metadata_type>(provider);
+            //pAsm->SetName(fullName);
+            //assembly_metadata_persisted_handler_type handler(const_cast<this_type *>(this));
+            //provider.AddPersistedHandler(pAsm, handler);
+            //return pAsm;
+        }
+
+        bool TryGetAssembly(assembly_metadata_type const &keyAsm, assembly_metadata_type *&pExistingAsm) const
+        {
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            //if (m_asmToIndex.find(&keyAsm) == m_asmToIndex.end())
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    size_t index = m_asmToIndex[&keyAsm];
+            //    assembly_metadata_provider_type &provider = ProviderOf<assembly_metadata_type>();
+            //    pExistingAsm = provider.GetObject(index);
+            //    return true;
+            //}
+        }
+
     };
 
 
