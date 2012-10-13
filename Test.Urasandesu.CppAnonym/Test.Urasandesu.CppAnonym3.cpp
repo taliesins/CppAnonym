@@ -46,36 +46,15 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
-    struct MetadataInfoLabel { };
-    struct MetadataInfoPersistedHandlerLabel { };
-
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace Interfaces {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-    struct DefaultMetadataInfoApiHolder;
+    //struct DefaultMetadataInfoApiHolder;
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Metadata {
-
-    template<
-        class MetadataInfoApiHolder = ApiHolders::DefaultMetadataInfoApiHolder
-    >    
-    class BaseMetadataInfo;
-
-    typedef BaseMetadataInfo<> MetadataInfo;
-
-    
-    
-    
-    
-    template<
-        class MetadataInfoApiHolder = ApiHolders::DefaultMetadataInfoApiHolder
-    >    
-    class BaseMetadataInfoPersistedHandler;
-
-    typedef BaseMetadataInfoPersistedHandler<> MetadataInfoPersistedHandler;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
@@ -143,42 +122,19 @@ namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace StrongNaming {
 
+#ifndef URASANDESU_CPPANONYM_METADATA_APIHOLDERS_DEFAULTMETADATAINFOAPIHOLDER_H
+#include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMetadataInfoApiHolder.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
-
-    namespace DefaultMetadataInfoApiHolderDetail {
-        
-        //using namespace boost::mpl;
-        //using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
-        //using namespace Urasandesu::CppAnonym::Hosting;
-        //using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
-
-        //struct DefaultMetadataInfoApiHolderImpl
-        //{
-        //    typedef map<
-        //        pair<RuntimeHostLabel, RuntimeHost>,
-        //        pair<MetadataInfoLabel, MetadataInfo>,
-        //        pair<MetadataDispenserLabel, MetadataDispenser>,
-        //        pair<MetadataDispenserPersistedHandlerLabel, MetadataDispenserPersistedHandler>
-        //    > api_cartridges;
-        //};
-
-    }   // namespace DefaultMetadataInfoApiHolderDetail {
-
-    struct DefaultMetadataInfoApiHolder /*: 
-        DefaultMetadataInfoApiHolderDetail::DefaultMetadataInfoApiHolderImpl*/
-    {
-    };
 
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiHolders {
 
-namespace Urasandesu { namespace CppAnonym { namespace Metadata {
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFO_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfo.hpp>
+#endif
 
-    template<
-        class MetadataInfoApiHolder
-    >    
-    class BaseMetadataInfo
-    {
-    };
+namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Metadata {
 

@@ -93,9 +93,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         public SimpleDisposable
     {
     public:
+        typedef BaseRuntimeHost<RuntimeHostApiHolder> this_type;
+        
         typedef RuntimeHostDetail::RuntimeHostFacade<RuntimeHostApiHolder> facade;
         typedef typename facade::host_info_type host_info_type;
         typedef typename facade::runtime_host_type runtime_host_type;
+        typedef typename facade::runtime_host_persisted_handler_type runtime_host_persisted_handler_type;
+        typedef typename facade::runtime_host_disposing_info_type runtime_host_disposing_info_type;
+        typedef typename facade::metadata_info_type metadata_info_type;
+        typedef typename facade::metadata_info_persisted_handler_type metadata_info_persisted_handler_type;
+        typedef typename facade::metadata_info_disposing_info_type metadata_info_disposing_info_type;
+        typedef typename facade::metadata_info_provider_type metadata_info_provider_type;        
         typedef typename facade::runtime_host_previous_type runtime_host_previous_type;
         typedef typename facade::chain_info_types chain_info_types;
         typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
@@ -136,7 +144,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;
 
-            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            BOOST_MPL_ASSERT((is_provided_object<Info>));
             typedef typename first_provider_of<Info>::type InfoProvider;
 
             Info *pExistingInfo = NULL;
@@ -153,6 +161,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         }
 
     private:
+        friend typename metadata_info_persisted_handler_type;
+
         template<class Info>
         Utilities::TempPtr<Info> NewInfo() const
         {
@@ -160,10 +170,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;
 
-            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            BOOST_MPL_ASSERT((is_provided_object<Info>));
+            typedef typename first_providing_persisted_handler<Info>::type InfoPersistedHandler;
             typedef typename first_provider_of<Info>::type InfoProvider;
 
-            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+            InfoProvider &provider = FirstProviderOf<Info>();
+            runtime_host_chain_type &chain = ChainFrom<runtime_host_previous_type>();
+            TempPtr<Info> pInfo = chain.NewObject<Info>(provider);
+            InfoPersistedHandler handler(const_cast<this_type *>(this));
+            provider.AddPersistedHandler(pInfo, handler);
+            return pInfo;
         }
 
         template<class Info>
@@ -173,7 +189,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             using namespace boost;
             using namespace Urasandesu::CppAnonym::Utilities;
 
-            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            BOOST_MPL_ASSERT((is_provided_object<Info>));
             typedef typename first_provider_of<Info>::type InfoProvider;
 
             TypeInfo key = mpl::identity<Info>();
@@ -229,6 +245,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
         typedef typename facade::runtime_host_type runtime_host_type;
         typedef typename facade::runtime_host_persisted_handler_type runtime_host_persisted_handler_type;
         typedef typename facade::runtime_host_disposing_info_type runtime_host_disposing_info_type;
+        typedef typename facade::metadata_info_type metadata_info_type;
+        typedef typename facade::metadata_info_persisted_handler_type metadata_info_persisted_handler_type;
+        typedef typename facade::metadata_info_disposing_info_type metadata_info_disposing_info_type;
         typedef typename facade::runtime_host_previous_type runtime_host_previous_type;
         typedef typename facade::chain_info_types chain_info_types;
         typedef typename facade::base_ptr_chain_type base_ptr_chain_type;

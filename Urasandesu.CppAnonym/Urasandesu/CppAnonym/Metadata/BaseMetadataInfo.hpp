@@ -6,10 +6,6 @@
 #include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoApiHolderLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATADISPENSERLABEL_HPP
-#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataDispenserLabel.hpp>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
 #include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
 #endif
@@ -35,27 +31,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         {
             typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, RuntimeHostLabel>::type runtime_host_type;
             typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataInfoLabel>::type metadata_info_type;
-            typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataDispenserLabel>::type metadata_dispenser_type;
-            typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataDispenserPersistedHandlerLabel>::type metadata_dispenser_persisted_handler_type;
+            typedef typename MetadataInfoApiAt<MetadataInfoApiHolder, MetadataInfoPersistedHandlerLabel>::type metadata_info_persisted_handler_type;
+            typedef DisposingInfo<metadata_info_type, metadata_info_persisted_handler_type> metadata_info_disposing_info_type;
 
-            typedef mpl::vector<
-                DisposingInfo<metadata_dispenser_type, metadata_dispenser_persisted_handler_type>
-            > disposing_info_types;
-            typedef DisposableHeapProvider<disposing_info_types> base_heap_provider_type;
+            //typedef DisposableHeapProvider<
+            //    metadata_info_disposing_info_type
+            //> base_heap_provider_type;
 
 
-            typedef typename base_heap_provider_type::provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
+            //typedef typename base_heap_provider_type::provider_of<metadata_dispenser_type>::type metadata_dispenser_provider_type;
 
 
             typedef runtime_host_type metadata_info_previous_type;
-            
-            
+
+
             typedef mpl::vector<
                 SmartPtrChainInfo<metadata_info_previous_type>
             > chain_info_types;
             typedef SmartPtrChain<metadata_info_type, chain_info_types> base_ptr_chain_type;
-            
-            
+
+
             typedef typename base_ptr_chain_type::chain_from<metadata_info_previous_type>::type metadata_info_chain_type;
         };
 
@@ -66,46 +61,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
     >    
     class BaseMetadataInfo : 
         public MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder>::base_ptr_chain_type,
-        public MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder>::base_heap_provider_type,
         public SimpleDisposable
     {
     public:
-        typedef BaseMetadataInfo<MetadataInfoApiHolder> this_type;
-
         typedef MetadataInfoDetail::MetadataInfoFacade<MetadataInfoApiHolder> facade;
         typedef typename facade::runtime_host_type runtime_host_type;
-        typedef typename facade::metadata_dispenser_type metadata_dispenser_type;
-        typedef typename facade::metadata_dispenser_persisted_handler_type metadata_dispenser_persisted_handler_type;
-        typedef typename facade::metadata_dispenser_provider_type metadata_dispenser_provider_type;
+        typedef typename facade::metadata_info_type metadata_info_type;
+        typedef typename facade::metadata_info_persisted_handler_type metadata_info_persisted_handler_type;
+        typedef typename facade::metadata_info_disposing_info_type metadata_info_disposing_info_type;
         typedef typename facade::metadata_info_previous_type metadata_info_previous_type;
+        typedef typename facade::chain_info_types chain_info_types;
+        typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
         typedef typename facade::metadata_info_chain_type metadata_info_chain_type;
-
-        BaseMetadataInfo()
-        { }
-
-        metadata_dispenser_type *CreateDispenser() const
-        {
-            using namespace Urasandesu::CppAnonym::Utilities;
-            
-            TempPtr<metadata_dispenser_type> pNewDisp = NewDispenser();
-            pNewDisp.Persist();
-            return pNewDisp.Get();
-        }
-
-    private:
-        friend typename metadata_info_previous_type;
-
-        Utilities::TempPtr<metadata_dispenser_type> NewDispenser() const
-        {
-            using namespace Urasandesu::CppAnonym::Utilities;
-
-            metadata_dispenser_provider_type &provider = ProviderOf<metadata_dispenser_type>();
-            metadata_info_chain_type &chain = ChainFrom<metadata_info_previous_type>();
-            TempPtr<metadata_dispenser_type> pDisp = chain.NewObject<metadata_dispenser_type>(provider);
-            metadata_dispenser_persisted_handler_type handler(const_cast<this_type *>(this));
-            provider.AddPersistedHandler(pDisp, handler);
-            return pDisp;
-        }
     };
 
 
@@ -140,6 +107,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         typedef MetadataInfoDetail::MetadataInfoPersistedHandlerFacade<MetadataInfoApiHolder> facade;
         typedef typename facade::runtime_host_type runtime_host_type;
         typedef typename facade::metadata_info_type metadata_info_type;
+        typedef typename facade::metadata_info_persisted_handler_type metadata_info_persisted_handler_type;
+        typedef typename facade::metadata_info_disposing_info_type metadata_info_disposing_info_type;
+        typedef typename facade::metadata_info_previous_type metadata_info_previous_type;
+        typedef typename facade::chain_info_types chain_info_types;
+        typedef typename facade::base_ptr_chain_type base_ptr_chain_type;
+        typedef typename facade::metadata_info_chain_type metadata_info_chain_type;
         typedef typename facade::metadata_info_provider_type metadata_info_provider_type;
 
         typedef Utilities::TempPtr<metadata_info_type> sender_type;
@@ -153,7 +126,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata {
         void operator()(sender_type *pSender, void *pArg)
         {
             sender_type &pMetaInfo = *pSender;
-            metadata_info_provider_type &provider = m_pRuntimeHost->ProviderOf<metadata_info_type>();
+            metadata_info_provider_type &provider = m_pRuntimeHost->ProviderOf<metadata_info_disposing_info_type>();
             TypeInfo key = mpl::identity<metadata_info_type>();
             m_pRuntimeHost->m_infoToIndex[key] = provider.RegisterObject(pMetaInfo);
         }

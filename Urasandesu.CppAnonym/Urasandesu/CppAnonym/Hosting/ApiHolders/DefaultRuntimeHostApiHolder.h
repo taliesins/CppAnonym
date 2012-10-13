@@ -10,6 +10,14 @@
 #include <Urasandesu/CppAnonym/Hosting/BaseRuntimeHostFwd.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METADATAINFOLABEL_HPP
+#include <Urasandesu/CppAnonym/Metadata/Interfaces/MetadataInfoLabel.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_METADATA_BASEMETADATAINFOFWD_HPP
+#include <Urasandesu/CppAnonym/Metadata/BaseMetadataInfoFwd.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_HOSTING_APIHOLDERS_DEFAULTRUNTIMEHOSTAPIHOLDERFWD_H
 #include <Urasandesu/CppAnonym/Hosting/ApiHolders/DefaultRuntimeHostApiHolderFwd.h>
 #endif
@@ -29,7 +37,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
                 pair<HostInfoLabel, HostInfo>,
                 pair<RuntimeHostLabel, RuntimeHost>,
                 pair<RuntimeHostPersistedHandlerLabel, RuntimeHostPersistedHandler>,
-                pair<MetadataInfoLabel, MetadataInfo>
+                pair<MetadataInfoLabel, MetadataInfo>,
+                pair<MetadataInfoPersistedHandlerLabel, MetadataInfoPersistedHandler>
             > api_cartridges;
         };
 
