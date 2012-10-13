@@ -20,6 +20,8 @@ namespace {
         struct Piyo;
         struct PiyoPersistedHandler;
 
+        struct PuyoPersistedHandler;
+
     }   // namespace _731D234E {
 
     namespace _731D234E {
@@ -136,6 +138,57 @@ namespace {
             provider.RegisterObject(pPiyo);
         }
 
+
+
+
+
+
+        struct PuyoFacade
+        {
+            typedef Piyo piyo_type;
+            typedef PuyoPersistedHandler puyo_persisted_handler_type;
+            typedef DisposingInfo<piyo_type, puyo_persisted_handler_type> nested_piyo_disposing_info_type;
+            typedef PiyoPersistedHandler piyo_persisted_handler_type;
+            typedef DisposingInfo<piyo_type, piyo_persisted_handler_type> piyo_disposing_info_type;
+
+            
+            typedef DisposableHeapProvider<
+                nested_piyo_disposing_info_type,
+                piyo_disposing_info_type
+            > base_heap_provider_type;
+            
+            
+            typedef base_heap_provider_type::provider_of<nested_piyo_disposing_info_type>::type nested_piyo_provider_type;
+            typedef base_heap_provider_type::provider_of<piyo_disposing_info_type>::type piyo_provider_type;
+        };
+
+        struct PuyoPersistedHandler
+        {
+            typedef PuyoFacade facade;
+            typedef facade::piyo_type piyo_type;
+            typedef facade::puyo_persisted_handler_type puyo_persisted_handler_type;
+            typedef facade::nested_piyo_disposing_info_type nested_piyo_disposing_info_type;
+            typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_disposing_info_type piyo_disposing_info_type;
+            typedef facade::base_heap_provider_type base_heap_provider_type;
+            typedef facade::nested_piyo_provider_type nested_piyo_provider_type;
+            typedef facade::piyo_provider_type piyo_provider_type;
+        };
+
+        struct Puyo : 
+            PuyoFacade::base_heap_provider_type
+        {
+            typedef PuyoFacade facade;
+            typedef facade::piyo_type piyo_type;
+            typedef facade::puyo_persisted_handler_type puyo_persisted_handler_type;
+            typedef facade::nested_piyo_disposing_info_type nested_piyo_disposing_info_type;
+            typedef facade::piyo_persisted_handler_type piyo_persisted_handler_type;
+            typedef facade::piyo_disposing_info_type piyo_disposing_info_type;
+            typedef facade::base_heap_provider_type base_heap_provider_type;
+            typedef facade::nested_piyo_provider_type nested_piyo_provider_type;
+            typedef facade::piyo_provider_type piyo_provider_type;
+        };
+
     }   // namespace _731D234E {
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_DisposableHeapProviderTest, Test_01)
@@ -167,6 +220,35 @@ namespace {
 
         // Restore static area to work the debug heap correctly.
         new(&StaticDependentObjectsStorageDetail::HostAccessor<Piyo>::Host())Host();
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_DisposableHeapProviderTest, Test_02)
+    {
+        namespace mpl = boost::mpl;
+        using namespace boost;
+        using namespace boost::mpl;
+        using namespace _731D234E;
+        
+        BOOST_MPL_ASSERT((Piyo::is_provided_object<Piyo>));
+        BOOST_MPL_ASSERT((not_<Piyo::is_provided_object<int> >));
+        
+        Piyo piyo;
+        
+        typedef Piyo::first_provider_of<Piyo>::type PiyoProvider;
+        PiyoProvider &provider = piyo.FirstProviderOf<Piyo>();
+        Utilities::TempPtr<Piyo> pPiyo = provider.NewObject();
+        ASSERT_TRUE(pPiyo);
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_DisposableHeapProviderTest, Test_03)
+    {
+        namespace mpl = boost::mpl;
+        using namespace boost;
+        using namespace boost::mpl;
+        using namespace _731D234E;
+        
+        BOOST_MPL_ASSERT((is_same<Puyo::first_provider_of<Piyo>::type, PuyoFacade::nested_piyo_provider_type>));
+        BOOST_MPL_ASSERT((is_same<Puyo::first_providing_persisted_handler<Piyo>::type, PuyoFacade::puyo_persisted_handler_type>));
     }
 
 }

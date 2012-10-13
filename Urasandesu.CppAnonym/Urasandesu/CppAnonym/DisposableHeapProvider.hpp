@@ -129,6 +129,14 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename disposing_info_type::object_type type;
         };
 
+        template<class DisposingInfoTypes, class T>
+        class FirstProviderOfImpl
+        {
+            typedef typename mpl::find_if<DisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
+        public:
+            typedef typename ProviderOfImpl<typename mpl::reverse<DisposingInfoTypes>::type, typename deref<i>::type>::type type;
+        };
+
         template<class ReversedDisposingInfoTypes, class ProvidingType>
         class ProviderOfImpl
         {
@@ -140,7 +148,7 @@ namespace Urasandesu { namespace CppAnonym {
         };
 
         template<class ReversedDisposingInfoTypes, class T>
-        class IsProvidedImpl
+        class IsProvidedObjectImpl
         {
             typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
             typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
@@ -148,10 +156,10 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename mpl::not_<is_same<i, i_end> >::type type;
         };
 
-        template<class ReversedDisposingInfoTypes, class ProvidingType>
-        class ProvidingPersistedHandlerTypeAtImpl
+        template<class DisposingInfoTypes, class T>
+        class FirstProvidingPersistedHandlerImpl
         {
-            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, ProvidingType> >::type i;
+            typedef typename mpl::find_if<DisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
             typedef typename mpl::deref<i>::type disposing_info_type;
         public:
             typedef typename disposing_info_type::persisted_handler_type type;
@@ -178,6 +186,12 @@ namespace Urasandesu { namespace CppAnonym {
             {
             };
 
+            template<class T>
+            struct first_provider_of : 
+                FirstProviderOfImpl<disposing_info_types, T>
+            {
+            };
+
             template<class ProvidingType>
             struct provider_of : 
                 ProviderOfImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
@@ -185,16 +199,23 @@ namespace Urasandesu { namespace CppAnonym {
             };
 
             template<class T>
-            struct is_provided : 
-                IsProvidedImpl<typename mpl::reverse<disposing_info_types>::type, T>
+            struct is_provided_object : 
+                IsProvidedObjectImpl<typename mpl::reverse<disposing_info_types>::type, T>
             {
             };
 
-            template<class ProvidingType>
-            struct providing_persisted_handler_type_at : 
-                ProvidingPersistedHandlerTypeAtImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
+            template<class T>
+            struct first_providing_persisted_handler : 
+                FirstProvidingPersistedHandlerImpl<disposing_info_types, T>
             {
             };
+
+            template<class T>
+            inline typename first_provider_of<T>::type & FirstProviderOf() const
+            {
+                this_type *pMutableThis = const_cast<this_type *>(this);
+                return static_cast<typename first_provider_of<T>::type &>(*pMutableThis);
+            }
 
             template<class ProvidingType>
             inline typename provider_of<ProvidingType>::type &ProviderOf() const

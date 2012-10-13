@@ -20,13 +20,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
         
         using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Metadata;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
         struct DefaultRuntimeHostApiHolderImpl
         {
             typedef map<
                 pair<HostInfoLabel, HostInfo>,
                 pair<RuntimeHostLabel, RuntimeHost>,
-                pair<RuntimeHostPersistedHandlerLabel, RuntimeHostPersistedHandler>
+                pair<RuntimeHostPersistedHandlerLabel, RuntimeHostPersistedHandler>,
+                pair<MetadataInfoLabel, MetadataInfo>
             > api_cartridges;
         };
 

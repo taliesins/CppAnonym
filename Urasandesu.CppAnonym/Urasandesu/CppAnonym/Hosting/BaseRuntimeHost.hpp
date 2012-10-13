@@ -46,6 +46,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
         namespace mpl = boost::mpl;
         using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+        using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
         template<
             class RuntimeHostApiHolder
@@ -56,6 +57,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, RuntimeHostLabel>::type runtime_host_type;
             typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, RuntimeHostPersistedHandlerLabel>::type runtime_host_persisted_handler_type;
             typedef DisposingInfo<runtime_host_type, runtime_host_persisted_handler_type> runtime_host_disposing_info_type;
+            typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, MetadataInfoLabel>::type metadata_info_type;
+            typedef typename RuntimeHostApiAt<RuntimeHostApiHolder, MetadataInfoPersistedHandlerLabel>::type metadata_info_persisted_handler_type;
+            typedef DisposingInfo<metadata_info_type, metadata_info_persisted_handler_type> metadata_info_disposing_info_type;
+            
+            
+            typedef DisposableHeapProvider<
+                metadata_info_disposing_info_type
+            > base_heap_provider_type;
+            
+            
+            typedef typename base_heap_provider_type::provider_of<metadata_info_disposing_info_type>::type metadata_info_provider_type;
             
             
             typedef host_info_type runtime_host_previous_type;
@@ -77,6 +89,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     >    
     class BaseRuntimeHost : 
         public RuntimeHostDetail::RuntimeHostFacade<RuntimeHostApiHolder>::base_ptr_chain_type,
+        public RuntimeHostDetail::RuntimeHostFacade<RuntimeHostApiHolder>::base_heap_provider_type,
         public SimpleDisposable
     {
     public:
@@ -116,9 +129,70 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
             return m_corVersion;
         }
 
+        template<class Info>
+        Info *GetInfo() const
+        {
+            namespace mpl = boost::mpl;
+            using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            typedef typename first_provider_of<Info>::type InfoProvider;
+
+            Info *pExistingInfo = NULL;
+            if (!TryGetInfo<Info>(pExistingInfo))
+            {
+                TempPtr<Info> pNewInfo = NewInfo<Info>();
+                pNewInfo.Persist();
+                return pNewInfo.Get();
+            }
+            else
+            {
+                return pExistingInfo;
+            }
+        }
+
     private:
+        template<class Info>
+        Utilities::TempPtr<Info> NewInfo() const
+        {
+            namespace mpl = boost::mpl;
+            using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            typedef typename first_provider_of<Info>::type InfoProvider;
+
+            BOOST_THROW_EXCEPTION(CppAnonymNotImplementedException());
+        }
+
+        template<class Info>
+        bool TryGetInfo(Info *&pExistingInfo) const
+        {
+            namespace mpl = boost::mpl;
+            using namespace boost;
+            using namespace Urasandesu::CppAnonym::Utilities;
+
+            BOOST_MPL_ASSERT((is_provided_object_type<Info>));
+            typedef typename first_provider_of<Info>::type InfoProvider;
+
+            TypeInfo key = mpl::identity<Info>();
+            if (m_infoToIndex.find(key) == m_infoToIndex.end())
+            {
+                return false;
+            }
+            else
+            {
+                SIZE_T index = m_infoToIndex[key];
+                InfoProvider &provider = FirstProviderOf<Info>();
+                pExistingInfo = provider.GetObject(index);
+                return true;
+            }
+        }
+
         mutable bool m_corVersionInitialized;
         mutable std::wstring m_corVersion;
+        mutable boost::unordered_map<Utilities::TypeInfo, SIZE_T, Utilities::TypeInfoHash, Utilities::TypeInfoEqualTo> m_infoToIndex;
     };
 
 
