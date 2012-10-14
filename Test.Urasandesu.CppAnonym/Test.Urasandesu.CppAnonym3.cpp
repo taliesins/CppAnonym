@@ -82,9 +82,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
+    namespace DefaultHostInfoApiHolderDetail {
+        
+        //using boost::mpl::map;
+        //using boost::mpl::pair;
+        //using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
+
+        //struct DefaultHostInfoApiHolderImpl
+        //{
+        //    typedef map<
+        //        pair<HostInfoLabel, HostInfo>,
+        //        pair<HostInfoPersistedHandlerLabel, HostInfoPersistedHandler>,
+        //        pair<RuntimeHostLabel, RuntimeHost>,
+        //        pair<RuntimeHostPersistedHandlerLabel, RuntimeHostPersistedHandler>
+        //    > api_cartridges;
+        //};
+
+    }   // namespace DefaultHostInfoApiHolderDetail {
+
+    struct DefaultHostInfoApiHolder /*: 
+        DefaultHostInfoApiHolderDetail::DefaultHostInfoApiHolderImpl*/
+    {
+    };
+
 }}}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHolders {
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {
+
+    template<
+        class HostInfoApiHolder
+    >    
+    class BaseHostInfo
+    {
+    public:
+        BaseHostInfo()
+        { }
+    };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
@@ -119,9 +152,10 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test3, Test_01)
     {
         using namespace Urasandesu::CppAnonym;
+        using namespace Urasandesu::CppAnonym::Hosting;
         int a = 0;
 
-        BOOST_THROW_EXCEPTION(CppAnonymSystemException(EINVAL));
+        HostInfo &hostInfo = CppAnonymStorage::Object<HostInfo>();
     }
 
 }

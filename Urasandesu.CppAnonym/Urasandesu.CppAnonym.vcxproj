@@ -171,8 +171,9 @@
     <ClInclude Include="Urasandesu\CppAnonym.h" />
     <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.h" />
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />

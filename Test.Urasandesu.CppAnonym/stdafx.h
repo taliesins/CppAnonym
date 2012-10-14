@@ -142,13 +142,13 @@ private:
 ////#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 ////#endif
 //
-//#ifndef URASANDESU_CPPANONYM_IAPIOPERABLE_H
-//#include <Urasandesu/CppAnonym/IApiOperable.h>
-//#endif
+////#ifndef URASANDESU_CPPANONYM_IAPIOPERABLE_H
+////#include <Urasandesu/CppAnonym/IApiOperable.h>
+////#endif
 //
-//#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
-//#include <Urasandesu/CppAnonym/IHeapContent.h>
-//#endif
+////#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
+////#include <Urasandesu/CppAnonym/IHeapContent.h>
+////#endif
 //
 //#ifndef URASANDESU_CPPANONYM_IDISPOSABLE_HPP
 //#include <Urasandesu/CppAnonym/IDisposable.hpp>
@@ -242,9 +242,9 @@ private:
 //#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
 //#endif
 //
-#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
-#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_CPPANONYMSYSTEMEXCEPTION_H
+//#include <Urasandesu/CppAnonym/CppAnonymSystemException.h>
+//#endif
 
 //#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
 //#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
@@ -425,3 +425,7 @@ private:
 //#ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
 //#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
 //#endif
+
+#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
+#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
+#endif

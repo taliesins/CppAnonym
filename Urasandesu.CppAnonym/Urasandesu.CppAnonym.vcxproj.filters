@@ -1200,16 +1200,19 @@
     <ClInclude Include="Urasandesu\CppAnonym\Interfaces\CppAnonymStorageLabel.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\StackTraceFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\StackFrameFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
