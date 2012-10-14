@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
+#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_H
 #include <Urasandesu/CppAnonym/DisposingInfo.h>
 #endif

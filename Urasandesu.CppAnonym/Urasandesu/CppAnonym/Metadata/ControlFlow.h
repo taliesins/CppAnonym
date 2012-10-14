@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Metadata/ControlFlowTypes.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#include <Urasandesu/CppAnonym/SafeEnum.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_CONTROLFLOWFWD_H

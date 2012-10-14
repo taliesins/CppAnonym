@@ -402,8 +402,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\ICorProfilerCallback2Impl.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\IProfilingApiOperable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Profiling\ProfilingDependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h" />

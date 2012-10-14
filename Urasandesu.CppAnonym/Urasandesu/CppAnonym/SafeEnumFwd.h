@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
-#define URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_H
+#define URASANDESU_CPPANONYM_SAFEENUMFWD_H
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -9,4 +9,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_SAFEENUMFWD_H

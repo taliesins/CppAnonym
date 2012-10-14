@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
 #define URASANDESU_CPPANONYM_FUSION_ASSEMBLYQUERYTYPES_H
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#include <Urasandesu/CppAnonym/SafeEnum.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Fusion {
