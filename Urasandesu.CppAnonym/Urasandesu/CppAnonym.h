@@ -70,7 +70,7 @@
 #include <Urasandesu/CppAnonym/SafeEnum.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
 #include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 

@@ -405,8 +405,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.hpp" />

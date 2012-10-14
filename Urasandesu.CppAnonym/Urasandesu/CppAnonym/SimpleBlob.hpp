@@ -2,75 +2,65 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
 #define URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOBFWD_HPP
-#include <Urasandesu/CppAnonym/SimpleBlobFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
+#include <Urasandesu/CppAnonym/SimpleBlob.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
     
-    class SimpleBlob
+    SimpleBlob::SimpleBlob() 
+    { }
+
+    template<class T>
+    inline HRESULT SimpleBlob::Put(typename boost::call_traits<T>::param_type val)
     {
-        typedef Collections::RapidVector<BYTE> ByteVector;        
-        ByteVector m_buffer;
-
-    public:
-        inline SimpleBlob() { }
-
-        template<class T>
-        inline HRESULT Put(typename boost::call_traits<T>::param_type val)
-        {
-            namespace mpl = boost::mpl;
-            using mpl::or_;
-            using namespace boost;            
+        namespace mpl = boost::mpl;
+        using mpl::or_;
+        using namespace boost;            
             
-            BOOST_MPL_ASSERT((or_<is_arithmetic<T>, is_pod<T>>));
+        BOOST_MPL_ASSERT((or_<is_arithmetic<T>, is_pod<T>>));
 
-            return Put(&val, sizeof(T));
-        }
+        return Put(&val, sizeof(T));
+    }
         
-        inline HRESULT Put(void const *p, SIZE_T size)
-        {
-            _ASSERT(0 <= size);
-            size_t lastSize = m_buffer.size();
-            m_buffer.resize(lastSize + size);
-            ::memcpy_s(&m_buffer[0] + lastSize, size, p, size);
-            return S_OK;
-        }
+    inline HRESULT SimpleBlob::Put(void const *p, SIZE_T size)
+    {
+        _ASSERT(0 <= size);
+        size_t lastSize = m_buffer.size();
+        m_buffer.resize(lastSize + size);
+        ::memcpy_s(&m_buffer[0] + lastSize, size, p, size);
+        return S_OK;
+    }
         
-        inline BYTE *Ptr()
-        {
-            return &m_buffer[0];
-        }
+    inline BYTE *SimpleBlob::Ptr()
+    {
+        return &m_buffer[0];
+    }
         
-        inline BYTE const *Ptr() const
-        {
-            return &m_buffer[0];
-        }
+    inline BYTE const *SimpleBlob::Ptr() const
+    {
+        return &m_buffer[0];
+    }
         
-        inline SIZE_T Size() const
-        { 
-            return m_buffer.size();
-        }
+    inline SIZE_T SimpleBlob::Size() const
+    { 
+        return m_buffer.size();
+    }
 
-        inline SIZE_T Capacity() const
-        { 
-            return m_buffer.capacity();
-        }
+    inline SIZE_T SimpleBlob::Capacity() const
+    { 
+        return m_buffer.capacity();
+    }
 
-        inline BYTE& operator[] (SIZE_T ix)
-        { 
-            return m_buffer[ix];
-        }
+    inline BYTE& SimpleBlob::operator[](SIZE_T ix)
+    { 
+        return m_buffer[ix];
+    }
 
-        inline BYTE const& operator[] (SIZE_T ix) const
-        { 
-            return m_buffer[ix];
-        }
-    };
+    inline BYTE const& SimpleBlob::operator[](SIZE_T ix) const
+    { 
+        return m_buffer[ix];
+    }
     
 }}  // namespace Urasandesu { namespace CppAnonym {
 

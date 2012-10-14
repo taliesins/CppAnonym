@@ -24,7 +24,7 @@
 #include <Urasandesu/CppAnonym/Metadata/ApiHolders/DefaultMethodMetadataApiHolder.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_HPP
+#ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
 #include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 #endif
 
