@@ -424,8 +424,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainInfoFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapperFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapperFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrameFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />

@@ -4,8 +4,8 @@
 #include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_H
-#include <Urasandesu/CppAnonym/SmartPtrChainConstructor.h>
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_HPP
+#include <Urasandesu/CppAnonym/SmartPtrChainConstructor.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAININFO_HPP
