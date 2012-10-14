@@ -409,8 +409,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartHeapProvider.hpp" />

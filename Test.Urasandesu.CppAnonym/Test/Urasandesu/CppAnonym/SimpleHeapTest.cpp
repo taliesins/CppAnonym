@@ -1,24 +1,24 @@
 ﻿#include "stdafx.h"
 
+//#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
+//#include <Urasandesu/CppAnonym/IHeapContent.h>
+//#endif
+
+//#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
+//#include <Urasandesu/CppAnonym/HeapProvider.hpp>
+//#endif
+
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #include <Urasandesu/CppAnonym/SimpleHeap.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_IHEAPCONTENT_H
-#include <Urasandesu/CppAnonym/IHeapContent.h>
-#endif
+//#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
+//#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+//#endif
 
-#ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/HeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+//#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+//#endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_SimpleHeapTest.*
 namespace {
@@ -45,8 +45,7 @@ namespace {
         MyPOD2 *next;
     };
 
-    struct MyPOD3 : 
-        Urasandesu::CppAnonym::IHeapContent<size_t>
+    struct MyPOD3
     {
         INT int1;
         MyPOD1 pod1;

@@ -9,7 +9,6 @@
 namespace Urasandesu { namespace CppAnonym {
 
     typedef boost::error_info<struct tag_stack_trace, StackTrace *> ThrowStackTrace;
-    template class boost::error_info<struct tag_stack_trace, StackTrace *>;
 
     class CppAnonymException : 
         public virtual boost::exception, 

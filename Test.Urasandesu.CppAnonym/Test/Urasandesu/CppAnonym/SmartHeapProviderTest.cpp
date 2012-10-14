@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
 #endif

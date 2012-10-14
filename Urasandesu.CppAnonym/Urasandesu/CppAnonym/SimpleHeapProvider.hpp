@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Traits/Distinct.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
+#include <Urasandesu/CppAnonym/SimpleHeap.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_H

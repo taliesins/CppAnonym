@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
-#define URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
+#define URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H
 
 namespace Urasandesu { namespace CppAnonym {
     
@@ -19,13 +19,10 @@ namespace Urasandesu { namespace CppAnonym {
         struct SimpleHeapImpl;
 
     }   // namespace SimpleHeapDetail
-    
-    template<
-        class T, 
-        class Tag = DefaultHeap
-    >
+
+    template<class T, class Tag = DefaultHeap>
     class SimpleHeap;
 
 }}  // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // URASANDESU_CPPANONYM_SIMPLEHEAPFWD_HPP
+#endif  // URASANDESU_CPPANONYM_SIMPLEHEAPFWD_H

@@ -16,6 +16,10 @@
 #include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
+#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_DisposableHeapProviderTest.*
 namespace {
 

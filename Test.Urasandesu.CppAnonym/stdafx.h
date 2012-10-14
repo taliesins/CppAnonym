@@ -174,8 +174,8 @@ private:
 //#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
-//#include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+//#ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
+//#include <Urasandesu/CppAnonym/SimpleHeap.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP
@@ -209,14 +209,14 @@ private:
 //#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_H
 //#include <Urasandesu/CppAnonym/DisposableHeapProvider.h>
 //#endif
-//
-//#ifndef URASANDESU_CPPANONYM_STACKFRAME_H
-//#include <Urasandesu/CppAnonym/StackFrame.h>
-//#endif
 
-//#ifndef URASANDESU_CPPANONYM_STACKTRACE_H
-//#include <Urasandesu/CppAnonym/StackTrace.h>
-//#endif
+#ifndef URASANDESU_CPPANONYM_STACKFRAME_H
+#include <Urasandesu/CppAnonym/StackFrame.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STACKTRACE_H
+#include <Urasandesu/CppAnonym/StackTrace.h>
+#endif
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymException.h>
