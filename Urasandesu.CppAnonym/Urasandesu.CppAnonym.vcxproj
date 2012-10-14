@@ -190,8 +190,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymSystemException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.hpp" />

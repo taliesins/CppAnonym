@@ -1101,12 +1101,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -1213,6 +1207,15 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
