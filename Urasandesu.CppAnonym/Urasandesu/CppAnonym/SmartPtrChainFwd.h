@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_HPP
-#define URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_HPP
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_H
+#define URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_H
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -32,4 +32,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_H

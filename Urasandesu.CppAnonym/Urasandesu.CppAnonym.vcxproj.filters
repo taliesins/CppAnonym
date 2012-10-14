@@ -921,12 +921,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\Interfaces\IAssemblyMetadataApiHolderLabel.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Metadata\Interfaces</Filter>
     </ClInclude>
@@ -1228,6 +1222,15 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeap.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>

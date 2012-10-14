@@ -51,8 +51,8 @@
 #include <Urasandesu/CppAnonym/SimpleDisposable.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
-#include <Urasandesu/CppAnonym/SmartPtrChain.hpp>
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_H
+#include <Urasandesu/CppAnonym/SmartPtrChain.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP

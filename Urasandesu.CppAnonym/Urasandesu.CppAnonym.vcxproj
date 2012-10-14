@@ -416,10 +416,11 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartHeapProviderFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainConstructor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainConstructorFwd.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainInfoFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.hpp" />
