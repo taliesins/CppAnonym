@@ -206,8 +206,8 @@ private:
 //#include <Urasandesu/CppAnonym/DisposingInfo.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
-//#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
+//#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_H
+//#include <Urasandesu/CppAnonym/DisposableHeapProvider.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_STACKFRAME_H

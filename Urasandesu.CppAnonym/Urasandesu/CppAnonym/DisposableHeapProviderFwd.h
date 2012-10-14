@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
-#define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_H
+#define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_H
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
 #include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
@@ -30,8 +30,6 @@ namespace Urasandesu { namespace CppAnonym {
         template<class ReversedDisposingInfoTypes, class I, class IEnd>
         class ATL_NO_VTABLE DisposableHeapProviderImplImpl;
 
-        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(DisposingInfoObject, object_type);
-
         template<class DisposingInfo, class T>
         struct HasObjectT;
 
@@ -54,4 +52,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_H

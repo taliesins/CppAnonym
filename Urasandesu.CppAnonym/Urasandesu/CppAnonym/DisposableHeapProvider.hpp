@@ -2,254 +2,112 @@
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 #define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
 
-#ifndef URASANDESU_CPPANONYM_IDISPOSABLE_HPP
-#include <Urasandesu/CppAnonym/IDisposable.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_HPP
-#include <Urasandesu/CppAnonym/DisposableHeapProviderFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_H
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
 
     namespace DisposableHeapProviderDetail {
 
-        namespace mpl = boost::mpl;
-        using mpl::_;
-        using mpl::_1;
-        using mpl::_2;
-        using mpl::deref;
-        using mpl::filter_view;
-        using mpl::fold;
-        using mpl::not_;
-        using mpl::void_;
-        using namespace boost;
-        using namespace Urasandesu::CppAnonym::Utilities;
-
-        template<class I>
-        struct DisposingInfoFacade
+        template<class T, class HasDispose>
+        inline void DisposeCoreImpl<T, HasDispose>::DisposeCore(T *p)
         {
-            typedef typename mpl::deref<I>::type disposing_info_type;
-            typedef PersistableHeapProvider<disposing_info_type> base_type;
-            typedef typename base_type::object_type object_type;
-            typedef typename base_type::persisted_handler_type persisted_handler_type;
-        };
+            // Do nothing.
+        }
+
+        template<class T>
+        inline void DisposeCoreImpl<T, mpl::true_>::DisposeCore(T *p)
+        {
+            p->Dispose();
+        }
 
         template<class ReversedDisposingInfoTypes, class I, class IEnd>
-        class ATL_NO_VTABLE DisposableHeapProviderImplImpl : 
-            public DisposingInfoFacade<I>::base_type,
-            public DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, typename mpl::next<I>::type, IEnd>
+        DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::~DisposableHeapProviderImplImpl()
         {
-        public:
-            typedef typename DisposingInfoFacade<I>::base_type base_type;
-            typedef typename DisposingInfoFacade<I>::object_type object_type;
-            typedef typename DisposingInfoFacade<I>::persisted_handler_type persisted_handler_type;
+            if (base_type::AnyObjects())
+                Destruct(base_type::Objects());
+        }
 
-            ~DisposableHeapProviderImplImpl()
-            {
-                if (base_type::AnyObjects())
-                    Destruct(base_type::Objects());
-            }
-
-            TempPtr<object_type> NewObject()
-            {
-                return base_type::NewObject();
-            }
-
-            SIZE_T RegisterObject(TempPtr<object_type> &p)
-            {
-                return base_type::RegisterObject(p);
-            }
-
-            object_type *GetObject(SIZE_T n)
-            {
-                return base_type::GetObject(n);
-            }
-
-            SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
-            {
-                return base_type::AddPersistedHandler(p, handler);
-            }
-
-        private:
-            static void Destruct(std::vector<object_type *> &objects)
-            {
-                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
-                    DisposeCore(*ri);
-            }
-
-            static void DisposeCore(object_type *p)
-            {
-                typedef typename mpl::or_<
-                    CPP_ANONYM_HAS_MEMBER_FUNCTION(DisposingInfoDispose, object_type), 
-                    boost::is_base_of<IDisposable, object_type> 
-                >::type HasDispose;
-
-                typedef dispose_core_impl_type<HasDispose> Impl;
-
-                Impl::DisposeCore(p);
-            }
-
-            template<class HasDispose>
-            struct dispose_core_impl_type
-            {
-                static inline void DisposeCore(object_type *p)
-                {
-                    // Do nothing.
-                }
-            };
-
-            template<>
-            struct dispose_core_impl_type<mpl::true_> 
-            { 
-                static inline void DisposeCore(object_type *p)
-                {
-                    p->Dispose();
-                }
-            };
-        };
-
-        template<class ReversedDisposingInfoTypes>
-        class DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, 
-                                              typename mpl::end<ReversedDisposingInfoTypes>::type, 
-                                              typename mpl::end<ReversedDisposingInfoTypes>::type> : 
-            noncopyable
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        TempPtr<typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type> 
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::NewObject()
         {
-        };
+            return base_type::NewObject();
+        }
 
-        template<class DisposingInfo, class T>
-        struct HasObjectT : 
-            boost::is_same<typename CPP_ANONYM_GET_MEMBER_TYPE(DisposingInfoObject, DisposingInfo)::type, T>
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        SIZE_T 
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::RegisterObject(
+                TempPtr<typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type> &p
+            )
         {
-        };
+            return base_type::RegisterObject(p);
+        }
 
-        template<class DisposingInfoTypes, LONG N>
-        class ProvidingTypeAtImpl
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type *
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::GetObject(SIZE_T n)
         {
-            typedef typename mpl::at_c<DisposingInfoTypes, N>::type disposing_info_type;
-        public:
-            typedef typename disposing_info_type::object_type type;
-        };
+            return base_type::GetObject(n);
+        }
 
-        template<class DisposingInfoTypes, class T>
-        class FirstProviderOfImpl
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        SIZE_T 
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::AddPersistedHandler(
+                TempPtr<typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type> &p, 
+                typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::persisted_handler_type const &handler
+            )
         {
-            typedef typename mpl::find_if<DisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
-        public:
-            typedef typename ProviderOfImpl<typename mpl::reverse<DisposingInfoTypes>::type, typename deref<i>::type>::type type;
-        };
+            return base_type::AddPersistedHandler(p, handler);
+        }
 
-        template<class ReversedDisposingInfoTypes, class ProvidingType>
-        class ProviderOfImpl
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        void 
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::Destruct(
+                std::vector<typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type *> &objects
+            )
         {
-            typedef typename mpl::find<ReversedDisposingInfoTypes, ProvidingType>::type i;
-            typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
-            BOOST_MPL_ASSERT((not_<boost::is_same<i, i_end> >));
-        public:
-            typedef DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, i, i_end> type;
-        };
+            typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
+            for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
+                DisposeCore(*ri);
+        }
 
-        template<class ReversedDisposingInfoTypes, class T>
-        class IsProvidedObjectImpl
+        template<class ReversedDisposingInfoTypes, class I, class IEnd>
+        void 
+            DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::DisposeCore(
+                typename DisposableHeapProviderImplImpl<ReversedDisposingInfoTypes, I, IEnd>::object_type *p
+            )
         {
-            typedef typename mpl::find_if<ReversedDisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
-            typedef typename mpl::end<ReversedDisposingInfoTypes>::type i_end;
-        public:
-            typedef typename mpl::not_<is_same<i, i_end> >::type type;
-        };
+            typedef typename mpl::or_<
+                CPP_ANONYM_HAS_MEMBER_FUNCTION(DisposingInfoDispose, object_type), 
+                boost::is_base_of<IDisposable, object_type> 
+            >::type HasDispose;
 
-        template<class DisposingInfoTypes, class T>
-        class FirstProvidingPersistedHandlerImpl
-        {
-            typedef typename mpl::find_if<DisposingInfoTypes, HasObjectT<mpl::_1, T> >::type i;
-            typedef typename mpl::deref<i>::type disposing_info_type;
-        public:
-            typedef typename disposing_info_type::persisted_handler_type type;
-        };
+            typedef DisposeCoreImpl<object_type, HasDispose> Impl;
+
+            Impl::DisposeCore(p);
+        }
         
         template<class DisposingInfoTypes>
-        struct ATL_NO_VTABLE DisposableHeapProviderImpl : 
-            DisposableHeapProviderImplImpl<typename mpl::reverse<DisposingInfoTypes>::type, 
-                                           typename mpl::begin<typename mpl::reverse<DisposingInfoTypes>::type>::type, 
-                                           typename mpl::end<typename mpl::reverse<DisposingInfoTypes>::type>::type>
+        template<class T>
+        inline typename DisposableHeapProviderImpl<DisposingInfoTypes>::first_provider_of<T>::type &
+            DisposableHeapProviderImpl<DisposingInfoTypes>::FirstProviderOf() const
         {
-            typedef DisposableHeapProviderImpl<DisposingInfoTypes> this_type;
-            typedef DisposingInfoTypes disposing_info_types;
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return static_cast<typename first_provider_of<T>::type &>(*pMutableThis);
+        }
 
-            template<LONG N>
-            struct disposing_info_at : 
-                mpl::at_c<disposing_info_types, N>
-            {
-            };
-
-            template<LONG N>
-            struct providing_type_at : 
-                ProvidingTypeAtImpl<disposing_info_types, N>
-            {
-            };
-
-            template<class T>
-            struct first_provider_of : 
-                FirstProviderOfImpl<disposing_info_types, T>
-            {
-            };
-
-            template<class ProvidingType>
-            struct provider_of : 
-                ProviderOfImpl<typename mpl::reverse<disposing_info_types>::type, ProvidingType>
-            {
-            };
-
-            template<class T>
-            struct is_provided_object : 
-                IsProvidedObjectImpl<typename mpl::reverse<disposing_info_types>::type, T>
-            {
-            };
-
-            template<class T>
-            struct first_providing_persisted_handler : 
-                FirstProvidingPersistedHandlerImpl<disposing_info_types, T>
-            {
-            };
-
-            template<class T>
-            inline typename first_provider_of<T>::type & FirstProviderOf() const
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                return static_cast<typename first_provider_of<T>::type &>(*pMutableThis);
-            }
-
-            template<class ProvidingType>
-            inline typename provider_of<ProvidingType>::type &ProviderOf() const
-            {
-                this_type *pMutableThis = const_cast<this_type *>(this);
-                return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
-            }
-        };
-
-        template<class T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
-        class DesignatedSequence
+        template<class DisposingInfoTypes>
+        template<class ProvidingType>
+        inline typename DisposableHeapProviderImpl<DisposingInfoTypes>::provider_of<ProvidingType>::type &
+            DisposableHeapProviderImpl<DisposingInfoTypes>::ProviderOf() const
         {
-            typedef mpl::vector<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)> types;
-            typedef typename mpl::lambda<not_<boost::is_same<_, void_> > >::type is_designated;
-        public:
-            typedef typename fold<filter_view<types, is_designated>, mpl::vector<>, mpl::push_back<_1, _2> >::type type;
-        };
+            this_type *pMutableThis = const_cast<this_type *>(this);
+            return static_cast<typename provider_of<ProvidingType>::type &>(*pMutableThis);
+        }
 
     }   // namespace DisposableHeapProviderDetail {
-
-    template<class T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(class T)>
-    struct ATL_NO_VTABLE DisposableHeapProvider : 
-        DisposableHeapProviderDetail::DisposableHeapProviderImpl<
-            typename DisposableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
-        >
-    {
-    };
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 

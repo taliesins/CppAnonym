@@ -193,8 +193,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposingInfoFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h" />
