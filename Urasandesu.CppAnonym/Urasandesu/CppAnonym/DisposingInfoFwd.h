@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_DISPOSINGINFOFWD_HPP
-#define URASANDESU_CPPANONYM_DISPOSINGINFOFWD_HPP
+#ifndef URASANDESU_CPPANONYM_DISPOSINGINFOFWD_H
+#define URASANDESU_CPPANONYM_DISPOSINGINFOFWD_H
 
 namespace Urasandesu { namespace CppAnonym {
     
@@ -12,4 +12,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_DISPOSINGINFOFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_DISPOSINGINFOFWD_H

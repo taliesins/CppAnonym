@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_HPP
-#include <Urasandesu/CppAnonym/DisposingInfo.hpp>
+#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_H
+#include <Urasandesu/CppAnonym/DisposingInfo.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP

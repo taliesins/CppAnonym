@@ -102,7 +102,7 @@
 #include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_HPP
+#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_H
 #include <Urasandesu/CppAnonym/DisposingInfo.hpp>
 #endif
 

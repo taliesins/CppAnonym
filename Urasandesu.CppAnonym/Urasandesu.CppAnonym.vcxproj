@@ -196,8 +196,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfoFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\DisposingInfoFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Environment.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultAssemblyInfoApiHolder.h" />
