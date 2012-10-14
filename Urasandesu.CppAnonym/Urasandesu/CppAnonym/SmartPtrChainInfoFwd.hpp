@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/SmartPtrChainMapperFwd.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTORFWD_HPP
-#include <Urasandesu/CppAnonym/SmartPtrChainConstructorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTORFWD_H
+#include <Urasandesu/CppAnonym/SmartPtrChainConstructorFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
