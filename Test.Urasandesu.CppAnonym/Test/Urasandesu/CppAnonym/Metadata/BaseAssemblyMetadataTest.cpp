@@ -4,8 +4,8 @@
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
-#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_H
+#include <Urasandesu/CppAnonym/ObjectTag.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAPPROVIDER_HPP

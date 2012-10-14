@@ -1,9 +1,9 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
-#define URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#ifndef URASANDESU_CPPANONYM_OBJECTTAG_H
+#define URASANDESU_CPPANONYM_OBJECTTAG_H
 
-#ifndef URASANDESU_CPPANONYM_OBJECTTAGFWD_HPP
-#include <Urasandesu/CppAnonym/ObjectTagFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_OBJECTTAGFWD_H
+#include <Urasandesu/CppAnonym/ObjectTagFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
@@ -17,4 +17,4 @@ namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_OBJECTTAG_H

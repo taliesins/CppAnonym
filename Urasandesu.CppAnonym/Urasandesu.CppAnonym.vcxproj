@@ -383,8 +383,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\StackBehaviourTypes.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeAttributes.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Metadata\TypeKinds.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\ObjectTag.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\ObjectTagFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\ObjectTag.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\ObjectTagFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProvider.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\PersistableHeapProviderFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\PersistentInfo.hpp" />

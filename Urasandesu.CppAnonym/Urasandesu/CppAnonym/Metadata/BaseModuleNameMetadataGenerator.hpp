@@ -10,8 +10,8 @@
 //#include <Urasandesu/CppAnonym/SimpleHeapProvider.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_OBJECTTAG_HPP
-//#include <Urasandesu/CppAnonym/ObjectTag.hpp>
+//#ifndef URASANDESU_CPPANONYM_OBJECTTAG_H
+//#include <Urasandesu/CppAnonym/ObjectTag.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_MODULENAMEMETADATAAPIHOLDERLABEL_HPP
