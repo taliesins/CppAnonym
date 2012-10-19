@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
-#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
+#define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H
 
 namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
@@ -14,11 +14,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         >
         class RapidVectorIterator;
 
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        class RapidVectorImpl;
+
     }   // namespace RapidVectorDetail
 
     template<class T, DWORD RAPID_SIZE = 512, class Alloc = std::allocator<T>>
-    class RapidVector;
+    struct RapidVector;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
-#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
+#endif  // URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_H

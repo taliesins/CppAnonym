@@ -429,12 +429,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SimpleHeapProviderFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
@@ -1053,12 +1047,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\PersistentInfo.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -1238,6 +1226,24 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,8 +14,8 @@
 #include <Urasandesu/CppAnonym/Collections/Iterable.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_COLLECTIONS_H

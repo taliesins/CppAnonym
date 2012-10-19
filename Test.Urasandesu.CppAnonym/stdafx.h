@@ -198,8 +198,8 @@ private:
 //#include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
-//#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+//#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
+//#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_H
@@ -270,8 +270,8 @@ private:
 //#include <Urasandesu/CppAnonym/Collections/Iterable.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-//#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+//#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
+//#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
@@ -426,6 +426,6 @@ private:
 //#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
 //#endif
 
-#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
-#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
-#endif
+//#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
+//#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
+//#endif

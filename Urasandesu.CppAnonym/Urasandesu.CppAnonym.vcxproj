@@ -178,8 +178,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\GlobalSafeDictionary.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\Iterable.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVectorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymArgumentException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymCOMException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymDependsOn.h" />
@@ -431,8 +432,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\StackFrameFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTraceFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\ApiHolders\DefaultStrongNameInfoApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\ApiHolders\DefaultStrongNameInfoApiHolderFwd.h" />

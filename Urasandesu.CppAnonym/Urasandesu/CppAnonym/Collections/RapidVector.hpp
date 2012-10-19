@@ -2,166 +2,99 @@
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
 #define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H
-#include <Urasandesu/CppAnonym/Traits/HasConst.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
-#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTORFWD_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVectorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     namespace RapidVectorDetail {
 
-        namespace mpl = boost::mpl;
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::RapidVectorIterator() : 
+            m_pThis(NULL), 
+            m_isEnd(false),
+            m_pBuf(NULL)
+        { }
 
-        template<
-            class Value, 
-            class T, 
-            DWORD RAPID_SIZE,
-            class Alloc
-        >
-        class RapidVectorIterator : 
-            public boost::iterator_facade<
-                RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>, 
-                Value, 
-                boost::random_access_traversal_tag>
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::RapidVectorIterator(RapidVectorImpl<T, RAPID_SIZE, Alloc> *pThis, bool isEnd) : 
+            m_pThis(pThis), 
+            m_isEnd(isEnd),
+            m_pBuf(NULL)
         {
-        private:
-            typedef typename mpl::eval_if<
-                Traits::HasConst<Value>, 
-                mpl::identity<typename std::vector<T, Alloc>::const_iterator>, 
-                mpl::identity<typename std::vector<T, Alloc>::iterator> >::type iterator_;
+            if (m_pThis->RunAsRapid())
+                m_pBuf = !isEnd ? m_pThis->RapidBuf() : m_pThis->RapidBuf() + m_pThis->m_size;
+            else
+                m_i = !isEnd ? m_pThis->m_pVec->begin() : m_pThis->m_pVec->end();
+        }
 
-            typedef typename mpl::eval_if<
-                Traits::HasConst<Value>,
-                mpl::identity<RapidVectorIterator<Value, T, RAPID_SIZE, Alloc> >,
-                mpl::identity<RapidVectorIterator<Value const, T, RAPID_SIZE, Alloc> > >::type const_iterator_;
-        public:
-            RapidVectorIterator() : 
-                m_pThis(NULL), 
-                m_isEnd(false),
-                m_pBuf(NULL)
-            { }
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        template<class OtherValue, class OtherT, DWORD OTHER_RAPID_SIZE, class OtherAlloc>
+        RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::RapidVectorIterator(RapidVectorIterator<OtherValue, OtherT, OTHER_RAPID_SIZE, OtherAlloc> const &other)
+        {
+            m_pThis = other.m_pThis;
+            m_isEnd = other.m_isEnd;
+            m_pBuf = other.m_pBuf;
+            m_i = other.m_i;
+        } 
 
-            explicit RapidVectorIterator(RapidVector<T, RAPID_SIZE, Alloc> *pThis, bool isEnd = false) : 
-                m_pThis(pThis), 
-                m_isEnd(isEnd),
-                m_pBuf(NULL)
-            {
-                if (m_pThis->RunAsRapid())
-                    m_pBuf = !isEnd ? m_pThis->RapidBuf() : m_pThis->RapidBuf() + m_pThis->m_size;
-                else
-                    m_i = !isEnd ? m_pThis->m_pVec->begin() : m_pThis->m_pVec->end();
-            }
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::operator const_iterator_() const
+        {
+            return const_iterator_(*this);
+        }
 
-            template<
-                class OtherValue, 
-                class OtherT, 
-                DWORD OTHER_RAPID_SIZE, 
-                class OtherAlloc
-            >
-            RapidVectorIterator(RapidVectorIterator<OtherValue, OtherT, OTHER_RAPID_SIZE, OtherAlloc> const &other)
-            {
-                m_pThis = other.m_pThis;
-                m_isEnd = other.m_isEnd;
-                m_pBuf = other.m_pBuf;
-                m_i = other.m_i;
-            } 
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::increment() 
+        { 
+            if (m_pThis->RunAsRapid())
+                ++m_pBuf;
+            else
+                ++m_i;
+        }
 
-            operator const_iterator_() const
-            {
-                return const_iterator_(*this);
-            }
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::advance(difference_type n) 
+        { 
+            if (m_pThis->RunAsRapid())
+                m_pBuf += n;
+            else
+                m_i += n;
+        }
+
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        bool RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::equal(RapidVectorIterator<Value, T, RAPID_SIZE, Alloc> const& other) const
+        {
+            if (m_pThis->RunAsRapid())
+                return m_pBuf == other.m_pBuf;
+            else
+                return m_i == other.m_i;
+        }
+
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        typename RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::reference 
+            RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::dereference() const 
+        { 
+            return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
+        }
+
+        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
+        typename RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::difference_type 
+            RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>::distance_to(RapidVectorIterator<Value, T, RAPID_SIZE, Alloc> const& other) const
+        {
+            if (m_pThis->RunAsRapid())
+                return static_cast<difference_type>(other.m_pBuf - m_pBuf);
+            else
+                return other.m_i - m_i;
+        }
+
         
-        private:
-            friend class boost::iterator_core_access;
-            
-            template<class T, DWORD RAPID_SIZE, class Alloc>
-            friend class RapidVector;
-
-            template<
-                class Value, 
-                class T, 
-                DWORD RAPID_SIZE, 
-                class Alloc
-            >
-            friend class RapidVectorIterator;
-
-            inline void increment() 
-            { 
-                if (m_pThis->RunAsRapid())
-                    ++m_pBuf;
-                else
-                    ++m_i;
-            }
-
-            inline void advance(difference_type n) 
-            { 
-                if (m_pThis->RunAsRapid())
-                    m_pBuf += n;
-                else
-                    m_i += n;
-            }
-
-            inline bool equal(RapidVectorIterator<Value, T, RAPID_SIZE, Alloc> const& other) const
-            {
-                if (m_pThis->RunAsRapid())
-                    return m_pBuf == other.m_pBuf;
-                else
-                    return m_i == other.m_i;
-            }
-
-            inline reference dereference() const 
-            { 
-                return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
-            }
-
-            difference_type distance_to(RapidVectorIterator<Value, T, RAPID_SIZE, Alloc> const& other) const
-            {
-                if (m_pThis->RunAsRapid())
-                    return static_cast<difference_type>(other.m_pBuf - m_pBuf);
-                else
-                    return other.m_i - m_i;
-            }
-
-            RapidVector<T, RAPID_SIZE, Alloc> *m_pThis;
-            bool m_isEnd;
-            T *m_pBuf;
-            iterator_ m_i;
-        };
         
-    }   // namespace RapidVectorDetail
-
-    template<class T, DWORD RAPID_SIZE, class Alloc>
-    class RapidVector
-    {
-    public:
-        typedef RapidVector<T, RAPID_SIZE, Alloc> type;
-	    typedef typename std::vector<T, Alloc>::allocator_type allocator_type;
-	    typedef RapidVectorDetail::RapidVectorIterator<T const, T, RAPID_SIZE, Alloc> const_iterator;
-	    typedef typename std::vector<T, Alloc>::const_pointer const_pointer;
-	    typedef typename std::vector<T, Alloc>::const_reference const_reference;
-	    typedef typename std::vector<T, Alloc>::const_reverse_iterator const_reverse_iterator;
-	    typedef typename std::vector<T, Alloc>::difference_type difference_type;
-	    typedef RapidVectorDetail::RapidVectorIterator<T, T, RAPID_SIZE, Alloc> iterator;
-	    typedef typename std::vector<T, Alloc>::pointer pointer;
-	    typedef typename std::vector<T, Alloc>::reference reference;
-	    typedef typename std::vector<T, Alloc>::reverse_iterator reverse_iterator;
-	    typedef typename std::vector<T, Alloc>::size_type size_type;
-	    typedef typename std::vector<T, Alloc>::value_type value_type;
-        typedef typename boost::is_pointer<T>::type is_value_type_pointer;
-        typedef typename boost::remove_pointer<typename Traits::RemoveConst<T>::type>::type raw_value_type;
-        typedef typename boost::has_trivial_constructor<raw_value_type>::type has_raw_value_type_trivial_constructor;
-        typedef typename boost::has_trivial_destructor<raw_value_type>::type has_raw_value_type_trivial_destructor;
-        typedef boost::integral_constant<bool, false> false_;
-
-        RapidVector() : 
+        
+        
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorImpl<T, RAPID_SIZE, Alloc>::RapidVectorImpl() : 
             m_pVec(NULL), 
             m_size(0), 
             m_capacity(RAPID_SIZE)
@@ -169,7 +102,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             ConstructRapidBuf(RapidBuf());
         }
 
-        ~RapidVector() 
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorImpl<T, RAPID_SIZE, Alloc>::~RapidVectorImpl() 
         {
             if (RunAsRapid())
                 DestructRapidBuf(RapidBuf(), m_size);
@@ -177,7 +111,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 DestroyVec(); 
         }
 
-        RapidVector(type const &other) : 
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        RapidVectorImpl<T, RAPID_SIZE, Alloc>::RapidVectorImpl(typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::this_type const &other) : 
             m_pVec(NULL), 
             m_size(0), 
             m_capacity(RAPID_SIZE)
@@ -191,7 +126,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
         }
 
-        void reserve(size_type count)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::reserve(size_type count)
         {
             if (count <= capacity())
                 return;
@@ -205,7 +141,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             m_capacity = m_pVec->capacity();
         }
         
-        void push_back(typename boost::call_traits<T>::param_type val)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::push_back(typename boost::call_traits<T>::param_type val)
         {
             if (RunAsRapid() && m_size < RAPID_SIZE)
             {
@@ -223,7 +160,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             m_capacity = m_pVec->capacity();
         }
 
-        void pop_back()
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::pop_back()
         {
             _ASSERTE(!empty());
 
@@ -239,8 +177,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             // NOTE: std::vector::capacity() has no effect by calling the pop_back method.
         }
 
+        template<class T, DWORD RAPID_SIZE, class Alloc>
         template<class Iterator>
-        void assign(Iterator first, Iterator last)
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::assign(Iterator first, Iterator last)
         {
             if (!empty())
                 erase(begin(), end());
@@ -249,7 +188,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 push_back(*i);
         }
 
-        iterator erase(const_iterator first, const_iterator last)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::iterator 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::erase(
+                typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::const_iterator first, 
+                typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::const_iterator last
+            )
         {
             _ASSERTE(!empty());
 
@@ -282,7 +226,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             return begin();
         }
 
-        inline type &operator =(type &other)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::this_type &
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::operator=(typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::this_type &other)
         {
             if (this != &other)
             {
@@ -292,52 +238,70 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             return *this;
         }
 
-        inline const_reference operator[](size_type pos) const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::const_reference 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::operator[](typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::size_type pos) const
         {
             return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
         }
 
-        inline reference operator[](size_type pos)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::reference 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::operator[](typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::size_type pos)
         {
             return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
         }
 
-	    inline iterator begin()
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+	    inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::iterator 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::begin()
 	    {
 	        return iterator(this);
 	    }
 
-        inline const_iterator begin() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::const_iterator 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::begin() const
         {
-            return const_iterator(const_cast<type *>(this));
+            return const_iterator(const_cast<this_type *>(this));
         }
 
-        inline iterator end()
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::iterator 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::end()
         {
             return iterator(this, true);
         }
 
-        inline const_iterator end() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::const_iterator 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::end() const
         {
-            return const_iterator(const_cast<type *>(this), true);
+            return const_iterator(const_cast<this_type *>(this), true);
         }
 
-        inline size_type size() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::size_type 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::size() const
         {
             return m_size;
         }
 
-        inline size_type capacity() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline typename RapidVectorImpl<T, RAPID_SIZE, Alloc>::size_type 
+            RapidVectorImpl<T, RAPID_SIZE, Alloc>::capacity() const
         {
             return m_capacity;
         }
 
-        inline bool empty() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline bool RapidVectorImpl<T, RAPID_SIZE, Alloc>::empty() const
         {
             return m_size == 0;
         }
 
-        void resize(size_type newSize)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::resize(size_type newSize)
         {
             if (newSize <= RAPID_SIZE)
             {
@@ -354,30 +318,31 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             m_capacity = m_pVec->capacity();
         }
 
-        inline bool RunAsRapid() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline bool RapidVectorImpl<T, RAPID_SIZE, Alloc>::RunAsRapid() const
         {
             return m_capacity <= RAPID_SIZE;
         }
-    
-    private:
-        template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
-	    friend class RapidVectorDetail::RapidVectorIterator;
 
-        inline T *RapidBuf()
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline T *RapidVectorImpl<T, RAPID_SIZE, Alloc>::RapidBuf()
         {
             return reinterpret_cast<T *>(m_pRapidBuf);
         }
 
-        inline T const *RapidBuf() const
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        inline T const *RapidVectorImpl<T, RAPID_SIZE, Alloc>::RapidBuf() const
         {
             return reinterpret_cast<T *>(const_cast<PUINT64>(m_pRapidBuf));
         }
 
-        static void CopyRapidBuf(T *pDstRapidBuf, T const *pSrcRapidBuf, size_type size)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::CopyRapidBuf(T *pDstRapidBuf, T const *pSrcRapidBuf, size_type size)
         {
             _ASSERTE(size <= RAPID_SIZE);
 
-            typedef copy_rapid_buf_impl_type<
+            typedef CopyRapidBufImpl<
+                facade,
                 is_value_type_pointer, 
                 has_raw_value_type_trivial_constructor, 
                 has_raw_value_type_trivial_destructor
@@ -386,30 +351,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             Impl::Copy(pDstRapidBuf, pSrcRapidBuf, size);
         }
 
-        template<class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
-        struct copy_rapid_buf_impl_type
-        {
-            static inline void Copy(T *pDstRapidBuf, T const *pSrcRapidBuf, size_type size)
-            {
-                ::memcpy_s(pDstRapidBuf, size * sizeof(raw_value_type), pSrcRapidBuf, size * sizeof(raw_value_type));
-            }
-        };
-
-        template<>
-        struct copy_rapid_buf_impl_type<false_, false_, false_ > 
-        { 
-            static inline void Copy(T *pDstRapidBuf, T const *pSrcRapidBuf, size_type size)
-            {
-                for (T const *i = pSrcRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
-                    *(--pDstRapidBuf + size) = *i_end;
-            }
-        };
-
-        static void MoveRapidBuf(T *pDstRapidBuf, T *pSrcRapidBuf, size_type size)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::MoveRapidBuf(T *pDstRapidBuf, T *pSrcRapidBuf, size_type size)
         {
             _ASSERTE(size <= RAPID_SIZE);
 
-            typedef move_rapid_buf_impl_type<
+            typedef MoveRapidBufImpl<
+                facade,
                 is_value_type_pointer, 
                 has_raw_value_type_trivial_constructor, 
                 has_raw_value_type_trivial_destructor
@@ -418,26 +366,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             Impl::Move(pDstRapidBuf, pSrcRapidBuf, size);
         }
 
-        template<class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
-        struct move_rapid_buf_impl_type
-        {
-            static inline void Move(T *pDstRapidBuf, T *pSrcRapidBuf, size_type size)
-            {
-                CopyRapidBuf(pDstRapidBuf, pSrcRapidBuf, size);
-            }
-        };
-
-        template<>
-        struct move_rapid_buf_impl_type<false_, false_, false_ > 
-        { 
-            static inline void Move(T *pDstRapidBuf, T *pSrcRapidBuf, size_type size)
-            {
-                CopyRapidBuf(pDstRapidBuf, pSrcRapidBuf, size);
-                DestructRapidBuf(pSrcRapidBuf, size);
-            }
-        };
-
-        static void AssignVec(std::vector<T, Alloc> *&pVec, size_type newSize, T *pRapidBuf, size_type size)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::AssignVec(std::vector<T, Alloc> *&pVec, size_type newSize, T *pRapidBuf, size_type size)
         {
             _ASSERTE(size <= RAPID_SIZE);
 
@@ -450,12 +380,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
         }
 
-        static void AssignRapidBuf(T *pRapidBuf, size_type newSize, std::vector<T, Alloc> const *pVec)
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::AssignRapidBuf(T *pRapidBuf, size_type newSize, std::vector<T, Alloc> const *pVec)
         {
             _ASSERTE(pVec->size() <= RAPID_SIZE);
             _ASSERTE(newSize <= RAPID_SIZE);
 
-            typedef assign_rapid_buf_impl_type<
+            typedef AssignRapidBufImpl<
+                facade,
                 is_value_type_pointer, 
                 has_raw_value_type_trivial_constructor, 
                 has_raw_value_type_trivial_destructor
@@ -464,31 +396,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             Impl::Assign(pRapidBuf, newSize, pVec);
         }
 
-        template<class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
-        struct assign_rapid_buf_impl_type
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::ConstructRapidBuf(T *pRapidBuf)
         {
-            static inline void Assign(T *pRapidBuf, size_type newSize, std::vector<T, Alloc> const *pVec)
-            {
-                ::memcpy_s(pRapidBuf, newSize * sizeof(raw_value_type), &(*pVec)[0], newSize * sizeof(raw_value_type));
-            }
-        };
-
-        template<>
-        struct assign_rapid_buf_impl_type<false_, false_, false_ > 
-        { 
-            static inline void Assign(T *pRapidBuf, size_type newSize, std::vector<T, Alloc> const *pVec)
-            {
-                ::ZeroMemory(pRapidBuf, newSize * sizeof(raw_value_type));
-
-                typedef std::vector<T, Alloc>::const_iterator Iterator;
-                for (Iterator i = pVec->cbegin(), i_end = i + newSize; i != i_end; ++i)
-                    *(pRapidBuf++) = *i;
-            }
-        };
-
-        static void ConstructRapidBuf(T *pRapidBuf)
-        {
-            typedef construct_rapid_buf_impl_type<
+            typedef ConstructRapidBufImpl<
+                facade,
                 is_value_type_pointer, 
                 has_raw_value_type_trivial_constructor
             > Impl;
@@ -496,27 +408,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             Impl::Construct(pRapidBuf);
         }
 
-        template<class IsPointer, class HasTrivialConstructor>
-        struct construct_rapid_buf_impl_type
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::DestructRapidBuf(T *pRapidBuf, size_type size)
         {
-            static inline void Construct(T *pRapidBuf)
-            {
-                // Do nothing. Because T has trivial constructor in this case.
-            }
-        };
-
-        template<>
-        struct construct_rapid_buf_impl_type<false_, false_ > 
-        { 
-            static inline void Construct(T *pRapidBuf)
-            {
-                ::ZeroMemory(pRapidBuf, RAPID_BUF_SIZE * sizeof(UINT64));
-            }
-        };
-
-        static void DestructRapidBuf(T *pRapidBuf, size_type size)
-        {
-            typedef destruct_rapid_buf_impl_type<
+            typedef DestructRapidBufImpl<
+                facade,
                 is_value_type_pointer, 
                 has_raw_value_type_trivial_destructor
             > Impl;
@@ -524,28 +420,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             Impl::Destruct(pRapidBuf, size);
         }
 
-        template<class IsPointer, class HasTrivialDestructor>
-        struct destruct_rapid_buf_impl_type
-        {
-            static inline void Destruct(T *pRapidBuf, size_type size)
-            {
-                // Do nothing. Because T has trivial constructor in this case.
-            }
-        };
-
-        template<>
-        struct destruct_rapid_buf_impl_type<false_, false_ > 
-        { 
-            static inline void Destruct(T *pRapidBuf, size_type size)
-            {
-                for (T *i = pRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
-                    (*i_end).~raw_value_type();
-                
-                ::ZeroMemory(pRapidBuf, size * sizeof(raw_value_type));
-            }
-        };
-
-        void DestroyVec()
+        template<class T, DWORD RAPID_SIZE, class Alloc>
+        void RapidVectorImpl<T, RAPID_SIZE, Alloc>::DestroyVec()
         {
             if (m_pVec != NULL)
             {
@@ -553,13 +429,184 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 m_pVec = NULL;
             }
         }
-	    
-        std::vector<T, Alloc> *m_pVec;
-        SIZE_T m_size;
-        SIZE_T m_capacity;
-        static size_t const RAPID_BUF_SIZE = (RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64);
-        UINT64 m_pRapidBuf[RAPID_BUF_SIZE];
-    };
+
+
+
+
+
+        
+        template<class Facade, class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
+        inline void 
+            CopyRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::Copy(
+                typename CopyRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::pointer pDstRapidBuf, 
+                typename CopyRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::const_pointer pSrcRapidBuf, 
+                typename CopyRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::size_type size
+            )
+        {
+            ::memcpy_s(pDstRapidBuf, size * sizeof(raw_value_type), pSrcRapidBuf, size * sizeof(raw_value_type));
+        }
+
+        template<class Facade>
+        inline void 
+            CopyRapidBufImpl<Facade, False, False, False>::Copy(
+                typename CopyRapidBufImpl<Facade, False, False, False>::pointer pDstRapidBuf, 
+                typename CopyRapidBufImpl<Facade, False, False, False>::const_pointer pSrcRapidBuf, 
+                typename CopyRapidBufImpl<Facade, False, False, False>::size_type size
+            )
+        {
+            for (raw_value_type const *i = pSrcRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
+                *(--pDstRapidBuf + size) = *i_end;
+        }
+
+        
+        
+        
+        
+        template<class Facade, class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
+        inline void 
+            MoveRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::Move(
+                typename MoveRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::pointer pDstRapidBuf, 
+                typename MoveRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::pointer pSrcRapidBuf, 
+                typename MoveRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::size_type size
+            )
+        {
+            typedef CopyRapidBufImpl<
+                Facade, 
+                IsPointer, 
+                HasTrivialConstructor, 
+                HasTrivialDestructor
+            > Impl;
+
+            Impl::Copy(pDstRapidBuf, pSrcRapidBuf, size);
+        }
+
+        template<class Facade>
+        inline 
+            void MoveRapidBufImpl<Facade, False, False, False>::Move(
+                typename MoveRapidBufImpl<Facade, False, False, False>::pointer pDstRapidBuf, 
+                typename MoveRapidBufImpl<Facade, False, False, False>::pointer pSrcRapidBuf, 
+                typename MoveRapidBufImpl<Facade, False, False, False>::size_type size
+            )
+        {
+            {
+                typedef CopyRapidBufImpl<
+                    Facade, 
+                    False, 
+                    False, 
+                    False
+                > Impl;
+
+                Impl::Copy(pDstRapidBuf, pSrcRapidBuf, size);
+            }
+
+            {
+                typedef DestructRapidBufImpl<
+                    Facade,
+                    False, 
+                    False
+                > Impl;
+            
+                Impl::Destruct(pSrcRapidBuf, size);
+            }
+        }
+
+        
+        
+        
+        
+        
+        template<class Facade, class IsPointer, class HasTrivialConstructor, class HasTrivialDestructor>
+        inline void 
+            AssignRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::Assign(
+                typename AssignRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::pointer pRapidBuf, 
+                typename AssignRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::size_type newSize, 
+                typename AssignRapidBufImpl<Facade, IsPointer, HasTrivialConstructor, HasTrivialDestructor>::internal_vector_type const *pVec
+            )
+        {
+            ::memcpy_s(pRapidBuf, newSize * sizeof(raw_value_type), &(*pVec)[0], newSize * sizeof(raw_value_type));
+        }
+
+        template<class Facade>
+        inline void 
+            AssignRapidBufImpl<Facade, False, False, False>::Assign(
+                typename AssignRapidBufImpl<Facade, False, False, False>::pointer pRapidBuf, 
+                typename AssignRapidBufImpl<Facade, False, False, False>::size_type newSize, 
+                typename AssignRapidBufImpl<Facade, False, False, False>::internal_vector_type const *pVec
+            )
+        {
+            ::ZeroMemory(pRapidBuf, newSize * sizeof(raw_value_type));
+
+            typedef typename internal_vector_type::const_iterator Iterator;
+            for (Iterator i = pVec->cbegin(), i_end = i + newSize; i != i_end; ++i)
+                *(pRapidBuf++) = *i;
+        }
+
+        
+        
+        
+        
+        
+        template<class Facade, class IsPointer, class HasTrivialConstructor>
+        inline void 
+            ConstructRapidBufImpl<Facade, IsPointer, HasTrivialConstructor>::Construct(
+                typename ConstructRapidBufImpl<Facade, IsPointer, HasTrivialConstructor>::pointer pRapidBuf
+            )
+        {
+            // Do nothing. Because T has trivial constructor in this case.
+        }
+
+        template<class Facade>
+        inline void 
+            ConstructRapidBufImpl<Facade, False, False>::Construct(
+                typename ConstructRapidBufImpl<Facade, False, False>::pointer pRapidBuf
+            )
+        {
+            ::ZeroMemory(pRapidBuf, RAPID_BUF_SIZE * sizeof(UINT64));
+        }
+
+        
+        
+        
+        
+        
+        template<class Facade, class IsPointer, class HasTrivialDestructor>
+        inline void 
+            DestructRapidBufImpl<Facade, IsPointer, HasTrivialDestructor>::Destruct(
+                typename DestructRapidBufImpl<Facade, IsPointer, HasTrivialDestructor>::pointer pRapidBuf, size_type size
+            )
+        {
+            // Do nothing. Because T has trivial constructor in this case.
+        }
+
+        template<class Facade>
+        inline void 
+            DestructRapidBufImpl<Facade, False, False>::Destruct(
+                typename DestructRapidBufImpl<Facade, False, False>::pointer pRapidBuf, 
+                typename DestructRapidBufImpl<Facade, False, False>::size_type size
+            )
+        {
+            for (value_type *i = pRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
+                (*i_end).~raw_value_type();
+                
+            ::ZeroMemory(pRapidBuf, size * sizeof(raw_value_type));
+        }
+
+    }   // namespace RapidVectorDetail
+
+    
+    template<class T, DWORD RAPID_SIZE, class Alloc>
+    RapidVector<T, RAPID_SIZE, Alloc>::RapidVector() : 
+        RapidVector<T, RAPID_SIZE, Alloc>::base_type()
+    { }
+
+    template<class T, DWORD RAPID_SIZE, class Alloc>
+    RapidVector<T, RAPID_SIZE, Alloc>::~RapidVector()
+    { }
+
+    template<class T, DWORD RAPID_SIZE, class Alloc>
+    RapidVector<T, RAPID_SIZE, Alloc>::RapidVector(typename RapidVector<T, RAPID_SIZE, Alloc>::this_type const &other) : 
+        RapidVector<T, RAPID_SIZE, Alloc>::base_type(other)
+    { }
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
 

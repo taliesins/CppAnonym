@@ -2,12 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
 #define URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
 
-#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_H
-#include <Urasandesu/CppAnonym/DependentObjectsProvider.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGEFWD_HPP
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorageFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
@@ -15,52 +11,34 @@ namespace Urasandesu { namespace CppAnonym {
     namespace StaticDependentObjectsStorageDetail {
 
         template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
-        struct DependentObjectsProvidersHost : 
-            DependentObjectsProvider<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>
+        template<class T>
+        inline T &StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Object()
         {
-        };
+            typedef typename host_type::provider_of<T>::type provider_type;
+            provider_type &provider = Host().ProviderOf<T>();
+            return provider.Object();
+        }
 
         template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
-        class StaticDependentObjectsStorageImpl
+        inline typename StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::host_type &
+            StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host()
         {
-        public:
-            typedef DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> host_type;
+            static host_type host;
+            return host;
+        }
+
         
-            template<class T>
-            static T &Object()
-            {
-                typedef typename host_type::provider_of<T>::type provider_type;
-                provider_type &provider = Host().ProviderOf<T>();
-                return provider.Object();
-            }
-
-        private:
-            template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
-            friend struct HostAccessor;
-
-            static host_type &Host()
-            {
-                static host_type host;
-                return host;
-            }
-        };
-
+        
+        
+        
         template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
-        struct HostAccessor
+        inline DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> &
+            HostAccessor<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host()
         {
-            static DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> &Host()
-            {
-                return StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host();
-            }
-        };
+            return StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host();
+        }
 
     }   // namespace StaticDependentObjectsStorageDetail {
-
-    template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
-    struct StaticDependentObjectsStorage : 
-        StaticDependentObjectsStorageDetail::StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>
-    {
-    };
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 

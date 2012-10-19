@@ -8,13 +8,13 @@
 //#include <Urasandesu/CppAnonym/HeapProvider.hpp>
 //#endif
 
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
+#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #include <Urasandesu/CppAnonym/SimpleHeap.hpp>
 #endif
-
-//#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-//#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
-//#endif
 
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
 //#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>

@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
 #define URASANDESU_CPPANONYM_SIMPLEBLOB_H
 
-#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
-#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
+#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOBFWD_H

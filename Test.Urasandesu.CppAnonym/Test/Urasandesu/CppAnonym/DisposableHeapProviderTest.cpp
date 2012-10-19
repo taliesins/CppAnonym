@@ -12,12 +12,20 @@
 #include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
+#include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #include <Urasandesu/CppAnonym/SimpleHeap.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DependentObjectsProvider.hpp>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_DisposableHeapProviderTest.*

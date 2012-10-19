@@ -1,5 +1,9 @@
 ﻿#include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_HPP
+#include <Urasandesu/CppAnonym/DependentObjectsProvider.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
 #include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
 #endif

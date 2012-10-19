@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
