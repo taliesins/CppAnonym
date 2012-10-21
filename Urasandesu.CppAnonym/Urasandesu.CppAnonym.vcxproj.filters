@@ -1245,6 +1245,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Collections\RapidVector.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\DistinctFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">
