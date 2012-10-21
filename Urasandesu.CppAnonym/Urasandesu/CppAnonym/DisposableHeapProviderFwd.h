@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_H
 #define URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDERFWD_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
-#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_H
+#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym {

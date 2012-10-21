@@ -66,8 +66,8 @@
 #include <Urasandesu/CppAnonym/Traits/GetMemberType.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_HPP
-#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_H
+#include <Urasandesu/CppAnonym/Traits/HasMemberFunction.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_H

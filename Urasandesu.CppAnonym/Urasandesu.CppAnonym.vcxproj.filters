@@ -1023,9 +1023,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\PersistentInfo.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -1249,6 +1246,9 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
   </ItemGroup>
