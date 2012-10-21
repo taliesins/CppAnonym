@@ -1248,6 +1248,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\DistinctFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\ReplaceFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc">

@@ -212,6 +212,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\IsLikePointerTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\MaxSizeTypeTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ReplaceTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AnyPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AssignationDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AutoPtrTest.cpp" />

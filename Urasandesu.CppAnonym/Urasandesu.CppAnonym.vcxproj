@@ -480,6 +480,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\ReplaceFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.hpp" />
