@@ -460,8 +460,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointer.hpp" />

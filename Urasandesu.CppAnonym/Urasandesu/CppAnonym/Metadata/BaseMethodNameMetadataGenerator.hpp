@@ -34,8 +34,8 @@
 //#include <Urasandesu/CppAnonym/Traits/EqualityComparable.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_HASHCOMPUTABLE_HPP
-//#include <Urasandesu/CppAnonym/Traits/HashComputable.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_HASHCOMPUTABLE_H
+//#include <Urasandesu/CppAnonym/Traits/HashComputable.h>
 //#endif
 
 #ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAGENERATORAPIHOLDERLABEL_HPP
