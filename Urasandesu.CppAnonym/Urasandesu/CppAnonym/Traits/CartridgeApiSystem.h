@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_HPP
-#include <Urasandesu/CppAnonym/Traits/GetMemberType.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_H
+#include <Urasandesu/CppAnonym/Traits/GetMemberType.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEMFWD_H

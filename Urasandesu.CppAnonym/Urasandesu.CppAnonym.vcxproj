@@ -458,7 +458,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\DistinctFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparableFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.hpp" />

@@ -633,9 +633,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
@@ -1249,6 +1246,9 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\EqualityComparable.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\GetMemberType.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
   </ItemGroup>
