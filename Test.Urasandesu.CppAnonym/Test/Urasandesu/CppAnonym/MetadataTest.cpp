@@ -80,8 +80,8 @@
 #include <Urasandesu/CppAnonym/Fusion/Interfaces/FusionInfoLabel.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
@@ -193,8 +193,8 @@
 #endif
 
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
 #endif
 
 // Forward Declarations

@@ -16,8 +16,8 @@
 #include <Urasandesu/CppAnonym/CppAnonymCOMException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Hosting {

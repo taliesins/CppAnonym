@@ -44,8 +44,8 @@
 #include <Urasandesu/CppAnonym/StrongNaming/BaseStrongNameInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
+#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Hosting_BaseRuntimeHostTest.*

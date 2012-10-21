@@ -274,8 +274,8 @@ private:
 //#include <Urasandesu/CppAnonym/Collections/RapidVector.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_HPP
-//#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
+//#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_HASCONST_H
