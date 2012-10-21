@@ -294,8 +294,8 @@ private:
 //#include <Urasandesu/CppAnonym/Traits/Distinct.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_EQUALITYCOMPARABLE_HPP
-//#include <Urasandesu/CppAnonym/Traits/EqualityComparable.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_EQUALITYCOMPARABLE_H
+//#include <Urasandesu/CppAnonym/Traits/EqualityComparable.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_HASHCOMPUTABLE_HPP
