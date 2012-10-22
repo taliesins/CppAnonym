@@ -1,27 +1,32 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
-#define URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_H
+#define URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_H
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERFUNCTION_H
 #include <Urasandesu/CppAnonym/Traits/HasMemberFunction.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTERFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/IsLikePointerFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTERFWD_H
+#include <Urasandesu/CppAnonym/Traits/IsLikePointerFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     namespace IsLikePointerDetail {
 
-        using namespace boost;
-        using boost::mpl::and_;
-        using boost::mpl::not_;
-        using boost::mpl::or_;
+        namespace mpl = boost::mpl;
+        using boost::has_trivial_assign;
+        using boost::has_trivial_constructor;
+        using boost::has_trivial_copy;
+        using boost::has_trivial_destructor;
+        using boost::is_pointer;
+        using mpl::and_;
+        using mpl::not_;
+        using mpl::or_;
 
         template<class T>
         class IsLikePointerImpl : 
-            public boost::is_pointer<T>
+            public is_pointer<T>
         {
         };
 
@@ -61,4 +66,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_H

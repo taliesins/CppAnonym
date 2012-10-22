@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_HPP
-#include <Urasandesu/CppAnonym/Traits/IsLikePointer.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_ISLIKEPOINTER_H
+#include <Urasandesu/CppAnonym/Traits/IsLikePointer.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Traits_IsLikePointerTest.*

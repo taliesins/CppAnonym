@@ -464,8 +464,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointer.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointerFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointer.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointerFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImpl.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImplFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImpl.hpp" />
