@@ -14,8 +14,8 @@
 #include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
-#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
+#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP

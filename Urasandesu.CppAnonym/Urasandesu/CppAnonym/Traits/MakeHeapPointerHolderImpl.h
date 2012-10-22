@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
-#define URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
+#define URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #include <Urasandesu/CppAnonym/SimpleHeap.h>
@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPLFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImplFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPLFWD_H
+#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImplFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
@@ -47,4 +47,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
