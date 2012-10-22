@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/SafeEnum.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
-#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_H
+#include <Urasandesu/CppAnonym/Traits/HasMemberType.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_H

@@ -624,9 +624,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\ApiHolders\DefaultStrongNameKeyApiHolderFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\StrongNaming\ApiHolders</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
@@ -1250,6 +1247,9 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hxx">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

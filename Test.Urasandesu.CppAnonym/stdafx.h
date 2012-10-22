@@ -330,8 +330,8 @@ private:
 //#include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_HPP
-//#include <Urasandesu/CppAnonym/Traits/HasMemberType.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_H
+//#include <Urasandesu/CppAnonym/Traits/HasMemberType.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_GETMEMBERTYPE_H
@@ -426,6 +426,6 @@ private:
 //#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
 //#endif
 
-#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
-#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hxx>
-#endif
+//#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
+//#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hxx>
+//#endif

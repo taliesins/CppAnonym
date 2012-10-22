@@ -14,10 +14,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     namespace IsLikePointerDetail {
 
+        using namespace boost;
         using boost::mpl::and_;
         using boost::mpl::not_;
         using boost::mpl::or_;
-        using namespace boost;
 
         template<class T>
         class IsLikePointerImpl : 
