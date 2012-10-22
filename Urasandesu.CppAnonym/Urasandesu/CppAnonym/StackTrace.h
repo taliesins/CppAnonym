@@ -30,8 +30,6 @@ namespace Urasandesu { namespace CppAnonym {
         boost::ptr_vector<StackFrame> m_frames;
     };
 
-    template class boost::ptr_vector<StackFrame>;
-
 }}  // namespace Urasandesu { namespace CppAnonym {
 
 #endif  // URASANDESU_CPPANONYM_STACKTRACE_H

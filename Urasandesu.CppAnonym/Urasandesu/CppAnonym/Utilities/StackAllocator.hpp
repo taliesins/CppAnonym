@@ -4,7 +4,7 @@
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-    template <class T>
+    template<class T>
     class StackAllocator
     {
     public:
@@ -16,14 +16,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         typedef T const &const_reference;
         typedef T value_type;
 
-        template <class U>
+        template<class U>
         struct rebind
         {
 	        typedef StackAllocator<U> other;
         };
 
         StackAllocator() throw() { }
-        template <class U> StackAllocator(StackAllocator<U> const&) throw() { }
+        template<class U> StackAllocator(StackAllocator<U> const &) throw() { }
         ~StackAllocator() throw() { }
 
         pointer allocate(size_type num, void const *hint = NULL)
@@ -55,11 +55,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
     };
 
-    template <class T1, class T2>
-    bool operator==(StackAllocator<T1> const&, StackAllocator<T2> const&) throw() { return true; }
+    template<class T1, class T2>
+    bool operator==(StackAllocator<T1> const &, StackAllocator<T2> const &) throw() { return true; }
 
-    template <class T1, class T2>
-    bool operator!=(StackAllocator<T1> const&, StackAllocator<T2> const&) throw() { return false; }
+    template<class T1, class T2>
+    bool operator!=(StackAllocator<T1> const &, StackAllocator<T2> const &) throw() { return false; }
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 

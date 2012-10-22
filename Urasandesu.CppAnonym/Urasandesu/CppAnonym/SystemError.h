@@ -14,7 +14,7 @@ namespace Urasandesu { namespace CppAnonym {
         { 
         }
 
-        template <class ErrorCodeEnum>
+        template<class ErrorCodeEnum>
         SystemError(ErrorCodeEnum e, 
                      typename boost::enable_if<
                         boost::system::is_error_code_enum<ErrorCodeEnum>>::type* = 0)

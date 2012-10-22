@@ -15,7 +15,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         using mpl::eval_if;
         using mpl::identity;
 
-        template <class T, class Old, class New>
+        template<class T, class Old, class New>
         struct ReplaceImpl : 
             eval_if<is_same<T, Old>, identity<New>, identity<T> >
         {
@@ -23,7 +23,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
     }   // namespace ReplaceDetail {
 
-    template <class T, class Old, class New>
+    template<class T, class Old, class New>
     struct Replace : 
         ReplaceDetail::ReplaceImpl<T, Old, New>
     {

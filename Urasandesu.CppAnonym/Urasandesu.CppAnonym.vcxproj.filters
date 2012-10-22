@@ -1116,9 +1116,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -1250,6 +1247,9 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hxx">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

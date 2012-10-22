@@ -157,7 +157,6 @@ namespace {
     {
         using namespace Urasandesu::CppAnonym;
         using namespace Urasandesu::CppAnonym::Hosting;
-        int a = 0;
 
         HostInfo &hostInfo = CppAnonymStorage::Object<HostInfo>();
     }

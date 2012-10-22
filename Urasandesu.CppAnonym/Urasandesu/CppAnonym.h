@@ -162,8 +162,8 @@
 #include <Urasandesu/CppAnonym/CppAnonymInvalidOperationException.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
-#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
+#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
+#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hxx>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H

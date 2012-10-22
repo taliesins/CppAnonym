@@ -31,8 +31,6 @@ namespace Urasandesu { namespace CppAnonym {
 
     };
 
-    template class boost::shared_ptr<StackTrace>;
-
 }}  // namespace Urasandesu { namespace CppAnonym {
 
 #endif  // URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H

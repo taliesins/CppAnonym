@@ -426,6 +426,6 @@ private:
 //#include <Urasandesu/CppAnonym/Fusion/AssemblyQueryTypes.h>
 //#endif
 
-//#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP
-//#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hpp>
-//#endif
+#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
+#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hxx>
+#endif
