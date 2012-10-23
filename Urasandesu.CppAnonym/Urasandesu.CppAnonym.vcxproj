@@ -476,8 +476,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Replace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\ReplaceFwd.h" />

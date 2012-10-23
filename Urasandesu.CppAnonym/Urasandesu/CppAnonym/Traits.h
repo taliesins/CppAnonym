@@ -54,8 +54,8 @@
 #include <Urasandesu/CppAnonym/Traits/MaxSizeType.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
-#include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_H
+#include <Urasandesu/CppAnonym/Traits/Predicatable.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_HASMEMBERTYPE_H

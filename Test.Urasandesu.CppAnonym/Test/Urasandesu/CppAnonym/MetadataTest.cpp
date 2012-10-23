@@ -4,8 +4,8 @@
 #include <Urasandesu/CppAnonym/Utilities/IsAnyT.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_HPP
-#include <Urasandesu/CppAnonym/Traits/Predicatable.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_H
+#include <Urasandesu/CppAnonym/Traits/Predicatable.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
