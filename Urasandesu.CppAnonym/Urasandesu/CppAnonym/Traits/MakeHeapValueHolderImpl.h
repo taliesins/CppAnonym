@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
-#define URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_H
+#define URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_H
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
 #include <Urasandesu/CppAnonym/SimpleHeap.h>
@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPLFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImplFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPLFWD_H
+#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImplFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
@@ -45,4 +45,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_H

@@ -468,8 +468,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointerFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImpl.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImplFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImpl.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImplFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImpl.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImplFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImpl.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImplFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImpl.hpp" />

@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
-#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_H
+#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H

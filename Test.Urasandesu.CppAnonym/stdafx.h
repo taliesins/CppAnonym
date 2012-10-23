@@ -306,8 +306,8 @@ private:
 //#include <Urasandesu/CppAnonym/Traits/IsLikePointer.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_HPP
-//#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_H
+//#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
@@ -318,8 +318,8 @@ private:
 //#include <Urasandesu/CppAnonym/Traits/MakeValueHolderImpl.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_HPP
-//#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.hpp>
+//#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPVALUEHOLDERIMPL_H
+//#include <Urasandesu/CppAnonym/Traits/MakeHeapValueHolderImpl.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
