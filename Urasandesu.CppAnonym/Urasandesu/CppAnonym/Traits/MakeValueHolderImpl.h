@@ -1,9 +1,9 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
-#define URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_H
+#define URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPLFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/MakeValueHolderImplFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPLFWD_H
+#include <Urasandesu/CppAnonym/Traits/MakeValueHolderImplFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
@@ -20,4 +20,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEVALUEHOLDERIMPL_H

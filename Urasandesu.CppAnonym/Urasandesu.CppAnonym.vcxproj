@@ -472,8 +472,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapValueHolderImplFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImpl.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakePointerHolderImplFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImpl.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImpl.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.hpp" />
