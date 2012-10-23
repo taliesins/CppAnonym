@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
-#include <Urasandesu/CppAnonym/Traits/MaxSizeType.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_H
+#include <Urasandesu/CppAnonym/Traits/MaxSizeType.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Traits_MaxSizeTypeTest.*

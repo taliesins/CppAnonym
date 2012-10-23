@@ -1053,12 +1053,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\ApiHolders</Filter>
     </ClInclude>
@@ -1249,6 +1243,12 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
     </ClInclude>
   </ItemGroup>

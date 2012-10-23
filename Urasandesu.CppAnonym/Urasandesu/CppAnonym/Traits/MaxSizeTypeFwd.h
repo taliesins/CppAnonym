@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_HPP
-#define URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_H
+#define URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_H
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
@@ -16,4 +16,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_H

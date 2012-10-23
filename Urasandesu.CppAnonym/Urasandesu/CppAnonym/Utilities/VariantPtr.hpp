@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Traits/IsLikePointer.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
-#include <Urasandesu/CppAnonym/Traits/MaxSizeType.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_H
+#include <Urasandesu/CppAnonym/Traits/MaxSizeType.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP

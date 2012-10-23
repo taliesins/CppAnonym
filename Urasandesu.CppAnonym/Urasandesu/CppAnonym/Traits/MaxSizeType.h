@@ -1,9 +1,9 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
-#define URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_H
+#define URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/MaxSizeTypeFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPEFWD_H
+#include <Urasandesu/CppAnonym/Traits/MaxSizeTypeFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
@@ -21,7 +21,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
         class MaxSizeTypeImpl
         {
             typedef typename transform_view<Types, sizeof_<_1> > type_size_view;
-            typedef typename mpl::max_element<type_size_view>::type i;
+            typedef typename max_element<type_size_view>::type i;
         public:
             typedef typename deref<typename i::base>::type type;
         };
@@ -36,4 +36,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Traits {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_TRAITS_MAXSIZETYPE_H
