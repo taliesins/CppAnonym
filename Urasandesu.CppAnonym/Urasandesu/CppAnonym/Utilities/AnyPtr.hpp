@@ -2,211 +2,150 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
-#include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_H
-#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImpl.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEHEAPPOINTERHOLDERIMPL_H
-#include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.h>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_H
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace AnyPtrDetail {
 
-        using namespace boost;
+        AnyPtrHolder::AnyPtrHolder() : 
+            m_useCount(0) 
+        { }
         
-        struct AnyPtrHolder
+        AnyPtrHolder::~AnyPtrHolder() 
+        { }
+
+        inline void intrusive_ptr_add_ref(AnyPtrHolder::this_type *p)
         {
-            typedef AnyPtrHolder this_type;
+            ++p->m_useCount;
+        }
 
-            AnyPtrHolder() : m_useCount(0) { }
-            virtual ~AnyPtrHolder() { };
-            virtual void *Pointer() const = 0;
-            virtual void Delete() = 0;
-            virtual std::type_info const &GetType() const = 0;
+        inline void intrusive_ptr_release(AnyPtrHolder::this_type *p)
+        {
+            if(--p->m_useCount == 0) 
+                p->Delete();
+        }
 
-            inline friend void intrusive_ptr_add_ref(this_type *p)
-            {
-                ++p->m_useCount;
-            }
-
-            inline friend void intrusive_ptr_release(this_type *p)
-            {
-                if(--p->m_useCount == 0) 
-                    p->Delete();
-            }
-
-            LONG m_useCount;
-        };
+        
+        template<class T, class TD, class ImplD>
+        AnyPtrHolderImpl<T, TD, ImplD>::AnyPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+            base_type(), 
+            m_p(p),
+            m_d(d),
+            m_impld(impld)
+        { 
+            _ASSERTE(p != NULL); 
+        }
 
         template<class T, class TD, class ImplD>
-        struct AnyPtrHolderImpl : 
-            AnyPtrHolder
+        AnyPtrHolderImpl<T, TD, ImplD>::~AnyPtrHolderImpl()
         {
-            typedef AnyPtrHolderImpl<T, TD, ImplD> this_type;
-            typedef AnyPtrHolder base_type;
-            typedef T object_type;
-            typedef TD object_deleter_type;
-            typedef ImplD impl_deleter_type; 
-
-            AnyPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
-                base_type(), 
-                m_p(p),
-                m_d(d),
-                m_impld(impld)
-            { 
-                _ASSERTE(p != NULL); 
-            }
-
-            virtual ~AnyPtrHolderImpl()
-            {
-            }
-
-            virtual void *Pointer() const
-            {
-                return const_cast<typename Traits::RemoveConst<object_type *>::type>(m_p);
-            }
-
-            virtual void Delete()
-            {
-                m_d(m_p);
-                m_impld(this);
-            }
-
-            virtual std::type_info const &GetType() const 
-            { 
-                return typeid(object_type *); 
-            }
-
-            object_type *m_p;
-            mutable object_deleter_type m_d;
-            impl_deleter_type m_impld;
-        };
+        }
 
         template<class T, class TD, class ImplD>
-        struct MakeHolderImpl : 
-            Traits::MakePointerHolderImpl<T, TD, ImplD, AnyPtrHolderImpl>
+        void *AnyPtrHolderImpl<T, TD, ImplD>::Pointer() const
         {
-        };
+            return const_cast<typename Traits::RemoveConst<object_type *>::type>(m_p);
+        }
 
-        template<
-            class T, 
-            class Tag
-        >
-        struct MakeHeapHolderImpl : 
-            Traits::MakeHeapPointerHolderImpl<T, AnyPtrHolderImpl, Tag>
+        template<class T, class TD, class ImplD>
+        void AnyPtrHolderImpl<T, TD, ImplD>::Delete()
         {
-        };
+            m_d(m_p);
+            m_impld(this);
+        }
 
-        class AnyPtrImpl
-        {
-        public:
-            typedef AnyPtrImpl this_type;
-            typedef AnyPtrHolder holder_type;
+        template<class T, class TD, class ImplD>
+        std::type_info const &AnyPtrHolderImpl<T, TD, ImplD>::GetType() const 
+        { 
+            return typeid(object_type *); 
+        }
 
-            AnyPtrImpl() : 
-                m_pHolder()
-            { }
-
-            template<class T>
-            explicit AnyPtrImpl(T *p) : 
-                m_pHolder(new MakeHolderImpl<T, DefaultDeleter, DefaultDeleter>::type(p, DefaultDeleter(), DefaultDeleter()))
-            { }
-
-            template<class T, class TD>
-            AnyPtrImpl(T *p, TD d) : 
-                m_pHolder(new MakeHolderImpl<T, TD, DefaultDeleter>::type(p, d, DefaultDeleter()))
-            { }
-
-            template<class T, class TD, class ImplD>
-            AnyPtrImpl(typename MakeHolderImpl<T, TD, ImplD>::type *pHolder) : 
-                m_pHolder(pHolder)
-            {
-                _ASSERTE(pHolder != NULL); 
-            }
-
-            AnyPtrImpl(AnyPtrImpl const &other) : 
-                m_pHolder(other.m_pHolder)
-            { }
-
-            inline AnyPtrImpl &operator =(AnyPtrImpl &other)
-            {
-                m_pHolder = other.m_pHolder;
-                return *this;
-            }
-
-            inline bool IsEmpty() const
-            {
-                return !m_pHolder;
-            }
-
-            template<class Pointer>
-            inline bool Is() const 
-            {
-                BOOST_MPL_ASSERT((is_pointer<Pointer>));
-                return m_pHolder && typeid(Pointer) == m_pHolder->GetType();
-            }
-
-            template<class Pointer>
-            inline operator Pointer()
-            {
-                return Is<Pointer>() ? static_cast<Pointer>(m_pHolder->Pointer()) : NULL;
-            }
-
-        protected:
-            AnyPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
-                m_pHolder(pHolder)
-            { }
-
-            intrusive_ptr<holder_type> m_pHolder;
-        };
-
-    }   // namespace AnyPtrDetail {
-
-    struct AnyPtr : 
-        AnyPtrDetail::AnyPtrImpl
-    {
-        typedef AnyPtr this_type;
-        typedef AnyPtrDetail::AnyPtrImpl base_type;
-
-        AnyPtr() : 
-            base_type()
+        AnyPtrImpl::AnyPtrImpl() : 
+            m_pHolder()
         { }
 
         template<class T>
-        explicit AnyPtr(T *p) : 
-            base_type(p)
+        AnyPtrImpl::AnyPtrImpl(T *p) : 
+            m_pHolder(new AnyPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
         { }
 
         template<class T, class TD>
-        AnyPtr(T *p, TD d) : 
-            base_type(p, d)
+        AnyPtrImpl::AnyPtrImpl(T *p, TD d) : 
+            m_pHolder(new AnyPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
         { }
 
         template<class T, class TD, class ImplD>
-        explicit AnyPtr(AnyPtrDetail::AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
-            base_type(pHolder)
-        { }
-
-        AnyPtr(AnyPtr const &other) : 
-            base_type(other)
-        { }
-
-        inline AnyPtr &operator =(AnyPtr &other)
+        AnyPtrImpl::AnyPtrImpl(AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+            m_pHolder(pHolder)
         {
-            base_type::operator =(other);
+            _ASSERTE(pHolder != NULL); 
+        }
+
+        AnyPtrImpl::AnyPtrImpl(AnyPtrImpl const &other) : 
+            m_pHolder(other.m_pHolder)
+        { }
+
+        inline AnyPtrImpl &AnyPtrImpl::operator=(AnyPtrImpl &other)
+        {
+            m_pHolder = other.m_pHolder;
             return *this;
         }
-    };
+
+        inline bool AnyPtrImpl::IsEmpty() const
+        {
+            return !m_pHolder;
+        }
+
+        template<class Pointer>
+        inline bool AnyPtrImpl::Is() const 
+        {
+            BOOST_MPL_ASSERT((is_pointer<Pointer>));
+            return m_pHolder && typeid(Pointer) == m_pHolder->GetType();
+        }
+
+        template<class Pointer>
+        inline AnyPtrImpl::operator Pointer()
+        {
+            return Is<Pointer>() ? static_cast<Pointer>(m_pHolder->Pointer()) : NULL;
+        }
+
+        AnyPtrImpl::AnyPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
+            m_pHolder(pHolder)
+        { }
+
+    }   // namespace AnyPtrDetail {
+
+    AnyPtr::AnyPtr() : 
+        base_type()
+    { }
+
+    template<class T>
+    AnyPtr::AnyPtr(T *p) : 
+        base_type(p)
+    { }
+
+    template<class T, class TD>
+    AnyPtr::AnyPtr(T *p, TD d) : 
+        base_type(p, d)
+    { }
+
+    template<class T, class TD, class ImplD>
+    AnyPtr::AnyPtr(AnyPtrDetail::AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+        base_type(pHolder)
+    { }
+
+    AnyPtr::AnyPtr(AnyPtr const &other) : 
+        base_type(other)
+    { }
+
+    inline AnyPtr &AnyPtr::operator=(AnyPtr &other)
+    {
+        base_type::operator=(other);
+        return *this;
+    }
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
