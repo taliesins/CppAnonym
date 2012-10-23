@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_H
 #define URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPL_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPLFWD_HPP
-#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImplFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_TRAITS_MAKEPOINTERHOLDERIMPLFWD_H
+#include <Urasandesu/CppAnonym/Traits/MakePointerHolderImplFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Traits {
