@@ -30,8 +30,8 @@
 #include <Urasandesu/CppAnonym/DefaultSTDMETHODWrapper.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_HPP
-#include <Urasandesu/CppAnonym/DependentObjectsProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_H
+#include <Urasandesu/CppAnonym/DependentObjectsProvider.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_ENVIRONMENT_H
