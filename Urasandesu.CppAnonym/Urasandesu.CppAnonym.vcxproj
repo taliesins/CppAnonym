@@ -489,6 +489,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hxx" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.hpp" />
@@ -512,7 +514,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />

@@ -4,6 +4,10 @@
 #include <Urasandesu/CppAnonym/SimpleHeap.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTHEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/SmartHeapProvider.hpp>
 #endif

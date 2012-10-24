@@ -999,9 +999,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
@@ -1258,6 +1255,15 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hxx">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
