@@ -8,8 +8,8 @@
 #include <Urasandesu/CppAnonym/DisposingInfo.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/DisposableHeapProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_H
+#include <Urasandesu/CppAnonym/DisposableHeapProvider.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
