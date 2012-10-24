@@ -66,8 +66,8 @@
 #include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_SAFEENUM_HPP
-#include <Urasandesu/CppAnonym/SafeEnum.hpp>
+#ifndef URASANDESU_CPPANONYM_SAFEENUM_H
+#include <Urasandesu/CppAnonym/SafeEnum.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H

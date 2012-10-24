@@ -14,15 +14,48 @@ namespace Urasandesu { namespace CppAnonym {
     public:
         typedef SafeEnum<EnumDef, EnumType> this_type;
 
-        SafeEnum();
-        SafeEnum(EnumType value);
-        EnumType Value() const;
-        bool operator ==(this_type const &other) const;
-        bool operator !=(this_type const &other) const;
-        bool operator <(this_type const &other) const;
-        bool operator <=(this_type const &other) const;
-        bool operator >(this_type const &other) const;
-        bool operator >=(this_type const &other) const;
+        SafeEnum() : 
+            m_value(EnumType())
+        { }
+        
+        SafeEnum(EnumType value) : 
+            m_value(value)
+        { }
+
+        EnumType Value() const
+        {
+            return m_value;
+        }
+        
+        bool operator ==(this_type const &other) const
+        {
+            return m_value == other.m_value; 
+        }
+        
+        bool operator !=(this_type const &other) const
+        {
+            return m_value != other.m_value; 
+        }
+        
+        bool operator <(this_type const &other) const
+        {
+            return m_value <  other.m_value; 
+        }
+        
+        bool operator <=(this_type const &other) const
+        {
+            return m_value <= other.m_value; 
+        }
+        
+        bool operator >(this_type const &other) const
+        {
+            return m_value >  other.m_value; 
+        }
+        
+        bool operator >=(this_type const &other) const
+        {
+            return m_value >= other.m_value; 
+        }
 
     private:
         EnumType m_value;
