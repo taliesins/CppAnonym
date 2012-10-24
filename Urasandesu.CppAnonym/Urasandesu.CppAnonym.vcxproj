@@ -491,7 +491,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hxx" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlimFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleter.hpp" />
