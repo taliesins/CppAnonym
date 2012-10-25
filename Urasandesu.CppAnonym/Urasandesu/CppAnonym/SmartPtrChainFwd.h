@@ -6,14 +6,14 @@ namespace Urasandesu { namespace CppAnonym {
 
     namespace SmartPtrChainDetail {
 
-        template<class Current, class ChainInfoSequence, class I, class IEnd>
+        template<class Current, class ChainInfoTypes, class I, class IEnd>
         class ATL_NO_VTABLE SmartPtrChainImplImpl;
 
         template<class Current>
         struct ExtractPreviousOrDefault;
 
         template<class Last, class T>
-        struct ExtractChainInfoSequenceOrDefault;
+        struct ExtractChainInfoTypesOrDefault;
 
         template<class Last, class Current>
         class FlattenChainInfoImpl;
@@ -24,11 +24,34 @@ namespace Urasandesu { namespace CppAnonym {
         template<class Current, class T>
         class IsMappable;
 
+        template<class ChainInfo, class T>
+        struct HasPreviousT;
+
+        template<class ChainInfoTypes, LONG N>
+        class ChainingPreviousTypeAtImpl;
+
+        template<class Current, class ChainInfoTypes, class ChainingPreviousType>
+        class ChainFromImpl;
+
+        template<class T>
+        struct Wrap;
+
+        template<class T>
+        struct Container;
+
+        template<class Chain, class T>
+        struct MapFirstAncestorSelector;
+
+        template<class Chain, class T>
+        struct MapFirstSelector;
+
+        template<class Current, class ChainInfoTypes>
+        class ATL_NO_VTABLE SmartPtrChainImpl;
+
     }   // namespace SmartPtrChainDetail
 
-
-    template<class Current, class ChainInfoSequence>
-    class ATL_NO_VTABLE SmartPtrChain;
+    template<class Current, class ChainInfoTypes>
+    struct ATL_NO_VTABLE SmartPtrChain;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
 
