@@ -5,7 +5,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
-#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
+#include <Urasandesu/CppAnonym/SimpleBlob.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_SimpleBlobTest.*

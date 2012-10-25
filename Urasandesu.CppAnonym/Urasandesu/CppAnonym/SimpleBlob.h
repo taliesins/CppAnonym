@@ -15,18 +15,59 @@ namespace Urasandesu { namespace CppAnonym {
     class SimpleBlob
     {
     public:
-        SimpleBlob();
+        SimpleBlob()
+        { }
 
         template<class T>
-        HRESULT Put(typename boost::call_traits<T>::param_type val);
+        HRESULT Put(typename boost::call_traits<T>::param_type val)
+        {
+            namespace mpl = boost::mpl;
+            using mpl::or_;
+            using namespace boost;            
+            
+            BOOST_MPL_ASSERT((or_<is_arithmetic<T>, is_pod<T>>));
+
+            return Put(&val, sizeof(T));
+        }
         
-        HRESULT Put(void const *p, SIZE_T size);
-        BYTE *Ptr();
-        BYTE const *Ptr() const;
-        SIZE_T Size() const;
-        SIZE_T Capacity() const;
-        BYTE& operator[] (SIZE_T ix);
-        BYTE const& operator[] (SIZE_T ix) const;
+        HRESULT Put(void const *p, SIZE_T size)
+        {
+            _ASSERT(0 <= size);
+            size_t lastSize = m_buffer.size();
+            m_buffer.resize(lastSize + size);
+            ::memcpy_s(&m_buffer[0] + lastSize, size, p, size);
+            return S_OK;
+        }
+        
+        BYTE *Ptr()
+        {
+            return &m_buffer[0];
+        }
+        
+        BYTE const *Ptr() const
+        {
+            return &m_buffer[0];
+        }
+        
+        SIZE_T Size() const
+        {
+            return m_buffer.size();
+        }
+        
+        SIZE_T Capacity() const
+        {
+            return m_buffer.capacity();
+        }
+        
+        BYTE& operator[] (SIZE_T ix)
+        {
+            return m_buffer[ix];
+        }
+        
+        BYTE const& operator[] (SIZE_T ix) const
+        {
+            return m_buffer[ix];
+        }
         
     private:
         typedef Collections::RapidVector<BYTE> ByteVector;        
