@@ -22,8 +22,8 @@
 //#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
-//#include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_H
+//#include <Urasandesu/CppAnonym/Utilities/EqualTo.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_METADATA_INTERFACES_METHODNAMEMETADATAAPIHOLDERLABEL_HPP

@@ -8,8 +8,8 @@
 #include <Urasandesu/CppAnonym/Traits/Predicatable.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP
-#include <Urasandesu/CppAnonym/Utilities/EqualTo.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_H
+#include <Urasandesu/CppAnonym/Utilities/EqualTo.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_EQUALITYCOMPARABLE_H
