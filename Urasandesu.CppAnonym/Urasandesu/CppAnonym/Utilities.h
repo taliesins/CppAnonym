@@ -66,8 +66,8 @@
 #include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H
+#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP

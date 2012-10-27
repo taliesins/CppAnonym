@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H
+#define URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_H
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.h>
@@ -18,8 +18,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTRFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtrFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTRFWD_H
+#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtrFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
@@ -40,12 +40,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             virtual void EnableDeletion() = 0;
             virtual void DisableDeletion() = 0;
 
-            inline friend void intrusive_ptr_add_ref(this_type *p)
+            friend void intrusive_ptr_add_ref(this_type *p)
             {
                 ++p->m_useCount;
             }
 
-            inline friend void intrusive_ptr_release(this_type *p)
+            friend void intrusive_ptr_release(this_type *p)
             {
                 if(--p->m_useCount == 0) 
                     p->Delete();
@@ -54,6 +54,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct SemiAutoPtrHolderImpl : 
             SemiAutoPtrHolder
@@ -103,12 +107,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             impl_deleter_type m_impld;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct MakeHolderImpl : 
             Traits::MakePointerHolderImpl<T, TD, ImplD, SemiAutoPtrHolderImpl>
         {
         };
 
+        
+        
+        
+        
         template<
             class T, 
             class Tag
@@ -118,6 +130,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         };
 
+        
+        
+        
+        
         template<class T>
         class SemiAutoPtrImpl
         {
@@ -166,7 +182,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_pHolder(SemiAutoPtrHolderAccessor<U>::Get(other))
             { }
 
-            inline SemiAutoPtrImpl &operator =(SemiAutoPtrImpl &other)
+            SemiAutoPtrImpl &operator =(SemiAutoPtrImpl &other)
             {
                 if (this != &other)
                 {
@@ -176,13 +192,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             template<class U>
-            inline SemiAutoPtrImpl &operator =(SemiAutoPtrImpl<U> &other)
+            SemiAutoPtrImpl &operator =(SemiAutoPtrImpl<U> &other)
             {
                 m_pHolder = SemiAutoPtrHolderAccessor<U>::Get(other);
                 return *this;
             }
 
-            inline operator bool() const
+            operator bool() const
             {
                 return m_pHolder;
             }
@@ -192,29 +208,29 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 return !m_pHolder;
             }
 
-            inline T *operator->()
+            T *operator ->()
             {
                 return Get();
             }
 
-            inline T *Get() const
+            T *Get() const
             {
                 return static_cast<T *>(m_pHolder->Pointer());
             }
 
-            inline T &operator *()
+            T &operator *()
             {
                 T *p = Get();
                 _ASSERTE(p != NULL);
                 return *p;
             }
 
-            inline void SetAuto()
+            void SetAuto()
             {
                 m_pHolder->EnableDeletion();
             }
 
-            inline void SetManual()
+            void SetManual()
             {
                 m_pHolder->DisableDeletion();
             }
@@ -224,6 +240,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             intrusive_ptr<holder_type> m_pHolder;
         };
 
+        
+        
+        
+        
         template<class U> 
         struct SemiAutoPtrHolderAccessor
         {
@@ -275,14 +295,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         }
 
-        inline SemiAutoPtr &operator =(SemiAutoPtr &other)
+        SemiAutoPtr &operator =(SemiAutoPtr &other)
         {
             base_type::operator =(other);
             return *this;
         }
 
         template<class U>
-        inline SemiAutoPtr &operator =(SemiAutoPtr<U> &other)
+        SemiAutoPtr &operator =(SemiAutoPtr<U> &other)
         {
             base_type::operator =(other);
             return *this;
@@ -291,4 +311,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H

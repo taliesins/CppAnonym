@@ -391,8 +391,8 @@ private:
 //#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HPP
-//#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HXX
+//#include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.hxx>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP

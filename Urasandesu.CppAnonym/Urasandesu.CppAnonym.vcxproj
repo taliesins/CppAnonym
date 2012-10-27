@@ -503,8 +503,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtrFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hxx" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp" />
