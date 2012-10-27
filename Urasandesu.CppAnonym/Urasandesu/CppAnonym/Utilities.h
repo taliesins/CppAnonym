@@ -42,8 +42,8 @@
 #include <Urasandesu/CppAnonym/Utilities/EqualTo.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/NullDeleter.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_H
+#include <Urasandesu/CppAnonym/Utilities/NullDeleter.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_H

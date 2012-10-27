@@ -1,9 +1,9 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_H
+#define URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_H
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETERFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/NullDeleterFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETERFWD_H
+#include <Urasandesu/CppAnonym/Utilities/NullDeleterFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
@@ -34,4 +34,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_NULLDELETER_H

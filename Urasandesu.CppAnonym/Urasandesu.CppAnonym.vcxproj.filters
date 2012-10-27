@@ -837,12 +837,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SmartHeapProviderFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
@@ -1240,6 +1234,12 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
