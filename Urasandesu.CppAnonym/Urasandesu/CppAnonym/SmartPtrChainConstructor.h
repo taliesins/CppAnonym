@@ -18,14 +18,23 @@ namespace Urasandesu { namespace CppAnonym {
             class T,
             class PersistableHeapProvider
         >
-        static Utilities::TempPtr<T> NewRootObject(PersistableHeapProvider &provider);
+        static Utilities::TempPtr<T> NewRootObject(PersistableHeapProvider &provider)
+        {
+            return provider.NewObject();
+        }
 
         template<
             class T,
             class Current,
             class PersistableHeapProvider
         >
-        static Utilities::TempPtr<T> NewObject(Current &current, PersistableHeapProvider &provider);
+        static Utilities::TempPtr<T> NewObject(Current &current, PersistableHeapProvider &provider)
+        {
+            typedef typename Current::current_type previous_type;
+            Utilities::TempPtr<T> pObj(provider.NewObject());
+            pObj->ChainFrom<previous_type>().SetPrevious(current);
+            return pObj;
+        }
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

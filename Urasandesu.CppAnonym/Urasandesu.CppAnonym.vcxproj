@@ -416,7 +416,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChain.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainConstructor.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainConstructor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainConstructorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainInfo.hpp" />
