@@ -62,8 +62,8 @@
 #include <Urasandesu/CppAnonym/PersistentInfo.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_HPP
-#include <Urasandesu/CppAnonym/PersistableHeapProvider.hpp>
+#ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_H
+#include <Urasandesu/CppAnonym/PersistableHeapProvider.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_H
