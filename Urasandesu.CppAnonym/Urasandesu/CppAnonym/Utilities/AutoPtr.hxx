@@ -2,8 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX
 #define URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {

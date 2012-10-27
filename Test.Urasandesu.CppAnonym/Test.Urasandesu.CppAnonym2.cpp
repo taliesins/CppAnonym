@@ -20,7 +20,7 @@
 //#endif
 
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
-//#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+//#include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 //#endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_H

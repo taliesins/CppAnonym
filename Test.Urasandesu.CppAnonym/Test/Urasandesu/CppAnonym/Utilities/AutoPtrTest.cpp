@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP

@@ -10,6 +10,10 @@
 #include <Urasandesu/CppAnonym/Traits/MakeHeapPointerHolderImpl.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
+#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTRFWD_H
 #include <Urasandesu/CppAnonym/Utilities/AutoPtrFwd.h>
 #endif
@@ -24,17 +28,34 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
             typedef AutoPtrHolder this_type;
 
-            AutoPtrHolder();
-            virtual ~AutoPtrHolder();
+            AutoPtrHolder() : 
+                m_useCount(0) 
+            { }
+
+            virtual ~AutoPtrHolder()
+            { }
+
             virtual void *Pointer() const = 0;
             virtual void Delete() = 0;
 
-            friend void intrusive_ptr_add_ref(this_type *p);
-            friend void intrusive_ptr_release(this_type *p);
+            friend void intrusive_ptr_add_ref(this_type *p)
+            {
+                ++p->m_useCount;
+            }
+
+            friend void intrusive_ptr_release(this_type *p)
+            {
+                if(--p->m_useCount == 0) 
+                    p->Delete();
+            }
 
             LONG m_useCount;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct AutoPtrHolderImpl : 
             AutoPtrHolder
@@ -45,22 +66,49 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef TD object_deleter_type;
             typedef ImplD impl_deleter_type; 
 
-            AutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld);
-            virtual ~AutoPtrHolderImpl();
-            virtual void *Pointer() const;
-            virtual void Delete();
+            AutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+                base_type(), 
+                m_p(p),
+                m_d(d),
+                m_impld(impld)
+            { 
+                _ASSERTE(p != NULL); 
+            }
+            
+            virtual ~AutoPtrHolderImpl()
+            {
+            }
+            
+            virtual void *Pointer() const
+            {
+                return m_p;
+            }
+            
+            virtual void Delete()
+            {
+                m_d(m_p);
+                m_impld(this);
+            }
 
             object_type *m_p;
             mutable object_deleter_type m_d;
             impl_deleter_type m_impld;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct MakeHolderImpl : 
             Traits::MakePointerHolderImpl<T, TD, ImplD, AutoPtrHolderImpl>
         {
         };
 
+        
+        
+        
+        
         template<
             class T, 
             class Tag
@@ -70,6 +118,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         };
 
+        
+        
+        
+        
         template<class T>
         class AutoPtrImpl
         {
@@ -89,33 +141,79 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             {
             };
 
-            AutoPtrImpl();
-            explicit AutoPtrImpl(T *p);
+            AutoPtrImpl() : 
+                m_pHolder()
+            { }
+            
+            explicit AutoPtrImpl(T *p) : 
+                m_pHolder(new AutoPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
+            { }
 
             template<class TD>
-            AutoPtrImpl(T *p, TD d);
+            AutoPtrImpl(T *p, TD d) : 
+                m_pHolder(new AutoPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
+            { }
 
             template<class TD, class ImplD>
-            AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder);
+            AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+                m_pHolder(pHolder)
+            {
+                _ASSERTE(pHolder != NULL); 
+            }
 
-            AutoPtrImpl(this_type const &other);
+            AutoPtrImpl(this_type const &other) : 
+                m_pHolder(other.m_pHolder)
+            { }
 
             template<class U>
-            AutoPtrImpl(AutoPtrImpl<U> const &other);
+            AutoPtrImpl(AutoPtrImpl<U> const &other) : 
+                m_pHolder(AutoPtrHolderAccessor<U>::Get(other))
+            { }
 
-            AutoPtrImpl &operator =(AutoPtrImpl &other);
+            AutoPtrImpl &operator =(AutoPtrImpl &other)
+            {
+                m_pHolder = other.m_pHolder;
+                return *this;
+            }
 
             template<class U>
-            AutoPtrImpl &operator =(AutoPtrImpl<U> &other);
+            AutoPtrImpl &operator =(AutoPtrImpl<U> &other)
+            {
+                m_pHolder = AutoPtrHolderAccessor<U>::Get(other);
+                return *this;
+            }
 
-            operator bool() const;
-            bool operator !() const;
-            T *operator ->();
-            T *Get() const;
-            T &operator *();
+            operator bool() const
+            {
+                return m_pHolder;
+            }
+            
+            bool operator !() const
+            {
+                return !m_pHolder;
+            }
+            
+            T *operator ->()
+            {
+                return Get();
+            }
+            
+            T *Get() const
+            {
+                return static_cast<T *>(m_pHolder->Pointer());
+            }
+            
+            T &operator *()
+            {
+                T *p = Get();
+                _ASSERTE(p != NULL);
+                return *p;
+            }
 
         protected:
-            AutoPtrImpl(intrusive_ptr<holder_type> const &pHolder);
+            AutoPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
+                m_pHolder(pHolder)
+            { }
 
         private:
             template<class U> friend struct AutoPtrHolderAccessor;
@@ -123,12 +221,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             intrusive_ptr<holder_type> m_pHolder;
         };
 
+        
+        
+        
+        
         template<class U> 
         struct AutoPtrHolderAccessor
         {
             typedef typename AutoPtrImpl<U>::holder_type holder_type;
 
-            static intrusive_ptr<holder_type> const &Get(AutoPtrImpl<U> const &p);
+            static intrusive_ptr<holder_type> const &Get(AutoPtrImpl<U> const &p)
+            {
+                return p.m_pHolder;
+            }
         };
 
     }   // namespace AutoPtrDetail {
@@ -140,24 +245,45 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         typedef AutoPtr<T> this_type;
         typedef AutoPtrDetail::AutoPtrImpl<T> base_type;
 
-        AutoPtr();
-        explicit AutoPtr(T *p);
+        AutoPtr() : 
+            base_type()
+        { }
+        
+        explicit AutoPtr(T *p) : 
+            base_type(p)
+        { }
 
         template<class TD>
-        AutoPtr(T *p, TD d);
+        AutoPtr(T *p, TD d) : 
+            base_type(p, d)
+        { }
 
         template<class TD, class ImplD>
-        explicit AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder);
+        explicit AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+            base_type(pHolder)
+        { }
 
-        AutoPtr(this_type const &other);
+        AutoPtr(this_type const &other) : 
+            base_type(other)
+        { }
 
         template<class U>
-        AutoPtr(AutoPtr<U> const &other);
+        AutoPtr(AutoPtr<U> const &other) : 
+            base_type(other)
+        { }
 
-        AutoPtr &operator =(AutoPtr &other);
+        AutoPtr &operator =(AutoPtr &other)
+        {
+            base_type::operator =(other);
+            return *this;
+        }
 
         template<class U>
-        AutoPtr &operator =(AutoPtr<U> &other);
+        AutoPtr &operator =(AutoPtr<U> &other)
+        {
+            base_type::operator =(other);
+            return *this;
+        }
 
     };
 

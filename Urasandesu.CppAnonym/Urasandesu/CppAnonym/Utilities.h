@@ -58,8 +58,8 @@
 #include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AutoPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
+#include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
