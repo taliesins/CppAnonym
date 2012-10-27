@@ -370,8 +370,8 @@ private:
 //#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
-//#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_H
+//#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_EQUALTO_HPP

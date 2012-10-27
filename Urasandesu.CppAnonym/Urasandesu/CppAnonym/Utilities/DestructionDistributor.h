@@ -1,16 +1,20 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_H
+#define URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_H
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTORFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/DestructionDistributorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTORFWD_H
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributorFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace DestructionDistributorDetail {
 
-        using namespace boost;
+        using boost::has_trivial_destructor;
+        using boost::integral_constant;
+        using boost::is_pointer;
+
+        typedef integral_constant<bool, false> False;
 
         template<class T, class IsPointer, class HasTrivialDestructor>
         struct DestructImpl
@@ -22,7 +26,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class T>
-        struct DestructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+        struct DestructImpl<T, False, False>
         {
             static void Destruct(void *p)
             {
@@ -54,4 +58,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_H

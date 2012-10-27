@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/DestructionDistributor.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_DestructionDistributorTest.*
