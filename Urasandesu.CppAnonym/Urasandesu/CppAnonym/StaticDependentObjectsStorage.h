@@ -27,19 +27,31 @@ namespace Urasandesu { namespace CppAnonym {
             typedef DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> host_type;
         
             template<class T>
-            static T &Object();
+            static T &Object()
+            {
+                typedef typename host_type::provider_of<T>::type provider_type;
+                provider_type &provider = Host().ProviderOf<T>();
+                return provider.Object();
+            }
 
         private:
             template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
             friend struct HostAccessor;
 
-            static host_type &Host();
+            static host_type &Host()
+            {
+                static host_type host;
+                return host;
+            }
         };
 
         template<class T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(class T)>
         struct HostAccessor
         {
-            static DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> &Host();
+            static DependentObjectsProvidersHost<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)> &Host()
+            {
+                return StaticDependentObjectsStorageImpl<T0, CPPANONYM_STATIC_DEPENDENT_OBJECTS_STORAGE_ENUM_SHIFTED_PARAMS(T)>::Host();
+            }
         };
 
     }   // namespace StaticDependentObjectsStorageDetail {

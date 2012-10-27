@@ -30,8 +30,8 @@
 #include <Urasandesu/CppAnonym/Utilities/VariantPtr.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_HPP
-#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DELETIONSWITCHABLEPOLICY_H
+#include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP

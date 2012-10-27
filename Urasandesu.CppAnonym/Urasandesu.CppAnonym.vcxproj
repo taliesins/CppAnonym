@@ -427,7 +427,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTraceFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming\ApiHolders\DefaultStrongNameInfoApiHolder.h" />
@@ -490,8 +489,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleter.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleterFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualTo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualToFwd.hpp" />

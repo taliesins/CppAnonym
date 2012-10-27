@@ -4,8 +4,8 @@
 #include <Urasandesu/CppAnonym/DependentObjectsProvider.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_StaticDependentObjectsStorageTest.*
@@ -79,6 +79,7 @@ namespace {
         using namespace _C317D758;
 
         typedef StaticDependentObjectsStorage<Counter0, Counter1, Counter2> MyStorage;
+        typedef StaticDependentObjectsStorageDetail::HostAccessor<Counter0, Counter1, Counter2> MyStorageHostAccessor;
         typedef MyStorage::host_type Host;
         Counter1 &counter1 = MyStorage::Object<Counter1>();
         Counter0 &counter0 = MyStorage::Object<Counter0>();
@@ -93,7 +94,7 @@ namespace {
         ASSERT_EQ(1, Counter1::Instance().Value());
         ASSERT_EQ(1, Counter2::Instance().Value());
 
-        StaticDependentObjectsStorageDetail::HostAccessor<Counter0, Counter1, Counter2>::Host().~Host();
+        MyStorageHostAccessor::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
         ASSERT_EQ(reinterpret_cast<int>(&counter2), OrderChecker::Instance().m_dtorOrder[0]);
@@ -102,6 +103,9 @@ namespace {
         ASSERT_EQ(0, Counter0::Instance().Value());
         ASSERT_EQ(0, Counter1::Instance().Value());
         ASSERT_EQ(0, Counter2::Instance().Value());
+        
+        // Restore static area to work the debug heap correctly.
+        new(&MyStorageHostAccessor::Host())Host();
     }
 
 }

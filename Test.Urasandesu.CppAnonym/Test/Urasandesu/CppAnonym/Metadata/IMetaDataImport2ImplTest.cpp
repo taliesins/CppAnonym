@@ -47,8 +47,6 @@ namespace {
         ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportDefaultObject::CreateInstance(&pMetaImp_)); 
         ATL::CComPtr<IMetaDataImport2> pMetaImp(pMetaImp_);
 
-        ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportDefaultObject::CreateInstance(&pMetaImp_)); 
-
         mdModule mdm = mdModuleNil;
         ASSERT_HRESULT_SUCCEEDED(pMetaImp->GetModuleFromScope(&mdm)); 
 
@@ -97,8 +95,6 @@ namespace {
         MyMetaDataImportSpecializedObject *pMetaImp_ = NULL;
         ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportSpecializedObject::CreateInstance(&pMetaImp_)); 
         ATL::CComPtr<IMetaDataImport2> pMetaImp(pMetaImp_);
-
-        ASSERT_HRESULT_SUCCEEDED(MyMetaDataImportSpecializedObject::CreateInstance(&pMetaImp_)); 
 
         mdModule mdm = mdModuleNil;
         ASSERT_HRESULT_SUCCEEDED(pMetaImp->GetModuleFromScope(&mdm)); 

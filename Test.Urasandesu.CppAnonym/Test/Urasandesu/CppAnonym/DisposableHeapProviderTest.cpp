@@ -24,8 +24,8 @@
 #include <Urasandesu/CppAnonym/DependentObjectsProvider.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_HPP
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.hpp>
+#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
+#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_DisposableHeapProviderTest.*
