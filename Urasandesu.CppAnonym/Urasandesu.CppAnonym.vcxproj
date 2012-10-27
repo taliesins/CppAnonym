@@ -488,8 +488,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlimFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleter.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleterFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleter.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\DefaultDeleterFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.hpp" />

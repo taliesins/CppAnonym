@@ -11,8 +11,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DeletionSwitchablePolicy.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
-#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_H
+#include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.h>
 #endif
 
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
