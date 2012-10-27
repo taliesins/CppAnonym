@@ -46,8 +46,8 @@
 #include <Urasandesu/CppAnonym/Utilities/NullDeleter.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_HPP
-#include <Urasandesu/CppAnonym/Utilities/Hash.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_H
+#include <Urasandesu/CppAnonym/Utilities/Hash.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP

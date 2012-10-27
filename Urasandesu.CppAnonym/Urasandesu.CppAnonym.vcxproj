@@ -494,9 +494,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualTo.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualToFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributor.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleter.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
