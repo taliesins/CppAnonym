@@ -509,8 +509,11 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocatorFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrVector.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrVectorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.hpp" />

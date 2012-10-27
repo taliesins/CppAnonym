@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_H
+#define URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_H
 
 #ifndef URASANDESU_CPPANONYM_SAFEENUM_H
 #include <Urasandesu/CppAnonym/SafeEnum.h>
@@ -84,4 +84,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTRFWD_H
