@@ -15,24 +15,40 @@ namespace Urasandesu { namespace CppAnonym {
             class Previous,
             class Current
         >
-        static T *MapFirstAncestor(Current &current);
+        static T *MapFirstAncestor(Current &current)
+        { 
+            Previous *pPrevious = NULL;
+            pPrevious = current.ChainFrom<Previous>().GetPrevious();
+            return pPrevious == NULL ? NULL : pPrevious->MapFirst<T>();
+        }
 
         template<
             class T,
             class Previous,
             class Current
         >
-        static T *MapAncestor(Current &current);
+        static T *MapAncestor(Current &current)
+        { 
+            Previous *pPrevious = NULL;
+            pPrevious = current.ChainFrom<Previous>().GetPrevious();
+            return pPrevious == NULL ? NULL : pPrevious->Map<T>();
+        }
 
         template<
             class Current
         >
-        static Current *MapFirst(Current &current);
+        static Current *MapFirst(Current &current)
+        {
+            return &current; 
+        }
 
         template<
             class Current
         >
-        static Current *Map(Current &current);
+        static Current *Map(Current &current)
+        { 
+            return &current;
+        }
     };
     
 }}  // namespace Urasandesu { namespace CppAnonym {

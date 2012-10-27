@@ -1131,9 +1131,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>

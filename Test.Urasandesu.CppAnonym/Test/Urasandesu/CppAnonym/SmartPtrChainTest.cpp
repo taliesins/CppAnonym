@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_HPP
-#include <Urasandesu/CppAnonym/SmartPtrChainMapper.hpp>
+#ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_H
+#include <Urasandesu/CppAnonym/SmartPtrChainMapper.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINCONSTRUCTOR_H
