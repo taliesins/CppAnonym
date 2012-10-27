@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_AssignationDistributorTest.*

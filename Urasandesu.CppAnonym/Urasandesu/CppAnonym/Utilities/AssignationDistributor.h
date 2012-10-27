@@ -19,13 +19,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         template<class T, class IsPointer, class HasTrivialAssign>
         struct AssignImpl
         {
-            static void Assign(void *pDst, void *pSrc);
+            static void Assign(void *pDst, void *pSrc)
+            {
+                if (pDst != pSrc)
+                    ::memcpy_s(pDst, sizeof(T), pSrc, sizeof(T));
+            }
         };
 
         template<class T>
         struct AssignImpl<T, False, False>
         {
-            static void Assign(void *pDst, void *pSrc);
+            static void Assign(void *pDst, void *pSrc)
+            {
+                if (pDst != pSrc)
+                    *reinterpret_cast<T *>(pDst) = *reinterpret_cast<T *>(pSrc);
+            }
         };
 
         template<class T>
@@ -35,7 +43,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef typename has_trivial_assign<T>::type has_trivial_assign_type;
             typedef AssignImpl<T, is_pointer_type, has_trivial_assign_type> impl_type;
             
-            static void Assign(void *pDst, void *pSrc);
+            static void Assign(void *pDst, void *pSrc)
+            {
+                impl_type::Assign(pDst, pSrc);
+            }
         };
 
     }   // namespace AssignationDistributorDetail {

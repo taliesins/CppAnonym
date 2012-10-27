@@ -480,7 +480,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hxx" />

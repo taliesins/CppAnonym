@@ -14,8 +14,8 @@
 #include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/AssignationDistributor.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DESTRUCTIONDISTRIBUTOR_HPP
