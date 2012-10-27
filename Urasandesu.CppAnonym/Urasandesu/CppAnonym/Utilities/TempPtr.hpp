@@ -353,7 +353,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 typedef typename PersistedHandlersAccessor<U>::persisted_handlers_type PersistedHandlers;
                 PersistedHandlers const &persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
                 m_persistedHandlers.reserve(persistedHandlers.size());
-                m_persistedHandlers.assign(persistedHandlers.begin(), persistedHandlers.end());
+                m_persistedHandlers.assign(persistedHandlers.cbegin(), persistedHandlers.cend());
                 
                 return *this;
             }

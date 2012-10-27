@@ -52,13 +52,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 identity<this_type >,
                 identity<RapidVectorIterator<Value const, T, RAPID_SIZE, Alloc> > >::type const_iterator_;
         public:
-            RapidVectorIterator();
+            RapidVectorIterator() : 
+                m_pThis(NULL), 
+                m_isEnd(false),
+                m_pBuf(NULL)
+            { }
+
             explicit RapidVectorIterator(RapidVectorImpl<T, RAPID_SIZE, Alloc> *pThis, bool isEnd = false);
 
             template<class OtherValue, class OtherT, DWORD OTHER_RAPID_SIZE, class OtherAlloc>
             RapidVectorIterator(RapidVectorIterator<OtherValue, OtherT, OTHER_RAPID_SIZE, OtherAlloc> const &other);
 
-            operator const_iterator_() const;
+            operator const_iterator_() const
+            {
+                return const_iterator_(*this);
+            }
 
         private:
             friend class iterator_core_access;
@@ -69,11 +77,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
             friend class RapidVectorIterator;
 
-            void increment();
-            void advance(difference_type n);
-            bool equal(this_type const& other) const;
-            reference dereference() const;
-            difference_type distance_to(this_type const& other) const;
+            void increment()
+            { 
+                if (m_pThis->RunAsRapid())
+                    ++m_pBuf;
+                else
+                    ++m_i;
+            }
+            
+            void advance(difference_type n)
+            { 
+                if (m_pThis->RunAsRapid())
+                    m_pBuf += n;
+                else
+                    m_i += n;
+            }
+            
+            bool equal(this_type const& other) const
+            {
+                if (m_pThis->RunAsRapid())
+                    return m_pBuf == other.m_pBuf;
+                else
+                    return m_i == other.m_i;
+            }
+            
+            reference dereference() const
+            { 
+                return m_pThis->RunAsRapid() ? *m_pBuf : *m_i; 
+            }
+            
+            difference_type distance_to(this_type const& other) const
+            {
+                if (m_pThis->RunAsRapid())
+                    return static_cast<difference_type>(other.m_pBuf - m_pBuf);
+                else
+                    return other.m_i - m_i;
+            }
             
             RapidVectorImpl<T, RAPID_SIZE, Alloc> *m_pThis;
             bool m_isEnd;
@@ -134,8 +173,22 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             typedef typename facade::has_raw_value_type_trivial_destructor has_raw_value_type_trivial_destructor;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
 
-            RapidVectorImpl();
-            ~RapidVectorImpl();
+            RapidVectorImpl() : 
+                m_pVec(NULL), 
+                m_size(0), 
+                m_capacity(RAPID_SIZE)
+            { 
+                ConstructRapidBuf(RapidBuf());
+            }
+
+            ~RapidVectorImpl()
+            {
+                if (RunAsRapid())
+                    DestructRapidBuf(RapidBuf(), m_size);
+                else
+                    DestroyVec(); 
+            }
+            
             RapidVectorImpl(this_type const &other);
         
             void reserve(size_type count);
@@ -146,25 +199,93 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             void assign(Iterator first, Iterator last);
 
             iterator erase(const_iterator first, const_iterator last);
-            this_type &operator =(this_type &other);
-            const_reference operator[](size_type pos) const;
-            reference operator[](size_type pos);
-	        iterator begin();
-            const_iterator begin() const;
-            iterator end();
-            const_iterator end() const;
-            size_type size() const;
-            size_type capacity() const;
-            bool empty() const;
+            
+            this_type &operator =(this_type &other)
+            {
+                if (this != &other)
+                {
+                    reserve(other.size());
+                    assign(other.begin(), other.end());
+                }
+                return *this;
+            }
+            
+            const_reference operator [](size_type pos) const
+            {
+                return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
+            }
+            
+            reference operator [](size_type pos)
+            {
+                return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
+            }
+	        
+            iterator begin()
+	        {
+	            return iterator(this);
+	        }
+
+            const_iterator begin() const
+            {
+                return cbegin();
+            }
+
+            const_iterator cbegin() const
+            {
+                return const_iterator(const_cast<this_type *>(this));
+            }
+            
+            iterator end()
+            {
+                return iterator(this, true);
+            }
+            
+            const_iterator end() const
+            {
+                return cend();
+            }
+            
+            const_iterator cend() const
+            {
+                return const_iterator(const_cast<this_type *>(this), true);
+            }
+            
+            size_type size() const
+            {
+                return m_size;
+            }
+            
+            size_type capacity() const
+            {
+                return m_capacity;
+            }
+            
+            bool empty() const
+            {
+                return m_size == 0;
+            }
+            
             void resize(size_type newSize);
-            bool RunAsRapid() const;
+            
+            bool RunAsRapid() const
+            {
+                return m_capacity <= RAPID_SIZE;
+            }
 
         private:
             template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
 	        friend class RapidVectorIterator;
 
-            T *RapidBuf();
-            T const *RapidBuf() const;
+            T *RapidBuf()
+            {
+                return reinterpret_cast<T *>(m_pRapidBuf);
+            }
+            
+            T const *RapidBuf() const
+            {
+                return const_cast<this_type *>(this)->RapidBuf();
+            }
+
             static void CopyRapidBuf(T *pDstRapidBuf, T const *pSrcRapidBuf, size_type size);
             static void MoveRapidBuf(T *pDstRapidBuf, T *pSrcRapidBuf, size_type size);
             static void AssignVec(std::vector<T, Alloc> *&pVec, size_type newSize, T *pRapidBuf, size_type size);
@@ -194,7 +315,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             typedef typename facade::raw_value_type raw_value_type;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
             
-            static void Copy(pointer pDstRapidBuf, const_pointer pSrcRapidBuf, size_type size);
+            static void Copy(pointer pDstRapidBuf, const_pointer pSrcRapidBuf, size_type size)
+            {
+                ::memcpy_s(pDstRapidBuf, size * sizeof(raw_value_type), pSrcRapidBuf, size * sizeof(raw_value_type));
+            }
         };
 
         template<class Facade>
@@ -207,7 +331,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             typedef typename facade::raw_value_type raw_value_type;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
             
-            static void Copy(pointer pDstRapidBuf, const_pointer pSrcRapidBuf, size_type size);
+            static void Copy(pointer pDstRapidBuf, const_pointer pSrcRapidBuf, size_type size)
+            {
+                for (raw_value_type const *i = pSrcRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
+                    *(--pDstRapidBuf + size) = *i_end;
+            }
         };
 
 
@@ -246,7 +374,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	        typedef typename facade::size_type size_type;
             typedef typename facade::internal_vector_type internal_vector_type;
 
-            static void Assign(pointer pRapidBuf, size_type newSize, internal_vector_type const *pVec);
+            static void Assign(pointer pRapidBuf, size_type newSize, internal_vector_type const *pVec)
+            {
+                ::memcpy_s(pRapidBuf, newSize * sizeof(raw_value_type), &(*pVec)[0], newSize * sizeof(raw_value_type));
+            }
         };
 
         template<class Facade>
@@ -271,7 +402,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	        typedef typename facade::pointer pointer;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
 
-            static inline void Construct(pointer pRapidBuf);
+            static void Construct(pointer pRapidBuf)
+            {
+                // Do nothing. Because T has trivial constructor in this case.
+            }
         };
 
         template<class Facade>
@@ -281,7 +415,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	        typedef typename facade::pointer pointer;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
 
-            static void Construct(pointer pRapidBuf);
+            static void Construct(pointer pRapidBuf)
+            {
+                ::ZeroMemory(pRapidBuf, RAPID_BUF_SIZE * sizeof(UINT64));
+            }
         };
 
 
@@ -297,7 +434,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	        typedef typename facade::value_type value_type;
             typedef typename facade::raw_value_type raw_value_type;
 
-            static void Destruct(pointer pRapidBuf, size_type size);
+            static void Destruct(pointer pRapidBuf, size_type size)
+            {
+                // Do nothing. Because T has trivial constructor in this case.
+            }
         };
 
         template<class Facade>
@@ -309,7 +449,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 	        typedef typename facade::value_type value_type;
             typedef typename facade::raw_value_type raw_value_type;
             
-            static void Destruct(pointer pRapidBuf, size_type size);
+            static void Destruct(pointer pRapidBuf, size_type size)
+            {
+                for (value_type *i = pRapidBuf - 1, *i_end = i + size; i != i_end; --i_end)
+                    (*i_end).~raw_value_type();
+                
+                ::ZeroMemory(pRapidBuf, size * sizeof(raw_value_type));
+            }
         };
         
     }   // namespace RapidVectorDetail
@@ -321,9 +467,16 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         typedef RapidVector<T, RAPID_SIZE, Alloc> this_type;
         typedef RapidVectorDetail::RapidVectorImpl<T, RAPID_SIZE, Alloc> base_type;
 
-        RapidVector();
-        ~RapidVector();
-        RapidVector(this_type const &other);
+        RapidVector() : 
+            base_type()
+        { }
+        
+        ~RapidVector()
+        { }
+        
+        RapidVector(this_type const &other) : 
+            base_type(other)
+        { }
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
