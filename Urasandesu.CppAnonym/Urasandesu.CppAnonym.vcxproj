@@ -506,8 +506,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hxx" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtrFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocatorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />

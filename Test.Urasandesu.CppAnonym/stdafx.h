@@ -379,8 +379,8 @@ private:
 //#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.h>
 //#endif
 //
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_HPP
-//#include <Urasandesu/CppAnonym/Utilities/StackAllocator.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_STACKALLOCATOR_H
+//#include <Urasandesu/CppAnonym/Utilities/StackAllocator.h>
 //#endif
 //
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX
