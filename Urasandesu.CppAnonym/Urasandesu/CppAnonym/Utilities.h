@@ -6,8 +6,8 @@
 #include <Urasandesu/CppAnonym/Utilities/UtilitiesDependsOn.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
-#include <Urasandesu/CppAnonym/Utilities/AnyPtr.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_H
+#include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_HPP

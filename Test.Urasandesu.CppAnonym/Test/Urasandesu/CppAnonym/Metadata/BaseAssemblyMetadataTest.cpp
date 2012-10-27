@@ -60,7 +60,7 @@
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_H
 #include <Urasandesu/CppAnonym/Utilities/AnyPtr.h>
 #endif
 

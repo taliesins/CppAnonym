@@ -478,7 +478,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\TraitsDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AnyPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.hpp" />
