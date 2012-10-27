@@ -22,8 +22,8 @@
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP

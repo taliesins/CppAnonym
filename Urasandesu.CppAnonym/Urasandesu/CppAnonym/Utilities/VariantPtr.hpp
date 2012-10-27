@@ -10,8 +10,8 @@
 #include <Urasandesu/CppAnonym/Traits/MaxSizeType.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ASSIGNATIONDISTRIBUTOR_H

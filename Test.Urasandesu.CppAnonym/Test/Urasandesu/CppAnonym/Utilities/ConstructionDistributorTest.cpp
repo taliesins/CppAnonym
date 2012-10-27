@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
-#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributor.h>
 #endif
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_ConstructionDistributorTest.*

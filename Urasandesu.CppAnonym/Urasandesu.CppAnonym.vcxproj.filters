@@ -1017,12 +1017,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\IDisposableFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.hpp">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.hpp">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
@@ -1243,6 +1237,12 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlimFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributorFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\ConstructionDistributor.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

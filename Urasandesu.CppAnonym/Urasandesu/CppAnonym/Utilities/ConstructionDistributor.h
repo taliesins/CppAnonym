@@ -1,21 +1,27 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
+#define URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_REMOVECONST_H
 #include <Urasandesu/CppAnonym/Traits/RemoveConst.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTORFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributorFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTORFWD_H
+#include <Urasandesu/CppAnonym/Utilities/ConstructionDistributorFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace ConstructionDistributorDetail {
 
-        using namespace boost;
         using namespace Urasandesu::CppAnonym::Traits;
+        using boost::has_trivial_constructor;
+        using boost::integral_constant;
+        using boost::is_pointer;
+        using boost::is_same;
+        using boost::remove_reference;
+
+        typedef integral_constant<bool, false> False;
 
         template<class T, class IsPointer, class HasTrivialConstructor>
         struct ConstructImpl
@@ -34,7 +40,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         };
 
         template<class T>
-        struct ConstructImpl<T, integral_constant<bool, false>, integral_constant<bool, false> >
+        struct ConstructImpl<T, False, False>
         {
             static void Construct(void *p)
             {
@@ -77,4 +83,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_CONSTRUCTIONDISTRIBUTOR_H
