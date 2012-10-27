@@ -1,9 +1,9 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_H
+#define URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_H
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETERFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/HeapDeleterFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETERFWD_H
+#include <Urasandesu/CppAnonym/Utilities/HeapDeleterFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
@@ -29,4 +29,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_H

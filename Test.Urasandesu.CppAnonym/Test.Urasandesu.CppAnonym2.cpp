@@ -15,8 +15,8 @@
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.h>
 #endif
 
-//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_HPP
-//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.hpp>
+//#ifndef URASANDESU_CPPANONYM_UTILITIES_HEAPDELETER_H
+//#include <Urasandesu/CppAnonym/Utilities/HeapDeleter.h>
 //#endif
 
 //#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTO_PTR_HPP
