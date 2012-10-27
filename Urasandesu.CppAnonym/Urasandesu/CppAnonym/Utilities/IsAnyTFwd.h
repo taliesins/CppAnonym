@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_H
+#define URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_H
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
@@ -9,4 +9,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_H

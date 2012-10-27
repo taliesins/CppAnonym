@@ -1,13 +1,13 @@
 ﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
-#define URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_H
+#define URASANDESU_CPPANONYM_UTILITIES_ISANYT_H
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_H
 #include <Urasandesu/CppAnonym/Traits/Predicatable.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_HPP
-#include <Urasandesu/CppAnonym/Utilities/IsAnyTFwd.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYTFWD_H
+#include <Urasandesu/CppAnonym/Utilities/IsAnyTFwd.h>
 #endif
 
 namespace Urasandesu { namespace CppAnonym { namespace Utilities {
@@ -24,4 +24,4 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_H

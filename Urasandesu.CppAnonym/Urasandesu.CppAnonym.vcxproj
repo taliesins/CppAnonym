@@ -499,8 +499,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HashFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleter.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\HeapDeleterFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.hpp" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyT.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\IsAnyTFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hpp" />

@@ -222,6 +222,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EqualToTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\IsAnyTTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\SemiAutoPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\TempPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\VariantPtrTest.cpp" />

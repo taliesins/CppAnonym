@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_HPP
-#include <Urasandesu/CppAnonym/Utilities/IsAnyT.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_ISANYT_H
+#include <Urasandesu/CppAnonym/Utilities/IsAnyT.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_PREDICATABLE_H

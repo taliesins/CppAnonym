@@ -4,10 +4,10 @@
 #include <Urasandesu/CppAnonym/Utilities/Hash.h>
 #endif
 
-// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_HashTest.*
+// Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Utilities_HashTest.*
 namespace {
 
-    TEST(Urasandesu_CppAnonym_HashTest, Test_01)
+    TEST(Urasandesu_CppAnonym_Utilities_HashTest, Test_01)
     {
         namespace fs = boost::filesystem;
         using namespace Urasandesu::CppAnonym::Utilities;
