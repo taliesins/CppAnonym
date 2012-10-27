@@ -14,26 +14,15 @@
 #include <Urasandesu/CppAnonym/CppAnonymDependsOn.h>
 #endif
 
-#include <boost/timer.hpp>
-#include <gtest/gtest.h>
-
+#include <boost/assign/std/list.hpp>
+#include <boost/assign/std/vector.hpp>
+#include <boost/detail/atomic_count.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/range/algorithm_ext.hpp>
-
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/filter_view.hpp>
-#include <boost/mpl/for_each.hpp>
-#include <boost/mpl/insert_range.hpp>
-#include <boost/mpl/reverse.hpp>
-#include <boost/mpl/transform_view.hpp>
-
-#include <boost/intrusive_ptr.hpp>
-#include <boost/detail/atomic_count.hpp>
-#include <boost/unordered_set.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/variant.hpp>
+#include <boost/timer.hpp>
+#include <gtest/gtest.h>
 
 #define CPPANONYM_TEST(test_case_name, test_name) \
     class GTEST_TEST_CLASS_NAME_(test_case_name, test_name); \

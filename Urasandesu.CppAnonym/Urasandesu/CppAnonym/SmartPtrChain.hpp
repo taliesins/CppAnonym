@@ -46,11 +46,15 @@ namespace Urasandesu { namespace CppAnonym {
         template<class T>
         T *SmartPtrChainImpl<Current, ChainInfoTypes>::MapFirstAncestor() const
         {
-            typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            using mpl::_;
+            using mpl::filter_view;
+            using mpl::for_each;
+
+            typedef filter_view<chain_info_types, IsMappable<_, T> >::type MappableTypes;
             
             Container<T> container;
             MapFirstAncestorSelector<this_type, T> selector(*this, container);
-            mpl::for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
+            for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, _) > >(selector);
             return container.m_p;
         }
 
@@ -58,11 +62,15 @@ namespace Urasandesu { namespace CppAnonym {
         template<class T>
         T *SmartPtrChainImpl<Current, ChainInfoTypes>::MapFirst() const
         {
-            typedef mpl::filter_view<chain_info_types, IsMappable<mpl::_, T> >::type MappableTypes;
+            using mpl::_;
+            using mpl::filter_view;
+            using mpl::for_each;
+
+            typedef filter_view<chain_info_types, IsMappable<_, T> >::type MappableTypes;
             
             Container<T> container;
             MapFirstSelector<this_type, T> selector(*this, container);
-            mpl::for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, mpl::_) > >(selector);
+            for_each<MappableTypes, Wrap<CPP_ANONYM_GET_MEMBER_TYPE(ChainInfoPrevious, _) > >(selector);
             return container.m_p;
         }
 

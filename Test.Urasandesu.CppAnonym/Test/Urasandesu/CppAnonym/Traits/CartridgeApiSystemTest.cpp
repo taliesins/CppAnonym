@@ -9,19 +9,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     namespace FlattenDetail {
 
         namespace mpl = boost::mpl;
+        using mpl::_1;
+        using mpl::_2;
+        using mpl::back_inserter;
+        using mpl::bind;
+        using mpl::copy;
+        using mpl::fold;
+        using mpl::vector;
 
         struct Flatter
         {
             template<class F, class State, class Value>
             struct apply : 
-                mpl::copy<typename mpl::apply<F, Value>::type, mpl::back_inserter<State> >
+                copy<typename mpl::apply<F, Value>::type, back_inserter<State> >
             {
             };
         };
 
         template<class Sequence, class F>
         struct FlattenImpl : 
-            mpl::fold<Sequence, mpl::vector<>, mpl::bind<Flatter, F, mpl::_1, mpl::_2> >
+            fold<Sequence, vector<>, bind<Flatter, F, _1, _2> >
         {
         };
     

@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
 #define URASANDESU_CPPANONYM_COLLECTIONS_ITERABLE_H
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_HASH_H
+#include <Urasandesu/CppAnonym/Utilities/Hash.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     template<class InputIterator1, class InputIterator2>

@@ -263,5 +263,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\ReplaceTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\IterableTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
