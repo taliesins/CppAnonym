@@ -267,7 +267,9 @@ namespace Mock9254318F {
 
     namespace Detail {
 
-        using namespace boost::mpl;
+        namespace mpl = boost::mpl;
+        using mpl::map;
+        using mpl::pair;
         using namespace Urasandesu::CppAnonym::Fusion;
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
         using namespace Urasandesu::CppAnonym::Metadata;

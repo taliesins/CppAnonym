@@ -12,7 +12,14 @@ namespace Urasandesu { namespace CppAnonym {
         
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
+        using mpl::_;
+        using mpl::_1;
+        using mpl::_2;
+        using mpl::filter_view;
+        using mpl::fold;
+        using mpl::not_;
+        using mpl::void_;
+
 
         template<class ReversedProvidingTypes, class I, class IEnd>
         class ATL_NO_VTABLE DependentObjectsProviderImplImpl : 

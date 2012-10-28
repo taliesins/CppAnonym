@@ -10,7 +10,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Fusion { namespace ApiHol
     
     namespace DefaultAssemblyInfoApiHolderDetail {
         
-        using namespace boost::mpl;
+        using boost::mpl::map;
+        using boost::mpl::pair;
         using namespace Urasandesu::CppAnonym::Fusion::Interfaces;
 
         struct DefaultAssemblyInfoApiHolderImpl

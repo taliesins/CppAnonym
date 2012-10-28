@@ -419,7 +419,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapper.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SmartPtrChainMapperFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StackFrame.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\StackFrameFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StackTrace.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\StackTraceFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />

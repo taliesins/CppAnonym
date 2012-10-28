@@ -26,7 +26,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting { namespace ApiHo
 
     namespace DefaultRuntimeHostApiHolderDetail {
         
-        using namespace boost::mpl;
+        using boost::mpl::map;
+        using boost::mpl::pair;
         using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
         using namespace Urasandesu::CppAnonym::Metadata;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;

@@ -2,11 +2,14 @@
 #ifndef URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 #define URASANDESU_CPPANONYM_CPPANONYMEXCEPTION_H
 
+#ifndef URASANDESU_CPPANONYM_STACKTRACEFWD_H
+#include <Urasandesu/CppAnonym/StackTraceFwd.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
-    class StackTrace;
-
-    typedef boost::error_info<struct tag_stack_trace, StackTrace*> ThrowStackTrace;
+    typedef boost::error_info<struct tag_stack_trace, StackTrace *> ThrowStackTrace;
+    template class boost::error_info<struct tag_stack_trace, StackTrace *>;
 
     class CppAnonymException : 
         public virtual boost::exception, 
@@ -28,6 +31,8 @@ namespace Urasandesu { namespace CppAnonym {
         void CaptureStackTrace(CppAnonymException *this_);
 
     };
+
+    template class boost::shared_ptr<StackTrace>;
 
 }}  // namespace Urasandesu { namespace CppAnonym {
 

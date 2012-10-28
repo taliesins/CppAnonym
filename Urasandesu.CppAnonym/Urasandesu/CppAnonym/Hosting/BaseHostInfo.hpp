@@ -175,6 +175,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 
         mutable boost::unordered_map<std::wstring, SIZE_T> m_versionToIndex;
     };
+    
+    template class BaseHostInfo<>;
 
 
 
@@ -226,6 +228,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Hosting {
     private:
         host_info_type *m_pHostInfo;
     };
+    
+    template class BaseHostInfoPersistedHandler<>;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Hosting {
 

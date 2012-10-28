@@ -11,7 +11,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Traits {
     namespace MaxSizeTypeDetail {
 
         namespace mpl = boost::mpl;
-        using namespace boost::mpl;
+        using mpl::_1;
+        using mpl::deref;
+        using mpl::max_element;
+        using mpl::sizeof_;
+        using mpl::transform_view;
 
         template<class Types>
         class MaxSizeTypeImpl

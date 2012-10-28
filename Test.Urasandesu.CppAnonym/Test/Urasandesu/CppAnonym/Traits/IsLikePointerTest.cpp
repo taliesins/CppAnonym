@@ -35,8 +35,8 @@ namespace {
     TEST(Urasandesu_CppAnonym_Traits_IsLikePointerTest, Test_01)
     {
         namespace mpl = boost::mpl;
+        using mpl::not_;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
         using namespace _FFBD97C5;
 

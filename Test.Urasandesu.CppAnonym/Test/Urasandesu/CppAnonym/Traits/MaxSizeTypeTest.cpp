@@ -10,8 +10,8 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_Traits_MaxSizeTypeTest, Test_01)
     {
         namespace mpl = boost::mpl;
+        using mpl::vector;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
         BOOST_MPL_ASSERT((is_same<MaxSizeType<vector<int, double> >::type, double>)); 

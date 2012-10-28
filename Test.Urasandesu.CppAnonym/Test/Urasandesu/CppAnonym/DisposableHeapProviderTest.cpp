@@ -225,8 +225,8 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_DisposableHeapProviderTest, Test_02)
     {
         namespace mpl = boost::mpl;
+        using mpl::not_;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace _731D234E;
         
         BOOST_MPL_ASSERT((Piyo::is_provided_object<Piyo>));
@@ -244,7 +244,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace _731D234E;
         
         BOOST_MPL_ASSERT((is_same<Puyo::first_provider_of<Piyo>::type, PuyoFacade::nested_piyo_provider_type>));

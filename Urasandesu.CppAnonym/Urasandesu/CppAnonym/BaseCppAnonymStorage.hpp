@@ -43,6 +43,8 @@ namespace Urasandesu { namespace CppAnonym {
     {
     };
 
+    template class BaseCppAnonymStorage<>;
+
 }}   // namespace Urasandesu { namespace CppAnonym {
 
 #endif  // URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HPP

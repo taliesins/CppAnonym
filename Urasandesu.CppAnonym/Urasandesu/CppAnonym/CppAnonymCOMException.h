@@ -9,7 +9,10 @@
 namespace Urasandesu { namespace CppAnonym {
 
     typedef boost::error_info<struct tag_hresult, std::string> ThrowHResult;
+    template class boost::error_info<struct tag_hresult, std::string>;
+    
     typedef boost::error_info<struct tag_com_error, _com_error> ThrowCOMError;
+    template class boost::error_info<struct tag_com_error, _com_error>;
     
     struct CppAnonymCOMException : CppAnonymException
     {

@@ -26,7 +26,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Metadata { namespace ApiH
 
     namespace DefaultMetadataDispenserApiHolderDetail {
         
-        using namespace boost::mpl;
+        using boost::mpl::map;
+        using boost::mpl::pair;
         using namespace Urasandesu::CppAnonym::Metadata::Interfaces;
 
         struct DefaultMetadataDispenserApiHolderImpl

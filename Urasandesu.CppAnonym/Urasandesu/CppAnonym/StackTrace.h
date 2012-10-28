@@ -2,9 +2,15 @@
 #ifndef URASANDESU_CPPANONYM_STACKTRACE_H
 #define URASANDESU_CPPANONYM_STACKTRACE_H
 
-namespace Urasandesu { namespace CppAnonym {
+#ifndef URASANDESU_CPPANONYM_STACKFRAME_H
+#include <Urasandesu/CppAnonym/StackFrame.h>
+#endif
 
-    class StackFrame;
+#ifndef URASANDESU_CPPANONYM_STACKTRACEFWD_H
+#include <Urasandesu/CppAnonym/StackTraceFwd.h>
+#endif
+
+namespace Urasandesu { namespace CppAnonym {
 
     class StackTrace
     {
@@ -23,6 +29,8 @@ namespace Urasandesu { namespace CppAnonym {
         HANDLE m_hProcess;
         boost::ptr_vector<StackFrame> m_frames;
     };
+
+    template class boost::ptr_vector<StackFrame>;
 
 }}  // namespace Urasandesu { namespace CppAnonym {
 

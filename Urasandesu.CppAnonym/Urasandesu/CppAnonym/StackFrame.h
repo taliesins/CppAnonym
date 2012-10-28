@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_STACKFRAME_H
 #define URASANDESU_CPPANONYM_STACKFRAME_H
 
+#ifndef URASANDESU_CPPANONYM_STACKFRAMEFWD_H
+#include <Urasandesu/CppAnonym/StackFrameFwd.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
     class StackFrame

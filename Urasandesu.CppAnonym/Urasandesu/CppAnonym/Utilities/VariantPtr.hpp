@@ -31,8 +31,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     namespace VariantPtrDetail {
 
         namespace mpl = boost::mpl;
+        using mpl::_;
+        using mpl::_1;
+        using mpl::_2;
+        using mpl::and_;
+        using mpl::apply;
+        using mpl::filter_view;
+        using mpl::fold;
+        using mpl::not_;
+        using mpl::or_;
+        using mpl::true_;
+        using mpl::void_;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
 
         template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>

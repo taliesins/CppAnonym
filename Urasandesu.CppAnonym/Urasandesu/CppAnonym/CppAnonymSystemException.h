@@ -9,6 +9,7 @@
 namespace Urasandesu { namespace CppAnonym {
 
     typedef boost::error_info<struct tag_errno, errno_t> ThrowErrNo;
+    template class boost::error_info<struct tag_errno, errno_t>;
     
     struct CppAnonymSystemException : CppAnonymException
     {

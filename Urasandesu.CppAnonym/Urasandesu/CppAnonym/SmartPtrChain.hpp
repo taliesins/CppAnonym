@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
 #define URASANDESU_CPPANONYM_SMARTPTRCHAIN_HPP
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
+#include <Urasandesu/CppAnonym/Utilities/TempPtr.hpp>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINFWD_HPP
 #include <Urasandesu/CppAnonym/SmartPtrChainFwd.hpp>
 #endif
@@ -108,6 +112,12 @@ namespace Urasandesu { namespace CppAnonym {
             noncopyable
         {
         };
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(ChainInfoPrevious, previous_type);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(ChainInfoPrevious, previous_type);
+
+        CPP_ANONYM_DECLARE_HAS_MEMBER_TYPE(SmartPtrChainChainInfos, chain_info_types);
+        CPP_ANONYM_DECLARE_GET_MEMBER_TYPE(SmartPtrChainChainInfos, chain_info_types);
 
         template<class Current>
         struct ExtractPreviousOrDefault : 

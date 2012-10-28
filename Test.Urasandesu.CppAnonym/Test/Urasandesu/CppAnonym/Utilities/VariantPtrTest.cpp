@@ -40,7 +40,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -60,7 +59,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -78,7 +76,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -105,7 +102,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -130,7 +126,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -167,7 +162,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -202,7 +196,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -232,7 +225,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
 
@@ -260,7 +252,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;
@@ -309,7 +300,6 @@ namespace {
     {
         namespace mpl = boost::mpl;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Traits;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _AE9B0ABB;

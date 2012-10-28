@@ -23,8 +23,14 @@ namespace Urasandesu { namespace CppAnonym {
     namespace PersistableHeapProviderDetail {
 
         namespace mpl = boost::mpl;
+        using mpl::_;
+        using mpl::_1;
+        using mpl::_2;
+        using mpl::filter_view;
+        using mpl::fold;
+        using mpl::not_;
+        using mpl::void_;
         using namespace boost;
-        using namespace boost::mpl;
         using namespace Urasandesu::CppAnonym::Utilities;
 
         template<class I>

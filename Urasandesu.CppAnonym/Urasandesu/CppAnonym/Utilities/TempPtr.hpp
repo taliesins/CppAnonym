@@ -2,6 +2,10 @@
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_HPP
 
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTSUPPORTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotSupportedException.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_DEFAULTDELETER_HPP
 #include <Urasandesu/CppAnonym/Utilities/DefaultDeleter.hpp>
 #endif

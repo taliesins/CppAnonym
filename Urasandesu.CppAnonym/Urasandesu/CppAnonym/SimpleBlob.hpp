@@ -23,8 +23,9 @@ namespace Urasandesu { namespace CppAnonym {
         template<class T>
         inline HRESULT Put(typename boost::call_traits<T>::param_type val)
         {
+            namespace mpl = boost::mpl;
+            using mpl::or_;
             using namespace boost;            
-            using namespace boost::mpl;
             
             BOOST_MPL_ASSERT((or_<is_arithmetic<T>, is_pod<T>>));
 
