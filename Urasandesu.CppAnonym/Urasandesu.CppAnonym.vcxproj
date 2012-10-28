@@ -161,6 +161,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackTrace.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dllmain.h" />
@@ -514,7 +515,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrVector.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\TempPtrVectorFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.hpp" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfo.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\TypeInfoFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\UtilitiesDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.hpp" />

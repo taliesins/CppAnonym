@@ -73,6 +73,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct TempPtrHolderImpl : 
             TempPtrHolder
@@ -117,12 +121,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             impl_deleter_type m_impld;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct MakeHolderImpl : 
             MakePointerHolderImpl<T, TD, ImplD, TempPtrHolderImpl>
         {
         };
 
+        
+        
+        
+        
         template<
             class T, 
             class Tag
@@ -132,6 +144,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         };
 
+        
+        
+        
+        
         struct PersistedHandlerHolder
         {
             typedef PersistedHandlerHolder this_type;
@@ -155,6 +171,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
+        
+        
+        
+        
         template<class Handler, class ImplD>
         struct PersistedHandlerHolderImpl : 
             PersistedHandlerHolder
@@ -204,12 +224,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             ImplD m_impld;
         };
 
+        
+        
+        
+        
         template<class Handler, class ImplD>
         struct MakePersistedHandlerHolderImpl : 
             MakeValueHolderImpl<Handler, ImplD, PersistedHandlerHolderImpl>
         {
         };
 
+        
+        
+        
+        
         template<
             class Handler, 
             class Tag
@@ -219,6 +247,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         };
 
+        
+        
+        
+        
         template<class T>
         class TempPtrImpl
         {

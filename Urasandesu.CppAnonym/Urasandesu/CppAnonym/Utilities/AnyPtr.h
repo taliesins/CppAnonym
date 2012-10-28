@@ -57,6 +57,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             LONG m_useCount;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct AnyPtrHolderImpl : 
             AnyPtrHolder
@@ -101,12 +105,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             impl_deleter_type m_impld;
         };
 
+        
+        
+        
+        
         template<class T, class TD, class ImplD>
         struct MakeHolderImpl : 
             Traits::MakePointerHolderImpl<T, TD, ImplD, AnyPtrHolderImpl>
         {
         };
 
+        
+        
+        
+        
         template<
             class T, 
             class Tag
@@ -116,6 +128,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         };
 
+        
+        
+        
+        
         class AnyPtrImpl
         {
         public:
