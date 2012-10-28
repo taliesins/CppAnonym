@@ -19,12 +19,12 @@ namespace {
             Hoge() : m_useCount(0), m_value(0) { }
             Hoge(INT value) : m_useCount(0), m_value(value) { }
 
-            inline friend void intrusive_ptr_add_ref(this_type *p)
+            friend void intrusive_ptr_add_ref(this_type *p)
             {
                 ++p->m_useCount;
             }
 
-            inline friend void intrusive_ptr_release(this_type *p)
+            friend void intrusive_ptr_release(this_type *p)
             {
                 if(--p->m_useCount == 0) 
                     delete p;
