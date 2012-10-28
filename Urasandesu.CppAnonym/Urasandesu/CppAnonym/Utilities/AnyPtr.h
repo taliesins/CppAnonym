@@ -98,7 +98,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             AnyPtrImpl(AnyPtrHolderImpl<T, TD, ImplD> *pHolder);
 
             AnyPtrImpl(AnyPtrImpl const &other);
-            AnyPtrImpl &operator=(AnyPtrImpl &other);
+            AnyPtrImpl &operator =(AnyPtrImpl &other);
             bool IsEmpty() const;
             
             template<class Pointer>
@@ -133,7 +133,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         explicit AnyPtr(AnyPtrDetail::AnyPtrHolderImpl<T, TD, ImplD> *pHolder);
 
         AnyPtr(AnyPtr const &other);
-        AnyPtr &operator=(AnyPtr &other);
+        AnyPtr &operator =(AnyPtr &other);
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {

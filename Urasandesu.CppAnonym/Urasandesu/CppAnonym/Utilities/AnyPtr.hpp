@@ -10,11 +10,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
     namespace AnyPtrDetail {
 
-        AnyPtrHolder::AnyPtrHolder() : 
+        inline AnyPtrHolder::AnyPtrHolder() : 
             m_useCount(0) 
         { }
         
-        AnyPtrHolder::~AnyPtrHolder() 
+        inline AnyPtrHolder::~AnyPtrHolder() 
         { }
 
         inline void intrusive_ptr_add_ref(AnyPtrHolder::this_type *p)
@@ -29,8 +29,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         
+        
+        
+        
         template<class T, class TD, class ImplD>
-        AnyPtrHolderImpl<T, TD, ImplD>::AnyPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+        inline AnyPtrHolderImpl<T, TD, ImplD>::AnyPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
             base_type(), 
             m_p(p),
             m_d(d),
@@ -40,55 +43,59 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         template<class T, class TD, class ImplD>
-        AnyPtrHolderImpl<T, TD, ImplD>::~AnyPtrHolderImpl()
+        inline AnyPtrHolderImpl<T, TD, ImplD>::~AnyPtrHolderImpl()
         {
         }
 
         template<class T, class TD, class ImplD>
-        void *AnyPtrHolderImpl<T, TD, ImplD>::Pointer() const
+        inline void *AnyPtrHolderImpl<T, TD, ImplD>::Pointer() const
         {
             return const_cast<typename Traits::RemoveConst<object_type *>::type>(m_p);
         }
 
         template<class T, class TD, class ImplD>
-        void AnyPtrHolderImpl<T, TD, ImplD>::Delete()
+        inline void AnyPtrHolderImpl<T, TD, ImplD>::Delete()
         {
             m_d(m_p);
             m_impld(this);
         }
 
         template<class T, class TD, class ImplD>
-        std::type_info const &AnyPtrHolderImpl<T, TD, ImplD>::GetType() const 
+        inline std::type_info const &AnyPtrHolderImpl<T, TD, ImplD>::GetType() const 
         { 
             return typeid(object_type *); 
         }
 
-        AnyPtrImpl::AnyPtrImpl() : 
+        
+        
+        
+        
+        inline AnyPtrImpl::AnyPtrImpl() : 
             m_pHolder()
         { }
 
         template<class T>
-        AnyPtrImpl::AnyPtrImpl(T *p) : 
+        inline AnyPtrImpl::AnyPtrImpl(T *p) : 
             m_pHolder(new AnyPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
         { }
 
         template<class T, class TD>
-        AnyPtrImpl::AnyPtrImpl(T *p, TD d) : 
+        inline AnyPtrImpl::AnyPtrImpl(T *p, TD d) : 
             m_pHolder(new AnyPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
         { }
 
         template<class T, class TD, class ImplD>
-        AnyPtrImpl::AnyPtrImpl(AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+        inline AnyPtrImpl::AnyPtrImpl(AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
             m_pHolder(pHolder)
         {
             _ASSERTE(pHolder != NULL); 
         }
 
-        AnyPtrImpl::AnyPtrImpl(AnyPtrImpl const &other) : 
+        inline AnyPtrImpl::AnyPtrImpl(AnyPtrImpl const &other) : 
             m_pHolder(other.m_pHolder)
         { }
 
-        inline AnyPtrImpl &AnyPtrImpl::operator=(AnyPtrImpl &other)
+        inline AnyPtrImpl &AnyPtrImpl::operator =(AnyPtrImpl &other)
         {
             m_pHolder = other.m_pHolder;
             return *this;
@@ -112,38 +119,42 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             return Is<Pointer>() ? static_cast<Pointer>(m_pHolder->Pointer()) : NULL;
         }
 
-        AnyPtrImpl::AnyPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
+        inline AnyPtrImpl::AnyPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
             m_pHolder(pHolder)
         { }
 
     }   // namespace AnyPtrDetail {
 
-    AnyPtr::AnyPtr() : 
+    
+    
+    
+    
+    inline AnyPtr::AnyPtr() : 
         base_type()
     { }
 
     template<class T>
-    AnyPtr::AnyPtr(T *p) : 
+    inline AnyPtr::AnyPtr(T *p) : 
         base_type(p)
     { }
 
     template<class T, class TD>
-    AnyPtr::AnyPtr(T *p, TD d) : 
+    inline AnyPtr::AnyPtr(T *p, TD d) : 
         base_type(p, d)
     { }
 
     template<class T, class TD, class ImplD>
-    AnyPtr::AnyPtr(AnyPtrDetail::AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+    inline AnyPtr::AnyPtr(AnyPtrDetail::AnyPtrHolderImpl<T, TD, ImplD> *pHolder) : 
         base_type(pHolder)
     { }
 
-    AnyPtr::AnyPtr(AnyPtr const &other) : 
+    inline AnyPtr::AnyPtr(AnyPtr const &other) : 
         base_type(other)
     { }
 
-    inline AnyPtr &AnyPtr::operator=(AnyPtr &other)
+    inline AnyPtr &AnyPtr::operator =(AnyPtr &other)
     {
-        base_type::operator=(other);
+        base_type::operator =(other);
         return *this;
     }
 

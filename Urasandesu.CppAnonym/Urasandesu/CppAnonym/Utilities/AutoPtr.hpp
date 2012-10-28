@@ -37,7 +37,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         
         
         template<class T, class TD, class ImplD>
-        AutoPtrHolderImpl<T, TD, ImplD>::AutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
+        inline AutoPtrHolderImpl<T, TD, ImplD>::AutoPtrHolderImpl(object_type *p, object_deleter_type d, impl_deleter_type impld) : 
             base_type(), 
             m_p(p),
             m_d(d),
@@ -47,18 +47,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         template<class T, class TD, class ImplD>
-        AutoPtrHolderImpl<T, TD, ImplD>::~AutoPtrHolderImpl()
+        inline AutoPtrHolderImpl<T, TD, ImplD>::~AutoPtrHolderImpl()
         {
         }
 
         template<class T, class TD, class ImplD>
-        void *AutoPtrHolderImpl<T, TD, ImplD>::Pointer() const
+        inline void *AutoPtrHolderImpl<T, TD, ImplD>::Pointer() const
         {
             return m_p;
         }
 
         template<class T, class TD, class ImplD>
-        void AutoPtrHolderImpl<T, TD, ImplD>::Delete()
+        inline void AutoPtrHolderImpl<T, TD, ImplD>::Delete()
         {
             m_d(m_p);
             m_impld(this);
@@ -70,37 +70,37 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
         
         template<class T>
-        AutoPtrImpl<T>::AutoPtrImpl() : 
+        inline AutoPtrImpl<T>::AutoPtrImpl() : 
             m_pHolder()
         { }
 
         template<class T>
-        AutoPtrImpl<T>::AutoPtrImpl(T *p) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(T *p) : 
             m_pHolder(new AutoPtrHolderImpl<T, DefaultDeleter, DefaultDeleter>(p, DefaultDeleter(), DefaultDeleter()))
         { }
 
         template<class T>
         template<class TD>
-        AutoPtrImpl<T>::AutoPtrImpl(T *p, TD d) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(T *p, TD d) : 
             m_pHolder(new AutoPtrHolderImpl<T, TD, DefaultDeleter>(p, d, DefaultDeleter()))
         { }
 
         template<class T>
         template<class TD, class ImplD>
-        AutoPtrImpl<T>::AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
             m_pHolder(pHolder)
         {
             _ASSERTE(pHolder != NULL); 
         }
 
         template<class T>
-        AutoPtrImpl<T>::AutoPtrImpl(this_type const &other) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(this_type const &other) : 
             m_pHolder(other.m_pHolder)
         { }
 
         template<class T>
         template<class U>
-        AutoPtrImpl<T>::AutoPtrImpl(AutoPtrImpl<U> const &other) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(AutoPtrImpl<U> const &other) : 
             m_pHolder(AutoPtrHolderAccessor<U>::Get(other))
         { }
 
@@ -126,7 +126,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         template<class T>
-        bool AutoPtrImpl<T>::operator !() const
+        inline bool AutoPtrImpl<T>::operator !() const
         {
             return !m_pHolder;
         }
@@ -152,7 +152,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         template<class T>
-        AutoPtrImpl<T>::AutoPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
+        inline AutoPtrImpl<T>::AutoPtrImpl(intrusive_ptr<holder_type> const &pHolder) : 
             m_pHolder(pHolder)
         { }
 
@@ -162,7 +162,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         
         
         template<class U> 
-        intrusive_ptr<typename AutoPtrHolderAccessor<U>::holder_type> const &
+        inline intrusive_ptr<typename AutoPtrHolderAccessor<U>::holder_type> const &
             AutoPtrHolderAccessor<U>::Get(AutoPtrImpl<U> const &p)
         {
             return p.m_pHolder;
@@ -175,35 +175,35 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     
     
     template<class T>
-    AutoPtr<T>::AutoPtr() : 
+    inline AutoPtr<T>::AutoPtr() : 
         base_type()
     { }
 
     template<class T>
-    AutoPtr<T>::AutoPtr(T *p) : 
+    inline AutoPtr<T>::AutoPtr(T *p) : 
         base_type(p)
     { }
 
     template<class T>
     template<class TD>
-    AutoPtr<T>::AutoPtr(T *p, TD d) : 
+    inline AutoPtr<T>::AutoPtr(T *p, TD d) : 
         base_type(p, d)
     { }
 
     template<class T>
     template<class TD, class ImplD>
-    AutoPtr<T>::AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
+    inline AutoPtr<T>::AutoPtr(AutoPtrDetail::AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
         base_type(pHolder)
     { }
 
     template<class T>
-    AutoPtr<T>::AutoPtr(this_type const &other) : 
+    inline AutoPtr<T>::AutoPtr(this_type const &other) : 
         base_type(other)
     { }
 
     template<class T>
     template<class U>
-    AutoPtr<T>::AutoPtr(AutoPtr<U> const &other) : 
+    inline AutoPtr<T>::AutoPtr(AutoPtr<U> const &other) : 
         base_type(other)
     { }
 
