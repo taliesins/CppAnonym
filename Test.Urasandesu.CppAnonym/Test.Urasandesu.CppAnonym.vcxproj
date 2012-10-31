@@ -100,6 +100,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymException.cpp" />
@@ -110,27 +111,13 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodes.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodes.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp" />

@@ -1,6 +1,5 @@
-﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
-#define URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
+﻿
+#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_DEPENDENTOBJECTSPROVIDER_H
 #include <Urasandesu/CppAnonym/DependentObjectsProvider.h>
@@ -19,5 +18,3 @@ namespace Urasandesu { namespace CppAnonym {
     template class BaseCppAnonymStorage<>;
 
 }}   // namespace Urasandesu { namespace CppAnonym {
-
-#endif  // URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX

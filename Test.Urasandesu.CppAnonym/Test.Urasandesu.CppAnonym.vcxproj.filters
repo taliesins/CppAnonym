@@ -278,5 +278,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

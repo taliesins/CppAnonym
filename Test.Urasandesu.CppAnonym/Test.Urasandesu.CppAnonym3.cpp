@@ -76,6 +76,14 @@ namespace Urasandesu { namespace CppAnonym { namespace ApiHolders {
 #include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_APIHOLDERS_DEFAULTCPPANONYMSTORAGEAPIHOLDER_H
+#include <Urasandesu/CppAnonym/ApiHolders/DefaultCppAnonymStorageApiHolder.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_H
+#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.h>
+#endif
+
 namespace Urasandesu { namespace CppAnonym {
 
 }}   // namespace Urasandesu { namespace CppAnonym {
@@ -159,6 +167,8 @@ namespace {
         using namespace Urasandesu::CppAnonym::Hosting;
 
         HostInfo &hostInfo = CppAnonymStorage::Object<HostInfo>();
+        std::cout << "Hoge!!" << std::endl;
+        std::cout << "Hoge!!" << std::endl;
     }
 
 }

@@ -196,6 +196,9 @@
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -1091,9 +1094,6 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hxx">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Traits</Filter>

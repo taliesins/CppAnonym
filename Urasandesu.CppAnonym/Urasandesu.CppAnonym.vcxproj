@@ -138,6 +138,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymException.cpp" />
@@ -173,7 +174,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolder.h" />
     <ClInclude Include="Urasandesu\CppAnonym\ApiHolders\DefaultCppAnonymStorageApiHolderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorage.hxx" />
     <ClInclude Include="Urasandesu\CppAnonym\BaseCppAnonymStorageFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Collections\CollectionsDependsOn.h" />
