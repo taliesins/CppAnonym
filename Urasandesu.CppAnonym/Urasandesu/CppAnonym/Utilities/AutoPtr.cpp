@@ -1,6 +1,5 @@
-﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX
-#define URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX
+﻿
+#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
@@ -15,5 +14,3 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     }   // namespace AutoPtrDetail {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
-
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_HXX

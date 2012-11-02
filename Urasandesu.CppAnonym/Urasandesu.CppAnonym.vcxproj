@@ -162,6 +162,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackTrace.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Utilities\AutoPtr.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -482,7 +483,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.hxx" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlimFwd.h" />
