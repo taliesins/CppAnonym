@@ -284,5 +284,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\AutoPtr.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

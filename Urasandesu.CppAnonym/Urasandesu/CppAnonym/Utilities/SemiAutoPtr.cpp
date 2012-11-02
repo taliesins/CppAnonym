@@ -1,6 +1,5 @@
-﻿#pragma once
-#ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HXX
-#define URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HXX
+﻿
+#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H
 #include <Urasandesu/CppAnonym/Utilities/SemiAutoPtr.h>
@@ -15,5 +14,3 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     }   // namespace SemiAutoPtrDetail {
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
-
-#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_HXX

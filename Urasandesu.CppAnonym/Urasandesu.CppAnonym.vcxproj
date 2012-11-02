@@ -163,6 +163,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackTrace.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\AutoPtr.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -505,7 +506,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleter.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\NullDeleterFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.hxx" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\StackAllocator.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtrFwd.h" />
