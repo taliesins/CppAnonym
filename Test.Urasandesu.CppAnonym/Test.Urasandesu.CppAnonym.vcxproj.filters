@@ -28,18 +28,6 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym">
       <UniqueIdentifier>{d4e9692f-424e-40af-940a-6693a5f4bf30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Fusion">
-      <UniqueIdentifier>{7c6bfdef-abcc-43c1-a6c2-f7e3e13c3f92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Hosting">
-      <UniqueIdentifier>{9a161422-f848-4421-a221-95ef438d0e3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Fusion">
-      <UniqueIdentifier>{524b781c-8852-46f1-8b14-5bb95d76e323}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Metadata">
-      <UniqueIdentifier>{c5bc9a57-d840-4f4d-8d05-123f529063b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{84c2002a-7124-4e90-bc10-13cf55fea226}</UniqueIdentifier>
     </Filter>
@@ -48,15 +36,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Collections">
       <UniqueIdentifier>{58e658ec-5729-40d9-b781-8368496aeec1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming">
-      <UniqueIdentifier>{09cf71cf-4a49-4ec3-8d4c-12cf8c45dfd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Metadata">
-      <UniqueIdentifier>{0dc08d80-cfdd-4128-993a-4f85a933be98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders">
-      <UniqueIdentifier>{3c5fe958-00c3-4ea0-9d45-b9eaf1290c86}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{b664fc94-88f8-4bd3-acc7-e4073180de1f}</UniqueIdentifier>
@@ -70,6 +49,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionCouner.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AtomicCounter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCounter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CounterWithAction1.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CounterWithValue1.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CppAnonymTest.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SurvivalCounter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,18 +125,6 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Collections</Filter>
     </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
@@ -146,62 +134,14 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\IMetaDataImport2ImplTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Hosting</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Hosting</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Fusion</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\StrongNaming</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\HashTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EqualToTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodes.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Fusion\ApiHolders</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\MetadataTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseILGeneratorTest.cpp">
-      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Test.Urasandesu.CppAnonym2.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymObjectDisposedException.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
@@ -211,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\SimpleDisposable.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AnyPtrTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
@@ -257,9 +194,6 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\VariantPtrTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Test.Urasandesu.CppAnonym3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\SmartPtrChainTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
     </ClCompile>
@@ -277,9 +211,6 @@
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\AutoPtr.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>

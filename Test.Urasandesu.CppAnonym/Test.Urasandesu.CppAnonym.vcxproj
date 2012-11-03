@@ -63,7 +63,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\boost_1_48_0\stage\lib;C:\gtest-1.6.0\msvc\gtest\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtestd.lib;gtest_maind.lib;corguids.lib;Dbghelp.lib;mscoree.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtestd.lib;gtest_maind.lib;corguids.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkStatus>
       </LinkStatus>
     </Link>
@@ -96,11 +96,17 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionCouner.h" />
+    <ClInclude Include="AtomicCounter.h" />
+    <ClInclude Include="BasicCounter.h" />
+    <ClInclude Include="CounterWithAction1.h" />
+    <ClInclude Include="CounterWithValue1.h" />
+    <ClInclude Include="CppAnonymTest.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SurvivalCounter.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\BaseCppAnonymStorage.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymArgumentException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymCOMException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymException.cpp" />
@@ -110,14 +116,6 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymObjectDisposedException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Fusion\ApiHolders\DefaultFusionInfoApiHolder.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\ControlFlow.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\MetadataSpecialValues.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCode.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpcodeKind.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OpCodes.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\OperandParam.cpp" />
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Metadata\StackBehaviour.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp" />
@@ -129,59 +127,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.Urasandesu.CppAnonym.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Test.Urasandesu.CppAnonym2.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test.Urasandesu.CppAnonym3.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\IterableTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymExceptionTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\DisposableHeapProviderTest.cpp" />
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Fusion\BaseFusionInfoTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\HeapProviderTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseHostInfoTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Hosting\BaseRuntimeHostTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\MetadataTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseAssemblyMetadataTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseILGeneratorTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataDispenserTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseMetadataInfoTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\BaseTypeMetadataTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\Metadata\IMetaDataImport2ImplTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\PersistableHeapProviderTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleBlobTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\SimpleHeapProviderTest.cpp" />
@@ -190,14 +145,6 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\SmartPtrChainTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StackTraceTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\StaticDependentObjectsStorageTest.cpp" />
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameInfoTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Test\Urasandesu\CppAnonym\StrongNaming\BaseStrongNameKeyTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\CartridgeApiSystemTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\IsLikePointerTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\MaxSizeTypeTest.cpp" />

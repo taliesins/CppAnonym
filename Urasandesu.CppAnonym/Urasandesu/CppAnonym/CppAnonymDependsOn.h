@@ -30,6 +30,7 @@
 #include <boost/exception_ptr.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/mpl/advance.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/assert.hpp>
@@ -54,18 +55,15 @@
 #include <boost/preprocessor/seq/for_each_i.hpp>
 #include <boost/preprocessor/seq/seq.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/scope_exit.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/system/windows_error.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/unordered_map.hpp>
-#include <corhlpr.h>    // This header needs the definitions. You must include the 
-                        // implementation file, named corhlpr.cpp at only once. 
-                        // In this time, I include it in stdafx.cpp.
 #include <comdef.h>
 #include <tlhelp32.h>
 #include <Dbghelp.h>
-#include <fusion.h>
-#include <mscoree.h>
 
 namespace Urasandesu { namespace CppAnonym {
 
@@ -73,18 +71,6 @@ namespace Urasandesu { namespace CppAnonym {
 
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_COLLECTIONSDEPENDSON_H
 #include <Urasandesu/CppAnonym/Collections/CollectionsDependsOn.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_METADATADEPENDSON_H
-#include <Urasandesu/CppAnonym/Metadata/MetadataDependsOn.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_PROFILING_PROFILINGDEPENDSON_H
-#include <Urasandesu/CppAnonym/Profiling/ProfilingDependsOn.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STRONGNAMING_STRONGNAMINGDEPENDSON_H
-#include <Urasandesu/CppAnonym/StrongNaming/StrongNamingDependsOn.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_TRAITS_TRAITSDEPENDSON_H

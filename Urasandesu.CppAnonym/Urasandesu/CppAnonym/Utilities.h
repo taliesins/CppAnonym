@@ -62,8 +62,8 @@
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_HPP
-#include <Urasandesu/CppAnonym/Utilities/TypeInfo.hpp>
+#ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_H
+#include <Urasandesu/CppAnonym/Utilities/TypeInfo.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_SEMIAUTOPTR_H

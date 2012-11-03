@@ -6,18 +6,6 @@
 #include <Urasandesu/CppAnonym/CppAnonymDependsOn.h>
 #endif
 
-#ifndef URASANDESU_CPPANONYM_FUSION_H
-#include <Urasandesu/CppAnonym/Fusion.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_METADATA_H
-#include <Urasandesu/CppAnonym/Metadata.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_PROFILING_H
-#include <Urasandesu/CppAnonym/Profiling.h>
-#endif
-
 #ifndef URASANDESU_CPPANONYM_TRAITS_H
 #include <Urasandesu/CppAnonym/Traits.h>
 #endif
@@ -71,7 +59,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEBLOB_H
-#include <Urasandesu/CppAnonym/SimpleBlob.hpp>
+#include <Urasandesu/CppAnonym/SimpleBlob.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_H
@@ -103,7 +91,7 @@
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSINGINFO_H
-#include <Urasandesu/CppAnonym/DisposingInfo.hpp>
+#include <Urasandesu/CppAnonym/DisposingInfo.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DISPOSABLEHEAPPROVIDER_H
@@ -160,10 +148,6 @@
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMINVALIDOPERATIONEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymInvalidOperationException.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_HXX
-#include <Urasandesu/CppAnonym/BaseCppAnonymStorage.hxx>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H
