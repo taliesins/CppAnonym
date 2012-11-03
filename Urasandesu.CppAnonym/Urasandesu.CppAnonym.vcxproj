@@ -192,6 +192,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageApiAt.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageApiAtFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageFacade.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageFacadeFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymSystemException.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h" />

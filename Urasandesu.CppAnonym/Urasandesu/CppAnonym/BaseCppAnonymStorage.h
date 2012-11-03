@@ -2,20 +2,8 @@
 #ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_H
 #define URASANDESU_CPPANONYM_BASECPPANONYMSTORAGE_H
 
-#ifndef URASANDESU_CPPANONYM_TRAITS_CARTRIDGEAPISYSTEM_H
-#include <Urasandesu/CppAnonym/Traits/CartridgeApiSystem.h>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_INTERFACES_CPPANONYMSTORAGEAPIHOLDERLABEL_HPP
-#include <Urasandesu/CppAnonym/Interfaces/CppAnonymStorageApiHolderLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_HOSTING_INTERFACES_HOSTINFOLABEL_HPP
-#include <Urasandesu/CppAnonym/Hosting/Interfaces/HostInfoLabel.hpp>
-#endif
-
-#ifndef URASANDESU_CPPANONYM_STATICDEPENDENTOBJECTSSTORAGE_H
-#include <Urasandesu/CppAnonym/StaticDependentObjectsStorage.h>
+#ifndef URASANDESU_CPPANONYM_CPPANONYMSTORAGEDETAIL_CPPANONYMSTORAGEFACADE_H
+#include <Urasandesu/CppAnonym/CppAnonymStorageDetail/CppAnonymStorageFacade.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_BASECPPANONYMSTORAGEFWD_H
@@ -23,29 +11,6 @@
 #endif
 
 namespace Urasandesu { namespace CppAnonym {
-
-    template<class ApiCartridgesHolder, class ApiLabel>
-    struct CppAnonymStorageApiAt : 
-        Traits::ApiAt<ApiCartridgesHolder, CppAnonym::Interfaces::CppAnonymStorageApiHolderLabel, ApiLabel>
-    {
-    };
-
-    namespace CppAnonymStorageDetail {
-
-        namespace mpl = boost::mpl;
-        using namespace Urasandesu::CppAnonym::Hosting;
-        using namespace Urasandesu::CppAnonym::Hosting::Interfaces;
-
-        template<
-            class CppAnonymStorageApiHolder
-        >    
-        struct CppAnonymStorageFacade
-        {
-            typedef typename CppAnonymStorageApiAt<CppAnonymStorageApiHolder, HostInfoLabel>::type host_info_type;
-            typedef StaticDependentObjectsStorage<host_info_type> base_type;
-        };
-
-    }   // namespace CppAnonymStorageDetail {
 
     template<
         class CppAnonymStorageApiHolder

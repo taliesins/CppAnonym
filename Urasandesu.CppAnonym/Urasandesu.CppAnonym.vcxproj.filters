@@ -107,6 +107,9 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{5e24e9e6-bbd3-4ca0-a841-565632716079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\CppAnonymStorageDetail">
+      <UniqueIdentifier>{ffd04df7-5713-4fe4-9f52-a9062ffa3316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1268,6 +1271,18 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageApiAt.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\CppAnonymStorageDetail</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageApiAtFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\CppAnonymStorageDetail</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageFacade.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\CppAnonymStorageDetail</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\CppAnonymStorageDetail\CppAnonymStorageFacadeFwd.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\CppAnonymStorageDetail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
