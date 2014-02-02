@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: SimpleHeap.hpp
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #define URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 
@@ -11,7 +41,7 @@ namespace Urasandesu { namespace CppAnonym {
     namespace SimpleHeapDetail {
 
         template<class T>
-        T *SimpleHeapImpl<T, VeryQuickHeapButMustUseSubscriptOperator>::New()
+        T *SimpleHeapImpl<T, VeryQuickHeapButMustAccessThroughEachMethod>::New()
         {
             T *pObj = NULL;
             m_array.resize(m_array.size() + 1);
@@ -22,27 +52,23 @@ namespace Urasandesu { namespace CppAnonym {
             }
             pObj = m_pCurrent;
             ++m_pCurrent;
-#pragma warning(push)
-#pragma warning(disable: 4345)
             new(pObj)T();
-#pragma warning(pop)
             return pObj;
         }
 
         template<class T>
-        void SimpleHeapImpl<T, VeryQuickHeapButMustUseSubscriptOperator>::Delete(T *pObj)
+        void SimpleHeapImpl<T, VeryQuickHeapButMustAccessThroughEachMethod>::Delete(T *pObj)
         {
             if (m_array.empty())
                 return;
 
-            if ((*this)[Size() - 1] == pObj)
+            if (&(*this)[size() - 1] == pObj)
             {
                 DeleteLastCore();
                 return;
             }
 
-            typedef TArray::iterator Iterator;
-            Iterator result = std::remove_if(m_array.begin(), m_array.end(), ReferenceEqualTo<T>(pObj));
+            iterator result = std::remove_if(m_array.begin(), m_array.end(), ReferenceEqualTo<T>(pObj));
             if (result != m_array.end())
                 m_array.erase(result, m_array.end());
         }
@@ -68,10 +94,7 @@ namespace Urasandesu { namespace CppAnonym {
         inline T *SimpleHeapImpl<T, QuickHeap>::New()
         {
             T *pObj = reinterpret_cast<T *>(m_pool.malloc());
-#pragma warning(push)
-#pragma warning(disable: 4345)
             new(pObj)T();
-#pragma warning(pop)
             m_array.push_back(pObj);
             return pObj;
         }
@@ -82,18 +105,17 @@ namespace Urasandesu { namespace CppAnonym {
             if (m_array.empty())
                 return;
 
-            if ((*this)[Size() - 1] == pObj)
+            if (&(*this)[size() - 1] == pObj)
             {
                 DeleteLastCore();
                 return;
             }
 
-            typedef TArray::iterator TIterator;
-            TIterator obj = std::remove_if(m_array.begin(), m_array.end(), PointerEqualTo<T>(pObj));
+            internal_iterator obj = std::remove_if(m_array.begin(), m_array.end(), PointerEqualTo<T>(pObj));
             if (obj != m_array.end())
             {
                 // This loop is performed only one time.
-                for (TIterator i = obj, i_end = m_array.end(); i != i_end; ++i)
+                for (internal_iterator i = obj, i_end = m_array.end(); i != i_end; ++i)
                 {
                     Utilities::DestructionDistributor<T>::Destruct(*i);
                     m_pool.free(*i);
@@ -107,16 +129,13 @@ namespace Urasandesu { namespace CppAnonym {
         
         
         template<class T>
-        inline T *SimpleHeapImpl<T, QuickHeapWithoutSubscriptOperator>::New()
+        inline T *SimpleHeapImpl<T, QuickHeapWithoutRandomAccess>::New()
         {
             T *pObj = reinterpret_cast<T *>(m_pool.malloc());
 #ifdef DEBUG_SIMPLEHEAP
             std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructing..." << std::endl;
 #endif
-#pragma warning(push)
-#pragma warning(disable: 4345)
             new(pObj)T();
-#pragma warning(pop)
 #ifdef DEBUG_SIMPLEHEAP
             std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is constructed !!" << std::endl;
 #endif
@@ -125,7 +144,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class T>
         template<class A1>
-        inline T *SimpleHeapImpl<T, QuickHeapWithoutSubscriptOperator>::New(A1 arg1)
+        inline T *SimpleHeapImpl<T, QuickHeapWithoutRandomAccess>::New(A1 arg1)
         {
             T *pObj = reinterpret_cast<T *>(m_pool.malloc());
 #ifdef DEBUG_SIMPLEHEAP
@@ -140,7 +159,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class T>
         template<class A1, class A2>
-        inline T *SimpleHeapImpl<T, QuickHeapWithoutSubscriptOperator>::New(A1 arg1, A2 arg2)
+        inline T *SimpleHeapImpl<T, QuickHeapWithoutRandomAccess>::New(A1 arg1, A2 arg2)
         {
             T *pObj = reinterpret_cast<T *>(m_pool.malloc());
 #ifdef DEBUG_SIMPLEHEAP
@@ -155,7 +174,7 @@ namespace Urasandesu { namespace CppAnonym {
 
         template<class T>
         template<class A1, class A2, class A3>
-        inline T *SimpleHeapImpl<T, QuickHeapWithoutSubscriptOperator>::New(A1 arg1, A2 arg2, A3 arg3)
+        inline T *SimpleHeapImpl<T, QuickHeapWithoutRandomAccess>::New(A1 arg1, A2 arg2, A3 arg3)
         {
             T *pObj = reinterpret_cast<T *>(m_pool.malloc());
 #ifdef DEBUG_SIMPLEHEAP
@@ -169,7 +188,7 @@ namespace Urasandesu { namespace CppAnonym {
         }
 
         template<class T>
-        void SimpleHeapImpl<T, QuickHeapWithoutSubscriptOperator>::Delete(T *pObj)
+        void SimpleHeapImpl<T, QuickHeapWithoutRandomAccess>::Delete(T *pObj)
         {
 #ifdef DEBUG_SIMPLEHEAP
             std::cout << "Type: " << typeid(T).name() << ", " << reinterpret_cast<int>(pObj) << " is destructing..." << std::endl;
@@ -191,7 +210,7 @@ namespace Urasandesu { namespace CppAnonym {
             if (m_array.empty())
                 return;
                 
-            if ((*this)[Size() - 1] == pObj)
+            if (&(*this)[size() - 1] == pObj)
             {
                 m_array.pop_back();
                 return;

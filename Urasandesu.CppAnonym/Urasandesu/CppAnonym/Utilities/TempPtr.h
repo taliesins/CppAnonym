@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: TempPtr.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_H
 #define URASANDESU_CPPANONYM_UTILITIES_TEMPPTR_H
 
@@ -268,7 +298,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             {
             };
 
-            template<class Tag = QuickHeapWithoutSubscriptOperator>
+            template<class Tag = QuickHeapWithoutRandomAccess>
             struct make_heap_holder_impl : 
                 MakeHeapHolderImpl<T, Tag>
             {
@@ -280,7 +310,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             {
             };
 
-            template<class Handler, class Tag = QuickHeapWithoutSubscriptOperator>
+            template<class Handler, class Tag = QuickHeapWithoutRandomAccess>
             struct make_heap_persisted_handler_holder_impl : 
                 MakeHeapPersistedHandlerHolderImpl<Handler, Tag>
             {
@@ -301,22 +331,17 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             TempPtrImpl(TempPtrImpl<U> const &other);
 
             ~TempPtrImpl();
-            this_type &operator =(this_type &other);
+            this_type &operator =(this_type const &other);
 
             template<class U>
-            TempPtrImpl &operator =(TempPtrImpl<U> &other);
-
-            operator bool() const
-            {
-                return m_pHolder;
-            }
-
-            bool operator !() const
-            {
-                return !m_pHolder;
-            }
+            TempPtrImpl &operator =(TempPtrImpl<U> const &other);
 
             T *operator ->()
+            {
+                return Get();
+            }
+
+            T const *operator ->() const
             {
                 return Get();
             }
@@ -364,6 +389,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             VariantPtr<intrusive_ptr<holder_type>, T *> m_pHolder;
             TempPtrStates m_state;
             persisted_handlers_type m_persistedHandlers;
+
+        private:
+            struct Tester
+            {
+                Tester(int) { }
+                void Dummy() { }
+            };
+
+            typedef void (Tester::*unspecified_bool_type)();
+
+        public:
+            operator unspecified_bool_type() const
+            {
+                return !m_pHolder ? 0 : &Tester::Dummy;
+            }
         };
 
         
@@ -437,14 +477,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
         }
 
-        TempPtr &operator =(TempPtr &other)
+        TempPtr &operator =(TempPtr const &other)
         {
             base_type::operator =(other);
             return *this;
         }
 
         template<class U>
-        TempPtr &operator =(TempPtr<U> &other)
+        TempPtr &operator =(TempPtr<U> const &other)
         {
             base_type::operator =(other);
             return *this;

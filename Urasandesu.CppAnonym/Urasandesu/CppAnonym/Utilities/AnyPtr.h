@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: AnyPtr.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_UTILITIES_ANYPTR_H
 #define URASANDESU_CPPANONYM_UTILITIES_ANYPTR_H
 
@@ -138,6 +168,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             typedef AnyPtrImpl this_type;
             typedef AnyPtrHolder holder_type;
 
+            template<class T, class TD, class ImplD>
+            struct make_holder_impl : 
+                MakeHolderImpl<T, TD, ImplD>
+            {
+            };
+
+            template<class T, class Tag = QuickHeapWithoutRandomAccess>
+            struct make_heap_holder_impl : 
+                MakeHeapHolderImpl<T, Tag>
+            {
+            };
+
             AnyPtrImpl() : 
                 m_pHolder()
             { }
@@ -163,15 +205,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_pHolder(other.m_pHolder)
             { }
             
-            AnyPtrImpl &operator =(AnyPtrImpl &other)
+            AnyPtrImpl &operator =(AnyPtrImpl const &other)
             {
                 m_pHolder = other.m_pHolder;
                 return *this;
-            }
-            
-            bool IsEmpty() const
-            {
-                return !m_pHolder;
             }
             
             template<class Pointer>
@@ -182,9 +219,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             template<class Pointer>
-            operator Pointer()
+            Pointer Get() const
             {
-                return Is<Pointer>() ? static_cast<Pointer>(m_pHolder->Pointer()) : NULL;
+                return const_cast<this_type *>(this)->Get<Pointer>();
+            }
+
+            template<class Pointer>
+            Pointer Get()
+            {
+                return Is<Pointer>() ? static_cast<Pointer>(m_pHolder->Pointer()) : nullptr;
             }
 
         protected:
@@ -193,6 +236,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             { }
 
             intrusive_ptr<holder_type> m_pHolder;
+
+        private:
+            struct Tester
+            {
+                Tester(int) { }
+                void Dummy() { }
+            };
+
+            typedef void (Tester::*unspecified_bool_type)();
+
+        public:
+            operator unspecified_bool_type() const
+            {
+                return !m_pHolder ? 0 : &Tester::Dummy;
+            }
         };
 
     }   // namespace AnyPtrDetail {
@@ -226,7 +284,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type(other)
         { }
 
-        AnyPtr &operator =(AnyPtr &other)
+        AnyPtr &operator =(AnyPtr const &other)
         {
             base_type::operator =(other);
             return *this;

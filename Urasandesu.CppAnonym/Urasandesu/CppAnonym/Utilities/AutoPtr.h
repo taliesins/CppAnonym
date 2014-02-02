@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: AutoPtr.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
 #define URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
 
@@ -135,7 +165,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             {
             };
 
-            template<class Tag = QuickHeapWithoutSubscriptOperator>
+            template<class Tag = QuickHeapWithoutRandomAccess>
             struct make_heap_holder_impl : 
                 MakeHeapHolderImpl<T, Tag>
             {
@@ -170,30 +200,25 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_pHolder(AutoPtrHolderAccessor<U>::Get(other))
             { }
 
-            AutoPtrImpl &operator =(AutoPtrImpl &other)
+            AutoPtrImpl &operator =(AutoPtrImpl const &other)
             {
                 m_pHolder = other.m_pHolder;
                 return *this;
             }
 
             template<class U>
-            AutoPtrImpl &operator =(AutoPtrImpl<U> &other)
+            AutoPtrImpl &operator =(AutoPtrImpl<U> const &other)
             {
                 m_pHolder = AutoPtrHolderAccessor<U>::Get(other);
                 return *this;
             }
-
-            operator bool() const
-            {
-                return m_pHolder;
-            }
-            
-            bool operator !() const
-            {
-                return !m_pHolder;
-            }
             
             T *operator ->()
+            {
+                return Get();
+            }
+            
+            T const *operator ->() const
             {
                 return Get();
             }
@@ -219,6 +244,21 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             template<class U> friend struct AutoPtrHolderAccessor;
 
             intrusive_ptr<holder_type> m_pHolder;
+
+        private:
+            struct Tester
+            {
+                Tester(int) { }
+                void Dummy() { }
+            };
+
+            typedef void (Tester::*unspecified_bool_type)();
+
+        public:
+            operator unspecified_bool_type() const
+            {
+                return !m_pHolder ? 0 : &Tester::Dummy;
+            }
         };
 
         
@@ -272,14 +312,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             base_type(other)
         { }
 
-        AutoPtr &operator =(AutoPtr &other)
+        AutoPtr &operator =(AutoPtr const &other)
         {
             base_type::operator =(other);
             return *this;
         }
 
         template<class U>
-        AutoPtr &operator =(AutoPtr<U> &other)
+        AutoPtr &operator =(AutoPtr<U> const &other)
         {
             base_type::operator =(other);
             return *this;

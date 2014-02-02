@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: VariantPtr.hpp
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
 #define URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
 
@@ -33,7 +63,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             m_which = I::pos::value;
 #else
 #endif
-            ConstructionDistributor<T>::Construct<T const &>(m_storage, p);
+            ConstructionDistributor<T>::Construct<T const &>(&m_storage, p);
         }
 
         template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
@@ -47,7 +77,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             _ASSERTE(m_which == I::pos::value);
 #else
 #endif
-            return *reinterpret_cast<T *>(m_storage);
+            return *reinterpret_cast<T *>(&m_storage);
         }
 
         template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
@@ -62,9 +92,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             m_which = I::pos::value;
 #else
 #endif
-            DestructionDistributor<T>::Destruct(m_storage);
-            ::ZeroMemory(m_storage, sizeof(max_size_type));
-            ConstructionDistributor<T>::Construct<T const &>(m_storage, p);
+            DestructionDistributor<T>::Destruct(&m_storage);
+            ::ZeroMemory(&m_storage, sizeof(storage_type));
+            ConstructionDistributor<T>::Construct<T const &>(&m_storage, p);
         }
 
         template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
@@ -79,8 +109,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             m_which = -1;
 #else
 #endif
-            DestructionDistributor<T>::Destruct(m_storage);
-            ::ZeroMemory(m_storage, sizeof(max_size_type));
+            DestructionDistributor<T>::Destruct(&m_storage);
+            ::ZeroMemory(&m_storage, sizeof(storage_type));
         }
 
         template<class T0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(class T)>
@@ -97,9 +127,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 #endif
             if (this != &other)
             {
-                DestructionDistributor<T>::Destruct(m_storage);
-                ::ZeroMemory(m_storage, sizeof(max_size_type));
-                ConstructionDistributor<T>::Construct<T const &>(m_storage, *reinterpret_cast<T *>(other.m_storage));
+                DestructionDistributor<T>::Destruct(&m_storage);
+                ::ZeroMemory(&m_storage, sizeof(storage_type));
+                ConstructionDistributor<T>::Construct<T const &>(&m_storage, *reinterpret_cast<T *>(&other.m_storage));
 #ifdef _DEBUG
                 m_which = I::pos::value;
 #else
@@ -127,10 +157,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 #else
 #endif
 
-            DestructionDistributor<T>::Destruct(m_storage);
-            ::ZeroMemory(m_storage, sizeof(max_size_type));
+            DestructionDistributor<T>::Destruct(&m_storage);
+            ::ZeroMemory(&m_storage, sizeof(storage_type));
             typedef StorageAccessor<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> StorageAccessor;
-            ConstructionDistributor<T>::Construct<T const &>(m_storage, *reinterpret_cast<T *>(StorageAccessor::Get(other)));
+            ConstructionDistributor<T>::Construct<T const &>(&m_storage, *reinterpret_cast<T const *>(&StorageAccessor::Get(other)));
 #ifdef _DEBUG
             m_which = I::pos::value;
 #else
@@ -150,9 +180,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             m_which = -1;
 #else
 #endif
-            T p(*reinterpret_cast<T *>(m_storage));
-            DestructionDistributor<T>::Destruct(m_storage);
-            ::ZeroMemory(m_storage, sizeof(max_size_type));
+            T p(*reinterpret_cast<T *>(&m_storage));
+            DestructionDistributor<T>::Destruct(&m_storage);
+            ::ZeroMemory(&m_storage, sizeof(storage_type));
             return p;
         }
 

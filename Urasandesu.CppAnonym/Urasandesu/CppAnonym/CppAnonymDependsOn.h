@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: CppAnonymDependsOn.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 #define URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 
@@ -29,7 +59,10 @@
 #include <boost/exception/errinfo_nested_exception.hpp>
 #include <boost/exception_ptr.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/flyweight.hpp>
+#include <boost/foreach.hpp>
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/mpl/advance.hpp>
 #include <boost/mpl/apply.hpp>
@@ -61,9 +94,117 @@
 #include <boost/system/windows_error.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 #include <comdef.h>
-#include <tlhelp32.h>
 #include <Dbghelp.h>
+#include <tlhelp32.h>
+
+
+#ifdef OUTPUT_VERBOSE
+#define V_COUT(s) std::cout << s << std::endl
+#define V_COUT1(fmt, arg) std::cout << boost::format(fmt) % arg << std::endl
+#define V_COUT2(fmt, arg1, arg2) std::cout << boost::format(fmt) % arg1 % arg2 << std::endl
+#define V_COUT3(fmt, arg1, arg2, arg3) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
+#define V_COUT4(fmt, arg1, arg2, arg3, arg4) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define V_COUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define V_WCOUT(s) std::wcout << s << std::endl
+#define V_WCOUT1(fmt, arg) std::wcout << boost::wformat(fmt) % arg << std::endl
+#define V_WCOUT2(fmt, arg1, arg2) std::wcout << boost::wformat(fmt) % arg1 % arg2 << std::endl
+#define V_WCOUT3(fmt, arg1, arg2, arg3) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
+#define V_WCOUT4(fmt, arg1, arg2, arg3, arg4) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define V_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define V_COUTI(i, s) std::cout << std::string(' ', i) << s << std::endl
+#define V_COUTI1(i, fmt, arg) std::cout << std::string(' ', i) << boost::format(fmt) % arg << std::endl
+#define V_COUTI2(i, fmt, arg1, arg2) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 << std::endl
+#define V_COUTI3(i, fmt, arg1, arg2, arg3) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
+#define V_COUTI4(i, fmt, arg1, arg2, arg3, arg4) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define V_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define V_WCOUTI(i, s) std::wcout << std::wstring(i, L' ') << s << std::endl
+#define V_WCOUTI1(i, fmt, arg) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg << std::endl
+#define V_WCOUTI2(i, fmt, arg1, arg2) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 << std::endl
+#define V_WCOUTI3(i, fmt, arg1, arg2, arg3) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
+#define V_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define V_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#else
+#define V_COUT(s)
+#define V_COUT1(fmt, arg)
+#define V_COUT2(fmt, arg1, arg2)
+#define V_COUT3(fmt, arg1, arg2, arg3)
+#define V_COUT4(fmt, arg1, arg2, arg3, arg4)
+#define V_COUT5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define V_WCOUT(s)
+#define V_WCOUT1(fmt, arg)
+#define V_WCOUT2(fmt, arg1, arg2)
+#define V_WCOUT3(fmt, arg1, arg2, arg3)
+#define V_WCOUT4(fmt, arg1, arg2, arg3, arg4)
+#define V_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define V_COUTI(i, s) 
+#define V_COUTI1(i, fmt, arg) 
+#define V_COUTI2(i, fmt, arg1, arg2) 
+#define V_COUTI3(i, fmt, arg1, arg2, arg3) 
+#define V_COUTI4(i, fmt, arg1, arg2, arg3, arg4) 
+#define V_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
+#define V_WCOUTI(i, s) 
+#define V_WCOUTI1(i, fmt, arg) 
+#define V_WCOUTI2(i, fmt, arg1, arg2) 
+#define V_WCOUTI3(i, fmt, arg1, arg2, arg3) 
+#define V_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) 
+#define V_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
+#endif
+
+
+#ifdef OUTPUT_DEBUG
+#define D_COUT(s) std::cout << s << std::endl
+#define D_COUT1(fmt, arg) std::cout << boost::format(fmt) % arg << std::endl
+#define D_COUT2(fmt, arg1, arg2) std::cout << boost::format(fmt) % arg1 % arg2 << std::endl
+#define D_COUT3(fmt, arg1, arg2, arg3) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
+#define D_COUT4(fmt, arg1, arg2, arg3, arg4) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define D_COUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define D_WCOUT(s) std::wcout << s << std::endl
+#define D_WCOUT1(fmt, arg) std::wcout << boost::wformat(fmt) % arg << std::endl
+#define D_WCOUT2(fmt, arg1, arg2) std::wcout << boost::wformat(fmt) % arg1 % arg2 << std::endl
+#define D_WCOUT3(fmt, arg1, arg2, arg3) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
+#define D_WCOUT4(fmt, arg1, arg2, arg3, arg4) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define D_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define D_COUTI(i, s) std::cout << std::string(i, ' ') << s << std::endl
+#define D_COUTI1(i, fmt, arg) std::cout << std::string(i, ' ') << boost::format(fmt) % arg << std::endl
+#define D_COUTI2(i, fmt, arg1, arg2) std::cout << std::string(i, ' ') << boost::format(fmt) % arg1 % arg2 << std::endl
+#define D_COUTI3(i, fmt, arg1, arg2, arg3) std::cout << std::string(i, ' ') << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
+#define D_COUTI4(i, fmt, arg1, arg2, arg3, arg4) std::cout << std::string(i, ' ') << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define D_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::cout << std::string(i, ' ') << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#define D_WCOUTI(i, s) std::wcout << std::wstring(i, L' ') << s << std::endl
+#define D_WCOUTI1(i, fmt, arg) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg << std::endl
+#define D_WCOUTI2(i, fmt, arg1, arg2) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 << std::endl
+#define D_WCOUTI3(i, fmt, arg1, arg2, arg3) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
+#define D_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
+#define D_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
+#else
+#define D_COUT(s)
+#define D_COUT1(fmt, arg)
+#define D_COUT2(fmt, arg1, arg2)
+#define D_COUT3(fmt, arg1, arg2, arg3)
+#define D_COUT4(fmt, arg1, arg2, arg3, arg4)
+#define D_COUT5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define D_WCOUT(s)
+#define D_WCOUT1(fmt, arg)
+#define D_WCOUT2(fmt, arg1, arg2)
+#define D_WCOUT3(fmt, arg1, arg2, arg3)
+#define D_WCOUT4(fmt, arg1, arg2, arg3, arg4)
+#define D_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define D_COUTI(i, s) 
+#define D_COUTI1(i, fmt, arg) 
+#define D_COUTI2(i, fmt, arg1, arg2) 
+#define D_COUTI3(i, fmt, arg1, arg2, arg3) 
+#define D_COUTI4(i, fmt, arg1, arg2, arg3, arg4) 
+#define D_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
+#define D_WCOUTI(i, s) 
+#define D_WCOUTI1(i, fmt, arg) 
+#define D_WCOUTI2(i, fmt, arg1, arg2) 
+#define D_WCOUTI3(i, fmt, arg1, arg2, arg3) 
+#define D_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) 
+#define D_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
+#endif
+
 
 namespace Urasandesu { namespace CppAnonym {
 

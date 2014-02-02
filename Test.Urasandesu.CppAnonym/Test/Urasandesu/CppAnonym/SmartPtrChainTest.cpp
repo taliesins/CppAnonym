@@ -1,4 +1,35 @@
-﻿#include "stdafx.h"
+﻿/* 
+ * File: SmartPtrChainTest.cpp
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+
+#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_H
 #include <Urasandesu/CppAnonym/SmartPtrChainMapper.h>
@@ -21,10 +52,11 @@ namespace {
 
     namespace _F74DEBBE {
 
-        struct Root;
+        struct Dummy;   // incomplete type is ignored if it is not designated explicitly.
+        struct Root;    // manages a root object and the specialized initialization. 
         struct Node1;
         struct Node2;   // manages nested same types.
-        struct Node3;
+        struct Node3;   // manages the specialized initialization.
 
     }   // namespace _F74DEBBE {
 
@@ -49,13 +81,13 @@ namespace {
         {
             typedef Root root_type;
             typedef Node1 node1_type;
-            typedef mpl::void_ root_previous_type;
+            typedef Dummy root_previous_type;
             typedef mpl::vector<SmartPtrChainInfo<root_previous_type> > chain_info_types;
             typedef SmartPtrChain<root_type, chain_info_types> base_ptr_chain_type;
             typedef base_ptr_chain_type::chain_from<root_previous_type>::type root_chain_type;
         };
 
-        struct Root : 
+        struct Root : // manages a root object and the specialized initialization. 
             RootFacade::base_ptr_chain_type
         {
             typedef RootFacade facade;
@@ -67,9 +99,11 @@ namespace {
             typedef facade::root_chain_type root_chain_type;
 
             Root();
+            void Initialized();
             static TempPtr<root_type> NewRoot(int value);
             TempPtr<node1_type> NewNode1(std::wstring const &version) const;
 
+            bool m_initialized;
             int m_value;
         };
 
@@ -161,7 +195,7 @@ namespace {
             typedef base_ptr_chain_type::chain_from<node3_previous_type>::type node3_chain_type;
         };
 
-        struct Node3 : 
+        struct Node3 : // manages the specialized initialization.
             Node3Facade::base_ptr_chain_type
         {
             typedef Node3Facade facade;
@@ -173,7 +207,9 @@ namespace {
             typedef facade::node3_chain_type node3_chain_type;
 
             Node3();
+            void Initialized();
 
+            bool m_initialized;
             char m_id;
         };
 
@@ -182,8 +218,14 @@ namespace {
         
         
         Root::Root() : 
+            m_initialized(false),
             m_value(0)
         { }
+
+        void Root::Initialized()
+        {
+            m_initialized = true;
+        }
 
         TempPtr<Root::root_type> Root::NewRoot(int value)
         {
@@ -244,8 +286,14 @@ namespace {
 
 
         Node3::Node3() : 
+            m_initialized(false),
             m_id('\0')
         { }
+
+        void Node3::Initialized()
+        {
+            m_initialized = true;
+        }
 
     }   // namespace _F74DEBBE {
 
@@ -253,65 +301,70 @@ namespace {
     {
         using namespace _F74DEBBE;
 
-        TempPtr<Root> pRoot = Root::NewRoot(42);
+        auto pRoot = Root::NewRoot(42);
         ASSERT_TRUE(pRoot);
+        ASSERT_TRUE(pRoot->m_initialized);
         ASSERT_EQ(42, pRoot->m_value);
         
-        TempPtr<Node1> pNode1 = pRoot->NewNode1(L"aiueo");
+        auto pNode1 = pRoot->NewNode1(L"aiueo");
         ASSERT_TRUE(pNode1);
         ASSERT_STREQ(L"aiueo", pNode1->m_version.c_str());
         {
-            Root *pRoot_ = pNode1->Map<Root>();
+            auto *pRoot_ = pNode1->Map<Root>();
             ASSERT_EQ(pRoot.Get(), pRoot_);
+
+            //auto *pDummy_ = pNode1->Map<Dummy>(); // C2027
         }
 
-        TempPtr<Node2> pNode2 = pNode1->NewNode2(2.2);
+        auto pNode2 = pNode1->NewNode2(2.2);
         ASSERT_TRUE(pNode2);
         ASSERT_EQ(2.2, pNode2->m_ratio);
         {
-            Root *pRoot_ = pNode2->MapFirst<Root>();
+            auto *pRoot_ = pNode2->MapFirst<Root>();
             ASSERT_EQ(pRoot.Get(), pRoot_);
 
-            Node1 *pNode1_ = pNode2->MapFirst<Node1>();
+            auto *pNode1_ = pNode2->MapFirst<Node1>();
             ASSERT_EQ(pNode1.Get(), pNode1_);
         }
 
-        TempPtr<Node3> pNode3_1 = pNode2->NewNode3('!');
+        auto pNode3_1 = pNode2->NewNode3('!');
         ASSERT_TRUE(pNode3_1);
+        ASSERT_TRUE(pNode3_1->m_initialized);
         ASSERT_EQ('!', pNode3_1->m_id);
         {
-            Root *pRoot_ = pNode3_1->MapFirst<Root>();
+            auto *pRoot_ = pNode3_1->MapFirst<Root>();
             ASSERT_EQ(pRoot.Get(), pRoot_);
 
-            Node1 *pNode1_ = pNode3_1->MapFirst<Node1>();
+            auto *pNode1_ = pNode3_1->MapFirst<Node1>();
             ASSERT_EQ(pNode1.Get(), pNode1_);
 
-            Node2 *pNode2_ = pNode3_1->MapFirst<Node2>();
+            auto *pNode2_ = pNode3_1->MapFirst<Node2>();
             ASSERT_EQ(pNode2.Get(), pNode2_);
         }
 
-        TempPtr<Node2> pNestedNode2 = pNode2->NewNestedNode2(3.5);
+        auto pNestedNode2 = pNode2->NewNestedNode2(3.5);
         ASSERT_TRUE(pNestedNode2);
         ASSERT_EQ(3.5, pNestedNode2->m_ratio);
         {
-            Root *pRoot_ = pNestedNode2->MapFirst<Root>();
+            auto *pRoot_ = pNestedNode2->MapFirst<Root>();
             ASSERT_EQ(pRoot.Get(), pRoot_);
 
-            Node1 *pNode1_ = pNestedNode2->MapFirst<Node1>();
+            auto *pNode1_ = pNestedNode2->MapFirst<Node1>();
             ASSERT_EQ(pNode1.Get(), pNode1_);
         }
 
-        TempPtr<Node3> pNode3_2 = pNestedNode2->NewNode3('?');
+        auto pNode3_2 = pNestedNode2->NewNode3('?');
         ASSERT_TRUE(pNode3_2);
+        ASSERT_TRUE(pNode3_2->m_initialized);
         ASSERT_EQ('?', pNode3_2->m_id);
         {
-            Root *pRoot_ = pNode3_2->MapFirst<Root>();
+            auto *pRoot_ = pNode3_2->MapFirst<Root>();
             ASSERT_EQ(pRoot.Get(), pRoot_);
 
-            Node1 *pNode1_ = pNode3_2->MapFirst<Node1>();
+            auto *pNode1_ = pNode3_2->MapFirst<Node1>();
             ASSERT_EQ(pNode1.Get(), pNode1_);
 
-            Node2 *pNestedNode2_ = pNode3_2->MapFirst<Node2>();
+            auto *pNestedNode2_ = pNode3_2->MapFirst<Node2>();
             ASSERT_EQ(pNestedNode2.Get(), pNestedNode2_);
         }
 

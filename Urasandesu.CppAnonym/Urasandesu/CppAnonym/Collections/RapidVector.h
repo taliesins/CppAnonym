@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: RapidVector.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
 #define URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_H
 
@@ -84,6 +114,14 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 else
                     ++m_i;
             }
+
+            void decrement()
+            { 
+                if (m_pThis->RunAsRapid())
+                    --m_pBuf;
+                else
+                    --m_i;
+            }
             
             void advance(difference_type n)
             { 
@@ -128,23 +166,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct RapidVectorFacade
         {
             typedef std::vector<T, Alloc> internal_vector_type;
-	        typedef typename internal_vector_type::allocator_type allocator_type;
-	        typedef RapidVectorIterator<T const, T, RAPID_SIZE, Alloc> const_iterator;
-	        typedef typename internal_vector_type::const_pointer const_pointer;
-	        typedef typename internal_vector_type::const_reference const_reference;
-	        typedef typename internal_vector_type::const_reverse_iterator const_reverse_iterator;
-	        typedef typename internal_vector_type::difference_type difference_type;
-	        typedef RapidVectorIterator<T, T, RAPID_SIZE, Alloc> iterator;
-	        typedef typename internal_vector_type::pointer pointer;
-	        typedef typename internal_vector_type::reference reference;
-	        typedef typename internal_vector_type::reverse_iterator reverse_iterator;
-	        typedef typename internal_vector_type::size_type size_type;
-	        typedef typename internal_vector_type::value_type value_type;
+            typedef typename internal_vector_type::allocator_type allocator_type;
+            typedef RapidVectorIterator<T const, T, RAPID_SIZE, Alloc> const_iterator;
+            typedef typename internal_vector_type::const_pointer const_pointer;
+            typedef typename internal_vector_type::const_reference const_reference;
+            typedef typename internal_vector_type::const_reverse_iterator const_reverse_iterator;
+            typedef typename internal_vector_type::difference_type difference_type;
+            typedef RapidVectorIterator<T, T, RAPID_SIZE, Alloc> iterator;
+            typedef typename internal_vector_type::pointer pointer;
+            typedef typename internal_vector_type::reference reference;
+            typedef typename internal_vector_type::reverse_iterator reverse_iterator;
+            typedef typename internal_vector_type::size_type size_type;
+            typedef typename internal_vector_type::value_type value_type;
             typedef typename is_pointer<T>::type is_value_type_pointer;
             typedef typename remove_pointer<typename RemoveConst<T>::type>::type raw_value_type;
             typedef typename has_trivial_constructor<raw_value_type>::type has_raw_value_type_trivial_constructor;
             typedef typename has_trivial_destructor<raw_value_type>::type has_raw_value_type_trivial_destructor;
-            static size_t const RAPID_BUF_SIZE = (RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64);
+            enum { RAPID_BUF_SIZE = (RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64) };
         };
 
         template<class T, DWORD RAPID_SIZE, class Alloc>
@@ -155,23 +193,23 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
             typedef RapidVectorFacade<T, RAPID_SIZE, Alloc> facade;
             typedef typename facade::internal_vector_type internal_vector_type;
-	        typedef typename facade::allocator_type allocator_type;
-	        typedef typename facade::const_iterator const_iterator;
-	        typedef typename facade::const_pointer const_pointer;
-	        typedef typename facade::const_reference const_reference;
-	        typedef typename facade::const_reverse_iterator const_reverse_iterator;
-	        typedef typename facade::difference_type difference_type;
-	        typedef typename facade::iterator iterator;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::reference reference;
-	        typedef typename facade::reverse_iterator reverse_iterator;
-	        typedef typename facade::size_type size_type;
-	        typedef typename facade::value_type value_type;
+            typedef typename facade::allocator_type allocator_type;
+            typedef typename facade::const_iterator const_iterator;
+            typedef typename facade::const_pointer const_pointer;
+            typedef typename facade::const_reference const_reference;
+            typedef typename facade::const_reverse_iterator const_reverse_iterator;
+            typedef typename facade::difference_type difference_type;
+            typedef typename facade::iterator iterator;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::reference reference;
+            typedef typename facade::reverse_iterator reverse_iterator;
+            typedef typename facade::size_type size_type;
+            typedef typename facade::value_type value_type;
             typedef typename facade::is_value_type_pointer is_value_type_pointer;
             typedef typename facade::raw_value_type raw_value_type;
             typedef typename facade::has_raw_value_type_trivial_constructor has_raw_value_type_trivial_constructor;
             typedef typename facade::has_raw_value_type_trivial_destructor has_raw_value_type_trivial_destructor;
-            static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
+            enum { RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE };
 
             RapidVectorImpl() : 
                 m_pVec(NULL), 
@@ -200,7 +238,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
             iterator erase(const_iterator first, const_iterator last);
             
-            this_type &operator =(this_type &other)
+            this_type &operator =(this_type const &other)
             {
                 if (this != &other)
                 {
@@ -219,11 +257,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             {
                 return RunAsRapid() ? RapidBuf()[pos] : (*m_pVec)[pos];
             }
-	        
+            
             iterator begin()
-	        {
-	            return iterator(this);
-	        }
+            {
+                return iterator(this);
+            }
 
             const_iterator begin() const
             {
@@ -274,7 +312,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         private:
             template<class Value, class T, DWORD RAPID_SIZE, class Alloc>
-	        friend class RapidVectorIterator;
+            friend class RapidVectorIterator;
 
             T *RapidBuf()
             {
@@ -297,7 +335,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             std::vector<T, Alloc> *m_pVec;
             SIZE_T m_size;
             SIZE_T m_capacity;
-            //static size_t const RAPID_BUF_SIZE = (RAPID_SIZE * sizeof(T) + sizeof(UINT64) - 1) / sizeof(UINT64);
             UINT64 m_pRapidBuf[RAPID_BUF_SIZE];
         };
 
@@ -309,9 +346,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct CopyRapidBufImpl
         {
             typedef Facade facade;
-	        typedef typename facade::const_pointer const_pointer;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::const_pointer const_pointer;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
             typedef typename facade::raw_value_type raw_value_type;
             static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
             
@@ -325,11 +362,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct CopyRapidBufImpl<Facade, False, False, False> 
         { 
             typedef Facade facade;
-	        typedef typename facade::const_pointer const_pointer;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::const_pointer const_pointer;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
             typedef typename facade::raw_value_type raw_value_type;
-            static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
+            enum { RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE };
             
             static void Copy(pointer pDstRapidBuf, const_pointer pSrcRapidBuf, size_type size)
             {
@@ -346,8 +383,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct MoveRapidBufImpl
         {
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
 
             static void Move(pointer pDstRapidBuf, pointer pSrcRapidBuf, size_type size);
         };
@@ -356,8 +393,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct MoveRapidBufImpl<Facade, False, False, False> 
         { 
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
 
             static void Move(pointer pDstRapidBuf, pointer pSrcRapidBuf, size_type size);
         };
@@ -370,8 +407,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct AssignRapidBufImpl
         {
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
             typedef typename facade::internal_vector_type internal_vector_type;
 
             static void Assign(pointer pRapidBuf, size_type newSize, internal_vector_type const *pVec)
@@ -384,8 +421,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct AssignRapidBufImpl<Facade, False, False, False> 
         { 
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
             typedef typename facade::internal_vector_type internal_vector_type;
 
             static void Assign(pointer pRapidBuf, size_type newSize, internal_vector_type const *pVec);
@@ -399,8 +436,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct ConstructRapidBufImpl
         {
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-            static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
+            typedef typename facade::pointer pointer;
+            enum { RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE };
 
             static void Construct(pointer pRapidBuf)
             {
@@ -412,8 +449,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct ConstructRapidBufImpl<Facade, False, False> 
         { 
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-            static size_t const RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE;
+            typedef typename facade::pointer pointer;
+            enum { RAPID_BUF_SIZE = facade::RAPID_BUF_SIZE };
 
             static void Construct(pointer pRapidBuf)
             {
@@ -429,9 +466,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct DestructRapidBufImpl
         {
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
-	        typedef typename facade::value_type value_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
+            typedef typename facade::value_type value_type;
             typedef typename facade::raw_value_type raw_value_type;
 
             static void Destruct(pointer pRapidBuf, size_type size)
@@ -444,9 +481,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         struct DestructRapidBufImpl<Facade, False, False> 
         { 
             typedef Facade facade;
-	        typedef typename facade::pointer pointer;
-	        typedef typename facade::size_type size_type;
-	        typedef typename facade::value_type value_type;
+            typedef typename facade::pointer pointer;
+            typedef typename facade::size_type size_type;
+            typedef typename facade::value_type value_type;
             typedef typename facade::raw_value_type raw_value_type;
             
             static void Destruct(pointer pRapidBuf, size_type size)
@@ -477,6 +514,12 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         RapidVector(this_type const &other) : 
             base_type(other)
         { }
+            
+        this_type &operator =(this_type const &other)
+        {
+            base_type::operator =(other);
+            return *this;
+        }
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {

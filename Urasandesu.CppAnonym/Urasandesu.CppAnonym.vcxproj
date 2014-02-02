@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,12 +20,14 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <UseOfAtl>Dynamic</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <UseOfAtl>Dynamic</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -51,7 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\boost_1_48_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_55_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm150 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Midl>
@@ -77,7 +79,7 @@
       <ModuleDefinitionFile>.\Urasandesu.CppAnonym.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalLibraryDirectories>C:\boost_1_48_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost_1_55_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Dbghelp.lib;corguids.lib;mscoree.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -198,6 +200,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\PersistentInfoFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnum.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SafeEnumFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SafeFlagsEnum.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\SafeFlagsEnumFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlob.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleBlobFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SimpleDisposable.h" />
@@ -239,6 +243,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HashComputableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberFunction.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\HasMemberType.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\HasStaticMemberFunction.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointer.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\IsLikePointerFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeHeapPointerHolderImpl.h" />
@@ -251,6 +256,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MakeValueHolderImplFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeType.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\MaxSizeTypeFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Traits\Nil.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\Predicatable.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\PredicatableFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\RemoveConst.h" />
@@ -273,6 +279,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicy.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DeletionSwitchablePolicyFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\DestructionDistributorFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\EmptinessVisitor.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\EmptinessVisitorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualTo.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\EqualToFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\Hash.h" />

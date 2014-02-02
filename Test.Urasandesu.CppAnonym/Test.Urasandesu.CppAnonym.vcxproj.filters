@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="ソース ファイル">
@@ -209,14 +209,32 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\TypeInfoTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp">
-      <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\AutoPtr.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\HasMemberFunctionTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Traits\HasStaticMemberFunctionTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\MetadataTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SafeEnumTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\SafeFlagsEnumTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\EmptinessVisitorTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

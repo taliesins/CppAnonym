@@ -1,4 +1,34 @@
-﻿#pragma once
+﻿/* 
+ * File: PersistableHeapProvider.h
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#pragma once
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_H
 #define URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_H
 
@@ -18,14 +48,16 @@
 #include <Urasandesu/CppAnonym/PersistableHeapProviderFwd.h>
 #endif
 
+// TODO: rename to PersistableHeapProvider.hpp.
+
 namespace Urasandesu { namespace CppAnonym {
 
     namespace PersistableHeapProviderDetail {
 
         namespace mpl = boost::mpl;
-        using namespace boost;
         using namespace Urasandesu::CppAnonym::Utilities;
         using boost::is_same;
+        using boost::noncopyable;
         using mpl::_;
         using mpl::_1;
         using mpl::_2;
@@ -43,6 +75,7 @@ namespace Urasandesu { namespace CppAnonym {
         using mpl::reverse;
         using mpl::vector;
         using mpl::void_;
+        using std::unique_ptr;
 
         template<class I>
         struct PersistentInfoFacade
@@ -50,18 +83,18 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename deref<I>::type persistent_info_type;
             typedef typename persistent_info_type::object_type object_type;
             typedef typename persistent_info_type::persisted_handler_type persisted_handler_type;
-            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::object_deleter_type object_deleter_type;
-            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::type holder_impl_type;
-            typedef typename TempPtr<object_type>::make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
-            typedef typename TempPtr<object_type>::make_heap_persisted_handler_holder_impl<persisted_handler_type>::type persisted_handler_holder_impl_type;
-            typedef typename TempPtr<object_type>::make_heap_persisted_handler_holder_impl<persisted_handler_type>::deleter_type persisted_handler_holder_impl_deleter_type;
-            typedef ObjectTag<object_type, QuickHeapWithoutSubscriptOperator> object_object_tag_type;
-            typedef ObjectTag<holder_impl_type, QuickHeapWithoutSubscriptOperator> holder_impl_object_tag_type;
-            typedef ObjectTag<persisted_handler_holder_impl_type, QuickHeapWithoutSubscriptOperator> persisted_handler_holder_impl_object_tag_type;
+            typedef typename TempPtr<object_type>::template make_heap_holder_impl<>::object_deleter_type object_deleter_type;
+            typedef typename TempPtr<object_type>::template make_heap_holder_impl<>::type holder_impl_type;
+            typedef typename TempPtr<object_type>::template make_heap_holder_impl<>::deleter_type holder_impl_deleter_type;
+            typedef typename TempPtr<object_type>::template make_heap_persisted_handler_holder_impl<persisted_handler_type>::type persisted_handler_holder_impl_type;
+            typedef typename TempPtr<object_type>::template make_heap_persisted_handler_holder_impl<persisted_handler_type>::deleter_type persisted_handler_holder_impl_deleter_type;
+            typedef ObjectTag<object_type, QuickHeapWithoutRandomAccess> object_object_tag_type;
+            typedef ObjectTag<holder_impl_type, QuickHeapWithoutRandomAccess> holder_impl_object_tag_type;
+            typedef ObjectTag<persisted_handler_holder_impl_type, QuickHeapWithoutRandomAccess> persisted_handler_holder_impl_object_tag_type;
             typedef SimpleHeapProvider<vector<object_object_tag_type, holder_impl_object_tag_type, persisted_handler_holder_impl_object_tag_type> > base_type;
-            typedef typename base_type::provider_of<object_type>::type object_provider_type;
-            typedef typename base_type::provider_of<holder_impl_type>::type holder_impl_provider_type;
-            typedef typename base_type::provider_of<persisted_handler_holder_impl_type>::type persisted_handler_holder_impl_provider_type;
+            typedef typename base_type::template provider_of<object_type>::type object_provider_type;
+            typedef typename base_type::template provider_of<holder_impl_type>::type holder_impl_provider_type;
+            typedef typename base_type::template provider_of<persisted_handler_holder_impl_type>::type persisted_handler_holder_impl_provider_type;
             typedef typename object_provider_type::object_heap_type object_heap_type;
             typedef typename holder_impl_provider_type::object_heap_type holder_impl_heap_type;
             typedef typename persisted_handler_holder_impl_provider_type::object_heap_type persisted_handler_holder_impl_heap_type;
@@ -96,11 +129,11 @@ namespace Urasandesu { namespace CppAnonym {
 
             TempPtr<object_type> NewObject()
             {
-                object_deleter_type objDeleter(ObjectHeap());
-                object_type *pObj = ObjectHeap().New();
+                auto objDeleter = object_deleter_type(ObjectHeap());
+                auto *pObj = ObjectHeap().New();
 
-                holder_impl_deleter_type implDeleter(HolderImplHeap());
-                holder_impl_type *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
+                auto implDeleter = holder_impl_deleter_type(HolderImplHeap());
+                auto *pHolderImpl = HolderImplHeap().New(pObj, objDeleter, implDeleter);
 
                 return TempPtr<object_type>(pHolderImpl);
             }
@@ -119,17 +152,26 @@ namespace Urasandesu { namespace CppAnonym {
 
             SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
             {
-                persisted_handler_holder_impl_deleter_type implDeleter(PersistedHandlerImplHeap());
-                persisted_handler_holder_impl_type *pHandlerImpl = PersistedHandlerImplHeap().New(handler, implDeleter);
+                auto implDeleter = persisted_handler_holder_impl_deleter_type(PersistedHandlerImplHeap());
+                auto *pHandlerImpl = PersistedHandlerImplHeap().New(handler, implDeleter);
 
                 return p.AddPersistedHandler(pHandlerImpl);
+            }
+
+            void DeleteObject(SIZE_T n)
+            {
+                if (!AnyObjects() || Objects().size() <= n)
+                    return;
+                
+                ObjectHeap().Delete(Objects()[n]);
+                Objects().erase(Objects().begin() + n);
             }
 
         protected:
             std::vector<object_type *> &Objects()
             {
                 if (!m_pObjects)
-                    m_pObjects = make_shared<std::vector<object_type *> >();
+                    m_pObjects = unique_ptr<std::vector<object_type *> >(new std::vector<object_type *>());
                 return *m_pObjects.get();
             }
 
@@ -141,30 +183,29 @@ namespace Urasandesu { namespace CppAnonym {
         private:            
             static void Destruct(object_heap_type &heap, std::vector<object_type *> &objects)
             {
-                typedef std::vector<object_type *>::reverse_iterator ReverseIterator;
-                for (ReverseIterator ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
+                for (auto ri = objects.rbegin(), ri_end = objects.rend(); ri != ri_end; ++ri)
                     heap.Delete(*ri);
             }
 
             object_heap_type &ObjectHeap()
             {
-                object_provider_type &provider = base_type::ProviderOf<object_type>();
+                auto &provider = base_type::ProviderOf<object_type>();
                 return provider.Heap();
             }
 
             holder_impl_heap_type &HolderImplHeap()
             {
-                holder_impl_provider_type &provider = base_type::ProviderOf<holder_impl_type>();
+                auto &provider = base_type::ProviderOf<holder_impl_type>();
                 return provider.Heap();
             }
 
             persisted_handler_holder_impl_heap_type &PersistedHandlerImplHeap()
             {
-                persisted_handler_holder_impl_provider_type &provider = base_type::ProviderOf<persisted_handler_holder_impl_type>();
+                auto &provider = base_type::ProviderOf<persisted_handler_holder_impl_type>();
                 return provider.Heap();
             }
 
-            shared_ptr<std::vector<object_type *> > m_pObjects;
+            unique_ptr<std::vector<object_type *> > m_pObjects;
         };
 
         template<class ReversedPersistentInfoTypes>

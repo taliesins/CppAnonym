@@ -1,4 +1,34 @@
-﻿#include "stdafx.h"
+﻿/* 
+ * File: PersistableHeapProviderTest.cpp
+ * 
+ * Author: Akira Sugiura (urasandesu@gmail.com)
+ * 
+ * 
+ * Copyright (c) 2014 Akira Sugiura
+ *  
+ *  This software is MIT License.
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+
+#include "stdafx.h"
 
 #ifndef URASANDESU_CPPANONYM_PERSISTABLEHEAPPROVIDER_H
 #include <Urasandesu/CppAnonym/PersistableHeapProvider.h>
@@ -42,8 +72,8 @@ namespace {
                 return checker;
             }
 
-            std::vector<int> m_ctorOrder;
-            std::vector<int> m_dtorOrder;
+            std::vector<int> m_ctorSeq;
+            std::vector<int> m_dtorSeq;
         };
 
         struct HogeFacade
@@ -86,8 +116,8 @@ namespace {
             typedef facade::hoge_persistent_info_type hoge_persistent_info_type;
             typedef facade::hoge_provider_type hoge_provider_type;
 
-            Hoge() { OrderChecker::Instance().m_ctorOrder.push_back(reinterpret_cast<int>(this)); }
-            ~Hoge() { OrderChecker::Instance().m_dtorOrder.push_back(reinterpret_cast<int>(this)); }
+            Hoge() { OrderChecker::Instance().m_ctorSeq.push_back(reinterpret_cast<int>(this)); }
+            ~Hoge() { OrderChecker::Instance().m_dtorSeq.push_back(reinterpret_cast<int>(this)); }
 
             static hoge_type *CreateStaticHoge()
             {
@@ -145,18 +175,18 @@ namespace {
         Hoge *pHogeRoot = Hoge::CreateStaticHoge();
         Hoge *pHoge = pHogeRoot->CreateHoge();
 
-        ASSERT_EQ(3, OrderChecker::Instance().m_ctorOrder.size());
-        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_ctorOrder[0]);
-        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_ctorOrder[1]);
-        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_ctorOrder[2]);
-        ASSERT_EQ(0, OrderChecker::Instance().m_dtorOrder.size());
+        ASSERT_EQ(3, OrderChecker::Instance().m_ctorSeq.size());
+        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_ctorSeq[0]);
+        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_ctorSeq[1]);
+        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_ctorSeq[2]);
+        ASSERT_EQ(0, OrderChecker::Instance().m_dtorSeq.size());
 
         StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host().~Host();
 
-        ASSERT_EQ(3, OrderChecker::Instance().m_dtorOrder.size());
-        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_dtorOrder[0]);
-        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_dtorOrder[1]);
-        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_dtorOrder[2]);
+        ASSERT_EQ(3, OrderChecker::Instance().m_dtorSeq.size());
+        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_dtorSeq[0]);
+        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_dtorSeq[1]);
+        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_dtorSeq[2]);
 
         // Restore static area to work the debug heap correctly.
         new(&StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host())Host();
