@@ -38,6 +38,7 @@
 #include <boost/range/algorithm.hpp>
 #include <boost/range/any_range.hpp>
 #include <boost/range/join.hpp>
+#include <boost/thread.hpp>
 #include <boost/utility.hpp>
 
 namespace Urasandesu { namespace CppAnonym { namespace Collections {

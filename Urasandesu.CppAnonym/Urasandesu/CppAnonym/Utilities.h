@@ -96,6 +96,10 @@
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITOR_H
+#include <Urasandesu/CppAnonym/Utilities/PointerVisitor.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_H
 #include <Urasandesu/CppAnonym/Utilities/TypeInfo.h>
 #endif

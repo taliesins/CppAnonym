@@ -50,11 +50,13 @@
 
 #define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
 #define BOOST_MPL_LIMIT_MAP_SIZE 30
+#define BOOST_MPL_LIMIT_VECTOR_SIZE 30
 
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlctl.h>
 #include <boost/call_traits.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/exception/errinfo_nested_exception.hpp>
 #include <boost/exception_ptr.hpp>
@@ -63,6 +65,16 @@
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/locale/generator.hpp>
+#include <boost/log/common.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/log/support/exception.hpp>
+#include <boost/log/utility/manipulators/add_value.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/file.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/mpl/advance.hpp>
 #include <boost/mpl/apply.hpp>
@@ -98,59 +110,6 @@
 #include <comdef.h>
 #include <Dbghelp.h>
 #include <tlhelp32.h>
-
-
-#ifdef OUTPUT_VERBOSE
-#define V_COUT(s) std::cout << s << std::endl
-#define V_COUT1(fmt, arg) std::cout << boost::format(fmt) % arg << std::endl
-#define V_COUT2(fmt, arg1, arg2) std::cout << boost::format(fmt) % arg1 % arg2 << std::endl
-#define V_COUT3(fmt, arg1, arg2, arg3) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
-#define V_COUT4(fmt, arg1, arg2, arg3, arg4) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
-#define V_COUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::cout << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
-#define V_WCOUT(s) std::wcout << s << std::endl
-#define V_WCOUT1(fmt, arg) std::wcout << boost::wformat(fmt) % arg << std::endl
-#define V_WCOUT2(fmt, arg1, arg2) std::wcout << boost::wformat(fmt) % arg1 % arg2 << std::endl
-#define V_WCOUT3(fmt, arg1, arg2, arg3) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
-#define V_WCOUT4(fmt, arg1, arg2, arg3, arg4) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
-#define V_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
-#define V_COUTI(i, s) std::cout << std::string(' ', i) << s << std::endl
-#define V_COUTI1(i, fmt, arg) std::cout << std::string(' ', i) << boost::format(fmt) % arg << std::endl
-#define V_COUTI2(i, fmt, arg1, arg2) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 << std::endl
-#define V_COUTI3(i, fmt, arg1, arg2, arg3) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 << std::endl
-#define V_COUTI4(i, fmt, arg1, arg2, arg3, arg4) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
-#define V_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::cout << std::string(' ', i) << boost::format(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
-#define V_WCOUTI(i, s) std::wcout << std::wstring(i, L' ') << s << std::endl
-#define V_WCOUTI1(i, fmt, arg) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg << std::endl
-#define V_WCOUTI2(i, fmt, arg1, arg2) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 << std::endl
-#define V_WCOUTI3(i, fmt, arg1, arg2, arg3) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 << std::endl
-#define V_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 << std::endl
-#define V_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) std::wcout << std::wstring(i, L' ') << boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5 << std::endl
-#else
-#define V_COUT(s)
-#define V_COUT1(fmt, arg)
-#define V_COUT2(fmt, arg1, arg2)
-#define V_COUT3(fmt, arg1, arg2, arg3)
-#define V_COUT4(fmt, arg1, arg2, arg3, arg4)
-#define V_COUT5(fmt, arg1, arg2, arg3, arg4, arg5)
-#define V_WCOUT(s)
-#define V_WCOUT1(fmt, arg)
-#define V_WCOUT2(fmt, arg1, arg2)
-#define V_WCOUT3(fmt, arg1, arg2, arg3)
-#define V_WCOUT4(fmt, arg1, arg2, arg3, arg4)
-#define V_WCOUT5(fmt, arg1, arg2, arg3, arg4, arg5)
-#define V_COUTI(i, s) 
-#define V_COUTI1(i, fmt, arg) 
-#define V_COUTI2(i, fmt, arg1, arg2) 
-#define V_COUTI3(i, fmt, arg1, arg2, arg3) 
-#define V_COUTI4(i, fmt, arg1, arg2, arg3, arg4) 
-#define V_COUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
-#define V_WCOUTI(i, s) 
-#define V_WCOUTI1(i, fmt, arg) 
-#define V_WCOUTI2(i, fmt, arg1, arg2) 
-#define V_WCOUTI3(i, fmt, arg1, arg2, arg3) 
-#define V_WCOUTI4(i, fmt, arg1, arg2, arg3, arg4) 
-#define V_WCOUTI5(i, fmt, arg1, arg2, arg3, arg4, arg5) 
-#endif
 
 
 #ifdef OUTPUT_DEBUG

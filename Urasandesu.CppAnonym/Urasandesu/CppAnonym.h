@@ -76,6 +76,10 @@
 #include <Urasandesu/CppAnonym/IDisposable.hpp>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_LOG_H
+#include "Urasandesu/CppAnonym/Log.h"
+#endif
+
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_H
 #include <Urasandesu/CppAnonym/ObjectTag.h>
 #endif

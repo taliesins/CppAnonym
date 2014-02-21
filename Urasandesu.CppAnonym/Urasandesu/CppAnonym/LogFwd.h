@@ -1,5 +1,5 @@
 ﻿/* 
- * File: stdafx.h
+ * File: LogFwd.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,19 +28,18 @@
  */
 
 
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but are changed infrequently
-
 #pragma once
+#ifndef URASANDESU_CPPANONYM_LOGFWD_H
+#define URASANDESU_CPPANONYM_LOGFWD_H
 
-#ifndef STRICT
-#define STRICT
-#endif
+namespace Urasandesu { namespace CppAnonym {
 
-#include "targetver.h"
+    namespace LogDetail {
 
-#include "resource.h"
+        class Bootstrap;
 
-#ifndef URASANDESU_CPPANONYM_H
-#include <Urasandesu/CppAnonym.h>
-#endif
+    }   // namespace LogDetail {
+
+}}  // namespace Urasandesu { namespace CppAnonym {
+
+#endif  // URASANDESU_CPPANONYM_LOGFWD_H

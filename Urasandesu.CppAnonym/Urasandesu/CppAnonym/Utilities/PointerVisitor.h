@@ -1,5 +1,5 @@
 ﻿/* 
- * File: stdafx.h
+ * File: PointerVisitor.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,19 +28,38 @@
  */
 
 
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but are changed infrequently
-
 #pragma once
+#ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITOR_H
+#define URASANDESU_CPPANONYM_UTILITIES_POINTERVISITOR_H
 
-#ifndef STRICT
-#define STRICT
+#ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITORFWD_H
+#include <Urasandesu/CppAnonym/Utilities/PointerVisitorFwd.h>
 #endif
 
-#include "targetver.h"
+namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#include "resource.h"
+    struct PointerVisitor : 
+        boost::static_visitor<void const *>
+    {
+        template<class T>
+        void const *operator ()(T const &p) const
+        {
+            return reinterpret_cast<void const *>(p);
+        }
 
-#ifndef URASANDESU_CPPANONYM_H
-#include <Urasandesu/CppAnonym.h>
-#endif
+        template<>
+        void const *operator ()<boost::blank>(boost::blank const &) const
+        {
+            return nullptr;
+        }
+    };
+
+    template<class Visitable>
+    void const *GetPointer(Visitable &visitable)
+    {
+        return boost::apply_visitor(PointerVisitor(), visitable);
+    }
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
+
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITOR_H

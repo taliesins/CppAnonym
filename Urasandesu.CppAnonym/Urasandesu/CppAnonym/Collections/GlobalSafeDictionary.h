@@ -43,6 +43,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
     > 
     class GlobalSafeDictionary : boost::noncopyable
     {
+    private:
+        typedef boost::lock_guard<boost::mutex> guard_type;
+
     public:
         typedef typename boost::call_traits<Key>::param_type in_key_type;
         typedef typename boost::call_traits<Value>::param_type in_value_type;
@@ -56,13 +59,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryAdd(in_key_type key, in_value_type value)
         {
-            m_lock.Lock();
-            BOOST_SCOPE_EXIT((&m_lock))
-            {
-                m_lock.Unlock();
-            }
-            BOOST_SCOPE_EXIT_END
-
+            if (!m_isEnabled)
+                return FALSE;
+            
+            auto _ = guard_type(m_lock);
 
             if (m_map.find(key) == m_map.end())
             {
@@ -77,13 +77,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryGet(in_key_type key, out_value_type rValue)
         {
-            m_lock.Lock();
-            BOOST_SCOPE_EXIT((&m_lock))
-            {
-                m_lock.Unlock();
-            }
-            BOOST_SCOPE_EXIT_END
-
+            if (!m_isEnabled)
+                return FALSE;
+            
+            auto _ = guard_type(m_lock);
 
             if (m_map.find(key) == m_map.end())
             {
@@ -98,13 +95,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryRemove(in_key_type key, out_value_type rValue)
         {
-            m_lock.Lock();
-            BOOST_SCOPE_EXIT((&m_lock))
-            {
-                m_lock.Unlock();
-            }
-            BOOST_SCOPE_EXIT_END
-
+            if (!m_isEnabled)
+                return FALSE;
+            
+            auto _ = guard_type(m_lock);
 
             if (m_map.find(key) == m_map.end())
             {
@@ -120,21 +114,31 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         void Clear()
         {
-            m_lock.Lock();
-            BOOST_SCOPE_EXIT((&m_lock))
-            {
-                m_lock.Unlock();
-            }
-            BOOST_SCOPE_EXIT_END
+            if (!m_isEnabled)
+                return;
 
-        
+            auto _ = guard_type(m_lock);
             m_map.clear();
         }
 
+        BOOL IsEnabled() const
+        {
+            return m_isEnabled;
+        }
+
+        void SetIsEnabled(BOOL isEnabled)
+        {
+            m_isEnabled = isEnabled;
+        }
+
     private:
-        GlobalSafeDictionary() { }
-        ATL::CComAutoCriticalSection m_lock;
+        GlobalSafeDictionary() : 
+            m_isEnabled(TRUE)
+        { }
+
+        boost::mutex m_lock;
         boost::unordered_map<Key, Value, Hash, Pred, Alloc> m_map;
+        volatile BOOL m_isEnabled;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {

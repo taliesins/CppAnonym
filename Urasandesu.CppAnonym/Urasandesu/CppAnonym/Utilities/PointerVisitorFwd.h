@@ -1,5 +1,5 @@
 ﻿/* 
- * File: stdafx.h
+ * File: PointerVisitorFwd.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,19 +28,14 @@
  */
 
 
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but are changed infrequently
-
 #pragma once
+#ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITORFWD_H
+#define URASANDESU_CPPANONYM_UTILITIES_POINTERVISITORFWD_H
 
-#ifndef STRICT
-#define STRICT
-#endif
+namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#include "targetver.h"
+    struct PointerVisitor;
 
-#include "resource.h"
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-#ifndef URASANDESU_CPPANONYM_H
-#include <Urasandesu/CppAnonym.h>
-#endif
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_POINTERVISITORFWD_H

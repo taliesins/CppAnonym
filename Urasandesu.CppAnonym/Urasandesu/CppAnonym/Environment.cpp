@@ -43,12 +43,18 @@ namespace Urasandesu { namespace CppAnonym {
 
     std::string Environment::GetEnvironmentVariable(LPCSTR variable)
     {
-        char *pVarValue = NULL;
-        size_t varValueSize = 0;
-        errno_t err = ::_dupenv_s(&pVarValue, &varValueSize, variable);
+        auto pVarValue = static_cast<char *>(nullptr);
+        auto varValueSize = size_t();
+        auto err = ::_dupenv_s(&pVarValue, &varValueSize, variable);
         if (err)
             BOOST_THROW_EXCEPTION(CppAnonymSystemException(err));
-        return std::string(pVarValue, varValueSize);
+
+        if (varValueSize == 0)
+            return std::string();
+        
+        auto result = std::string(pVarValue);
+        ::free(pVarValue);
+        return result;
     }
         
 }}  // namespace Urasandesu { namespace CppAnonym {

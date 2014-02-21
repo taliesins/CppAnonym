@@ -176,7 +176,6 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_ToEnd_01)
     {
         using namespace std;
-        using namespace boost::lambda;
         using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
@@ -184,7 +183,7 @@ namespace {
             vec.push_back(static_cast<BYTE>(i & 0xFF));
         ASSERT_EQ(512, vec.size());
 
-        boost::remove_erase_if(vec, _1 == 0xFF);
+        boost::remove_erase_if(vec, [](BYTE b) { return b == 0xFF; });
 
         ASSERT_EQ(510, vec.size());
         ASSERT_EQ(0x00, vec[0]);
@@ -198,7 +197,6 @@ namespace {
     CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_RapidVectorTest, EraseTest_LessThan512_InBetween_01)
     {
         using namespace std;
-        using namespace boost::lambda;
         using namespace Urasandesu::CppAnonym::Collections;
         
         RapidVector<BYTE> vec;
@@ -207,8 +205,8 @@ namespace {
         ASSERT_EQ(512, vec.size());
 
         typedef RapidVector<BYTE>::iterator ByteIterator;
-        ByteIterator i_ = std::find_if(vec.begin(), vec.end(), _1 == 0xFF);
-        ByteIterator i_end_ = std::find_if(i_, vec.end(), _1 == 0x03);
+        ByteIterator i_ = std::find_if(vec.begin(), vec.end(), [](BYTE b) { return b == 0xFF; });
+        ByteIterator i_end_ = std::find_if(i_, vec.end(), [](BYTE b) { return b == 0x03; });
         vec.erase(i_, i_end_);
 
         ASSERT_EQ(508, vec.size());
@@ -231,7 +229,7 @@ namespace {
             vec.push_back(static_cast<BYTE>(i & 0xFF));
         ASSERT_EQ(520, vec.size());
 
-        boost::remove_erase_if(vec, _1 == 0x00);
+        boost::remove_erase_if(vec, [](BYTE b) { return b == 0x00; });
 
         ASSERT_EQ(517, vec.size());
         ASSERT_EQ(0x01, vec[0]);
@@ -254,8 +252,8 @@ namespace {
         ASSERT_EQ(520, vec.size());
 
         typedef RapidVector<BYTE>::iterator ByteIterator;
-        ByteIterator i_ = std::find_if(vec.begin(), vec.end(), _1 == 0x80);
-        ByteIterator i_end_ = std::find_if(i_, vec.end(), _1 == 0x7F);
+        ByteIterator i_ = std::find_if(vec.begin(), vec.end(), [](BYTE b) { return b == 0x80; });
+        ByteIterator i_end_ = std::find_if(i_, vec.end(), [](BYTE b) { return b == 0x7F; });
         vec.erase(i_, i_end_);
 
         ASSERT_EQ(265, vec.size());
