@@ -94,6 +94,18 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
     
     
     template<class T>
+    struct Hash<T *> : 
+        Traits::HashComputable<T *>
+    {
+        result_type operator()(param_type v) const
+        {
+            return reinterpret_cast<std::size_t>(v);
+        }
+    };
+    
+    
+    
+    template<class T>
     std::size_t HashValue(T v)
     {
         return Hash<T>()(v);
