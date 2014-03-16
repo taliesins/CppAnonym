@@ -53,7 +53,7 @@ namespace {
         ASSERT_LT(0U, pFrames->size());
         for (ptr_vector<StackFrame>::iterator i = pFrames->begin(), i_end = pFrames->end(); i != i_end; ++i)
         {
-            cout << format("Offset: 0x%|1$08X|") % i->GetOffset() << endl;
+            cout << format("Offset: 0x%|1|") % reinterpret_cast<void *>(i->GetOffset()) << endl;
             cout << format("Module Name: %|1|") % i->GetModuleName() << endl;
             EXPECT_STRNE("", i->GetModuleName().c_str());
             cout << format("Symbol Name: %|1|") % i->GetSymbolName() << endl;
@@ -72,13 +72,15 @@ namespace {
         using namespace Urasandesu::CppAnonym;
         
         HANDLE hProcess = ::GetCurrentProcess();
-        cout << format("Current Process Pseudo Handle: 0x%|1$08X|") % hProcess << endl;
+        cout << format("Current Process Pseudo Handle: 0x%|1|") % reinterpret_cast<void *>(hProcess) << endl;
         
         HANDLE hThread = ::GetCurrentThread();
-        cout << format("Current Thread Pseudo Handle: 0x%|1$08X|") % hThread << endl;
+        cout << format("Current Thread Pseudo Handle: 0x%|1|") % reinterpret_cast<void *>(hThread) << endl;
 
         CONTEXT context;
         ::ZeroMemory(&context, sizeof(CONTEXT));
+
+#ifdef _M_IX86
         context.ContextFlags = CONTEXT_FULL;
 
         unsigned long instPtr;
@@ -94,7 +96,19 @@ namespace {
         context.Eip = instPtr; 
         context.Esp = stackPtr;
         context.Ebp = basePtr;
-        cout << format("Current Thread Context Eip: 0x%|1$08X|, Ebp: 0x%|2$08X|, Esp: 0x%|3$08X|") % context.Eip % context.Ebp % context.Esp << endl;
+        cout << format("Current Thread Context Eip: 0x%|1|, Ebp: 0x%|2|, Esp: 0x%|3|") % 
+                    reinterpret_cast<void *>(context.Eip) % 
+                    reinterpret_cast<void *>(context.Ebp) % 
+                    reinterpret_cast<void *>(context.Esp) << endl;
+#else
+        context.ContextFlags = CONTEXT_CONTROL;
+
+        ::RtlCaptureContext(&context);
+        cout << format("Current Thread Context Rip: 0x%|1|, Rsp: 0x%|2|, Rsp: 0x%|3|") % 
+                    reinterpret_cast<void *>(context.Rip) % 
+                    reinterpret_cast<void *>(context.Rsp) % 
+                    reinterpret_cast<void *>(context.Rsp) << endl;
+#endif
         
         LPCWSTR userSearchPath = L".\\";
         boost::filesystem::path p(userSearchPath);
@@ -106,7 +120,7 @@ namespace {
         ASSERT_LT(0U, pFrames->size());
         for (ptr_vector<StackFrame>::iterator i = pFrames->begin(), i_end = pFrames->end(); i != i_end; ++i)
         {
-            cout << format("Offset: 0x%|1$08X|") % i->GetOffset() << endl;
+            cout << format("Offset: 0x%|1|") % reinterpret_cast<void *>(i->GetOffset()) << endl;
             cout << format("Module Name: %|1|") % i->GetModuleName() << endl;
             EXPECT_STRNE("", i->GetModuleName().c_str());
             cout << format("Symbol Name: %|1|") % i->GetSymbolName() << endl;

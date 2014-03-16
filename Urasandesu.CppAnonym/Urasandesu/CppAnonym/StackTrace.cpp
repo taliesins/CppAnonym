@@ -75,6 +75,9 @@ namespace Urasandesu { namespace CppAnonym {
 
         STACKFRAME sf; 
         ::ZeroMemory(&sf, sizeof(STACKFRAME));
+        DWORD MachineType;
+#ifdef _M_IX86
+        MachineType = IMAGE_FILE_MACHINE_I386;
         if (!pContext)
         {
             unsigned long instPtr;
@@ -103,8 +106,35 @@ namespace Urasandesu { namespace CppAnonym {
             sf.AddrFrame.Offset = pContext->Ebp;
             sf.AddrFrame.Mode = AddrModeFlat;
         }
+#else
+        MachineType = IMAGE_FILE_MACHINE_AMD64;
+        CONTEXT context;
+        ::ZeroMemory(&context, sizeof(CONTEXT));
+        context.ContextFlags = CONTEXT_CONTROL;
+        if (!pContext)
+        {
+            ::RtlCaptureContext(&context);
+            pContext = &context;
 
-        while (::StackWalk(IMAGE_FILE_MACHINE_I386, m_hProcess, hThread, &sf, NULL, 
+            sf.AddrPC.Offset = context.Rip;
+            sf.AddrPC.Mode = AddrModeFlat;
+            sf.AddrStack.Offset = context.Rsp;
+            sf.AddrStack.Mode = AddrModeFlat;
+            sf.AddrFrame.Offset = context.Rsp;
+            sf.AddrFrame.Mode = AddrModeFlat;
+        }
+        else
+        {
+            sf.AddrPC.Offset = pContext->Rip;
+            sf.AddrPC.Mode = AddrModeFlat;
+            sf.AddrStack.Offset = pContext->Rsp;
+            sf.AddrStack.Mode = AddrModeFlat;
+            sf.AddrFrame.Offset = pContext->Rsp;
+            sf.AddrFrame.Mode = AddrModeFlat;
+        }
+#endif
+
+        while (::StackWalk(MachineType, m_hProcess, hThread, &sf, MachineType == IMAGE_FILE_MACHINE_I386 ? NULL : pContext, 
                            NULL, ::SymFunctionTableAccess, ::SymGetModuleBase, NULL) == TRUE) 
         {
             if (sf.AddrFrame.Offset == 0) 

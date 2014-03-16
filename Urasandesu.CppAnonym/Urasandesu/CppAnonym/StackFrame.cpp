@@ -45,13 +45,13 @@ namespace Urasandesu { namespace CppAnonym {
         m_fileColumnNum(0)
     { }
     
-    void StackFrame::Init(HANDLE hProcess, DWORD offset)
+    void StackFrame::Init(HANDLE hProcess, DWORD_PTR offset)
     {
         m_hProcess = hProcess;
         m_offset = offset;
     }
     
-    DWORD StackFrame::GetOffset()
+    DWORD_PTR StackFrame::GetOffset()
     {
         return m_offset;
     }
@@ -76,7 +76,7 @@ namespace Urasandesu { namespace CppAnonym {
         return m_symName;
     }
     
-    DWORD StackFrame::GetSymbolDisplacement()
+    DWORD_PTR StackFrame::GetSymbolDisplacement()
     {
         FillSymbolInfoIfNecessary();
         return m_symDisp;

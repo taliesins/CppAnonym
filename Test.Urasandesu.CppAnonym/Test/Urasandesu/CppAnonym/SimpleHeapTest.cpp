@@ -198,17 +198,18 @@ namespace {
         ASSERT_EQ(pPod2, &pod2Heap[0]);
         ASSERT_EQ(1, pod2Heap.size());
 
-        for (INT i = 0; i < 511; ++i)
+        auto capacity = SimpleHeap<MyPOD2, VeryQuickHeapButMustAccessThroughEachMethod>::internal_vector_type().capacity();
+        for (INT i = 0; i < capacity - 1; ++i)
             pod2Heap.New();
 
         ASSERT_EQ(pPod2, &pod2Heap[0]);
-        ASSERT_EQ(512, pod2Heap.size());
+        ASSERT_EQ(capacity, pod2Heap.size());
 
         pod2Heap.New();
 
-        ASSERT_NE(pPod2, &pod2Heap[0]);     // This heap version is very quick, but you must access through the each method if access it after a while.
-                                            // Because the allocated objects are moved when the heap is over a threshold size.
-        ASSERT_EQ(513, pod2Heap.size());
+        ASSERT_NE(pPod2, &pod2Heap[0]);             // This heap version is very quick, but you must access through the each method if access it after a while.
+                                                    // Because the allocated objects are moved when the heap is over a threshold size.
+        ASSERT_EQ(capacity + 1, pod2Heap.size());   // 
     }
 
     

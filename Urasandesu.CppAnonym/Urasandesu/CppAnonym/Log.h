@@ -110,7 +110,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Logging {
         BOOST_LOG_GLOBAL_LOGGER(LogW, src::wseverity_logger_mt<LogSeverityLevel>);
         BOOST_LOG_GLOBAL_LOGGER(LogA, src::severity_logger_mt<LogSeverityLevel>);
 
-        inline int GetIndentLevel()
+        inline size_t GetIndentLevel()
         {
             using boost::log::current_scope;
             auto size = current_scope().value().size();

@@ -271,7 +271,11 @@ namespace {
         v.push_back(reinterpret_cast<int const *>(2));
         v.push_back(reinterpret_cast<int const *>(3));
 
+#ifdef _M_IX86
         ASSERT_EQ(4216901971, SequenceHashValue(v.begin(), v.end())); 
+#else
+        ASSERT_EQ(11093822460243, SequenceHashValue(v.begin(), v.end())); 
+#endif
     }
 
     
@@ -286,7 +290,11 @@ namespace {
         v.push_back(reinterpret_cast<int const *>(2));
         v.push_back(reinterpret_cast<int const *>(3));
 
-        ASSERT_EQ(4216901971, SequenceHashValue(v)); 
+#ifdef _M_IX86
+        ASSERT_EQ(4216901971, SequenceHashValue(v));
+#else
+        ASSERT_EQ(11093822460243, SequenceHashValue(v));
+#endif
     }
 
     

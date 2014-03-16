@@ -42,11 +42,11 @@ namespace Urasandesu { namespace CppAnonym {
     {
     public:
         StackFrame();
-        void Init(HANDLE hProcess, DWORD offset);
-        DWORD GetOffset();
+        void Init(HANDLE hProcess, DWORD_PTR offset);
+        DWORD_PTR GetOffset();
         std::string const &GetModuleName();
         std::string const &GetSymbolName();
-        DWORD GetSymbolDisplacement();
+        DWORD_PTR GetSymbolDisplacement();
         std::string const &GetFileName();
         DWORD GetFileLineNumber();
         DWORD GetFileColumnNumber();
@@ -60,11 +60,11 @@ namespace Urasandesu { namespace CppAnonym {
         void FillFileLineInfo();
 
         HANDLE m_hProcess;
-        DWORD m_offset;
+        DWORD_PTR m_offset;
 
         std::string m_modName;
         std::string m_symName;
-        DWORD m_symDisp;
+        DWORD_PTR m_symDisp;
         std::string m_fileName;
         DWORD m_fileLineNum;
         DWORD m_fileColumnNum;

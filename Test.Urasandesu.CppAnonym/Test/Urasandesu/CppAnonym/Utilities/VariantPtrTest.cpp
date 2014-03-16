@@ -75,7 +75,7 @@ namespace {
 
         typedef VariantPtr<Hoge *, intrusive_ptr<Hoge> > MyVariantPtr;
 #ifdef _DEBUG
-        BOOST_MPL_ASSERT_RELATION(sizeof(MyVariantPtr), ==, sizeof(intrusive_ptr<Hoge>) + sizeof(INT));
+        BOOST_MPL_ASSERT_RELATION(sizeof(MyVariantPtr), ==, sizeof(intrusive_ptr<Hoge>) + sizeof(SIZE_T));
 #else
         BOOST_MPL_ASSERT_RELATION(sizeof(MyVariantPtr), ==, sizeof(intrusive_ptr<Hoge>));
 #endif

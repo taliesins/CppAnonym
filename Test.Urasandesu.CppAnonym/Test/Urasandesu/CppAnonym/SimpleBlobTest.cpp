@@ -120,7 +120,7 @@ namespace {
         MyPOD1 pod1 = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
         MyPOD2 podPrev;
         MyPOD2 podNext;
-        MyPOD2 pod2 = { 0x090A0B0C, pod1, NULL, &podPrev, &podNext };
+        MyPOD2 pod2 = { 0x090A0B0C, pod1, nullptr, &podPrev, &podNext };
         
         SimpleBlob sb;
         sb.Put<MyPOD2>(pod2);
@@ -138,18 +138,43 @@ namespace {
         ASSERT_EQ(0x06, *pb++);
         ASSERT_EQ(0x07, *pb++);
         ASSERT_EQ(0x08, *pb++);
+#ifdef _M_IX86
+#else
+        pb += 4;    // for next pointer member's alignment
+#endif
         ASSERT_EQ(0x00, *pb++);
         ASSERT_EQ(0x00, *pb++);
         ASSERT_EQ(0x00, *pb++);
         ASSERT_EQ(0x00, *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podPrev) & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podPrev) >> 8 & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podPrev) >> 16 & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podPrev) >> 24 & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podNext) & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podNext) >> 8 & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podNext) >> 16 & 0xFF), *pb++);
-        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<INT>(&podNext) >> 24 & 0xFF), *pb++);
+#ifdef _M_IX86
+#else
+        ASSERT_EQ(0x00, *pb++);
+        ASSERT_EQ(0x00, *pb++);
+        ASSERT_EQ(0x00, *pb++);
+        ASSERT_EQ(0x00, *pb++);
+#endif
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 8 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 16 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 24 & 0xFF), *pb++);
+#ifdef _M_IX86
+#else
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 32 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 40 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 48 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podPrev) >> 56 & 0xFF), *pb++);
+#endif
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 8 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 16 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 24 & 0xFF), *pb++);
+#ifdef _M_IX86
+#else
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 32 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 40 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 48 & 0xFF), *pb++);
+        ASSERT_EQ(static_cast<BYTE>(reinterpret_cast<DWORD_PTR>(&podNext) >> 56 & 0xFF), *pb++);
+#endif
     }
 
 
@@ -163,7 +188,7 @@ namespace {
             SimpleBlob sb;
             assignCount = static_cast<INT>(sb.Capacity() / sizeof(MyPOD2));
         }
-        ASSERT_EQ(21, assignCount);
+        ASSERT_LT(20, assignCount);
         
 
 #ifdef _DEBUG

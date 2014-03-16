@@ -39,7 +39,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         template<
             class Value, 
             class T, 
+#ifdef _M_IX86
             DWORD RAPID_SIZE = 512,
+#else
+            DWORD RAPID_SIZE = 1024,
+#endif
             class Alloc = std::allocator<T>
         >
         class RapidVectorIterator;
@@ -49,7 +53,15 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
     }   // namespace RapidVectorDetail
 
-    template<class T, DWORD RAPID_SIZE = 512, class Alloc = std::allocator<T>>
+    template<
+        class T, 
+#ifdef _M_IX86
+        DWORD RAPID_SIZE = 512, 
+#else
+        DWORD RAPID_SIZE = 1024, 
+#endif
+        class Alloc = std::allocator<T>
+    >
     struct RapidVector;
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
