@@ -199,7 +199,7 @@ namespace {
         ASSERT_EQ(1, pod2Heap.size());
 
         auto capacity = SimpleHeap<MyPOD2, VeryQuickHeapButMustAccessThroughEachMethod>::internal_vector_type().capacity();
-        for (INT i = 0; i < capacity - 1; ++i)
+        for (auto i = 0ul; i < capacity - 1; ++i)
             pod2Heap.New();
 
         ASSERT_EQ(pPod2, &pod2Heap[0]);
