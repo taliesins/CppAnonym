@@ -119,6 +119,83 @@ namespace Urasandesu { namespace CppAnonym { namespace Logging {
 
     }   // namespace LogDetail {
 
+#ifdef CPPANONYM_LOG_DISABLED
+#define CPPANONYM_LOG_FUNCTION()
+#define CPPANONYM_LOG_NAMED_SCOPE(name)
+
+#define CPPANONYM_D_LOG_ENABLED() false
+#define CPPANONYM_D_LOG(s)
+#define CPPANONYM_D_LOG1(fmt, arg)
+#define CPPANONYM_D_LOG2(fmt, arg1, arg2)
+#define CPPANONYM_D_LOG3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_D_LOG4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_D_LOG5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define CPPANONYM_D_LOGW(s)
+#define CPPANONYM_D_LOGW1(fmt, arg)
+#define CPPANONYM_D_LOGW2(fmt, arg1, arg2)
+#define CPPANONYM_D_LOGW3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_D_LOGW4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_D_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5)
+
+#define CPPANONYM_V_LOG_ENABLED() false
+#define CPPANONYM_V_LOG(s)
+#define CPPANONYM_V_LOG1(fmt, arg)
+#define CPPANONYM_V_LOG2(fmt, arg1, arg2)
+#define CPPANONYM_V_LOG3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_V_LOG4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_V_LOG5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define CPPANONYM_V_LOGW(s)
+#define CPPANONYM_V_LOGW1(fmt, arg)
+#define CPPANONYM_V_LOGW2(fmt, arg1, arg2)
+#define CPPANONYM_V_LOGW3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_V_LOGW4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_V_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5)
+
+#define CPPANONYM_I_LOG_ENABLED() false
+#define CPPANONYM_I_LOG(s)
+#define CPPANONYM_I_LOG1(fmt, arg)
+#define CPPANONYM_I_LOG2(fmt, arg1, arg2)
+#define CPPANONYM_I_LOG3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_I_LOG4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_I_LOG5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define CPPANONYM_I_LOGW(s)
+#define CPPANONYM_I_LOGW1(fmt, arg)
+#define CPPANONYM_I_LOGW2(fmt, arg1, arg2)
+#define CPPANONYM_I_LOGW3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_I_LOGW4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_I_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5)
+
+#define CPPANONYM_W_LOG_ENABLED() false
+#define CPPANONYM_W_LOG(s)
+#define CPPANONYM_W_LOG1(fmt, arg)
+#define CPPANONYM_W_LOG2(fmt, arg1, arg2)
+#define CPPANONYM_W_LOG3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_W_LOG4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_W_LOG5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define CPPANONYM_W_LOGW(s)
+#define CPPANONYM_W_LOGW1(fmt, arg)
+#define CPPANONYM_W_LOGW2(fmt, arg1, arg2)
+#define CPPANONYM_W_LOGW3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_W_LOGW4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_W_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5)
+
+#define CPPANONYM_E_LOG_ENABLED() false
+#define CPPANONYM_E_LOG(s)
+#define CPPANONYM_E_LOG1(fmt, arg)
+#define CPPANONYM_E_LOG2(fmt, arg1, arg2)
+#define CPPANONYM_E_LOG3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_E_LOG4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_E_LOG5(fmt, arg1, arg2, arg3, arg4, arg5)
+#define CPPANONYM_E_LOGW(s)
+#define CPPANONYM_E_LOGW1(fmt, arg)
+#define CPPANONYM_E_LOGW2(fmt, arg1, arg2)
+#define CPPANONYM_E_LOGW3(fmt, arg1, arg2, arg3)
+#define CPPANONYM_E_LOGW4(fmt, arg1, arg2, arg3, arg4)
+#define CPPANONYM_E_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5)
+#else
+#define CPPANONYM_LOG_FUNCTION() BOOST_LOG_FUNCTION()
+#define CPPANONYM_LOG_NAMED_SCOPE(name) BOOST_LOG_NAMED_SCOPE(name)
+
 #define CPPANONYM_D_LOG_ENABLED() Urasandesu::CppAnonym::Logging::LogDetail::LogW::get().open_record(boost::log::keywords::severity = Urasandesu::CppAnonym::Logging::LogDetail::LSL_DEBUG)
 #define CPPANONYM_D_LOG(s) BOOST_LOG_SEV((Urasandesu::CppAnonym::Logging::LogDetail::LogA::get()), Urasandesu::CppAnonym::Logging::LogDetail::LSL_DEBUG) << boost::log::add_value("FileLine", boost::lexical_cast<std::string>(__LINE__)) << boost::log::add_value("FilePath", __FILE__) << std::string(Urasandesu::CppAnonym::Logging::LogDetail::GetIndentLevel(), ' ') << s
 #define CPPANONYM_D_LOG1(fmt, arg) BOOST_LOG_SEV((Urasandesu::CppAnonym::Logging::LogDetail::LogA::get()), Urasandesu::CppAnonym::Logging::LogDetail::LSL_DEBUG) << boost::log::add_value("FileLine", boost::lexical_cast<std::string>(__LINE__)) << boost::log::add_value("FilePath", __FILE__) << std::string(Urasandesu::CppAnonym::Logging::LogDetail::GetIndentLevel(), ' ') << boost::str(boost::format(fmt) % arg)
@@ -188,6 +265,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Logging {
 #define CPPANONYM_E_LOGW3(fmt, arg1, arg2, arg3) BOOST_LOG_SEV((Urasandesu::CppAnonym::Logging::LogDetail::LogW::get()), Urasandesu::CppAnonym::Logging::LogDetail::LSL_ERROR) << boost::log::add_value("FileLine", boost::lexical_cast<std::string>(__LINE__)) << boost::log::add_value("FilePath", __FILE__) << std::wstring(Urasandesu::CppAnonym::Logging::LogDetail::GetIndentLevel(), L' ') << boost::str(boost::wformat(fmt) % arg1 % arg2 % arg3)
 #define CPPANONYM_E_LOGW4(fmt, arg1, arg2, arg3, arg4) BOOST_LOG_SEV((Urasandesu::CppAnonym::Logging::LogDetail::LogW::get()), Urasandesu::CppAnonym::Logging::LogDetail::LSL_ERROR) << boost::log::add_value("FileLine", boost::lexical_cast<std::string>(__LINE__)) << boost::log::add_value("FilePath", __FILE__) << std::wstring(Urasandesu::CppAnonym::Logging::LogDetail::GetIndentLevel(), L' ') << boost::str(boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4)
 #define CPPANONYM_E_LOGW5(fmt, arg1, arg2, arg3, arg4, arg5) BOOST_LOG_SEV((Urasandesu::CppAnonym::Logging::LogDetail::LogW::get()), Urasandesu::CppAnonym::Logging::LogDetail::LSL_ERROR) << boost::log::add_value("FileLine", boost::lexical_cast<std::string>(__LINE__)) << boost::log::add_value("FilePath", __FILE__) << std::wstring(Urasandesu::CppAnonym::Logging::LogDetail::GetIndentLevel(), L' ') << boost::str(boost::wformat(fmt) % arg1 % arg2 % arg3 % arg4 % arg5)
+#endif
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Logging {
 

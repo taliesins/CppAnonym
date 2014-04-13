@@ -73,10 +73,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 ++p->m_useCount;
             }
 
-            friend void intrusive_ptr_release(this_type *p)
+            friend void intrusive_ptr_release(this_type *&p)
             {
                 if(--p->m_useCount == 0) 
+                {
                     p->Delete();
+                    p = nullptr;
+                }
             }
 
             LONG m_useCount;
@@ -102,7 +105,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 m_d(d),
                 m_impld(impld)
             { 
-                _ASSERTE(p != NULL); 
+                _ASSERTE(p); 
             }
             
             virtual ~AutoPtrHolderImpl()
@@ -188,7 +191,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             AutoPtrImpl(AutoPtrHolderImpl<T, TD, ImplD> *pHolder) : 
                 m_pHolder(pHolder)
             {
-                _ASSERTE(pHolder != NULL); 
+                _ASSERTE(pHolder); 
             }
 
             AutoPtrImpl(this_type const &other) : 
@@ -230,8 +233,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             
             T &operator *()
             {
-                T *p = Get();
-                _ASSERTE(p != NULL);
+                auto *p = Get();
+                _ASSERTE(p);
                 return *p;
             }
 

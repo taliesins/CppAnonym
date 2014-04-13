@@ -117,25 +117,14 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename facade::object_type object_type;
             typedef typename facade::persisted_handler_type persisted_handler_type;
 
-            ~DisposableHeapProviderImplImpl()
-            {
-                if (base_type::AnyObjects())
-                    Destruct(base_type::Objects());
-            }
-
             TempPtr<object_type> NewObject()
             {
                 return base_type::NewObject();
             }
             
-            SIZE_T RegisterObject(TempPtr<object_type> &p)
+            void RegisterObject(TempPtr<object_type> &p)
             {
-                return base_type::RegisterObject(p);
-            }
-            
-            object_type *GetObject(SIZE_T n)
-            {
-                return base_type::GetObject(n);
+                base_type::RegisterObject(p);
             }
 
             SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
@@ -143,10 +132,10 @@ namespace Urasandesu { namespace CppAnonym {
                 return base_type::AddPersistedHandler(p, handler);
             }
 
-            void DeleteObject(SIZE_T n)
+            void DeleteObject(object_type *p)
             {
-                DisposeCore(GetObject(n));
-                base_type::DeleteObject(n);
+                DisposeCore(p);
+                base_type::DeleteObject(p);
             }
 
         private:
@@ -246,14 +235,16 @@ namespace Urasandesu { namespace CppAnonym {
         
         
         template<class DisposingInfoTypes>
-        struct ATL_NO_VTABLE DisposableHeapProviderImpl : 
+        class ATL_NO_VTABLE DisposableHeapProviderImpl : 
             DisposableHeapProviderImplImpl<typename reverse<DisposingInfoTypes>::type, 
                                            typename begin<typename reverse<DisposingInfoTypes>::type>::type, 
                                            typename end<typename reverse<DisposingInfoTypes>::type>::type>
         {
+        private:
             typedef DisposableHeapProviderImpl<DisposingInfoTypes> this_type;
             typedef DisposingInfoTypes disposing_info_types;
 
+        public:
             template<LONG N>
             struct disposing_info_at : 
                 at_c<disposing_info_types, N>
@@ -324,6 +315,13 @@ namespace Urasandesu { namespace CppAnonym {
             typename DisposableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
         >
     {
+        // The following typedef can't resolve if each element of the sequence is DisposableHeapProvider.
+        //typedef typename DisposableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type disposing_info_types;
+        template<class T = boost::mpl::void_>
+        struct disposing_info : 
+            DisposableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_DISPOSABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>
+        {
+        };
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

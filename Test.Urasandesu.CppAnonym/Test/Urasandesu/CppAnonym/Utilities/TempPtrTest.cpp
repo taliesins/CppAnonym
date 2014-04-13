@@ -484,13 +484,13 @@ namespace {
 
         ASSERT_EQ(0, Tester::Instance().Value());
 
-        Tester t;
+        auto t = Tester();
         { 
-            int *p = new int(10);
+            auto *p = new int(10);
             
-            TempPtr<int> sp1(p, t);
+            auto sp1 = TempPtr<int>(p, t);
             sp1.AddPersistedHandler(new PersistedHandlerImpl(TestHandler<Tester>(t), t));
-            TempPtr<int> sp2;
+            auto sp2 = TempPtr<int>();
             sp2 = sp1;
         }
 
@@ -513,15 +513,15 @@ namespace {
 
         ASSERT_EQ(0, Tester::Instance().Value());
 
-        std::vector<int *> garbages;
-        Tester t;
+        auto garbages = std::vector<int *>();
+        auto t = Tester();
         { 
-            int *p = new int(10);
+            auto *p = new int(10);
             
-            TempPtr<int> sp1(p, t);
+            auto sp1 = TempPtr<int>(p, t);
             sp1.AddPersistedHandler(new PersistedHandlerImpl(TestHandler<Tester>(t), t));
             sp1.Persist();
-            TempPtr<int> sp2;
+            auto sp2 = TempPtr<int>();
             sp2 = sp1;
             garbages.push_back(sp2.Get());
         }
@@ -529,9 +529,34 @@ namespace {
         ASSERT_EQ(1, Tester::Instance().Value());
         ASSERT_TRUE(t.m_value);
 
-        typedef std::vector<int *>::iterator Iterator;
-        for (Iterator i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
+        for (auto i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
             t(*i);
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_TempPtrTest, AssignAlreadyPersistedTest_02)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
+        using namespace _85245FB6;
+
+        auto garbages = std::vector<int *>();
+        { 
+            auto *p = new int(10);
+            
+            auto sp1 = TempPtr<int>(p, true);
+            ASSERT_TRUE(sp1 != nullptr);
+
+            sp1 = TempPtr<int>();
+            ASSERT_TRUE(sp1 == nullptr);
+            
+            garbages.push_back(p);
+        }
+
+        for (auto i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
+            delete *i;
     }
 
 
@@ -549,13 +574,13 @@ namespace {
 
         ASSERT_EQ(0, Tester::Instance().Value());
 
-        Tester t;
+        auto t = Tester();
         { 
-            int *p = new int(10);
+            auto *p = new int(10);
             
-            TempPtr<int> sp1(p, t);
+            auto sp1 = TempPtr<int>(p, t);
             sp1.AddPersistedHandler(new PersistedHandlerImpl(TestHandler<Tester>(t), t));
-            TempPtr<int const> sp2;
+            auto sp2 = TempPtr<int const>();
             sp2 = sp1;
         }
 
@@ -578,15 +603,15 @@ namespace {
 
         ASSERT_EQ(0, Tester::Instance().Value());
 
-        std::vector<int const *> garbages;
-        Tester t;
+        auto garbages = std::vector<int const *>();
+        auto t = Tester();
         { 
-            int *p = new int(10);
+            auto *p = new int(10);
             
-            TempPtr<int> sp1(p, t);
+            auto sp1 = TempPtr<int>(p, t);
             sp1.AddPersistedHandler(new PersistedHandlerImpl(TestHandler<Tester>(t), t));
             sp1.Persist();
-            TempPtr<int const> sp2;
+            auto sp2 = TempPtr<int const>();
             sp2 = sp1;
             garbages.push_back(sp2.Get());
         }
@@ -594,9 +619,34 @@ namespace {
         ASSERT_EQ(1, Tester::Instance().Value());
         ASSERT_TRUE(t.m_value);
 
-        typedef std::vector<int const *>::iterator Iterator;
-        for (Iterator i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
+        for (auto i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
             t(*i);
+    }
+
+
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Utilities_TempPtrTest, ImplicitAssignAlreadyPersistedTest_02)
+    {
+        using namespace Urasandesu::CppAnonym::Utilities;
+        using namespace _85245FB6;
+
+        auto garbages = std::vector<int const *>();
+        { 
+            auto *p = new int(10);
+            
+            auto sp1 = TempPtr<int const>(p, true);
+            ASSERT_TRUE(sp1 != nullptr);
+
+            sp1 = TempPtr<int>();
+            ASSERT_TRUE(sp1 == nullptr);
+            
+            garbages.push_back(p);
+        }
+
+        for (auto i = garbages.begin(), i_end = garbages.end(); i != i_end; ++i)
+            delete *i;
     }
 
 

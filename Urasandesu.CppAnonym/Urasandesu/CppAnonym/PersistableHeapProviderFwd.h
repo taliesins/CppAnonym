@@ -61,7 +61,7 @@ namespace Urasandesu { namespace CppAnonym {
         class ProviderOfImpl;
 
         template<class PersistentInfoTypes>
-        struct ATL_NO_VTABLE PersistableHeapProviderImpl;
+        class ATL_NO_VTABLE PersistableHeapProviderImpl;
 
         template<CPPANONYM_PERSISTABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
         class DesignatedSequence;

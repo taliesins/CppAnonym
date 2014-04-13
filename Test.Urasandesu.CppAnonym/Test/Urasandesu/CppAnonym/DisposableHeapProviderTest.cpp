@@ -93,9 +93,9 @@ namespace {
                 return checker;
             }
 
-            std::vector<int> m_ctorSeq;
-            std::vector<int> m_dtorSeq;
-            std::vector<int> m_disposingSeq;
+            std::vector<size_t> m_ctorSeq;
+            std::vector<size_t> m_dtorSeq;
+            std::vector<size_t> m_disposingSeq;
         };
 
         struct PiyoFacade
@@ -123,7 +123,7 @@ namespace {
 
             typedef TempPtr<piyo_type> sender_type;
 
-            PiyoPersistedHandler(piyo_type *pPiyo);
+            PiyoPersistedHandler();
             void operator()(sender_type *pSender, void *pArg);
 
             piyo_type *m_pPiyo;
@@ -138,8 +138,22 @@ namespace {
             typedef facade::piyo_disposing_info_type piyo_disposing_info_type;
             typedef facade::piyo_provider_type piyo_provider_type;
 
-            Piyo() { OrderChecker::Instance().m_ctorSeq.push_back(reinterpret_cast<int>(this)); }
-            ~Piyo() { OrderChecker::Instance().m_dtorSeq.push_back(reinterpret_cast<int>(this)); }
+            Piyo()
+            { 
+                OrderChecker::Instance().m_ctorSeq.push_back(reinterpret_cast<size_t>(this)); 
+            }
+            
+            ~Piyo() 
+            { 
+                OrderChecker::Instance().m_dtorSeq.push_back(reinterpret_cast<size_t>(this)); 
+                if (!m_piyos.empty())   // root
+                {
+                    auto &sPiyo = MyStorage::Object<piyo_type>();
+                    auto &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
+                    BOOST_FOREACH (auto const &pPiyo, m_piyos)
+                        provider.DeleteObject(pPiyo);
+                }
+            }
 
             static piyo_type *CreateStaticPiyo()
             {
@@ -153,7 +167,8 @@ namespace {
                 auto &sPiyo = MyStorage::Object<piyo_type>();
                 auto &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
                 auto pPiyo = provider.NewObject();
-                provider.AddPersistedHandler(pPiyo, &sPiyo);
+                auto handler = piyo_persisted_handler_type();
+                provider.AddPersistedHandler(pPiyo, handler);
                 return pPiyo;
             }
             
@@ -166,62 +181,61 @@ namespace {
 
             TempPtr<piyo_type> NewPiyo()
             {
-                auto &provider = ProviderOf<piyo_disposing_info_type>();
+                auto &sPiyo = MyStorage::Object<piyo_type>();
+                auto &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
                 auto pPiyo = provider.NewObject();
-                provider.AddPersistedHandler(pPiyo, this);
+                auto handler = piyo_persisted_handler_type();
+                provider.AddPersistedHandler(pPiyo, handler);
                 return pPiyo;
             }
 
             void RegisterPiyo(TempPtr<piyo_type> &pPiyo)
             {
-                using std::make_pair;
-
-                auto &provider = FirstProviderOf<piyo_type>();
+                auto &sPiyo = MyStorage::Object<piyo_type>();
+                auto &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
                 auto &piyo = *pPiyo;
-                m_piyoToIndex.push_back(make_pair(&piyo, provider.RegisterObject(pPiyo)));
+                provider.RegisterObject(pPiyo);
+                sPiyo.m_piyos.push_back(&piyo);
             }
 
             void DeletePiyo(TempPtr<piyo_type> &pPiyo)
             {
-                using std::find_if;
+                using boost::range::find_if;
 
-                typedef decltype(m_piyoToIndex) PiyoToIndex;
-                typedef PiyoToIndex::value_type Value;
+                auto &sPiyo = MyStorage::Object<piyo_type>();
+                typedef decltype(sPiyo.m_piyos) Piyos;
+                typedef Piyos::value_type Value;
 
-                auto i = m_piyoToIndex.begin();
-                auto i_end = m_piyoToIndex.end();
-                auto finder = [&](Value const &v) { return v.first == pPiyo.Get(); };
-                auto result = find_if(i, i_end, finder);
-                if (result != i_end)
+                auto finder = [&](Value const &v) { return v == pPiyo.Get(); };
+                auto result = find_if(sPiyo.m_piyos, finder);
+                if (result != sPiyo.m_piyos.end())
                 {
-                    auto &provider = FirstProviderOf<piyo_type>();
-                    provider.DeleteObject((*result).second);
-                    m_piyoToIndex.erase(result);
+                    auto &provider = sPiyo.ProviderOf<piyo_disposing_info_type>();
+                    provider.DeleteObject(*result);
+                    sPiyo.m_piyos.erase(result);
                 }
                 else
                 {
-                    // nop, because the object will be deleted automatically.
+                    // nop, because the object will be deleted in .dtor.
                 }
             }
 
             void Dispose()
             {
-                OrderChecker::Instance().m_disposingSeq.push_back(reinterpret_cast<int>(this));
+                OrderChecker::Instance().m_disposingSeq.push_back(reinterpret_cast<size_t>(this));
             }
 
-            vector<pair<piyo_type *, SIZE_T> > m_piyoToIndex;
+            vector<piyo_type *> m_piyos;
         };
 
-        PiyoPersistedHandler::PiyoPersistedHandler(piyo_type *pPiyo) : 
-            m_pPiyo(pPiyo)
-        { 
-            _ASSERTE(pPiyo != NULL);
-        }
+        PiyoPersistedHandler::PiyoPersistedHandler()
+        { }
                 
         void PiyoPersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
             sender_type &pPiyo = *pSender;
-            m_pPiyo->RegisterPiyo(pPiyo);
+            auto &sPiyo = MyStorage::Object<piyo_type>();
+            sPiyo.RegisterPiyo(pPiyo);
         }
 
 
@@ -283,24 +297,27 @@ namespace {
         using namespace _731D234E;
 
         auto &sPiyo = MyStorage::Object<Piyo>();
-        auto sPiyoId = reinterpret_cast<int>(&sPiyo);
+        auto sPiyoId = reinterpret_cast<size_t>(&sPiyo);
         auto *pPiyoRoot = Piyo::CreateStaticPiyo();
-        auto pPiyoRootId = reinterpret_cast<int>(pPiyoRoot);
+        auto pPiyoRootId = reinterpret_cast<size_t>(pPiyoRoot);
         auto *pPiyo1 = pPiyoRoot->CreatePiyo();
-        auto pPiyo1Id = reinterpret_cast<int>(pPiyo1);
-        auto pPiyo2 = pPiyoRoot->NewPiyo();
-        auto pPiyo2Id = reinterpret_cast<int>(pPiyo2.Get());
-        pPiyo2.Persist();
+        auto pPiyo1Id = reinterpret_cast<size_t>(pPiyo1);
+        auto pPiyo2Id = size_t();
+        {
+            auto pPiyo2 = pPiyoRoot->NewPiyo();
+            pPiyo2Id = reinterpret_cast<size_t>(pPiyo2.Get());
+            pPiyo2.Persist();
 
-        ASSERT_EQ(4, OrderChecker::Instance().m_ctorSeq.size());
-        ASSERT_EQ(sPiyoId, OrderChecker::Instance().m_ctorSeq[0]);
-        ASSERT_EQ(pPiyoRootId, OrderChecker::Instance().m_ctorSeq[1]);
-        ASSERT_EQ(pPiyo1Id, OrderChecker::Instance().m_ctorSeq[2]);
-        ASSERT_EQ(pPiyo2Id, OrderChecker::Instance().m_ctorSeq[3]);
-        ASSERT_EQ(0, OrderChecker::Instance().m_dtorSeq.size());
-        ASSERT_EQ(0, OrderChecker::Instance().m_disposingSeq.size());
+            ASSERT_EQ(4, OrderChecker::Instance().m_ctorSeq.size());
+            ASSERT_EQ(sPiyoId, OrderChecker::Instance().m_ctorSeq[0]);
+            ASSERT_EQ(pPiyoRootId, OrderChecker::Instance().m_ctorSeq[1]);
+            ASSERT_EQ(pPiyo1Id, OrderChecker::Instance().m_ctorSeq[2]);
+            ASSERT_EQ(pPiyo2Id, OrderChecker::Instance().m_ctorSeq[3]);
+            ASSERT_EQ(0, OrderChecker::Instance().m_dtorSeq.size());
+            ASSERT_EQ(0, OrderChecker::Instance().m_disposingSeq.size());
 
-        pPiyoRoot->DeletePiyo(pPiyo2);
+            pPiyoRoot->DeletePiyo(pPiyo2);
+        }
 
         ASSERT_EQ(4, OrderChecker::Instance().m_ctorSeq.size());
         ASSERT_EQ(sPiyoId, OrderChecker::Instance().m_ctorSeq[0]);
@@ -339,8 +356,7 @@ namespace {
         
         Piyo piyo;
         
-        typedef Piyo::first_provider_of<Piyo>::type PiyoProvider;
-        PiyoProvider &provider = piyo.FirstProviderOf<Piyo>();
+        auto &provider = piyo.FirstProviderOf<Piyo>();
         TempPtr<Piyo> pPiyo = provider.NewObject();
         ASSERT_TRUE(pPiyo);
     }

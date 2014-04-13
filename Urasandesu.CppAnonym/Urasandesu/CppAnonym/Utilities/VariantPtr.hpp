@@ -122,7 +122,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             BOOST_MPL_ASSERT((not_<is_same<I, IEnd> >));
 #ifdef _DEBUG
             _ASSERTE(m_which == -1 || m_which == I::pos::value);
-            _ASSERTE(other.m_which == I::pos::value);
+            _ASSERTE(other.m_which == -1 || other.m_which == I::pos::value);
 #else
 #endif
             if (this != &other)
@@ -153,7 +153,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 #ifdef _DEBUG
             _ASSERTE(m_which == -1 || m_which == I::pos::value);
             typedef WhichAccessor<U0, CPPANONYM_VARIANT_PTR_ENUM_SHIFTED_PARAMS(U)> WhichAccessor;
-            _ASSERTE(WhichAccessor::Get(other) == OtherI::pos::value);
+            _ASSERTE(WhichAccessor::Get(other) == -1 || WhichAccessor::Get(other) == OtherI::pos::value);
 #else
 #endif
 

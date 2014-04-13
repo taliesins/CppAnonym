@@ -121,12 +121,6 @@ namespace Urasandesu { namespace CppAnonym {
             typedef typename PersistentInfoFacade<I>::holder_impl_heap_type holder_impl_heap_type;
             typedef typename PersistentInfoFacade<I>::persisted_handler_holder_impl_heap_type persisted_handler_holder_impl_heap_type;
 
-            ~PersistableHeapProviderImplImpl()
-            {
-                if (AnyObjects())
-                    Destruct(ObjectHeap(), Objects());
-            }
-
             TempPtr<object_type> NewObject()
             {
                 auto objDeleter = object_deleter_type(ObjectHeap());
@@ -138,16 +132,9 @@ namespace Urasandesu { namespace CppAnonym {
                 return TempPtr<object_type>(pHolderImpl);
             }
 
-            SIZE_T RegisterObject(TempPtr<object_type> &p)
+            void RegisterObject(TempPtr<object_type> &p)
             {
                 p.Persist();
-                Objects().push_back(p.Get());
-                return Objects().size() - 1;
-            }
-
-            object_type *GetObject(SIZE_T n)
-            {
-                return Objects()[n];
             }
 
             SIZE_T AddPersistedHandler(TempPtr<object_type> &p, persisted_handler_type const &handler)
@@ -158,26 +145,9 @@ namespace Urasandesu { namespace CppAnonym {
                 return p.AddPersistedHandler(pHandlerImpl);
             }
 
-            void DeleteObject(SIZE_T n)
+            void DeleteObject(object_type *p)
             {
-                if (!AnyObjects() || Objects().size() <= n)
-                    return;
-                
-                ObjectHeap().Delete(Objects()[n]);
-                Objects().erase(Objects().begin() + n);
-            }
-
-        protected:
-            std::vector<object_type *> &Objects()
-            {
-                if (!m_pObjects)
-                    m_pObjects = unique_ptr<std::vector<object_type *> >(new std::vector<object_type *>());
-                return *m_pObjects.get();
-            }
-
-            bool AnyObjects() const
-            {
-                return m_pObjects && !m_pObjects->empty();
+                ObjectHeap().Delete(p);
             }
 
         private:            
@@ -259,14 +229,16 @@ namespace Urasandesu { namespace CppAnonym {
         
         
         template<class PersistentInfoTypes>
-        struct ATL_NO_VTABLE PersistableHeapProviderImpl : 
-            PersistableHeapProviderImplImpl<typename reverse<PersistentInfoTypes>::type, 
-                                            typename begin<typename reverse<PersistentInfoTypes>::type>::type, 
-                                            typename end<typename reverse<PersistentInfoTypes>::type>::type>
+        class ATL_NO_VTABLE PersistableHeapProviderImpl : 
+            public PersistableHeapProviderImplImpl<typename reverse<PersistentInfoTypes>::type, 
+                                                   typename begin<typename reverse<PersistentInfoTypes>::type>::type, 
+                                                   typename end<typename reverse<PersistentInfoTypes>::type>::type>
         {
+        private:
             typedef PersistableHeapProviderImpl<PersistentInfoTypes> this_type;
             typedef PersistentInfoTypes persistent_info_types;
 
+        public:
             template<LONG N>
             struct persistent_info_at : 
                 at_c<persistent_info_types, N>
@@ -320,6 +292,13 @@ namespace Urasandesu { namespace CppAnonym {
             typename PersistableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type
         >
     {
+        // The following typedef can't resolve if each element of the sequence is PersistableHeapProvider.
+        //typedef typename PersistableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>::type persistent_info_types;
+        template<class T = boost::mpl::void_>
+        struct persistent_info : 
+            PersistableHeapProviderDetail::DesignatedSequence<T0, CPPANONYM_PERSISTABLE_HEAP_PROVIDER_ENUM_SHIFTED_PARAMS(T)>
+        {
+        };
     };
 
 }}   // namespace Urasandesu { namespace CppAnonym {

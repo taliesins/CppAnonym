@@ -43,7 +43,7 @@ namespace {
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_LogTest, DebugLogTest_01)
     {
-        BOOST_LOG_FUNCTION();
+        CPPANONYM_LOG_FUNCTION();
 
         using boost::assign::operator +=;
         using std::wostringstream;
@@ -61,7 +61,7 @@ namespace {
         CPPANONYM_D_LOGW3(L"An debug severity message. %|1$d|, %|2$d|, %|3$d|", 1, 2, 3);
         CPPANONYM_D_LOGW4(L"An debug severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|", 1, 2, 3, 4);
         CPPANONYM_D_LOGW5(L"An debug severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|, %|5$d|", 1, 2, 3, 4, 5);
-        BOOST_LOG_NAMED_SCOPE("New Scope");
+        CPPANONYM_LOG_NAMED_SCOPE("New Scope");
         CPPANONYM_D_LOG("An debug severity message.");
         CPPANONYM_D_LOG1("An debug severity message. %|1$d|", 1);
         CPPANONYM_D_LOG2("An debug severity message. %|1$d|, %|2$d|", 1, 2);
@@ -93,7 +93,7 @@ namespace {
     
     CPPANONYM_TEST(Urasandesu_CppAnonym_LogTest, VerboseLogTest_01)
     {
-        BOOST_LOG_FUNCTION();
+        CPPANONYM_LOG_FUNCTION();
 
         using boost::assign::operator +=;
         using std::wostringstream;
@@ -111,7 +111,7 @@ namespace {
         CPPANONYM_V_LOGW3(L"An verbose severity message. %|1$d|, %|2$d|, %|3$d|", 1, 2, 3);
         CPPANONYM_V_LOGW4(L"An verbose severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|", 1, 2, 3, 4);
         CPPANONYM_V_LOGW5(L"An verbose severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|, %|5$d|", 1, 2, 3, 4, 5);
-        BOOST_LOG_NAMED_SCOPE("New Scope");
+        CPPANONYM_LOG_NAMED_SCOPE("New Scope");
         CPPANONYM_V_LOG("An verbose severity message.");
         CPPANONYM_V_LOG1("An verbose severity message. %|1$d|", 1);
         CPPANONYM_V_LOG2("An verbose severity message. %|1$d|, %|2$d|", 1, 2);
@@ -143,7 +143,7 @@ namespace {
     
     CPPANONYM_TEST(Urasandesu_CppAnonym_LogTest, InfoLogTest_01)
     {
-        BOOST_LOG_FUNCTION();
+        CPPANONYM_LOG_FUNCTION();
 
         using boost::assign::operator +=;
         using std::wostringstream;
@@ -161,7 +161,7 @@ namespace {
         CPPANONYM_I_LOGW3(L"An info severity message. %|1$d|, %|2$d|, %|3$d|", 1, 2, 3);
         CPPANONYM_I_LOGW4(L"An info severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|", 1, 2, 3, 4);
         CPPANONYM_I_LOGW5(L"An info severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|, %|5$d|", 1, 2, 3, 4, 5);
-        BOOST_LOG_NAMED_SCOPE("New Scope");
+        CPPANONYM_LOG_NAMED_SCOPE("New Scope");
         CPPANONYM_I_LOG("An info severity message.");
         CPPANONYM_I_LOG1("An info severity message. %|1$d|", 1);
         CPPANONYM_I_LOG2("An info severity message. %|1$d|, %|2$d|", 1, 2);
@@ -193,7 +193,7 @@ namespace {
     
     CPPANONYM_TEST(Urasandesu_CppAnonym_LogTest, WarningLogTest_01)
     {
-        BOOST_LOG_FUNCTION();
+        CPPANONYM_LOG_FUNCTION();
 
         using boost::assign::operator +=;
         using std::wostringstream;
@@ -211,7 +211,7 @@ namespace {
         CPPANONYM_W_LOGW3(L"An warning severity message. %|1$d|, %|2$d|, %|3$d|", 1, 2, 3);
         CPPANONYM_W_LOGW4(L"An warning severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|", 1, 2, 3, 4);
         CPPANONYM_W_LOGW5(L"An warning severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|, %|5$d|", 1, 2, 3, 4, 5);
-        BOOST_LOG_NAMED_SCOPE("New Scope");
+        CPPANONYM_LOG_NAMED_SCOPE("New Scope");
         CPPANONYM_W_LOG("An warning severity message.");
         CPPANONYM_W_LOG1("An warning severity message. %|1$d|", 1);
         CPPANONYM_W_LOG2("An warning severity message. %|1$d|, %|2$d|", 1, 2);
@@ -243,7 +243,7 @@ namespace {
     
     CPPANONYM_TEST(Urasandesu_CppAnonym_LogTest, ErrorLogTest_01)
     {
-        BOOST_LOG_FUNCTION();
+        CPPANONYM_LOG_FUNCTION();
 
         using boost::assign::operator +=;
         using std::wostringstream;
@@ -261,7 +261,7 @@ namespace {
         CPPANONYM_E_LOGW3(L"An error severity message. %|1$d|, %|2$d|, %|3$d|", 1, 2, 3);
         CPPANONYM_E_LOGW4(L"An error severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|", 1, 2, 3, 4);
         CPPANONYM_E_LOGW5(L"An error severity message. %|1$d|, %|2$d|, %|3$d|, %|4$d|, %|5$d|", 1, 2, 3, 4, 5);
-        BOOST_LOG_NAMED_SCOPE("New Scope");
+        CPPANONYM_LOG_NAMED_SCOPE("New Scope");
         CPPANONYM_E_LOG("An error severity message.");
         CPPANONYM_E_LOG1("An error severity message. %|1$d|", 1);
         CPPANONYM_E_LOG2("An error severity message. %|1$d|, %|2$d|", 1, 2);

@@ -72,8 +72,8 @@ namespace {
                 return checker;
             }
 
-            std::vector<int> m_ctorSeq;
-            std::vector<int> m_dtorSeq;
+            std::vector<size_t> m_ctorSeq;
+            std::vector<size_t> m_dtorSeq;
         };
 
         struct HogeFacade
@@ -101,10 +101,8 @@ namespace {
 
             typedef Utilities::TempPtr<hoge_type> sender_type;
 
-            HogePersistedHandler(hoge_type *pHoge);
+            HogePersistedHandler();
             void operator()(sender_type *pSender, void *pArg);
-
-            hoge_type *m_pHoge;
         };
 
         struct Hoge : 
@@ -116,52 +114,67 @@ namespace {
             typedef facade::hoge_persistent_info_type hoge_persistent_info_type;
             typedef facade::hoge_provider_type hoge_provider_type;
 
-            Hoge() { OrderChecker::Instance().m_ctorSeq.push_back(reinterpret_cast<int>(this)); }
-            ~Hoge() { OrderChecker::Instance().m_dtorSeq.push_back(reinterpret_cast<int>(this)); }
+            Hoge() { OrderChecker::Instance().m_ctorSeq.push_back(reinterpret_cast<size_t>(this)); }
+            
+            ~Hoge() 
+            { 
+                OrderChecker::Instance().m_dtorSeq.push_back(reinterpret_cast<size_t>(this)); 
+                if (!m_objects.empty())   // root
+                {
+                    auto &sHoge = MyStorage::Object<hoge_type>();
+                    auto &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
+                    BOOST_FOREACH (auto const &pObj, m_objects)
+                        provider.DeleteObject(pObj);
+                }
+            }
 
             static hoge_type *CreateStaticHoge()
             {
-                Utilities::TempPtr<hoge_type> pHoge = NewStaticHoge();
+                auto pHoge = NewStaticHoge();
                 pHoge.Persist();
                 return pHoge.Get();
             }
 
             static Utilities::TempPtr<hoge_type> NewStaticHoge()
             {
-                hoge_type &sHoge = MyStorage::Object<hoge_type>();
-                hoge_provider_type &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
-                Utilities::TempPtr<hoge_type> pHoge = provider.NewObject();
-                provider.AddPersistedHandler(pHoge, &sHoge);
+                auto &sHoge = MyStorage::Object<hoge_type>();
+                auto &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
+                auto pHoge = provider.NewObject();
+                auto handler = hoge_persisted_handler_type();
+                provider.AddPersistedHandler(pHoge, handler);
                 return pHoge;
             }
             
             hoge_type *CreateHoge()
             {
-                Utilities::TempPtr<hoge_type> pHoge = NewHoge();
+                auto pHoge = NewHoge();
                 pHoge.Persist();
                 return pHoge.Get();
             }
 
             Utilities::TempPtr<hoge_type> NewHoge()
             {
-                hoge_provider_type &provider = ProviderOf<hoge_persistent_info_type>();
-                Utilities::TempPtr<hoge_type> pHoge = provider.NewObject();
-                provider.AddPersistedHandler(pHoge, this);
+                auto &sHoge = MyStorage::Object<hoge_type>();
+                auto &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
+                auto pHoge = provider.NewObject();
+                auto handler = hoge_persisted_handler_type();
+                provider.AddPersistedHandler(pHoge, handler);
                 return pHoge;
             }
+
+            std::vector<hoge_type *> m_objects;
         };
 
-        HogePersistedHandler::HogePersistedHandler(hoge_type *pHoge) : 
-            m_pHoge(pHoge)
-        { 
-            _ASSERTE(pHoge != NULL);
-        }
+        HogePersistedHandler::HogePersistedHandler()
+        { }
                 
         void HogePersistedHandler::operator()(sender_type *pSender, void *pArg)
         {
-            sender_type &pHoge = *pSender;
-            hoge_provider_type &provider = m_pHoge->ProviderOf<hoge_persistent_info_type>();
+            auto &pHoge = *pSender;
+            auto &sHoge = MyStorage::Object<hoge_type>();
+            auto &provider = sHoge.ProviderOf<hoge_persistent_info_type>();
             provider.RegisterObject(pHoge);
+            sHoge.m_objects.push_back(pHoge.Get());
         }
 
     }   // namespace _E0BB97B4 {
@@ -176,17 +189,17 @@ namespace {
         Hoge *pHoge = pHogeRoot->CreateHoge();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_ctorSeq.size());
-        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_ctorSeq[0]);
-        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_ctorSeq[1]);
-        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_ctorSeq[2]);
+        ASSERT_EQ(reinterpret_cast<size_t>(&sHoge), OrderChecker::Instance().m_ctorSeq[0]);
+        ASSERT_EQ(reinterpret_cast<size_t>(pHogeRoot), OrderChecker::Instance().m_ctorSeq[1]);
+        ASSERT_EQ(reinterpret_cast<size_t>(pHoge), OrderChecker::Instance().m_ctorSeq[2]);
         ASSERT_EQ(0, OrderChecker::Instance().m_dtorSeq.size());
 
         StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host().~Host();
 
         ASSERT_EQ(3, OrderChecker::Instance().m_dtorSeq.size());
-        ASSERT_EQ(reinterpret_cast<int>(&sHoge), OrderChecker::Instance().m_dtorSeq[0]);
-        ASSERT_EQ(reinterpret_cast<int>(pHogeRoot), OrderChecker::Instance().m_dtorSeq[1]);
-        ASSERT_EQ(reinterpret_cast<int>(pHoge), OrderChecker::Instance().m_dtorSeq[2]);
+        ASSERT_EQ(reinterpret_cast<size_t>(&sHoge), OrderChecker::Instance().m_dtorSeq[0]);
+        ASSERT_EQ(reinterpret_cast<size_t>(pHogeRoot), OrderChecker::Instance().m_dtorSeq[1]);
+        ASSERT_EQ(reinterpret_cast<size_t>(pHoge), OrderChecker::Instance().m_dtorSeq[2]);
 
         // Restore static area to work the debug heap correctly.
         new(&StaticDependentObjectsStorageDetail::HostAccessor<Hoge>::Host())Host();

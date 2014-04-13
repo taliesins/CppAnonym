@@ -107,18 +107,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         template<class T>
         TempPtrImpl<T>::~TempPtrImpl()
         {
-            switch (m_state.Value())
-            {
-                case TempPtrStates::TPS_NONE:
-                case TempPtrStates::TPS_PERSISTED:
-                    m_pHolder.Clear<intrusive_ptr<holder_type> >();
-                    break;
-                case TempPtrStates::TPS_HAS_ALREADY_PERSISTED:
-                    m_pHolder.Clear<T *>();
-                    break;
-                default:
-                    BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException());
-            }
+            Clear();
         }
 
         template<class T>
@@ -126,6 +115,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
             if (this != &other)
             {
+                Clear();
+
                 if (!other.IsPersisted())
                     m_pHolder.Assign<intrusive_ptr<holder_type> >(other.m_pHolder);
                 else
@@ -142,6 +133,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         template<class U>
         typename TempPtrImpl<T>::this_type &TempPtrImpl<T>::operator =(TempPtrImpl<U> const &other)
         {
+            Clear();
+
             if (!other.IsPersisted())
                 m_pHolder.Assign<intrusive_ptr<holder_type> >(TempPtrHolderAccessor<U>::Get(other));
             else
@@ -149,8 +142,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
             m_state = !other.IsPersisted() ? TempPtrStates::TPS_NONE : TempPtrStates::TPS_HAS_ALREADY_PERSISTED;
                     
-            typedef typename PersistedHandlersAccessor<U>::persisted_handlers_type PersistedHandlers;
-            PersistedHandlers const &persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
+            auto const &persistedHandlers = PersistedHandlersAccessor<U>::Get(other);
             m_persistedHandlers.reserve(persistedHandlers.size());
             m_persistedHandlers.assign(persistedHandlers.cbegin(), persistedHandlers.cend());
                 
@@ -177,14 +169,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         {
             if (!IsPersisted())
             {
-                TempPtrStates lastState(m_state);
+                auto lastState = TempPtrStates(m_state);
                 m_state = TempPtrStates::TPS_PERSISTED;
                 if (!m_persistedHandlers.empty())
                 {
                     try
                     {
-                        typedef persisted_handlers_type::iterator Iterator;
-                        for (Iterator i = m_persistedHandlers.begin(), i_end = m_persistedHandlers.end(); i != i_end; ++i)
+                        for (auto i = m_persistedHandlers.begin(), i_end = m_persistedHandlers.end(); i != i_end; ++i)
                             (**i)(this, NULL);
                     }
                     catch (...)
@@ -195,6 +186,26 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
                 }
                 m_pHolder.Get<intrusive_ptr<holder_type> >()->DisableDeletion();
             }
+        }
+
+        template<class T>
+        void TempPtrImpl<T>::Clear()
+        {
+            switch (m_state.Value())
+            {
+                case TempPtrStates::TPS_NONE:
+                case TempPtrStates::TPS_PERSISTED:
+                    m_pHolder.Clear<intrusive_ptr<holder_type> >();
+                    break;
+                case TempPtrStates::TPS_HAS_ALREADY_PERSISTED:
+                    m_pHolder.Clear<T *>();
+                    break;
+                default:
+                    BOOST_THROW_EXCEPTION(CppAnonymNotSupportedException());
+            }
+
+            m_state = TempPtrStates::TPS_NONE;
+            m_persistedHandlers = persisted_handlers_type();
         }
 
     }   // namespace TempPtrDetail {

@@ -70,7 +70,7 @@ namespace Urasandesu { namespace CppAnonym {
         class ProviderOfImpl;
 
         template<class DisposingInfoTypes>
-        struct ATL_NO_VTABLE DisposableHeapProviderImpl;
+        class ATL_NO_VTABLE DisposableHeapProviderImpl;
 
         template<CPPANONYM_DISPOSABLE_HEAP_PROVIDER_AUX_DECLARE_PARAMS>
         class DesignatedSequence;

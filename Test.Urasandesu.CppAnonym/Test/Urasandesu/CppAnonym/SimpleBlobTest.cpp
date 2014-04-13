@@ -201,7 +201,7 @@ namespace {
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
-            vector<MyPOD2> vec(assignCount);
+            auto vec = vector<MyPOD2>();
             for (INT j = 0; j < assignCount; ++j)
             {
                 vec.push_back(MyPOD2());
@@ -224,7 +224,7 @@ namespace {
         double sbElapsed = t.elapsed();
         
         cout << "Typical Way: " << typicalElapsed << endl;
-        cout << "Simple Blob: " << sbElapsed << endl;
+        cout << "Simple Blob: " << sbElapsed << " (x " << typicalElapsed / sbElapsed << ")" << endl;
         ASSERT_LT(sbElapsed, typicalElapsed);
     }
 
