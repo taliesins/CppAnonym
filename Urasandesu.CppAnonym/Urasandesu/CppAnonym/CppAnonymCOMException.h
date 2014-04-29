@@ -41,9 +41,14 @@ namespace Urasandesu { namespace CppAnonym {
     typedef boost::error_info<struct tag_hresult, std::string> ThrowHResult;
     typedef boost::error_info<struct tag_com_error, _com_error> ThrowCOMError;
 
-    struct CppAnonymCOMException : CppAnonymException
+    class CppAnonymCOMException : public CppAnonymException
     {
+    public: 
         CppAnonymCOMException(HRESULT hr);
+        HRESULT GetHResult() const;
+
+    private:
+        HRESULT m_hr;
     };
         
 }}  // namespace Urasandesu { namespace CppAnonym {

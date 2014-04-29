@@ -41,12 +41,20 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    CppAnonymCOMException::CppAnonymCOMException(HRESULT hr)
+    CppAnonymCOMException::CppAnonymCOMException(HRESULT hr) : 
+        m_hr(hr)
     {
         _com_error ce(hr);    
         m_what = std::string(ATL::CW2A(ce.ErrorMessage()));
         *this << ThrowHResult(boost::str(boost::format("0x%|1$08X|") % hr));
         *this << ThrowCOMError(ce);
+    }
+    
+    
+    
+    HRESULT CppAnonymCOMException::GetHResult() const
+    {
+        return m_hr;
     }
         
 }}  // namespace Urasandesu { namespace CppAnonym {
