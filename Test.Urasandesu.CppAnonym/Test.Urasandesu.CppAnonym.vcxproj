@@ -95,7 +95,7 @@
       <AdditionalIncludeDirectories>C:\boost_1_55_0;..\Urasandesu.CppAnonym;C:\gtest-1.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessToFile>false</PreprocessToFile>
-      <AdditionalOptions>/Zm198 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm212 /wd4345 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
@@ -122,7 +122,7 @@
       <AdditionalIncludeDirectories>C:\boost_1_55_0;..\Urasandesu.CppAnonym;C:\gtest-1.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessToFile>false</PreprocessToFile>
-      <AdditionalOptions>/Zm198 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm212 /wd4345 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
@@ -148,7 +148,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;..\Urasandesu.CppAnonym;C:\gtest-1.6.0\include;</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm198 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm212 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -169,7 +169,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;..\Urasandesu.CppAnonym;C:\gtest-1.6.0\include;</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm198 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm212 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

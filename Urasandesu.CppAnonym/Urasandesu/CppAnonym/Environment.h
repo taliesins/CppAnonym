@@ -34,9 +34,28 @@
 
 namespace Urasandesu { namespace CppAnonym {
 
-    struct Environment
+    namespace EnvironmentDetail {
+
+        using std::basic_string;
+        using std::char_traits;
+        using std::allocator;
+        
+        class EnvironmentImpl
+        {
+        public:
+            template<class TChar> static basic_string<TChar, char_traits<TChar>, allocator<TChar> > GetEnvironmentVariable(TChar const *variable);
+            template<class TChar> static basic_string<TChar, char_traits<TChar>, allocator<TChar> > GetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &variable);
+            template<class TChar> static void SetEnvironmentVariable(TChar const *name, TChar const *value);
+            template<class TChar> static void SetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &name, TChar const *value);
+            template<class TChar> static void SetEnvironmentVariable(TChar const *name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
+            template<class TChar> static void SetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
+        };
+
+    }   // namespace EnvironmentDetail {
+    
+    struct Environment : 
+        EnvironmentDetail::EnvironmentImpl
     {
-        static std::string GetEnvironmentVariable(LPCSTR variable);
     };
         
 }}  // namespace Urasandesu { namespace CppAnonym {
