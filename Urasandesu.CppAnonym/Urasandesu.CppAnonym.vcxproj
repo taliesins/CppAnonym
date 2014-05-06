@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm199 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm209 /wd4345 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -130,7 +130,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm199 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm209 /wd4345 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -163,7 +163,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/Zm199 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm209 /wd4345 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
@@ -201,7 +201,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/Zm199 /wd4345 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm209 /wd4345 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>C:\boost_1_55_0;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
@@ -281,6 +281,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackTrace.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\AutoPtr.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
   </ItemGroup>
@@ -400,6 +401,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributor.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AssignationDistributorFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\AutoPtr.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlimFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlim.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComObjectSlimFwd.h" />

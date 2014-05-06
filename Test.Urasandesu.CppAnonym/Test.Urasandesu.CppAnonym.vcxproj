@@ -210,6 +210,7 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackTrace.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\AutoPtr.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -267,6 +268,7 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AnyPtrTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AssignationDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\AutoPtrTest.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComClassFactorySlimTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\CComObjectSlimTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\ConstructionDistributorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Utilities\DestructionDistributorTest.cpp" />

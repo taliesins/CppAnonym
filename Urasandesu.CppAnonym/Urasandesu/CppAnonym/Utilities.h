@@ -48,6 +48,10 @@
 #include <Urasandesu/CppAnonym/Utilities/IsAnyT.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMCLASSFACTORYSLIM_H
+#include <Urasandesu/CppAnonym/Utilities/CComClassFactorySlim.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMOBJECTSLIM_HPP
 #include <Urasandesu/CppAnonym/Utilities/CComObjectSlim.hpp>
 #endif

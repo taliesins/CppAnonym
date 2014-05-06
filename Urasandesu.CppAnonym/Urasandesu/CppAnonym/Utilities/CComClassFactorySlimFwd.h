@@ -1,5 +1,5 @@
 ﻿/* 
- * File: stdafx.cpp
+ * File: CComClassFactorySlimFwd.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,25 +28,24 @@
  */
 
 
-// stdafx.cpp : source file that includes just the standard includes
-// Test.Urasandesu.CppAnonym.pch will be the pre-compiled header
-// stdafx.obj will contain the pre-compiled type information
+#pragma once
+#ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMCLASSFACTORYSLIMFWD_H
+#define URASANDESU_CPPANONYM_UTILITIES_CCOMCLASSFACTORYSLIMFWD_H
 
-#include "stdafx.h"
+namespace Urasandesu { namespace CppAnonym { namespace Utilities {
 
-// TODO: reference any additional headers you need in STDAFX.H
-// and not in this file
+    namespace CComClassFactorySlimDetail {
 
-struct OleCom 
-{
-    OleCom() 
-    { 
-#ifdef _DEBUG
-        ::_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); 
-        //::_CrtSetBreakAlloc(4540);
-#endif
-        /* ::CoInitialize(NULL);  */
-    }
-    ~OleCom() 
-    { /* ::CoUninitialize(); */ }
-} olecom;
+        class CComClassFactorySlim;
+
+        template<REFCLSID RCLSID>
+        class CComClassFactorySlimT;
+
+    }   // namespace CComClassFactorySlimDetail {
+
+    using CComClassFactorySlimDetail::CComClassFactorySlim;
+    using CComClassFactorySlimDetail::CComClassFactorySlimT;
+
+}}}   // namespace Urasandesu { namespace CppAnonym { namespace Utilities {
+
+#endif  // #ifndef URASANDESU_CPPANONYM_UTILITIES_CCOMCLASSFACTORYSLIMFWD_H
