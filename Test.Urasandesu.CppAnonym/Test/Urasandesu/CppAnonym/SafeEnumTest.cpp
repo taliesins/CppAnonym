@@ -54,6 +54,18 @@ namespace {
                     HT_ITEM3,
                     HT_UNREACHED
                 };
+
+                friend std::wostream &operator <<(std::wostream &os, type v)
+                {
+                    switch (v)
+                    {
+                        case HT_ITEM1: os << L"ITEM1"; break;
+                        case HT_ITEM2: os << L"ITEM2"; break;
+                        case HT_ITEM3: os << L"ITEM3"; break;
+                        default:       os << L"UNREACHED"; break;
+                    }
+                    return os;
+                }
             };
 
         }   // namespace HogeTypesDetail {
@@ -120,5 +132,21 @@ namespace {
         ASSERT_EQ(2, map.size());
         ASSERT_EQ(42, map[HogeTypes::HT_ITEM1]);
         ASSERT_EQ(10, map[HogeTypes::HT_ITEM2]);
+    }
+
+    
+    
+    CPPANONYM_TEST(Urasandesu_CppAnonym_SafeEnumTest, Test_05)
+    {
+        using namespace _66D68309;
+        using namespace Urasandesu::CppAnonym::Utilities;
+        using std::wostringstream;
+        using std::wstring;
+        
+        auto hoge1 = HogeTypes::HT_ITEM2;
+
+        auto oss = wostringstream();
+        oss << hoge1;
+        ASSERT_EQ(wstring(L"ITEM2"), oss.str());
     }
 }

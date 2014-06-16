@@ -284,6 +284,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dllmain.h" />
@@ -444,6 +445,7 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc" />

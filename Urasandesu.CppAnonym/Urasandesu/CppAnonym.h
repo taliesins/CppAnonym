@@ -192,4 +192,8 @@
 #include <Urasandesu/CppAnonym/CppAnonymInvalidOperationException.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_VERSION_H
+#include <Urasandesu/CppAnonym/Version.h>
+#endif
+
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H

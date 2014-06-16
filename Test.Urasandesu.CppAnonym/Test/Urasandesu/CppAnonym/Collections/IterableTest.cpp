@@ -370,6 +370,20 @@ namespace {
 
     
     
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_IterableTest, SequenceToStringTest_04)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+        using boost::assign::operator +=;
+        using std::vector;
+        using std::wstring;
+
+        auto v = vector<BYTE>();
+        v += 0xb7, 0x7a, 0x5c, 0x56, 0x19, 0x34, 0xe0, 0x89;
+        ASSERT_EQ(wstring(L"b77a5c561934e089"), SequenceToString(v));
+    }
+
+    
+    
     CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_IterableTest, FindIfTest_01)
     {
         using namespace Urasandesu::CppAnonym::Collections;

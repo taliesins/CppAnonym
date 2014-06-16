@@ -106,6 +106,9 @@
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Version.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -581,6 +584,9 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\CComClassFactorySlimFwd.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Version.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

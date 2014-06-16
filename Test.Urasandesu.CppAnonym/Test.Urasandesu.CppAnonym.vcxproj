@@ -213,6 +213,7 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\CComClassFactorySlim.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Version.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -287,6 +288,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\VersionTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

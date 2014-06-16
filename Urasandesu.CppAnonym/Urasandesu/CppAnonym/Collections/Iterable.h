@@ -213,10 +213,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
 
         template<class InputIterator, class ToString>
-        class SequenceStringImpl
+        class IteratorStringImpl
         {
         public:
-            SequenceStringImpl(InputIterator const &i, InputIterator const &i_end, ToString toString) : 
+            IteratorStringImpl(InputIterator const &i, InputIterator const &i_end, ToString toString) : 
                 m_i(i), 
                 m_i_end(i_end), 
                 m_toString(toString)
@@ -230,19 +230,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
 
         private:
-            friend bool operator ==(wstring const &lhs, SequenceStringImpl const &rhs)
+            friend bool operator ==(wstring const &lhs, IteratorStringImpl const &rhs)
             {
                 return lhs == wstring(rhs);
             }
 
-            friend bool operator !=(wstring const &lhs, SequenceStringImpl const &rhs)
+            friend bool operator !=(wstring const &lhs, IteratorStringImpl const &rhs)
             {
                 return !(lhs == rhs);
             }
 
-            friend wostream &operator <<(wostream &os, SequenceStringImpl const &s)
+            friend wostream &operator <<(wostream &os, IteratorStringImpl const &s)
             {
-                auto _s = SequenceStringImpl(s);
+                auto _s = IteratorStringImpl(s);
                 for ( ; _s.m_i != _s.m_i_end; ++_s.m_i)
                     _s.m_toString(*_s.m_i, os);
                 return os;
@@ -256,26 +256,52 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
     }   // namespace SequenceToStringDetail {
 
     template<class InputIterator, class ToString>
-    struct SequenceString : 
-        SequenceToStringDetail::SequenceStringImpl<InputIterator, ToString>
+    struct IteratorString : 
+        SequenceToStringDetail::IteratorStringImpl<InputIterator, ToString>
     {
-        typedef SequenceToStringDetail::SequenceStringImpl<InputIterator, ToString> base_type;
+        typedef SequenceToStringDetail::IteratorStringImpl<InputIterator, ToString> base_type;
 
-        SequenceString(InputIterator const &i, InputIterator const &i_end, ToString toString) : 
+        IteratorString(InputIterator const &i, InputIterator const &i_end, ToString toString) : 
+            base_type(i, i_end, toString)
+        { }
+    };
+
+    template<class SinglePassRange, class ToString>
+    struct RangeString : 
+        SequenceToStringDetail::IteratorStringImpl<typename boost::range_iterator<SinglePassRange>::type, ToString>
+    {
+        typedef typename boost::range_iterator<SinglePassRange>::type input_iterator_type;
+        typedef SequenceToStringDetail::IteratorStringImpl<input_iterator_type, ToString> base_type;
+
+        RangeString(input_iterator_type const &i, input_iterator_type const &i_end, ToString toString) : 
             base_type(i, i_end, toString)
         { }
     };
 
     template<class InputIterator, class ToString>
-    inline SequenceString<InputIterator, ToString> SequenceToString(InputIterator const &i, InputIterator const &i_end, ToString toString)
+    inline IteratorString<InputIterator, ToString> SequenceToString(InputIterator const &i, InputIterator const &i_end, ToString toString)
     {
-        return SequenceString<InputIterator, ToString>(i, i_end, toString);
+        return IteratorString<InputIterator, ToString>(i, i_end, toString);
     } 
 
     template<class InputIterator>
-    inline SequenceString<InputIterator, typename SequenceToStringDetail::ToStringDecidedBy<InputIterator>::type> SequenceToString(InputIterator const &i, InputIterator const &i_end)
+    inline IteratorString<InputIterator, typename SequenceToStringDetail::ToStringDecidedBy<InputIterator>::type> SequenceToString(InputIterator const &i, InputIterator const &i_end)
     {
-        return SequenceString<InputIterator, typename SequenceToStringDetail::ToStringDecidedBy<InputIterator>::type>(i, i_end, SequenceToStringDetail::CreateToString(i));
+        return SequenceToString(i, i_end, SequenceToStringDetail::CreateToString(i));
+    } 
+
+    template<class SinglePassRange, class ToString>
+    inline RangeString<SinglePassRange, ToString> SequenceToString(SinglePassRange const &rng, ToString toString)
+    {
+        auto i = boost::begin(const_cast<SinglePassRange &>(rng));
+        auto i_end = boost::end(const_cast<SinglePassRange &>(rng));
+        return RangeString<SinglePassRange, ToString>(i, i_end, toString);
+    } 
+
+    template<class SinglePassRange>
+    inline RangeString<SinglePassRange, typename SequenceToStringDetail::ToStringDecidedBy<typename boost::range_iterator<SinglePassRange>::type>::type> SequenceToString(SinglePassRange const &rng)
+    {
+        return SequenceToString(rng, SequenceToStringDetail::CreateToString(boost::begin(rng)));
     } 
 
 
