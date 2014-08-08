@@ -684,6 +684,7 @@ namespace {
         using namespace std;
         using namespace Urasandesu::CppAnonym::Utilities;
         using namespace _BB8140DA;
+        using boost::timer::cpu_timer;
         
         typedef TempPtr<POD2>::make_heap_holder_impl<>::object_heap_type ObjectHeap;
         typedef TempPtr<POD2>::make_heap_holder_impl<>::object_deleter_type ObjectDeleter;
@@ -701,42 +702,39 @@ namespace {
 #else
         INT const RETRY_COUNT = 100000;
 #endif
-        boost::timer t;
-        t.restart();
+        auto t = cpu_timer();
 
         for (INT i = 0; i < RETRY_COUNT; ++i)
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
                 TempPtr<POD2> p(new POD2());
         
-        double defaultElapsed = t.elapsed();
-        
-        t.restart();
+        auto defaultElapsed = t.elapsed();
+        t = cpu_timer();
 
         for (INT i = 0; i < RETRY_COUNT; ++i)
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
                 TempPtr<POD2> p(objectHeap.New(), objectDeleter);
         
-        double quickElapsed = t.elapsed();
-        
-        t.restart();
+        auto quickElapsed = t.elapsed();
+        t = cpu_timer();
 
         for (INT i = 0; i < RETRY_COUNT; ++i)
             for (INT j = 0; j < ASSIGN_COUNT; ++j)
                 TempPtr<POD2> p(holderImplHeap.New(objectHeap.New(), objectDeleter, holderImplDeleter));
         
-        double veryQuickElapsed = t.elapsed();
+        auto veryQuickElapsed = t.elapsed();
         
-        cout << "Default Heap: " << defaultElapsed << endl;
-        cout << "Quick Heap: " << quickElapsed << " (x " << defaultElapsed / quickElapsed << ")" << endl;
-        cout << "Very Quick Heap: " << veryQuickElapsed << " (x " << defaultElapsed / veryQuickElapsed << ")" << endl;
+        cout << "Default Heap: " << defaultElapsed.wall << endl;
+        cout << "Quick Heap: " << quickElapsed.wall << " (x " << defaultElapsed.wall / quickElapsed.wall << ")" << endl;
+        cout << "Very Quick Heap: " << veryQuickElapsed.wall << " (x " << defaultElapsed.wall / veryQuickElapsed.wall << ")" << endl;
         // Sample results is as follows: 
         //   Default Heap: 12.387
         //   Quick Heap: 6.708 (x 1.8466)
         //   Very Quick Heap: 1.778 (x 6.96682)
 #ifdef _DEBUG
-        ASSERT_LT(veryQuickElapsed, defaultElapsed * 2.0);
+        ASSERT_LT(veryQuickElapsed.wall, defaultElapsed.wall * 2.0);
 #else
-        ASSERT_LT(veryQuickElapsed, defaultElapsed);
+        ASSERT_LT(veryQuickElapsed.wall, defaultElapsed.wall);
 #endif
     }
 

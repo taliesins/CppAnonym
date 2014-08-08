@@ -105,6 +105,7 @@
 #include <boost/scope_exit.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/system/windows_error.hpp>
+#include <boost/timer/timer.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>

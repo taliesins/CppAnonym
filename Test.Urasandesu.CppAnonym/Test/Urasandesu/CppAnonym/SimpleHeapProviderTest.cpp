@@ -103,6 +103,7 @@ namespace {
         using namespace std;
         using namespace Urasandesu::CppAnonym;
         using namespace _FEE1E6AA;
+        using boost::timer::cpu_timer;
 
         INT const ASSIGN_COUNT = 512;
 #ifdef _DEBUG
@@ -110,8 +111,7 @@ namespace {
 #else
         INT const RETRY_COUNT = 100000;
 #endif
-        boost::timer t;
-        t.restart();
+        auto t = cpu_timer();
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
@@ -126,9 +126,8 @@ namespace {
             }
         }
         
-        double defaultElapsed = t.elapsed();
-        
-        t.restart();
+        auto defaultElapsed = t.elapsed();
+        t = cpu_timer();
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
@@ -143,9 +142,8 @@ namespace {
             }
         }
         
-        double quickElapsed = t.elapsed();
-        
-        t.restart();
+        auto quickElapsed = t.elapsed();
+        t = cpu_timer();
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
@@ -160,16 +158,16 @@ namespace {
             }
         }
         
-        double veryQuickElapsed = t.elapsed();
+        auto veryQuickElapsed = t.elapsed();
         
-        cout << "Default Heap: " << defaultElapsed << endl;
-        cout << "Quick Heap: " << quickElapsed << " (x " << defaultElapsed / quickElapsed << ")" << endl;
-        cout << "Very Quick Heap: " << veryQuickElapsed << " (x " << defaultElapsed / veryQuickElapsed << ")" << endl;
+        cout << "Default Heap: " << defaultElapsed.wall << endl;
+        cout << "Quick Heap: " << quickElapsed.wall << " (x " << defaultElapsed.wall / quickElapsed.wall << ")" << endl;
+        cout << "Very Quick Heap: " << veryQuickElapsed.wall << " (x " << defaultElapsed.wall / veryQuickElapsed.wall << ")" << endl;
         // Sample results are as follows: 
         //   Default Heap: 8.205
         //   Quick Heap: 1.467 (x 5.59305)
         //   Very Quick Heap: 0.639 (x 12.8404)
-        ASSERT_LT(veryQuickElapsed, defaultElapsed);
+        ASSERT_LT(veryQuickElapsed.wall, defaultElapsed.wall);
     }
 
     

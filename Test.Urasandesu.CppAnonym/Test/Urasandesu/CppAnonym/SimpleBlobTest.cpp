@@ -182,6 +182,7 @@ namespace {
     {
         using namespace std;
         using namespace Urasandesu::CppAnonym;
+        using boost::timer::cpu_timer;
         
         INT assignCount = 0;
         {
@@ -196,8 +197,7 @@ namespace {
 #else
         INT const RETRY_COUNT = 100000;
 #endif
-        boost::timer t;
-        t.restart();
+        auto t = cpu_timer();
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
@@ -208,9 +208,8 @@ namespace {
             }
         }
         
-        double typicalElapsed = t.elapsed();
-        
-        t.restart();
+        auto typicalElapsed = t.elapsed();
+        t = cpu_timer();
         
         for (INT i = 0; i < RETRY_COUNT; ++i)
         {
@@ -221,11 +220,11 @@ namespace {
             }
         }
         
-        double sbElapsed = t.elapsed();
+        auto sbElapsed = t.elapsed();
         
-        cout << "Typical Way: " << typicalElapsed << endl;
-        cout << "Simple Blob: " << sbElapsed << " (x " << typicalElapsed / sbElapsed << ")" << endl;
-        ASSERT_LT(sbElapsed, typicalElapsed);
+        cout << "Typical Way: " << typicalElapsed.wall << endl;
+        cout << "Simple Blob: " << sbElapsed.wall << " (x " << typicalElapsed.wall / sbElapsed.wall << ")" << endl;
+        ASSERT_LT(sbElapsed.wall, typicalElapsed.wall);
     }
 
 
