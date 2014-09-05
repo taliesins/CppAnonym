@@ -221,6 +221,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.Urasandesu.CppAnonym.cpp" />
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\GlobalSafeDictionaryTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\IterableTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\RapidVectorTest.cpp" />
     <ClCompile Include="Test\Urasandesu\CppAnonym\CppAnonymArgumentExceptionTest.cpp" />

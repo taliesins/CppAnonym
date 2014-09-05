@@ -254,5 +254,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Version.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\GlobalSafeDictionaryTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

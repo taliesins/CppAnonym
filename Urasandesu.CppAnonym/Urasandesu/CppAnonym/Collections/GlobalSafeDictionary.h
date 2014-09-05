@@ -59,9 +59,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryAdd(in_key_type key, in_value_type value)
         {
-            if (!m_isEnabled)
-                return FALSE;
-            
             auto _ = guard_type(m_lock);
 
             if (m_map.find(key) == m_map.end())
@@ -77,11 +74,11 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryGet(in_key_type key, out_value_type rValue)
         {
-            if (!m_isEnabled)
-                return FALSE;
-            
             auto _ = guard_type(m_lock);
 
+            if (!m_stack.empty())
+                return FALSE;
+            
             if (m_map.find(key) == m_map.end())
             {
                 return FALSE;
@@ -95,9 +92,6 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryRemove(in_key_type key, out_value_type rValue)
         {
-            if (!m_isEnabled)
-                return FALSE;
-            
             auto _ = guard_type(m_lock);
 
             if (m_map.find(key) == m_map.end())
@@ -114,31 +108,40 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         void Clear()
         {
-            if (!m_isEnabled)
-                return;
-
             auto _ = guard_type(m_lock);
+
             m_map.clear();
         }
 
-        BOOL IsEnabled() const
+        void EnterDisabledProcessing()
         {
-            return m_isEnabled;
+            auto _ = guard_type(m_lock);
+            m_stack.push(true);
         }
 
-        void SetIsEnabled(BOOL isEnabled)
+        BOOL ExitDisabledProcessing()
         {
-            m_isEnabled = isEnabled;
+            auto _ = guard_type(m_lock);
+
+            if (m_stack.empty())
+                return FALSE;
+
+            m_stack.pop();
+            return TRUE;
+        }
+
+        BOOL IsDisabledProcessing() const
+        {
+            return !m_stack.empty();
         }
 
     private:
-        GlobalSafeDictionary() : 
-            m_isEnabled(TRUE)
+        GlobalSafeDictionary()
         { }
 
         boost::mutex m_lock;
         boost::unordered_map<Key, Value, Hash, Pred, Alloc> m_map;
-        volatile BOOL m_isEnabled;
+        std::stack<bool> m_stack;
     };
 
 }}}   // namespace Urasandesu { namespace CppAnonym { namespace Collections {
