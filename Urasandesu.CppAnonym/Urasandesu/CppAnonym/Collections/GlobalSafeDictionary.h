@@ -106,6 +106,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
         }
 
+        BOOL GetOrAdd(in_key_type key, in_value_type value, out_value_type rValue)
+        {
+            auto _ = guard_type(m_lock);
+
+            if (m_map.find(key) == m_map.end())
+                m_map[key] = value;
+            
+            if (!m_stack.empty())
+                return FALSE;
+            
+            rValue = m_map[key];
+            return TRUE;
+        }
+
         void Clear()
         {
             auto _ = guard_type(m_lock);
@@ -132,6 +146,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL IsDisabledProcessing() const
         {
+            auto _ = guard_type(m_lock);
+
             return !m_stack.empty();
         }
 
@@ -139,7 +155,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         GlobalSafeDictionary()
         { }
 
-        boost::mutex m_lock;
+        mutable boost::mutex m_lock;
         boost::unordered_map<Key, Value, Hash, Pred, Alloc> m_map;
         std::stack<bool> m_stack;
     };

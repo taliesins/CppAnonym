@@ -77,6 +77,22 @@ namespace {
             auto *p = static_cast<int *>(nullptr);
             ASSERT_FALSE(instance.TryRemove(L"Test", *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
         }
+
+        {
+            auto *p = static_cast<int *>(nullptr);
+            ASSERT_TRUE(instance.GetOrAdd(L"Test", &i, *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
+            ASSERT_EQ(i, *p);
+
+            auto j = 100;
+            ASSERT_TRUE(instance.GetOrAdd(L"Test", &j, *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
+            ASSERT_EQ(i, *p);
+        }
+
+        {
+            auto *p = static_cast<int *>(nullptr);
+            ASSERT_TRUE(instance.TryRemove(L"Test", *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
+            ASSERT_EQ(i, *p);
+        }
     }
 
 
@@ -120,6 +136,19 @@ namespace {
         }
         ASSERT_TRUE(instance.ExitDisabledProcessing() == TRUE);
 
+        instance.EnterDisabledProcessing();
+        {
+            // DisabledProcessing mode shall NOT prohibit modifying GlobalSafeDictionary.
+            auto *p = static_cast<int *>(nullptr);
+            ASSERT_FALSE(instance.GetOrAdd(L"Test", &i, *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
+        }
+        ASSERT_TRUE(instance.ExitDisabledProcessing() == TRUE);
+        {
+            auto *p = static_cast<int *>(nullptr);
+            ASSERT_TRUE(instance.TryGet(L"Test", *const_cast<void const **>(reinterpret_cast<void **>(&p))) == TRUE);
+            ASSERT_EQ(i, *p);
+        }
+
         ASSERT_FALSE(instance.ExitDisabledProcessing() == TRUE);
     }
 
@@ -133,6 +162,8 @@ namespace {
         typedef GlobalSafeDictionary<std::wstring, void const *> MyGlobalSafeDictionary;
         
         auto &instance = MyGlobalSafeDictionary::GetInstance();
+
+        instance.Clear();
 
         ASSERT_FALSE(instance.IsDisabledProcessing() == TRUE);
         instance.EnterDisabledProcessing();
