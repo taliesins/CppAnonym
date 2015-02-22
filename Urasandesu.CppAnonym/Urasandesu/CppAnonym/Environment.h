@@ -39,6 +39,7 @@ namespace Urasandesu { namespace CppAnonym {
         using std::basic_string;
         using std::char_traits;
         using std::allocator;
+        using boost::filesystem::path;
         
         class EnvironmentImpl
         {
@@ -49,6 +50,7 @@ namespace Urasandesu { namespace CppAnonym {
             template<class TChar> static void SetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &name, TChar const *value);
             template<class TChar> static void SetEnvironmentVariable(TChar const *name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
             template<class TChar> static void SetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
+            static path GetCurrentProcessPath();
         };
 
     }   // namespace EnvironmentDetail {

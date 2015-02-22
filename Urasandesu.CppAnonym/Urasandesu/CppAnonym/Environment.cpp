@@ -135,13 +135,27 @@ namespace Urasandesu { namespace CppAnonym {
         {
             SetEnvironmentVariable(name.c_str(), value.c_str());
         }
+        
+        
+        
+        path EnvironmentImpl::GetCurrentProcessPath()
+        {
+            using boost::array;
+            using Urasandesu::CppAnonym::CppAnonymSystemException;
+
+            auto wzname = array<WCHAR, MAX_PATH>();
+            if (!::GetModuleFileNameW(nullptr, wzname.c_array(), static_cast<DWORD>(wzname.size())))
+                BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
+            
+            return path(wzname.data());
+        }
 
     
         
         template basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > EnvironmentImpl::GetEnvironmentVariable<CHAR>(CHAR const *);
         template basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > EnvironmentImpl::GetEnvironmentVariable<WCHAR>(WCHAR const *);
-        template basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > EnvironmentImpl::GetEnvironmentVariableW<CHAR>(basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > const &);
-        template basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > EnvironmentImpl::GetEnvironmentVariableW<WCHAR>(basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > const &);
+        template basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > EnvironmentImpl::GetEnvironmentVariable<CHAR>(basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > const &);
+        template basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > EnvironmentImpl::GetEnvironmentVariable<WCHAR>(basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > const &);
         template void EnvironmentImpl::SetEnvironmentVariable<CHAR>(CHAR const *, CHAR const *);
         template void EnvironmentImpl::SetEnvironmentVariable<WCHAR>(WCHAR const *, WCHAR const *);
         template void EnvironmentImpl::SetEnvironmentVariable<CHAR>(CHAR const *, basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > const &);
