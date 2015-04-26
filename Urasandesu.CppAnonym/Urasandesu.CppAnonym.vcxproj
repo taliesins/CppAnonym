@@ -275,6 +275,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymObjectDisposedException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Diagnostics\Process.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Environment.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Log.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp" />
@@ -285,6 +286,7 @@
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\SemiAutoPtr.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Utilities\TypeInfo.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Version.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Xml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dllmain.h" />
@@ -312,6 +314,9 @@
     <ClInclude Include="Urasandesu\CppAnonym\DefaultSTDMETHODWrapper.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DependentObjectsProviderFwd.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics\DiagnosticsDependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics\Process.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProvider.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposableHeapProviderFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\DisposingInfo.h" />
@@ -360,7 +365,6 @@
     <ClInclude Include="Urasandesu\CppAnonym\StackTraceFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorage.h" />
     <ClInclude Include="Urasandesu\CppAnonym\StaticDependentObjectsStorageFwd.h" />
-    <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h" />
     <ClInclude Include="Urasandesu\CppAnonym\SystemError.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Traits\AddImplicitConversion.h" />
@@ -446,6 +450,8 @@
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtr.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\Utilities\VariantPtrFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Version.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Xml.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Xml\XmlDependsOn.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Urasandesu.CppAnonym.rc" />

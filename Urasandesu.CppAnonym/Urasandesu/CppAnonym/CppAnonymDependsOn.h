@@ -101,6 +101,7 @@
 #include <boost/preprocessor/seq/seq.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/scope_exit.hpp>
 #include <boost/shared_ptr.hpp>
@@ -109,6 +110,7 @@
 #include <boost/type_traits.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
+#include <codecvt>
 #include <comdef.h>
 #include <Dbghelp.h>
 #include <tlhelp32.h>
@@ -175,12 +177,20 @@ namespace Urasandesu { namespace CppAnonym {
 #include <Urasandesu/CppAnonym/Collections/CollectionsDependsOn.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_DIAGNOSTICS_DIAGNOSTICSDEPENDSON_H
+#include <Urasandesu/CppAnonym/Diagnostics/DiagnosticsDependsOn.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_TRAITSDEPENDSON_H
 #include <Urasandesu/CppAnonym/Traits/TraitsDependsOn.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_UTILITIESDEPENDSON_H
 #include <Urasandesu/CppAnonym/Utilities/UtilitiesDependsOn.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_XML_XMLDEPENDSON_H
+#include <Urasandesu/CppAnonym/Xml/XmlDependsOn.h>
 #endif
 
 #endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H

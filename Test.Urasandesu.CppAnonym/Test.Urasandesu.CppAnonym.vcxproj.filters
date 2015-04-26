@@ -40,6 +40,15 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{b664fc94-88f8-4bd3-acc7-e4073180de1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Xml">
+      <UniqueIdentifier>{c995d3b0-e683-45d7-b690-93e829899e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Diagnostics">
+      <UniqueIdentifier>{9494d043-2ef8-42b1-b5ff-20bebe81d162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Diagnostics">
+      <UniqueIdentifier>{89531c12-25dd-4edb-bff5-e73cf944ee52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -256,6 +265,15 @@
     </ClCompile>
     <ClCompile Include="Test\Urasandesu\CppAnonym\Collections\GlobalSafeDictionaryTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Xml\XmlTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Diagnostics\ProcessTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Diagnostics\Process.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

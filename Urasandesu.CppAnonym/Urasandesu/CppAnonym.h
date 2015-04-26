@@ -29,8 +29,8 @@
 
 
 #pragma once
-#ifndef URASANDESU_CPPANONYM_CPPANONYM_H
-#define URASANDESU_CPPANONYM_CPPANONYM_H
+#ifndef URASANDESU_CPPANONYM_H
+#define URASANDESU_CPPANONYM_H
 
 #ifndef URASANDESU_CPPANONYM_CPPANONYMDEPENDSON_H
 #include <Urasandesu/CppAnonym/CppAnonymDependsOn.h>
@@ -40,12 +40,20 @@
 #include <Urasandesu/CppAnonym/Collections.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_DIAGNOSTICS_H
+#include <Urasandesu/CppAnonym/Diagnostics.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_TRAITS_H
 #include <Urasandesu/CppAnonym/Traits.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_H
 #include <Urasandesu/CppAnonym/Utilities.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_XML_H
+#include <Urasandesu/CppAnonym/Xml.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_DEFAULTSTDMETHODWRAPPER_H
@@ -196,4 +204,4 @@
 #include <Urasandesu/CppAnonym/Version.h>
 #endif
 
-#endif  // #ifndef URASANDESU_CPPANONYM_CPPANONYM_H
+#endif  // #ifndef URASANDESU_CPPANONYM_H

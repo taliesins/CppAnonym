@@ -41,6 +41,15 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Utilities">
       <UniqueIdentifier>{5e24e9e6-bbd3-4ca0-a841-565632716079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\Xml">
+      <UniqueIdentifier>{18e2efd9-0e20-43dc-b991-a5574d184d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\Diagnostics">
+      <UniqueIdentifier>{edba2383-d8aa-4cd3-a1b3-b2862c9966a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Diagnostics">
+      <UniqueIdentifier>{4f82ffa6-baab-458d-a39c-e55194fa43c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -107,6 +116,12 @@
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\Version.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Diagnostics\Process.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Xml.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
   </ItemGroup>
@@ -187,9 +202,6 @@
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotSupportedException.h">
-      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
-    </ClInclude>
-    <ClInclude Include="Urasandesu\CppAnonym\StrongNaming.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\CppAnonymNotImplementedException.h">
@@ -587,6 +599,21 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Version.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Xml\XmlDependsOn.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Xml.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics\DiagnosticsDependsOn.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Diagnostics\Process.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
