@@ -275,5 +275,8 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Diagnostics\Process.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
     </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Xml.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

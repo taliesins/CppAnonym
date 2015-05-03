@@ -45,7 +45,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Xml {
             return is;
         }
         
-        shared_ptr<wistream> FromUTF8(path const &p, bool encoderShouldEmitUTF8Identifier = true)
+        shared_ptr<wistream> FromUTF8(path const &p, bool encoderShouldEmitUTF8Identifier)
         {
             using boost::make_shared;
             using std::wifstream;
@@ -73,7 +73,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Xml {
             return os;
         }
 
-        shared_ptr<wostream> ToUTF8(path const &p, bool encoderShouldEmitUTF8Identifier = true)
+        shared_ptr<wostream> ToUTF8(path const &p, bool encoderShouldEmitUTF8Identifier)
         {
             using boost::make_shared;
             using std::codecvt_utf8_utf16;

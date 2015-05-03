@@ -35,6 +35,7 @@
 #include <boost/archive/xml_wiarchive.hpp>
 #include <boost/archive/xml_woarchive.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <boost/serialization/version.hpp>
 
 namespace Urasandesu { namespace CppAnonym { namespace Xml {
 
