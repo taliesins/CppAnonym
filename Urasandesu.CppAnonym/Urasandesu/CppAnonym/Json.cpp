@@ -1,5 +1,5 @@
 ﻿/* 
- * File: Xml.cpp
+ * File: Json.cpp
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -31,30 +31,37 @@
 
 #include "stdafx.h"
 
-#ifndef URASANDESU_CPPANONYM_XML_H
-#include <Urasandesu/CppAnonym/Xml.h>
+#ifndef URASANDESU_CPPANONYM_JSON_H
+#include <Urasandesu/CppAnonym/Json.h>
 #endif
 
 #ifndef URASANDESU_CPPANONYM_IO_H
 #include <Urasandesu/CppAnonym/IO.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Xml {
+namespace Urasandesu { namespace CppAnonym { namespace Json {
 
-    namespace XmlDetail {
+    namespace JsonDetail {
 
         wistream &operator >>(wistream &is, wptree &pt)
         {
-            read_xml(is, pt);
+            read_json(is, pt);
             return is;
         }
 
         wostream &operator <<(wostream &os, wptree const &pt)
         {
-            write_xml(os, pt);
+            using std::wostringstream;
+
+            auto oss = wostringstream();
+            write_json(oss, pt, false);
+ 
+            auto s = oss.str();
+            s.pop_back();
+            os << s;
             return os;
         }
         
-    }   // namespace XmlDetail {
+    }   // namespace JsonDetail {
 
-}}}  // namespace Urasandesu { namespace CppAnonym { namespace Xml {
+}}}  // namespace Urasandesu { namespace CppAnonym { namespace Json {

@@ -49,6 +49,9 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Diagnostics">
       <UniqueIdentifier>{89531c12-25dd-4edb-bff5-e73cf944ee52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Test\Urasandesu\CppAnonym\Json">
+      <UniqueIdentifier>{5561d3ad-1b48-4817-a551-e18600e8f6bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -277,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Xml.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\IO.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Urasandesu\CppAnonym\Json\JsonTest.cpp">
+      <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -34,6 +34,10 @@
 #include <Urasandesu/CppAnonym/Xml.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_IO_H
+#include <Urasandesu/CppAnonym/IO.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_DIAGNOSTICS_PROCESS_H
 #include <Urasandesu/CppAnonym/Diagnostics/Process.h>
 #endif
@@ -92,6 +96,7 @@ namespace {
         using boost::property_tree::wptree;
         using std::wstring;
         using namespace Urasandesu::CppAnonym::Diagnostics;
+        using namespace Urasandesu::CppAnonym::IO;
         using namespace Urasandesu::CppAnonym::Xml;
 
         // Arrange
@@ -123,6 +128,7 @@ namespace {
         using std::wstring;
         using namespace _64FCD0A5;
         using namespace Urasandesu::CppAnonym::Diagnostics;
+        using namespace Urasandesu::CppAnonym::IO;
         using namespace Urasandesu::CppAnonym::Xml;
 
         // Arrange
@@ -154,6 +160,7 @@ namespace {
         using boost::property_tree::wptree;
         using std::wstring;
         using namespace Urasandesu::CppAnonym::Diagnostics;
+        using namespace Urasandesu::CppAnonym::IO;
         using namespace Urasandesu::CppAnonym::Xml;
 
         // Arrange
@@ -184,6 +191,7 @@ namespace {
         using std::wstring;
         using namespace _64FCD0A5;
         using namespace Urasandesu::CppAnonym::Diagnostics;
+        using namespace Urasandesu::CppAnonym::IO;
         using namespace Urasandesu::CppAnonym::Xml;
 
         // Arrange

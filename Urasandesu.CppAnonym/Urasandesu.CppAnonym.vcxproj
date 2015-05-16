@@ -277,6 +277,8 @@
     <ClCompile Include="Urasandesu\CppAnonym\CppAnonymSystemException.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Diagnostics\Process.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Environment.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\IO.cpp" />
+    <ClCompile Include="Urasandesu\CppAnonym\Json.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\Log.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="Urasandesu\CppAnonym\StackFrame.cpp" />
@@ -328,6 +330,10 @@
     <ClInclude Include="Urasandesu\CppAnonym\IDisposable.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IDisposableFwd.hpp" />
     <ClInclude Include="Urasandesu\CppAnonym\IHeapContent.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\IO.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\IO\IODependsOn.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Json.h" />
+    <ClInclude Include="Urasandesu\CppAnonym\Json\JsonDependsOn.h" />
     <ClInclude Include="Urasandesu\CppAnonym\Log.h" />
     <ClInclude Include="Urasandesu\CppAnonym\LogFwd.h" />
     <ClInclude Include="Urasandesu\CppAnonym\ObjectTag.h" />

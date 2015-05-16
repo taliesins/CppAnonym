@@ -1,5 +1,5 @@
 ﻿/* 
- * File: Xml.cpp
+ * File: IO.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,33 +28,35 @@
  */
 
 
-
-#include "stdafx.h"
-
-#ifndef URASANDESU_CPPANONYM_XML_H
-#include <Urasandesu/CppAnonym/Xml.h>
-#endif
-
+#pragma once
 #ifndef URASANDESU_CPPANONYM_IO_H
-#include <Urasandesu/CppAnonym/IO.h>
+#define URASANDESU_CPPANONYM_IO_H
+
+#ifndef URASANDESU_CPPANONYM_IO_IODEPENDSON_H
+#include <Urasandesu/CppAnonym/IO/IODependsOn.h>
 #endif
 
-namespace Urasandesu { namespace CppAnonym { namespace Xml {
+#ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
+#endif
 
-    namespace XmlDetail {
+namespace Urasandesu { namespace CppAnonym { namespace IO {
 
-        wistream &operator >>(wistream &is, wptree &pt)
-        {
-            read_xml(is, pt);
-            return is;
-        }
+    namespace IODetail {
 
-        wostream &operator <<(wostream &os, wptree const &pt)
-        {
-            write_xml(os, pt);
-            return os;
-        }
+        using boost::filesystem::path;
+        using boost::shared_ptr;
+        using std::wostream;
+        using std::wistream;
         
-    }   // namespace XmlDetail {
+        shared_ptr<wistream> FromUTF8(path const &p, bool encoderShouldEmitUTF8Identifier = true);
+        shared_ptr<wostream> ToUTF8(path const &p, bool encoderShouldEmitUTF8Identifier = true);
+        
+    }   // namespace IODetail {
 
-}}}  // namespace Urasandesu { namespace CppAnonym { namespace Xml {
+    using IODetail::FromUTF8;
+    using IODetail::ToUTF8;
+
+}}}  // namespace Urasandesu { namespace CppAnonym { namespace IO {
+
+#endif  // #ifndef URASANDESU_CPPANONYM_IO_H

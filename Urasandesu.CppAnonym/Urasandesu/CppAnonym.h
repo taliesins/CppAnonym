@@ -52,6 +52,14 @@
 #include <Urasandesu/CppAnonym/Utilities.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_IO_H
+#include <Urasandesu/CppAnonym/IO.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_JSON_H
+#include <Urasandesu/CppAnonym/Json.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_XML_H
 #include <Urasandesu/CppAnonym/Xml.h>
 #endif

@@ -1,5 +1,5 @@
 ﻿/* 
- * File: Xml.cpp
+ * File: JsonDependsOn.h
  * 
  * Author: Akira Sugiura (urasandesu@gmail.com)
  * 
@@ -28,33 +28,14 @@
  */
 
 
+#pragma once
+#ifndef URASANDESU_CPPANONYM_JSON_JSONDEPENDSON_H
+#define URASANDESU_CPPANONYM_JSON_JSONDEPENDSON_H
 
-#include "stdafx.h"
+#include <boost/property_tree/json_parser.hpp>
 
-#ifndef URASANDESU_CPPANONYM_XML_H
-#include <Urasandesu/CppAnonym/Xml.h>
-#endif
+namespace Urasandesu { namespace CppAnonym { namespace Json {
 
-#ifndef URASANDESU_CPPANONYM_IO_H
-#include <Urasandesu/CppAnonym/IO.h>
-#endif
+}}}  // namespace Urasandesu { namespace CppAnonym { namespace Json {
 
-namespace Urasandesu { namespace CppAnonym { namespace Xml {
-
-    namespace XmlDetail {
-
-        wistream &operator >>(wistream &is, wptree &pt)
-        {
-            read_xml(is, pt);
-            return is;
-        }
-
-        wostream &operator <<(wostream &os, wptree const &pt)
-        {
-            write_xml(os, pt);
-            return os;
-        }
-        
-    }   // namespace XmlDetail {
-
-}}}  // namespace Urasandesu { namespace CppAnonym { namespace Xml {
+#endif  // #ifndef URASANDESU_CPPANONYM_JSON_JSONDEPENDSON_H

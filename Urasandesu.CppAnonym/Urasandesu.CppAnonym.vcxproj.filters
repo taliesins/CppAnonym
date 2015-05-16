@@ -50,6 +50,12 @@
     <Filter Include="ソース ファイル\Urasandesu\CppAnonym\Diagnostics">
       <UniqueIdentifier>{4f82ffa6-baab-458d-a39c-e55194fa43c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\IO">
+      <UniqueIdentifier>{7cc39075-f92d-4274-9b2a-ecdef2df0d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Urasandesu\CppAnonym\Json">
+      <UniqueIdentifier>{7683788b-3877-44e9-88b6-15e9c1a69517}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -122,6 +128,12 @@
       <Filter>ソース ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
     </ClCompile>
     <ClCompile Include="Urasandesu\CppAnonym\Xml.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\IO.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
+    <ClCompile Include="Urasandesu\CppAnonym\Json.cpp">
       <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
     </ClCompile>
   </ItemGroup>
@@ -614,6 +626,18 @@
     </ClInclude>
     <ClInclude Include="Urasandesu\CppAnonym\Diagnostics\Process.h">
       <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\IO.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\IO\IODependsOn.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Json.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym</Filter>
+    </ClInclude>
+    <ClInclude Include="Urasandesu\CppAnonym\Json\JsonDependsOn.h">
+      <Filter>ヘッダー ファイル\Urasandesu\CppAnonym\Json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

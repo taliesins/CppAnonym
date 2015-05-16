@@ -189,6 +189,14 @@ namespace Urasandesu { namespace CppAnonym {
 #include <Urasandesu/CppAnonym/Utilities/UtilitiesDependsOn.h>
 #endif
 
+#ifndef URASANDESU_CPPANONYM_IO_IODEPENDSON_H
+#include <Urasandesu/CppAnonym/IO/IODependsOn.h>
+#endif
+
+#ifndef URASANDESU_CPPANONYM_JSON_JSONDEPENDSON_H
+#include <Urasandesu/CppAnonym/Json/JsonDependsOn.h>
+#endif
+
 #ifndef URASANDESU_CPPANONYM_XML_XMLDEPENDSON_H
 #include <Urasandesu/CppAnonym/Xml/XmlDependsOn.h>
 #endif
