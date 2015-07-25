@@ -53,7 +53,9 @@ namespace {
         auto i = 42;
 
         instance.Clear();
+        ASSERT_TRUE(instance.Empty() == TRUE);
         ASSERT_TRUE(instance.TryAdd(L"Test", &i) == TRUE);
+        ASSERT_FALSE(instance.Empty() == TRUE);
         ASSERT_FALSE(instance.TryAdd(L"Test", &i) == TRUE);
 
         {

@@ -287,5 +287,8 @@
     <ClCompile Include="Test\Urasandesu\CppAnonym\Json\JsonTest.cpp">
       <Filter>ソース ファイル\Test\Urasandesu\CppAnonym\Json</Filter>
     </ClCompile>
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Json.cpp">
+      <Filter>ソース ファイル\Urasandesu\CppAnonym</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

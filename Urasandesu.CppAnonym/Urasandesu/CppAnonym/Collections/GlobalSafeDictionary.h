@@ -151,6 +151,13 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             return !m_stack.empty();
         }
 
+        BOOL Empty() const
+        {
+            auto _ = guard_type(m_lock);
+
+            return m_map.empty();
+        }
+
     private:
         GlobalSafeDictionary()
         { }

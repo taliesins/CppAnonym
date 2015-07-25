@@ -207,6 +207,7 @@
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Diagnostics\Process.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Environment.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\IO.cpp" />
+    <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Json.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\Log.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\SimpleDisposable.cpp" />
     <ClCompile Include="..\Urasandesu.CppAnonym\Urasandesu\CppAnonym\StackFrame.cpp" />
