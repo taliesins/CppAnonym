@@ -36,9 +36,11 @@ namespace Urasandesu { namespace CppAnonym {
 
     namespace EnvironmentDetail {
 
+        using std::allocator;
         using std::basic_string;
         using std::char_traits;
-        using std::allocator;
+        using std::vector;
+        using std::wstring;
         using boost::filesystem::path;
         
         class EnvironmentImpl
@@ -51,6 +53,8 @@ namespace Urasandesu { namespace CppAnonym {
             template<class TChar> static void SetEnvironmentVariable(TChar const *name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
             template<class TChar> static void SetEnvironmentVariable(basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &name, basic_string<TChar, char_traits<TChar>, allocator<TChar> > const &value);
             static path GetCurrentProcessPath();
+            static bool IsCurrentProcessRunAsAdministrator();
+            static vector<wstring> GetCurrentProcessCommandLine();
         };
 
     }   // namespace EnvironmentDetail {

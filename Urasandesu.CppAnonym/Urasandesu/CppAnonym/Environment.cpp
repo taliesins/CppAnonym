@@ -149,9 +149,70 @@ namespace Urasandesu { namespace CppAnonym {
             
             return path(wzname.data());
         }
+        
+        
+        
+        bool EnvironmentImpl::IsCurrentProcessRunAsAdministrator()
+        {
+            using Urasandesu::CppAnonym::CppAnonymSystemException;
+            
+            auto pSid = PSID();
+            BOOST_SCOPE_EXIT((pSid))
+            {
+                if (pSid)
+                    ::FreeSid(pSid);
+            }
+            BOOST_SCOPE_EXIT_END
+            {
+                SID_IDENTIFIER_AUTHORITY identifierAuthority = SECURITY_NT_AUTHORITY;
+                auto nSubAuthorityCount = 2;
+                auto nSubAuthority0 = SECURITY_BUILTIN_DOMAIN_RID;
+                auto nSubAuthority1 = DOMAIN_ALIAS_RID_ADMINS;
+                auto nSubAuthority2 = 0;
+                auto nSubAuthority3 = 0;
+                auto nSubAuthority4 = 0;
+                auto nSubAuthority5 = 0;
+                auto nSubAuthority6 = 0;
+                auto nSubAuthority7 = 0;
+                if (!::AllocateAndInitializeSid(&identifierAuthority, 
+                                                nSubAuthorityCount, 
+                                                nSubAuthority0, 
+                                                nSubAuthority1, 
+                                                nSubAuthority2, 
+                                                nSubAuthority3, 
+                                                nSubAuthority4, 
+                                                nSubAuthority5, 
+                                                nSubAuthority6, 
+                                                nSubAuthority7, 
+                                                &pSid))
+                    BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
+            }
+            
+            auto isMember = FALSE;
+            {
+                auto tokenHandle = static_cast<HANDLE>(nullptr);
+                auto sidToCheck = pSid;
+                if (!::CheckTokenMembership(tokenHandle, sidToCheck, &isMember))
+                    BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
+            }
+            
+            return isMember == TRUE;
+        }
 
     
         
+        vector<wstring> EnvironmentImpl::GetCurrentProcessCommandLine()
+        {
+            auto numArgs = 0;
+            auto *lpszArg = CommandLineToArgvW(GetCommandLine(), &numArgs);
+            if (!lpszArg)
+                BOOST_THROW_EXCEPTION(CppAnonymSystemException(::GetLastError()));
+
+            return vector<wstring>(lpszArg, lpszArg + numArgs);
+        }
+
+
+
         template basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > EnvironmentImpl::GetEnvironmentVariable<CHAR>(CHAR const *);
         template basic_string<WCHAR, char_traits<WCHAR>, allocator<WCHAR> > EnvironmentImpl::GetEnvironmentVariable<WCHAR>(WCHAR const *);
         template basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > EnvironmentImpl::GetEnvironmentVariable<CHAR>(basic_string<CHAR, char_traits<CHAR>, allocator<CHAR> > const &);
