@@ -773,7 +773,7 @@ namespace {
             INT GetValue() const { return 1; }
         }; 
 
-        any_range<IItem const *, random_access_traversal_tag, IItem const *, ptrdiff_t> MakeUpper(SimpleHeap<Item1, QuickHeap> const &heap)
+        any_range<IItem const *, random_access_traversal_tag, IItem const * const, ptrdiff_t> MakeUpper(SimpleHeap<Item1, QuickHeap> const &heap)
         {
             using std::function;;
 
@@ -925,7 +925,7 @@ namespace {
             INT GetValue() const { return 1; }
         }; 
 
-        any_range<IItem const *, random_access_traversal_tag, IItem const *, ptrdiff_t> MakeUpper(SimpleHeap<Item1, VeryQuickHeapButMustAccessThroughEachMethod> const &heap)
+        any_range<IItem const *, random_access_traversal_tag, IItem const * const, ptrdiff_t> MakeUpper(SimpleHeap<Item1, VeryQuickHeapButMustAccessThroughEachMethod> const &heap)
         {
             using std::function;;
 

@@ -98,6 +98,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
                 return const_iterator_(*this);
             }
 
+            typedef typename iterator_facade<RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>, Value, random_access_traversal_tag>::difference_type difference_type;
+            typedef typename iterator_facade<RapidVectorIterator<Value, T, RAPID_SIZE, Alloc>, Value, random_access_traversal_tag>::reference reference;            
+
         private:
             friend class iterator_core_access;
             

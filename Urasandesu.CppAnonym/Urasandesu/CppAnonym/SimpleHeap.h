@@ -190,6 +190,10 @@ namespace Urasandesu { namespace CppAnonym {
         class QuickHeapIterator : 
             public iterator_facade<QuickHeapIterator<T, Tag>, T, random_access_traversal_tag>
         {
+        public:
+            typedef typename iterator_facade<QuickHeapIterator<T, Tag>, T, random_access_traversal_tag>::reference reference;
+            typedef typename iterator_facade<QuickHeapIterator<T, Tag>, T, random_access_traversal_tag>::difference_type difference_type;            
+
         private:
             typedef QuickHeapIterator<T, Tag> this_type;
             typedef vector<T *> internal_vector_type;

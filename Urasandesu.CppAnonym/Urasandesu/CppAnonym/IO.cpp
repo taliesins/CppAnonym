@@ -46,7 +46,7 @@ namespace Urasandesu { namespace CppAnonym { namespace IO {
             using std::codecvt_utf8_utf16;
             using std::locale;
 
-            auto pIfs = make_shared<wifstream>(p.native());
+            auto pIfs = boost::make_shared<wifstream>(p.native());
             if (pIfs->bad())
             {
                 auto oss = std::wostringstream();
@@ -88,7 +88,7 @@ namespace Urasandesu { namespace CppAnonym { namespace IO {
                 ofs.write(reinterpret_cast<CHAR const *>(bom), 3);
             }
 
-            auto pOfs = make_shared<wofstream>(p.native(), ios::out | (encoderShouldEmitUTF8Identifier ? ios::app : 0));
+            auto pOfs = boost::make_shared<wofstream>(p.native(), ios::out | (encoderShouldEmitUTF8Identifier ? ios::app : 0));
             if (pOfs->bad())
             {
                 auto oss = std::wostringstream();
