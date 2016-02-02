@@ -210,7 +210,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
             }
 
             template<class Type, class ImplD>
-            TypeInfoImpl &operator =(TypeInfoHolderImpl<Type, ImplD> *pOtherHolder) : 
+            TypeInfoImpl &operator =(TypeInfoHolderImpl<Type, ImplD> *pOtherHolder)
             {
                 _ASSERTE(pOtherHolder != NULL); 
                 m_pHolder = pOtherHolder;
@@ -295,7 +295,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Utilities {
         }
 
         template<class Type, class ImplD>
-        TypeInfo &operator =(TypeInfoDetail::TypeInfoHolderImpl<Type, ImplD> *pOtherHolder) : 
+        TypeInfo &operator =(TypeInfoDetail::TypeInfoHolderImpl<Type, ImplD> *pOtherHolder)
         {
             base_type::operator =(pOtherHolder);
             return *this;

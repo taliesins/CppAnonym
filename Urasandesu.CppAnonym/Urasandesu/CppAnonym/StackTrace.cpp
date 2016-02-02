@@ -42,7 +42,7 @@
 namespace Urasandesu { namespace CppAnonym {
 
     StackTrace::StackTrace() : 
-        m_hProcess(NULL)
+        m_hProcess(nullptr)
     { }
     
     StackTrace::~StackTrace()
@@ -64,7 +64,7 @@ namespace Urasandesu { namespace CppAnonym {
         
         std::string absoluteSearchPath = absolute(userSearchPath).string();
         PSTR userSearchPath_ = exists(absoluteSearchPath) ? 
-                                 const_cast<PSTR>(absoluteSearchPath.c_str()) : NULL;
+                                 const_cast<PSTR>(absoluteSearchPath.c_str()) : nullptr;
 
         DWORD options = ::SymGetOptions();
         options |= SYMOPT_LOAD_LINES;
@@ -106,6 +106,7 @@ namespace Urasandesu { namespace CppAnonym {
             sf.AddrFrame.Offset = pContext->Ebp;
             sf.AddrFrame.Mode = AddrModeFlat;
         }
+        auto *pContext_ = static_cast<PVOID>(nullptr);
 #else
         MachineType = IMAGE_FILE_MACHINE_AMD64;
         CONTEXT context;
@@ -132,10 +133,10 @@ namespace Urasandesu { namespace CppAnonym {
             sf.AddrFrame.Offset = pContext->Rsp;
             sf.AddrFrame.Mode = AddrModeFlat;
         }
+        auto *pContext_ = pContext;
 #endif
 
-        while (::StackWalk(MachineType, m_hProcess, hThread, &sf, MachineType == IMAGE_FILE_MACHINE_I386 ? NULL : pContext, 
-                           NULL, ::SymFunctionTableAccess, ::SymGetModuleBase, NULL) == TRUE) 
+        while (::StackWalk(MachineType, m_hProcess, hThread, &sf, pContext_, nullptr, ::SymFunctionTableAccess, ::SymGetModuleBase, nullptr) == TRUE) 
         {
             if (sf.AddrFrame.Offset == 0) 
                 break;
