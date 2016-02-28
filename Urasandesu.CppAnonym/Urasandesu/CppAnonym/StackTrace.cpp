@@ -78,6 +78,9 @@ namespace Urasandesu { namespace CppAnonym {
         DWORD MachineType;
 #ifdef _M_IX86
         MachineType = IMAGE_FILE_MACHINE_I386;
+        CONTEXT context;
+        ::ZeroMemory(&context, sizeof(CONTEXT));
+        context.ContextFlags = CONTEXT_CONTROL;
         if (!pContext)
         {
             unsigned long instPtr;
@@ -89,6 +92,11 @@ namespace Urasandesu { namespace CppAnonym {
             __asm mov [instPtr], eax
             __asm mov [stackPtr], esp
             __asm mov [basePtr], ebp
+
+            context.Eip = instPtr; 
+            context.Esp = stackPtr;
+            context.Ebp = basePtr;
+            pContext = &context;
 
             sf.AddrPC.Offset = instPtr;
             sf.AddrPC.Mode = AddrModeFlat;
@@ -106,7 +114,7 @@ namespace Urasandesu { namespace CppAnonym {
             sf.AddrFrame.Offset = pContext->Ebp;
             sf.AddrFrame.Mode = AddrModeFlat;
         }
-        auto *pContext_ = static_cast<PVOID>(nullptr);
+        auto *pContext_ = pContext;
 #else
         MachineType = IMAGE_FILE_MACHINE_AMD64;
         CONTEXT context;

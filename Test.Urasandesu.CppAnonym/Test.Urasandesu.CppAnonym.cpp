@@ -33,10 +33,15 @@
 
 #include "stdafx.h"
 
+#ifndef URASANDESU_CPPANONYM_CPPANONYMNOTIMPLEMENTEDEXCEPTION_H
+#include <Urasandesu/CppAnonym/CppAnonymNotImplementedException.h>
+#endif
+
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_Test.*
 namespace {
 
     CPPANONYM_TEST(Urasandesu_CppAnonym_Test, Test_01)
     {
+        BOOST_THROW_EXCEPTION(Urasandesu::CppAnonym::CppAnonymNotImplementedException());
     }
 }

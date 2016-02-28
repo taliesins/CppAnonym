@@ -51,7 +51,7 @@ namespace Urasandesu { namespace CppAnonym {
                      HANDLE hProcess = ::GetCurrentProcess(), 
                      HANDLE hThread = ::GetCurrentThread(), 
                      LPCWSTR userSearchPath = L".\\", 
-                     LPCONTEXT pContext = NULL);
+                     LPCONTEXT pContext = nullptr);
 
         boost::ptr_vector<StackFrame> *GetStackFrames();
         
