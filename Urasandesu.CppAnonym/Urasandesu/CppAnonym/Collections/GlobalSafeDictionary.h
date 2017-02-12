@@ -51,6 +51,9 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         typedef typename boost::call_traits<Value>::param_type in_value_type;
         typedef typename boost::call_traits<Value>::reference out_value_type;
 
+        GlobalSafeDictionary()
+        { }
+
         static GlobalSafeDictionary &GetInstance()
         {
             static GlobalSafeDictionary im;
@@ -72,7 +75,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
         }
 
-        BOOL TryGet(in_key_type key, out_value_type rValue)
+        BOOL TryGet(in_key_type key, out_value_type rValue) const
         {
             auto _ = guard_type(m_lock);
 
@@ -85,7 +88,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             }
             else
             {
-                rValue = m_map[key];
+                rValue = m_map.at(key);
                 return TRUE;
             }
         }
@@ -116,7 +119,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             if (!m_stack.empty())
                 return FALSE;
             
-            rValue = m_map[key];
+            rValue = m_map.at(key);
             return TRUE;
         }
 
@@ -155,13 +158,10 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         {
             auto _ = guard_type(m_lock);
 
-            return m_map.empty();
+            return !m_stack.empty() || m_map.empty();
         }
 
     private:
-        GlobalSafeDictionary()
-        { }
-
         mutable boost::mutex m_lock;
         boost::unordered_map<Key, Value, Hash, Pred, Alloc> m_map;
         std::stack<bool> m_stack;
