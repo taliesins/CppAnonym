@@ -184,4 +184,117 @@ namespace {
 
         ASSERT_FALSE(instance.ExitDisabledProcessing() == TRUE);
     }
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_GlobalSafeDictionaryTest, ForEach_should_apply_specified_function_for_all_entries)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+        using namespace std;
+
+        typedef GlobalSafeDictionary<std::wstring, void const *> FunctionCollection;
+        typedef GlobalSafeDictionary<UINT_PTR, boost::shared_ptr<FunctionCollection>> AppDomainFunctionCollection;
+
+        // Arrange
+        auto &adfc = AppDomainFunctionCollection::GetInstance();
+        adfc.Clear();
+        {
+            auto pFc = boost::make_shared<FunctionCollection>();
+            adfc.GetOrAdd(42, pFc, pFc);
+            pFc->TryAdd(L"aiueo", nullptr);
+        }
+        {
+            auto pFc = boost::make_shared<FunctionCollection>();
+            adfc.GetOrAdd(13, pFc, pFc);
+            pFc->TryAdd(L"kakikukeko", nullptr);
+        }
+
+
+        // Act
+        typedef AppDomainFunctionCollection::entry_type Entry;
+        auto clearer = function<void(Entry &)>();
+        clearer = [](Entry &pair) { pair.second->Clear(); };
+        adfc.ForEach(clearer);
+
+
+        // Assert
+        ASSERT_FALSE(adfc.Empty() == TRUE);
+        {
+            auto pFc = boost::shared_ptr<FunctionCollection>();
+            ASSERT_TRUE(adfc.TryGet(42, pFc) == TRUE);
+            ASSERT_TRUE(pFc->Empty() == TRUE);
+        }
+        {
+            auto pFc = boost::shared_ptr<FunctionCollection>();
+            ASSERT_TRUE(adfc.TryGet(13, pFc) == TRUE);
+            ASSERT_TRUE(pFc->Empty() == TRUE);
+        }
+    }
+
+
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_GlobalSafeDictionaryTest, AddOrUpdate_should_add_if_specified_key_does_not_exist)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+
+        typedef GlobalSafeDictionary<std::wstring, void const *> FunctionCollection;
+        typedef GlobalSafeDictionary<UINT_PTR, std::pair<bool, boost::shared_ptr<FunctionCollection>>> AppDomainFunctionCollection;
+        typedef AppDomainFunctionCollection::in_key_type InKey;
+        typedef AppDomainFunctionCollection::in_value_type InValue;
+        typedef AppDomainFunctionCollection::out_value_type OutValue;
+
+        // Arrange
+        auto &adfc = AppDomainFunctionCollection::GetInstance();
+        adfc.Clear();
+
+
+        // Act
+        auto addValue = std::make_pair(true, boost::make_shared<FunctionCollection>());
+        auto updateValueFactory = std::function<void(InKey, InValue, OutValue)>();
+        updateValueFactory = [](InKey inKey, InValue inValue, OutValue outValue) { outValue = inValue; outValue.first = true; };
+        auto resultValue = adfc.AddOrUpdate(42, addValue, updateValueFactory);
+
+
+        // Assert
+        ASSERT_FALSE(adfc.Empty() == TRUE);
+        {
+            auto pair = std::pair<bool, boost::shared_ptr<FunctionCollection>>();
+            ASSERT_TRUE(adfc.TryGet(42, pair) == TRUE);
+            ASSERT_EQ(resultValue, pair);
+            ASSERT_EQ(resultValue, addValue);
+        }
+    }
+
+    CPPANONYM_TEST(Urasandesu_CppAnonym_Collections_GlobalSafeDictionaryTest, AddOrUpdate_should_update_if_specified_key_exists)
+    {
+        using namespace Urasandesu::CppAnonym::Collections;
+
+        typedef GlobalSafeDictionary<std::wstring, void const *> FunctionCollection;
+        typedef GlobalSafeDictionary<UINT_PTR, std::pair<bool, boost::shared_ptr<FunctionCollection>>> AppDomainFunctionCollection;
+        typedef AppDomainFunctionCollection::in_key_type InKey;
+        typedef AppDomainFunctionCollection::in_value_type InValue;
+        typedef AppDomainFunctionCollection::out_value_type OutValue;
+
+        // Arrange
+        auto &adfc = AppDomainFunctionCollection::GetInstance();
+        adfc.Clear();
+        adfc.TryAdd(42, std::make_pair(false, boost::make_shared<FunctionCollection>()));
+
+
+        // Act
+        auto addValue = std::make_pair(true, boost::make_shared<FunctionCollection>());
+        auto updateValueFactory = std::function<void(InKey, InValue, OutValue)>();
+        updateValueFactory = [](InKey inKey, InValue inValue, OutValue outValue) { outValue = inValue; outValue.first = true; };
+        auto resultValue = adfc.AddOrUpdate(42, addValue, updateValueFactory);
+
+
+        // Assert
+        ASSERT_FALSE(adfc.Empty() == TRUE);
+        {
+            auto pair = std::pair<bool, boost::shared_ptr<FunctionCollection>>();
+            ASSERT_TRUE(adfc.TryGet(42, pair) == TRUE);
+            ASSERT_EQ(resultValue, pair);
+            ASSERT_NE(resultValue, addValue);
+        }
+    }
 }

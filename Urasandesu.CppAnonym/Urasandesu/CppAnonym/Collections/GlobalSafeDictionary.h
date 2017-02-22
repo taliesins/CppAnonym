@@ -50,6 +50,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         typedef typename boost::call_traits<Key>::param_type in_key_type;
         typedef typename boost::call_traits<Value>::param_type in_value_type;
         typedef typename boost::call_traits<Value>::reference out_value_type;
+        typedef typename boost::unordered_map<Key, Value, Hash, Pred, Alloc>::value_type entry_type;
 
         GlobalSafeDictionary()
         { }
@@ -159,6 +160,44 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
             auto _ = guard_type(m_lock);
 
             return !m_stack.empty() || m_map.empty();
+        }
+
+        template<class UnaryOperation>
+        void ForEach(UnaryOperation op)
+        {
+            auto _ = guard_type(m_lock);
+
+            BOOST_FOREACH (auto &pair, m_map)
+                op(pair);
+        }
+
+        template<class UnaryOperation>
+        void ForEach(UnaryOperation op) const
+        {
+            auto _ = guard_type(m_lock);
+
+            BOOST_FOREACH (auto const &pair, m_map)
+                op(pair);
+        }
+
+        template<class TernaryOperation>
+        Value AddOrUpdate(in_key_type key, in_value_type addValue, TernaryOperation updateValueFactory)
+        {
+            auto _ = guard_type(m_lock);
+
+            auto result = m_map.find(key);
+            if (result == m_map.end())
+            {
+                m_map[key] = addValue;
+                return addValue;
+            }
+            else
+            {
+                auto updateValue = (*result).second;
+                updateValueFactory(key, updateValue, updateValue);
+                m_map[key] = updateValue;
+                return updateValue;
+            }
         }
 
     private:
