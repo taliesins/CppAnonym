@@ -653,6 +653,7 @@
     <None Include="Urasandesu.CppAnonym.def">
       <Filter>ソース ファイル</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="UrasandesuCppAnonym.idl">

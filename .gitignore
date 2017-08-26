@@ -45,3 +45,5 @@
 *.ipch
 *.sdf
 *.unsuccessfulbuild
+/.vs
+/packages

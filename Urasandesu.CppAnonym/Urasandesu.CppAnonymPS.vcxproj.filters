@@ -11,6 +11,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Urasandesu.CppAnonymps.def" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UrasandesuCppAnonym_i.c">
