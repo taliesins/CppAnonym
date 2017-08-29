@@ -82,11 +82,11 @@
     </Link>
     <PreBuildEvent>
       <Command>if exist dlldata.c goto :END
-echo エラー: MIDL は、主要なプロジェクトにインターフェイスを少なくとも 1 つ持っていない限り DLLDATA.C を生成しません。
+echo Error: MIDL does not generate DLLDATA.C unless it has at least one interface in the main project.
 Exit 1
 :END
 </Command>
-      <Message>要求されたファイルを調べています。</Message>
+      <Message>I am looking for the requested file.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -100,11 +100,11 @@ Exit 1
     </Link>
     <PreBuildEvent>
       <Command>if exist dlldata.c goto :END
-echo エラー: MIDL は、主要なプロジェクトにインターフェイスを少なくとも 1 つ持っていない限り DLLDATA.C を生成しません。
+echo Error: MIDL does not generate DLLDATA.C unless it has at least one interface in the main project.
 Exit 1
 :END
 </Command>
-      <Message>要求されたファイルを調べています。</Message>
+      <Message>I am looking for the requested file.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,11 +121,11 @@ Exit 1
     </Link>
     <PreBuildEvent>
       <Command>if exist dlldata.c goto :END
-echo エラー: MIDL は、主要なプロジェクトにインターフェイスを少なくとも 1 つ持っていない限り DLLDATA.C を生成しません。
+echo Error: MIDL does not generate DLLDATA.C unless it has at least one interface in the main project.
 Exit 1
 :END
 </Command>
-      <Message>要求されたファイルを調べています。</Message>
+      <Message>I am looking for the requested file.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,11 +142,11 @@ Exit 1
     </Link>
     <PreBuildEvent>
       <Command>if exist dlldata.c goto :END
-echo エラー: MIDL は、主要なプロジェクトにインターフェイスを少なくとも 1 つ持っていない限り DLLDATA.C を生成しません。
+echo Error: MIDL does not generate DLLDATA.C unless it has at least one interface in the main project.
 Exit 1
 :END
 </Command>
-      <Message>要求されたファイルを調べています。</Message>
+      <Message>I am looking for the requested file.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
