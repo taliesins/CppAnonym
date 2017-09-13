@@ -39,6 +39,9 @@
 #ifndef URASANDESU_CPPANONYM_CPPANONYMARGUMENTEXCEPTION_H
 #include <Urasandesu/CppAnonym/CppAnonymArgumentException.h>
 #endif
+#include <boost/serialization/nvp.hpp>
+#include <boost/archive/basic_archive.hpp>
+#include <boost/archive/xml_wiarchive.hpp>
 
 namespace Urasandesu { namespace CppAnonym { namespace Xml {
 
@@ -63,8 +66,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Xml {
             auto header = wstring();
             getline(is, header);
 
-            auto iarchive = xml_wiarchive(is, no_header);
-            iarchive >> p;
+			xml_wiarchive(is, no_header) >> p;
             return is;
         }
 
@@ -85,8 +87,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Xml {
 
             os << L"<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
 
-            auto oarchive = xml_woarchive(os, no_header);
-            oarchive << p;
+			xml_woarchive(os, no_header) << p;
             return os;
         }
 
