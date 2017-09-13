@@ -63,8 +63,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryAdd(in_key_type key, in_value_type value)
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             if (m_map.find(key) == m_map.end())
             {
                 m_map[key] = value;
@@ -78,8 +77,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryGet(in_key_type key, out_value_type rValue) const
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             if (!m_stack.empty())
                 return FALSE;
             
@@ -96,8 +94,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL TryRemove(in_key_type key, out_value_type rValue)
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             if (m_map.find(key) == m_map.end())
             {
                 return FALSE;
@@ -112,8 +109,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL GetOrAdd(in_key_type key, in_value_type value, out_value_type rValue)
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             if (m_map.find(key) == m_map.end())
                 m_map[key] = value;
             
@@ -126,21 +122,19 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         void Clear()
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             m_map.clear();
         }
 
         void EnterDisabledProcessing()
         {
-            auto _ = guard_type(m_lock);
+			guard_type guard(m_lock);
             m_stack.push(true);
         }
 
         BOOL ExitDisabledProcessing()
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             if (m_stack.empty())
                 return FALSE;
 
@@ -150,23 +144,20 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
 
         BOOL IsDisabledProcessing() const
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             return !m_stack.empty();
         }
 
         BOOL Empty() const
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             return !m_stack.empty() || m_map.empty();
         }
 
         template<class UnaryOperation>
         void ForEach(UnaryOperation op)
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             BOOST_FOREACH (auto &pair, m_map)
                 op(pair);
         }
@@ -174,8 +165,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         template<class UnaryOperation>
         void ForEach(UnaryOperation op) const
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             BOOST_FOREACH (auto const &pair, m_map)
                 op(pair);
         }
@@ -183,8 +173,7 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         template<class TernaryOperation>
         Value AddOrUpdate(in_key_type key, in_value_type addValue, TernaryOperation updateValueFactory)
         {
-            auto _ = guard_type(m_lock);
-
+			guard_type guard(m_lock);
             auto result = m_map.find(key);
             if (result == m_map.end())
             {
