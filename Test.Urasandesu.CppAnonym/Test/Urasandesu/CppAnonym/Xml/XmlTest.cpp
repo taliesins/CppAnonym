@@ -43,6 +43,7 @@
 #endif
 
 #include <boost/serialization/vector.hpp>
+#include <gtest/gtest.h>
 
 // Test.Urasandesu.CppAnonym.exe --gtest_filter=Urasandesu_CppAnonym_XmlTest.*
 namespace {
