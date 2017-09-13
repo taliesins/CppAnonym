@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_OBJECTTAG_H
 #include <Urasandesu/CppAnonym/ObjectTag.h>
@@ -178,22 +179,19 @@ namespace {
         using namespace _FEE1E6AA;
 
         {
-            auto gen = MyPOD2GeneratorDefault();
-            auto &provider = gen.ProviderOf<MyPOD2>();
+            auto &provider = MyPOD2GeneratorDefault().ProviderOf<MyPOD2>();
             auto *pMyPOD2 = provider.Heap().New();
             ASSERT_TRUE(pMyPOD2 != nullptr);
         }
 
         {
-            auto gen = MyPOD2GeneratorQuick();
-            auto &provider = gen.ProviderOf<MyPOD2>();
+            auto &provider = MyPOD2GeneratorQuick().ProviderOf<MyPOD2>();
             auto *pMyPOD2 = provider.Heap().New();
             ASSERT_TRUE(pMyPOD2 != nullptr);
         }
 
         {
-            auto gen = MyPOD2GeneratorVeryQuick();
-            auto &provider = gen.ProviderOf<MyPOD2>();
+            auto &provider = MyPOD2GeneratorVeryQuick().ProviderOf<MyPOD2>();
             auto *pMyPOD2 = provider.Heap().New();
             ASSERT_TRUE(pMyPOD2 != nullptr);
         }
