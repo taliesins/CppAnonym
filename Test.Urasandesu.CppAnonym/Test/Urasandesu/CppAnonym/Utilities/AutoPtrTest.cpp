@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_AUTOPTR_H
 #include <Urasandesu/CppAnonym/Utilities/AutoPtr.h>

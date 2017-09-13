@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_SAFEFLAGSENUM_H
 #include <Urasandesu/CppAnonym/SafeFlagsEnum.h>

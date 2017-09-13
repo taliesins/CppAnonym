@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_VERSION_H
 #include <Urasandesu/CppAnonym/Version.h>

@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_DIAGNOSTICS_PROCESS_H
 #include <Urasandesu/CppAnonym/Diagnostics/Process.h>

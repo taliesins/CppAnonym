@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_SIMPLEHEAP_HPP
 #include <Urasandesu/CppAnonym/SimpleHeap.hpp>

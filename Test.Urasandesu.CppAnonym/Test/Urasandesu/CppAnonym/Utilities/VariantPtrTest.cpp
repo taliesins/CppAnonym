@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_VARIANTPTR_HPP
 #include <Urasandesu/CppAnonym/Utilities/VariantPtr.hpp>

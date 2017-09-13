@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_FUSION_ASSEMBLYINFO_H
 #include <Urasandesu/CppAnonym/Fusion/AssemblyInfo.h>

@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_HEAPPROVIDER_HPP
 #include <Urasandesu/CppAnonym/HeapProvider.hpp>

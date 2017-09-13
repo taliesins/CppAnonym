@@ -29,6 +29,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_UTILITIES_TYPEINFO_H
 #include <Urasandesu/CppAnonym/Utilities/TypeInfo.h>

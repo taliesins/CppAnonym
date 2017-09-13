@@ -30,6 +30,7 @@
 
 
 #include "stdafx.h"
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_SMARTPTRCHAINMAPPER_H
 #include <Urasandesu/CppAnonym/SmartPtrChainMapper.h>
