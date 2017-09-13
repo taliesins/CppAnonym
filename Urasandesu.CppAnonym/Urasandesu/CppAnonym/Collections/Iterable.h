@@ -314,7 +314,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
         using namespace std;
         _DEBUG_RANGE(i, i_end);
         _DEBUG_POINTER(pred);
-        return _Find_if(i, i_end, pred);
+
+		return std::find_if(i, i_end, pred);
     }
 
     template<class SinglePassRange, class UnaryPredicate>
