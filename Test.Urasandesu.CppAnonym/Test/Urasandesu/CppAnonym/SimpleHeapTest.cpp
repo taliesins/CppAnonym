@@ -29,6 +29,8 @@
 
 
 #include "stdafx.h"
+#include <vector>
+#include <gtest/gtest.h>
 
 #ifndef URASANDESU_CPPANONYM_COLLECTIONS_RAPIDVECTOR_HPP
 #include <Urasandesu/CppAnonym/Collections/RapidVector.hpp>
