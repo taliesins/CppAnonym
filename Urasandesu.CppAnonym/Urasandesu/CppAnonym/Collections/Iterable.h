@@ -313,8 +313,8 @@ namespace Urasandesu { namespace CppAnonym { namespace Collections {
     {
         using namespace std;
         _DEBUG_RANGE(i, i_end);
-        _DEBUG_POINTER(pred);
-
+       // _DEBUG_POINTER(pred);
+	
 		return std::find_if(i, i_end, pred);
     }
 
